@@ -32,7 +32,7 @@ const VerifyResponse = ({ email }) => {
             link inside to get started!
           </Text>
           <Text textAlign="center" mt="64px" color="app.primary">
-            <Link href="/auth/forgotpassword">Email didn't arrive? </Link>
+            <Link href="/auth/forgotpassword">{"Email didn't arrive? "}</Link>
           </Text>
         </Box>
       </AuthCard>
