@@ -15,3 +15,9 @@ export const signinSchema = yup
     password: yup.string().required().min(8).max(20),
   })
   .required();
+
+export const forgotPassswordSchema = yup
+  .object({
+    email: yup.string().email().required(),
+  })
+  .required();

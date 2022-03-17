@@ -1,9 +1,10 @@
-import { Box, Text } from "@chakra-ui/react";
-import { SigninForm } from "components/auth";
+import { Box } from "@chakra-ui/react";
+import { VerifyResponse } from "components/auth";
+import ForgotPasswordForm from "components/auth/ForgotPasswordForm";
 import Head from "next/head";
 import React from "react";
 
-const Signin = () => {
+const ForgotPassword = () => {
   return (
     <Box>
       <Head>
@@ -18,10 +19,10 @@ const Signin = () => {
         flexDir="column"
         color="text.black"
       >
-        <SigninForm />
+        <ForgotPasswordForm />
       </Box>
     </Box>
   );
 };
 
-export default Signin;
+export default ForgotPassword;

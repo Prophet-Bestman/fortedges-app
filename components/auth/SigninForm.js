@@ -109,7 +109,7 @@ const SigninForm = () => {
       </AuthCard>
 
       <Box textAlign="center" color="white" display="flex" gap="12px">
-        <Link href="#">
+        <Link href="/auth/forgotpassword">
           <Text cursor="pointer" fontWeight="500">
             Forgot Password?
           </Text>

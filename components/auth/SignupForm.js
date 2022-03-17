@@ -7,7 +7,7 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import AuthCard from "./AuthCard";
 
 import { useForm } from "react-hook-form";
@@ -16,8 +16,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { signupSchema } from "../../utils";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const SignupForm = () => {
+  const [email, setEmail] = useState("");
   const {
     register,
     handleSubmit,
@@ -25,7 +27,13 @@ const SignupForm = () => {
   } = useForm({
     resolver: yupResolver(signupSchema),
   });
-  const onSubmit = (data) => console.log(data);
+
+  const router = useRouter();
+
+  const onSubmit = (data) => {
+    router.push(`/auth/verify/?email=${data.email}`);
+    console.log(data);
+  };
   return (
     <Box
       w="full"
@@ -40,7 +48,9 @@ const SignupForm = () => {
       </Text>
       <AuthCard>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Text mb="24px">Required fields have an asterisk: *</Text>
+          <Text mb="24px" color="text.grey" textAlign="center">
+            Required fields have an asterisk: *
+          </Text>
           <Grid templateColumns="repeat(2, 1fr)" gap="16px" mb="24px">
             <GridItem>
               <Text fontWeight="600" fontSize="14px" mb="4px">
@@ -105,6 +115,7 @@ const SignupForm = () => {
             <Input
               {...register("email")}
               type="email"
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
               variant={errors.email ? "error" : "outline"}
             />
@@ -159,6 +170,7 @@ const SignupForm = () => {
               </Box>
             </Text>
           </Box>
+
           <Button type="submit" w="full">
             Create Account
           </Button>
