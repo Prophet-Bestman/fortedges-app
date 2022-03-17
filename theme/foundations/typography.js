@@ -1,0 +1,40 @@
+const typography = {
+  lineHeights: {
+    d_lg_lg: "66px",
+    d_lg_md: "50px",
+    d_lg_sm: "34px",
+    d_sm_lg: "50px",
+    d_sm_md: "34px",
+    d_sm_sm: "26px",
+    t_lg_lg: "38px",
+    t_lg_md: "34px",
+    t_lg_sm: "28px",
+    t_lg_xs: "24px",
+    t_sm_lg: "32px",
+    t_sm_md: "28px",
+    t_sm_sm: "24px",
+    t_sm_xs: "22px",
+  },
+  fonts: {
+    heading: "Coustard, san-serif",
+    body: "DM Sans, sans-serif",
+  },
+  fontSizes: {
+    d_lg_lg: "64px",
+    d_lg_md: "48px",
+    d_lg_sm: "32px",
+    d_sm_lg: "48px",
+    d_sm_md: "32px",
+    d_sm_sm: "24px",
+    t_lg_lg: "24px",
+    t_lg_md: "18px",
+    t_lg_sm: "16px",
+    t_lg_xs: "14px",
+    t_sm_lg: "20px",
+    t_sm_md: "16px",
+    t_sm_sm: "14px",
+    t_sm_xs: "12px",
+  },
+};
+
+export default typography;
