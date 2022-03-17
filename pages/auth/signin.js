@@ -1,9 +1,9 @@
 import { Box, Text } from "@chakra-ui/react";
-import { SignupForm } from "components/auth";
+import { SigninForm } from "components/auth";
 import Head from "next/head";
 import React from "react";
 
-const Signup = () => {
+const Signin = () => {
   return (
     <Box>
       <Head>
@@ -18,10 +18,10 @@ const Signup = () => {
         flexDir="column"
         color="text.black"
       >
-        <SignupForm />
+        <SigninForm />
       </Box>
     </Box>
   );
 };
 
-export default Signup;
+export default Signin;

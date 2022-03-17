@@ -77,6 +77,6 @@ export const buttonStyle = {
   // default values for `size` and `variant`
   defaultProps: {
     variant: "primary",
-    size: "lg",
+    size: "md",
   },
 };
