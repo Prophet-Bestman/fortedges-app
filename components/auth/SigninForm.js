@@ -116,7 +116,7 @@ const SigninForm = () => {
         </Link>
         <Link href="/auth/signup">
           <Text cursor="pointer" fontWeight="500">
-            Don't have an account?
+            {"Don't have an account?"}
           </Text>
         </Link>
       </Box>
