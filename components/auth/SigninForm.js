@@ -106,14 +106,18 @@ const SigninForm = () => {
         </form>
       </AuthCard>
 
-      <Text textAlign="center" color="white" display="flex" gap="4px">
-        Already have a Fortedges account?{" "}
+      <Box textAlign="center" color="white" display="flex" gap="12px">
         <Link href="#">
-          <Text cursor="pointer" fontWeight="600">
-            Log in
+          <Text cursor="pointer" fontWeight="500">
+            Forgot Password?
           </Text>
         </Link>
-      </Text>
+        <Link href="/auth/signup">
+          <Text cursor="pointer" fontWeight="500">
+            Don't have an account?
+          </Text>
+        </Link>
+      </Box>
     </Box>
   );
 };
