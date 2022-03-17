@@ -17,7 +17,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { signupSchema } from "utils";
+import { signinSchema } from "utils";
 import Link from "next/link";
 
 const SigninForm = () => {
@@ -32,9 +32,11 @@ const SigninForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(signupSchema),
+    resolver: yupResolver(signinSchema),
   });
+
   const onSubmit = (data) => console.log(data);
+
   return (
     <Box
       w="full"

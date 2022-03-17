@@ -8,3 +8,10 @@ export const signupSchema = yup
     password: yup.string().required().min(8).max(20),
   })
   .required();
+
+export const signinSchema = yup
+  .object({
+    email: yup.string().email().required(),
+    password: yup.string().required().min(8).max(20),
+  })
+  .required();
