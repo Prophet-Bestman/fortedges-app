@@ -13,7 +13,6 @@ const ForgotPassword = () => {
       </Head>
       <Box
         minH="100vh"
-        py="90px"
         bg="app.primary"
         display="flex"
         justifyContent="center"

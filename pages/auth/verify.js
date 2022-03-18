@@ -31,5 +31,3 @@ const Verify = () => {
 };
 
 export default Verify;
-
-export const icProps = async () => {};

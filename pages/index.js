@@ -19,9 +19,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <MainLayout>
-        <Box minH="100vh"></Box>
-      </MainLayout>
+      <Box minH="100vh" bg=""></Box>
     </div>
   );
 }
+
+Home.requireAuth = true;

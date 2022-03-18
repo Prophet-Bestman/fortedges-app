@@ -3,7 +3,7 @@ import React from "react";
 import MainHeader from "./MainHeader";
 import MainNav from "./MainNav";
 
-const MainLayout = () => {
+const MainLayout = ({ children }) => {
   return (
     <Box>
       <Grid
@@ -15,6 +15,7 @@ const MainLayout = () => {
         </GridItem>
         <GridItem position="relative" bg="" colSpan={10}>
           <MainHeader />
+          {children}
         </GridItem>
       </Grid>
     </Box>
