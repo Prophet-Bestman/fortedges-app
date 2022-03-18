@@ -1,4 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
+import Link from "next/link";
 import { NavContext } from "providers/NavProvider";
 import React, { useContext } from "react";
 import { mainNavs } from "utils/navs";
@@ -19,20 +20,21 @@ const MainNav = () => {
       <Box display="flex">
         <Box ml="12px">
           {mainNavs.map((nav, i) => (
-            <Text
-              key={i}
-              display="flex"
-              alignItems="center"
-              my="16px"
-              gap="8px"
-              color={active === nav.name ? "app.primary" : "text.dark"}
-              cursor="pointer"
-              _hover={{
-                color: "app.primary",
-              }}
-            >
-              <img src={nav.icon} alt="" /> {nav.name}
-            </Text>
+            <Link key={i} href={nav.link}>
+              <Text
+                display="flex"
+                alignItems="center"
+                my="16px"
+                gap="8px"
+                color={active === nav.name ? "app.primary" : "text.dark"}
+                cursor="pointer"
+                _hover={{
+                  color: "app.primary",
+                }}
+              >
+                <img src={nav.icon} alt="" /> {nav.name}
+              </Text>
+            </Link>
           ))}
         </Box>
       </Box>

@@ -19,7 +19,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const SignupForm = () => {
-  const [email, setEmail] = useState("");
   const {
     register,
     handleSubmit,
@@ -115,7 +114,6 @@ const SignupForm = () => {
             <Input
               {...register("email")}
               type="email"
-              onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
               variant={errors.email ? "error" : "outline"}
             />
