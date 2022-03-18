@@ -3,7 +3,7 @@ import { Box } from "@chakra-ui/react";
 import { MainLayout } from "components/layouts";
 import Head from "next/head";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
-import { OverviewHeader } from "components/overview";
+import { OverviewHeader, YourPlans } from "components/overview";
 
 export default function Home() {
   const { dispatch: setActiveNav } = useContext(NavContext);
@@ -22,6 +22,7 @@ export default function Home() {
 
       <Box minH="100vh" bg="">
         <OverviewHeader />
+        <YourPlans />
       </Box>
     </div>
   );

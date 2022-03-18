@@ -16,19 +16,20 @@ const OverviewCard = ({ title, amount, gains, className }) => {
       boxShadow="sm"
       flexDir="column"
       w="full"
+      minH="167px"
       mt="26px"
       minW="180px"
       className={className}
     >
       <Text fontSize="14px" mb="8px" color="text.grey">
-        Total Balance
+        {title}
       </Text>
 
       <Text fontSize={["28px"]} mb="32px">
-        $2000.93
+        {amount}
       </Text>
 
-      {!gains && (
+      {gains && (
         <Flex gap="15px" alignItems="center">
           <Text fontSize="13px" color="text.grey">
             Total Gains
@@ -40,7 +41,7 @@ const OverviewCard = ({ title, amount, gains, className }) => {
             alignItems="center"
             gap="4px"
           >
-            <FiArrowUpRight /> 14%
+            <FiArrowUpRight /> {gains}
           </Text>
         </Flex>
       )}

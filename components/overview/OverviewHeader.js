@@ -67,17 +67,13 @@ const OverviewHeader = () => {
           clickable: true,
         }}
         breakpoints={{
-          //   640: {
-          //     slidesPerView: 3,
-          //     spaceBetween: 20,
-          //   },
           767: {
             slidesPerView: 3,
-            spaceBetween: 20,
+            spaceBetween: 10,
           },
           1024: {
             slidesPerView: 3,
-            spaceBetween: 20,
+            spaceBetween: 10,
           },
         }}
         modules={[Pagination]}
@@ -88,13 +84,17 @@ const OverviewHeader = () => {
         }}
       >
         <SwiperSlide>
-          <OverviewCard />
+          <OverviewCard
+            amount={"$2000.93"}
+            gains="14 %"
+            title="Total Balance"
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <OverviewCard />
+          <OverviewCard amount={"$1800.00"} title="Total Invested" />
         </SwiperSlide>
         <SwiperSlide>
-          <OverviewCard />
+          <OverviewCard amount={"$200.93"} gains="14 %" title="Total Profit" />
         </SwiperSlide>
       </Swiper>
 
