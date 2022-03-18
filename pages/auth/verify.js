@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { SigninForm, VerifyResponse } from "components/auth";
+import { AuthLayout } from "components/layouts";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
@@ -9,13 +10,14 @@ const Verify = () => {
   const { email } = router.query;
   console.log(email);
   return (
-    <Box>
+    <AuthLayout>
       <Head>
-        <title>Sign In | Fortedges</title>
+        <title>Verify Email | Fortedges</title>
       </Head>
       <Box
         minH="100vh"
         bg="app.primary"
+        py="90px"
         display="flex"
         justifyContent="center"
         alignItems="center"
@@ -24,7 +26,7 @@ const Verify = () => {
       >
         <VerifyResponse email={email} />
       </Box>
-    </Box>
+    </AuthLayout>
   );
 };
 

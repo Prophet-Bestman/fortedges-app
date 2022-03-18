@@ -1,7 +1,16 @@
-import { Box, Button, Input } from "@chakra-ui/react";
+import React, { useContext, useEffect } from "react";
+import { Box } from "@chakra-ui/react";
+import { MainLayout } from "components/layouts";
 import Head from "next/head";
+import { navActions, NavContext, navStates } from "providers/NavProvider";
 
 export default function Home() {
+  const { dispatch: setActiveNav } = useContext(NavContext);
+
+  useEffect(() => {
+    setActiveNav({ type: navActions.SET_ACTIVE, payload: navStates.overview });
+  }, []);
+
   return (
     <div className="">
       <Head>
@@ -10,17 +19,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <Box fontSize="70px" color="others.cyan">
-          Hello World
-        </Box>
-        <Button size="sm" variant="outline">
-          1
-        </Button>
-        <Box w="900px" px="200px">
-          <Input size="sm" placeholder="something" />
-        </Box>
-      </main>
+      <MainLayout>
+        <Box minH="100vh"></Box>
+      </MainLayout>
     </div>
   );
 }

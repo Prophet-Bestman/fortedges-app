@@ -11,6 +11,7 @@ const colors = {
   },
   text: {
     black: "#1D2441",
+    dark: "#63626E",
     grey: "#71879C",
     green: "#449562",
     pink: "#E280C0",

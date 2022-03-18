@@ -748,6 +748,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fontsource/coustard@^4.5.4":
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/@fontsource/coustard/-/coustard-4.5.4.tgz#537ef2f8b3bbbe4f8da3f2237ffbebe7995e7bd5"
+  integrity sha512-NtsQjyOoURdGIMLlkfD2eDqwHaL45zxkYqNO6BZASRurWRzqem8gSz4xkorywbL9XNMAPtJ0vRuPW1GGEoQjpw==
+
 "@fontsource/dm-sans@^4.5.3":
   version "4.5.3"
   resolved "https://registry.yarnpkg.com/@fontsource/dm-sans/-/dm-sans-4.5.3.tgz#7c67f7a4b1c105799dfa4f636cf1b08bd46fd2af"
