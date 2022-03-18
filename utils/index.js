@@ -1,4 +1,11 @@
 import { signupSchema, signinSchema, forgotPassswordSchema } from "./schemas";
-import { authNavs } from "./navs";
+import { authNavs, mainNavs, mobileNavs } from "./navs";
 
-export { signupSchema, signinSchema, forgotPassswordSchema, authNavs };
+export {
+  signupSchema,
+  signinSchema,
+  forgotPassswordSchema,
+  authNavs,
+  mainNavs,
+  mobileNavs,
+};

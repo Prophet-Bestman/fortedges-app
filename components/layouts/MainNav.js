@@ -16,8 +16,8 @@ const MainNav = () => {
       >
         fortedges
       </Text>
-      <Box display="flex" justifyContent="center">
-        <Box>
+      <Box display="flex">
+        <Box ml="12px">
           {mainNavs.map((nav, i) => (
             <Text
               key={i}
