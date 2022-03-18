@@ -1,13 +1,11 @@
 import { Box } from "@chakra-ui/react";
-import { VerifyResponse } from "components/auth";
 import ForgotPasswordForm from "components/auth/ForgotPasswordForm";
-import { AuthLayout } from "components/layouts";
 import Head from "next/head";
 import React from "react";
 
 const ForgotPassword = () => {
   return (
-    <AuthLayout>
+    <Box>
       <Head>
         <title>Forgot Password | Fortedges</title>
       </Head>
@@ -22,7 +20,7 @@ const ForgotPassword = () => {
       >
         <ForgotPasswordForm />
       </Box>
-    </AuthLayout>
+    </Box>
   );
 };
 

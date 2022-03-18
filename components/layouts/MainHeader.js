@@ -20,7 +20,11 @@ const MainHeader = () => {
 
   return (
     <Box position="absolute" top="0" left={0} w="full">
-      <Box pt="48px" px="64px" display={["none", , , "block"]}>
+      <Box
+        pt="48px"
+        px={["24px", null, "32px", , "64px"]}
+        display={["none", , , "block"]}
+      >
         <Flex justifyContent="space-between" alignItems="center">
           <Flex gap="24px">
             <Flex

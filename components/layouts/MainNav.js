@@ -7,7 +7,7 @@ import { mainNavs } from "utils/navs";
 const MainNav = () => {
   const { navState: active } = useContext(NavContext);
   return (
-    <Box px="40px" py="48px">
+    <Box pl="40px" py="48px">
       <Text
         fontFamily="Coustard"
         fontSize={["20px", null, null, "24px"]}

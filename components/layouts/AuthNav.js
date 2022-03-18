@@ -10,9 +10,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import React, { useContext } from "react";
-import { GrMenu } from "react-icons/gr";
-// import LandingMobileMenu from "./LandingMobileMenu";
+import React from "react";
 import { AiOutlineArrowDown, AiOutlineMenu } from "react-icons/ai";
 import { authNavs } from "utils";
 import AuthMobileNav from "./AuthMobileNav";
@@ -90,6 +88,7 @@ const AuthNav = () => {
                         _focus={{
                           backgroundColor: "#00000007",
                           fontWeight: "600",
+                          color: "app.primary",
                         }}
                       >
                         <Link href={item.link}>

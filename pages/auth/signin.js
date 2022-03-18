@@ -1,12 +1,11 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { SigninForm } from "components/auth";
-import { AuthLayout } from "components/layouts";
 import Head from "next/head";
 import React from "react";
 
 const Signin = () => {
   return (
-    <AuthLayout>
+    <Box>
       <Head>
         <title>Sign In | Fortedges</title>
       </Head>
@@ -22,7 +21,7 @@ const Signin = () => {
       >
         <SigninForm />
       </Box>
-    </AuthLayout>
+    </Box>
   );
 };
 
