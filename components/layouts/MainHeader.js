@@ -14,6 +14,7 @@ import { BsArrowLeftShort } from "react-icons/bs";
 import { AiOutlineMenu } from "react-icons/ai";
 import MainMobileNav from "./MainMobileNav";
 import { NavContext } from "providers/NavProvider";
+import MobilePageTitle from "components/MobilePageTitle";
 
 const MainHeader = () => {
   const notificationCount = 10;
@@ -151,6 +152,7 @@ const MainHeader = () => {
           <MainMobileNav isOpen={isOpen} onClose={onClose} />
         </Box>
       </Box>
+      <MobilePageTitle>{pageTitle}</MobilePageTitle>
     </Box>
   );
 };

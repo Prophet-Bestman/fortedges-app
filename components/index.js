@@ -1,3 +1,4 @@
 import Capsule from "./Capsule";
+import MobilePageTitle from "./MobilePageTitle";
 
-export { Capsule };
+export { Capsule, MobilePageTitle };

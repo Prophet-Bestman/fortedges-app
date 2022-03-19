@@ -1,4 +1,5 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
+import MobilePageTitle from "components/MobilePageTitle";
 import React from "react";
 import MainHeader from "./MainHeader";
 import MainNav from "./MainNav";
@@ -22,6 +23,7 @@ const MainLayout = ({ children }) => {
         </GridItem>
         <GridItem position="relative" bg="" colSpan={10}>
           <MainHeader />
+
           {children}
         </GridItem>
       </Grid>
