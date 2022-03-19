@@ -10,8 +10,15 @@ const MainLayout = ({ children }) => {
         minH="100vh"
         templateColumns={["repeat(1, 1fr)", , , "repeat(12, 1fr)"]}
       >
-        <GridItem bg="#F8FAFC" colSpan={2} display={["none", , , "block"]}>
-          <MainNav />
+        <GridItem
+          bg="#F8FAFC"
+          colSpan={2}
+          display={["none", , , "block"]}
+          position="relative"
+        >
+          <Box position="fixed" w="full">
+            <MainNav />
+          </Box>
         </GridItem>
         <GridItem position="relative" bg="" colSpan={10}>
           <MainHeader />
