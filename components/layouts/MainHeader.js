@@ -83,7 +83,13 @@ const MainHeader = () => {
                 <Box w="48px" h="48px" rounded="full" bg="gray"></Box>
               </MenuButton>
 
-              <MenuList p="24px" color="text.black" w="300px" outline="none">
+              <MenuList
+                zIndex="popover"
+                p="24px"
+                color="text.black"
+                w="300px"
+                outline="none"
+              >
                 <Flex
                   flexDir="column"
                   justifyContent="center"

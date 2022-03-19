@@ -11,7 +11,7 @@ import { newsList } from "data";
 
 const News = () => {
   return (
-    <Box mb="300px">
+    <Box mb="80px">
       <Padding>
         <Text fontSize={["16px", "18px", "20px", "24px"]} mb="24px">
           News-get financial insight
@@ -40,7 +40,7 @@ const News = () => {
           modules={[Pagination]}
           className="mySwiper"
           style={{
-            paddingBottom: "100px",
+            paddingBottom: "160px",
             width: "full",
           }}
         >
