@@ -5,7 +5,8 @@ import React, { useContext } from "react";
 import { mainNavs } from "utils/navs";
 
 const MainNav = () => {
-  const { navState: active } = useContext(NavContext);
+  const { navState } = useContext(NavContext);
+  const active = navState.name;
   return (
     <Box pl="40px" py="48px">
       <Text

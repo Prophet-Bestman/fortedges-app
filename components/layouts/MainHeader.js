@@ -8,15 +8,18 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { AiOutlineMenu } from "react-icons/ai";
 import MainMobileNav from "./MainMobileNav";
+import { NavContext } from "providers/NavProvider";
 
 const MainHeader = () => {
   const notificationCount = 10;
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { navState } = useContext(NavContext);
+  const pageTitle = navState.pageTitle;
 
   return (
     <Box position="absolute" top="0" left={0} w="full">
@@ -46,7 +49,7 @@ const MainHeader = () => {
               color="text.black"
               fontWeight={600}
             >
-              Overview
+              {pageTitle}
             </Text>
           </Flex>
 

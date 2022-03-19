@@ -8,10 +8,16 @@ export const navActions = {
 };
 
 export const navStates = {
+  overview: { name: "Overview", pageTitle: "Overview" },
+  myPlans: { name: "My Plans", pageTitle: "Plans" },
+  feeds: { name: "Feeds", pageTitle: "Feeds" },
+  account: { name: "Account", pageTitle: "Account" },
+};
+
+export const pageTitles = {
   overview: "Overview",
-  myPlans: "My Plans",
-  feeds: "Feeds",
-  account: "Account",
+  plans: "Plans",
+  settings: "Settings",
 };
 
 const reducer = (navState, action) => {
@@ -23,6 +29,7 @@ const reducer = (navState, action) => {
 
 const NavProvider = ({ children }) => {
   const [navState, dispatch] = useReducer(reducer, initialNavState);
+
   return (
     <NavContext.Provider value={{ navState, dispatch }}>
       {children}

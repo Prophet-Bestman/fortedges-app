@@ -10,12 +10,14 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { NavContext } from "providers/NavProvider";
+import { NavContext, navStates } from "providers/NavProvider";
 import React, { useContext } from "react";
 import { mobileNavs } from "utils";
 
 const MainMobileNav = ({ isOpen, onClose }) => {
-  const { navState: active } = useContext(NavContext);
+  const { navState } = useContext(NavContext);
+  const active = navState.name;
+
   return (
     <div>
       <Modal
