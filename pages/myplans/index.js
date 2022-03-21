@@ -1,6 +1,6 @@
-import { Box, Tabs } from "@chakra-ui/react";
+import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { Padding } from "components/layouts";
-import { PlansHeader } from "components/plans";
+import { Explore, PlansHeader, PlansTab } from "components/plans";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
 import React, { useContext, useEffect } from "react";
 
@@ -14,6 +14,13 @@ export default function MyPlans() {
     <Padding>
       <Tabs variant="unstyled">
         <PlansHeader />
+        <TabPanels>
+          <TabPanel>
+            <PlansTab />
+            <Explore />
+          </TabPanel>
+          <TabPanel>1</TabPanel>
+        </TabPanels>
       </Tabs>
     </Padding>
   );

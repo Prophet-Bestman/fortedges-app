@@ -5,6 +5,7 @@ const OverviewPlans = [
     category: "Stocks Plan",
     amount: 1200.12,
     color: "text.brown",
+    gain: "12.66%",
   },
   {
     name: "Clash",
@@ -12,6 +13,7 @@ const OverviewPlans = [
     category: "Real Estate Plan",
     amount: 1200.12,
     color: "others.green",
+    gain: "12.66%",
   },
   {
     name: "Clash",
@@ -19,6 +21,7 @@ const OverviewPlans = [
     category: "Fixed Income",
     amount: 1200.12,
     color: "others.blue",
+    gain: "12.66%",
   },
 ];
 

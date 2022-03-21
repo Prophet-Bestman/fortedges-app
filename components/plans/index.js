@@ -1,3 +1,6 @@
-const { default: PlansHeader } = require("./PlansHeader");
+import PlansHeader from "./PlansHeader";
+import PlansTab from "./PlansTab";
+import Explore from "./Explore";
+import goals from "data/goals";
 
-export { PlansHeader };
+export { PlansHeader, PlansTab, Explore, goals };
