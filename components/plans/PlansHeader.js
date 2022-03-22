@@ -1,5 +1,6 @@
 import { Box, Button, Tab, TabList } from "@chakra-ui/react";
 import MobilePageTitle from "components/MobilePageTitle";
+import Link from "next/link";
 import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
@@ -43,16 +44,18 @@ const PlansHeader = () => {
         Portfolio
       </Tab>
 
-      <Button
-        ml="auto"
-        display={["none", , "flex"]}
-        variant="secondary"
-        leftIcon={<AiOutlinePlus />}
-        color="app.primary"
-        w="265px"
-      >
-        Create New Plan
-      </Button>
+      <Link href="/myplans/create">
+        <Button
+          ml="auto"
+          display={["none", , "flex"]}
+          variant="secondary"
+          leftIcon={<AiOutlinePlus />}
+          color="app.primary"
+          w="265px"
+        >
+          Create New Plan
+        </Button>
+      </Link>
     </TabList>
   );
 };
