@@ -9,19 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/progress": "^1.2.6",
     "@chakra-ui/react": "^1.8.6",
     "@emotion/react": "11",
     "@emotion/styled": "11",
     "@fontsource/coustard": "^4.5.4",
     "@fontsource/dm-sans": "^4.5.3",
     "@hookform/resolvers": "^2.8.8",
+    "chart.js": "^3.7.1",
     "embla-carousel-react": "^6.2.0",
     "framer-motion": "6",
     "next": "12.1.0",
     "react": "17.0.2",
+    "react-chartjs-2": "^4.0.1",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.28.0",
     "react-icons": "^4.3.1",
+    "recharts": "^2.1.9",
     "swiper": "^8.0.7",
     "yup": "^0.32.11"
   },

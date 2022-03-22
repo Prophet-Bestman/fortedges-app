@@ -22,7 +22,13 @@ const Goal = ({ goal }) => {
       <Flex justifyContent="center" alignItems="center" h="100%">
         <Image src={img} objectPosition="center" w={["60px"]} />
       </Flex>
-      <Box textAlign="center" color="white">
+      <Box
+        textAlign="center"
+        color="white"
+        display="flex"
+        alignItems="center"
+        gap="4px"
+      >
         <Text fontSize={"13px"}>{action}</Text>
         <BsArrowRightShort />
       </Box>

@@ -1,6 +1,7 @@
 import PlansHeader from "./PlansHeader";
 import PlansTab from "./PlansTab";
 import Explore from "./Explore";
-import goals from "data/goals";
+import Goal from "./Goal";
+import PortfolioTab from "./PortfolioTab";
 
-export { PlansHeader, PlansTab, Explore, goals };
+export { PlansHeader, PlansTab, Explore, Goal, PortfolioTab };

@@ -1,9 +1,8 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import { explorePlans } from "data";
+import { explorePlans, goals } from "data";
 import React from "react";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { goals } from ".";
 import Goal from "./Goal";
 import PlanResponsive from "./PlanResponsive";
 import { MdArrowForwardIos } from "react-icons/md";

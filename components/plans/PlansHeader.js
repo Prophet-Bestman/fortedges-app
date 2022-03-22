@@ -17,6 +17,10 @@ const PlansHeader = () => {
           borderBottomColor: "app.primary",
           borderBottomWidth: "2px",
         }}
+        _active={{
+          borderBottomColor: "app.primary",
+          borderBottomWidth: "2px",
+        }}
         pb="0px"
         h="auto"
       >
@@ -26,6 +30,10 @@ const PlansHeader = () => {
         _focus={{
           outline: "none",
           color: "app.primary",
+          borderBottomColor: "app.primary",
+          borderBottomWidth: "2px",
+        }}
+        _active={{
           borderBottomColor: "app.primary",
           borderBottomWidth: "2px",
         }}
@@ -41,8 +49,9 @@ const PlansHeader = () => {
         variant="secondary"
         leftIcon={<AiOutlinePlus />}
         color="app.primary"
+        w="265px"
       >
-        Create Plan
+        Create New Plan
       </Button>
     </TabList>
   );
