@@ -44,20 +44,21 @@ const MainMobileNav = ({ isOpen, onClose }) => {
               pb="36px"
             >
               {mobileNavs.map((nav, i) => (
-                <Text
-                  key={i}
-                  display="flex"
-                  alignItems="center"
-                  my="16px"
-                  gap="8px"
-                  color={active === nav.name ? "app.primary" : "text.dark"}
-                  cursor="pointer"
-                  _hover={{
-                    color: "app.primary",
-                  }}
-                >
-                  <img src={nav.icon} alt="" /> {nav.name}
-                </Text>
+                <Link key={i} href={nav.link}>
+                  <Text
+                    display="flex"
+                    alignItems="center"
+                    my="16px"
+                    gap="8px"
+                    color={active === nav.name ? "app.primary" : "text.dark"}
+                    cursor="pointer"
+                    _hover={{
+                      color: "app.primary",
+                    }}
+                  >
+                    <img src={nav.icon} alt="" /> {nav.name}
+                  </Text>
+                </Link>
               ))}
             </Box>
             <Box px="16px" pt="32px" color="text.black">

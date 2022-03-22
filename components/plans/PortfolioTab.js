@@ -24,12 +24,12 @@ const PortfolioTab = () => {
         </Link>
       </Flex>
 
-      <Box
-        display={["block", , , "flex"]}
+      <Flex
+        // display={["block", , , "flex"]}
         alignItems="center"
         mt="28px"
         mb="40px"
-        gap={[, , "50px"]}
+        gap={["12px", , "30px", "50px"]}
         justifyContent={["space-between", , "start"]}
       >
         <Box
@@ -62,7 +62,7 @@ const PortfolioTab = () => {
             3
           </Text>
         </Box>
-      </Box>
+      </Flex>
 
       <PorfolioDataRep />
     </Box>
