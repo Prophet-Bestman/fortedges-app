@@ -11,19 +11,23 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { NavContext, navStates } from "providers/NavProvider";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { mobileNavs } from "utils";
 
 const MainMobileNav = ({ isOpen, onClose }) => {
   const { navState } = useContext(NavContext);
   const active = navState.name;
 
+  useEffect(() => {
+    onClose();
+  }, [active]);
+
   return (
     <div>
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        blockScrollOnMount={true}
+        blockScrollOnMount={false}
         motionPreset="slideInRight"
         size="full"
       >
@@ -44,8 +48,9 @@ const MainMobileNav = ({ isOpen, onClose }) => {
               pb="36px"
             >
               {mobileNavs.map((nav, i) => (
-                <Link key={i} href={nav.link}>
+                <Link href={nav.link} key={i}>
                   <Text
+                    onClick={() => {}}
                     display="flex"
                     alignItems="center"
                     my="16px"

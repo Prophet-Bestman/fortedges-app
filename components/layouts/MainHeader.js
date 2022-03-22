@@ -152,7 +152,9 @@ const MainHeader = () => {
           <MainMobileNav isOpen={isOpen} onClose={onClose} />
         </Box>
       </Box>
-      <MobilePageTitle>{pageTitle}</MobilePageTitle>
+      {navState.pageTitle !== "Overview" && (
+        <MobilePageTitle>{pageTitle}</MobilePageTitle>
+      )}
     </Box>
   );
 };
