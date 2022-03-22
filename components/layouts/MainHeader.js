@@ -15,12 +15,15 @@ import { AiOutlineMenu } from "react-icons/ai";
 import MainMobileNav from "./MainMobileNav";
 import { NavContext } from "providers/NavProvider";
 import MobilePageTitle from "components/MobilePageTitle";
+import { useRouter } from "next/router";
 
 const MainHeader = () => {
   const notificationCount = 10;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { navState } = useContext(NavContext);
   const pageTitle = navState.pageTitle;
+
+  const router = useRouter();
 
   return (
     <Box position="absolute" top="0" left={0} w="full">
@@ -42,7 +45,7 @@ const MainHeader = () => {
               justifyContent="center"
               alignItems="center"
             >
-              <BsArrowLeftShort fontSize="24px" />
+              <BsArrowLeftShort onClick={() => router.back()} fontSize="24px" />
             </Flex>
 
             <Text

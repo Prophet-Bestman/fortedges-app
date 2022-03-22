@@ -2,6 +2,7 @@ import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { YourPlans } from "components/overview";
 import OverviewPlan from "components/overview/OverviewPlan";
 import { OverviewPlans } from "data";
+import Link from "next/link";
 import React from "react";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -40,7 +41,9 @@ const PlansTab = () => {
         >
           <SwiperSlide>
             <Flex justifyContent="center" h="full" w="full">
-              <Image src="/img/create_plan.png" h="196px" />
+              <Link href="/myplans/create">
+                <Image src="/img/create_plan.png" h="196px" />
+              </Link>
             </Flex>
           </SwiperSlide>
           {OverviewPlans.map((plan) => (

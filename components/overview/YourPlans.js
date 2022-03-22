@@ -49,7 +49,9 @@ const YourPlans = () => {
               >
                 <SwiperSlide>
                   <Flex justifyContent="center" h="full" w="full">
-                    <Image src="/img/create_plan.png" h="196px" />
+                    <Link href="/myplans/create">
+                      <Image src="/img/create_plan.png" h="196px" />
+                    </Link>
                   </Flex>
                 </SwiperSlide>
                 {OverviewPlans.map((plan) => (

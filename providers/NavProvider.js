@@ -12,7 +12,7 @@ export const navStates = {
   myPlans: { name: "My Plans", pageTitle: "Plans" },
   feeds: { name: "Feeds", pageTitle: "Feeds" },
   account: { name: "Account", pageTitle: "Account" },
-  creatPlans: { name: "Create Plans", pageTitle: "Create Plans" },
+  creatPlans: { name: "My Plans", pageTitle: "Create Plans" },
 };
 
 export const pageTitles = {
