@@ -3,5 +3,15 @@ import newsList from "./newsList";
 import explorePlans from "./explorePlans";
 import goals from "./goals";
 import transactionHistory from "./transactionHistory";
+import historicalPerformance from "./historicalPerformance";
+import portfolioBrands from "./portfolioBrands";
 
-export { OverviewPlans, newsList, explorePlans, goals, transactionHistory };
+export {
+  OverviewPlans,
+  newsList,
+  explorePlans,
+  goals,
+  transactionHistory,
+  portfolioBrands,
+  historicalPerformance,
+};
