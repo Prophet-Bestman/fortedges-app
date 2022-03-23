@@ -35,7 +35,7 @@ const MainNav = () => {
                   color: "app.primary",
                 }}
               >
-                <img src={nav.icon} alt="" /> <Text>{nav.name}</Text>
+                <img src={nav.icon} alt="" /> {nav.name}
               </Text>
             </Link>
           ))}

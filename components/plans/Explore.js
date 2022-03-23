@@ -1,13 +1,36 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { explorePlans, goals } from "data";
-import React from "react";
+import React, { useContext } from "react";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Goal from "./Goal";
 import PlanResponsive from "./PlanResponsive";
 import { MdArrowForwardIos } from "react-icons/md";
+import { PremiumPlan, RealEstatePlan } from "components/plansModals";
 
 const Explore = () => {
+  const {
+    isOpen: isPremiumOpen,
+    onClose: onPremiumClose,
+    onOpen: onPremiumOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isRealEstateOpen,
+    onClose: onRealEstateClose,
+    onOpen: onRealEstateOpen,
+  } = useDisclosure();
+
+  const handlePlan = (name) => {
+    console.log("clicked");
+    if (name === "Premium Stocks") {
+      console.log("is Premium Stocks");
+      onPremiumOpen();
+    }
+    if (name === "Real Estate") {
+      console.log("is Premium Stocks");
+      onRealEstateOpen();
+    }
+  };
   return (
     <Box py="64px">
       <Box py="16px" borderBottomWidth="1px" borderBottomColor="#E7E8ED">
@@ -58,7 +81,7 @@ const Explore = () => {
           }}
         >
           {explorePlans.map((plan) => (
-            <SwiperSlide key={plan.name}>
+            <SwiperSlide onClick={() => handlePlan(plan.name)} key={plan.name}>
               <PlanResponsive plan={plan} />
             </SwiperSlide>
           ))}
@@ -112,6 +135,8 @@ const Explore = () => {
           ))}
         </Flex>
       </Box>
+      <PremiumPlan isOpen={isPremiumOpen} onClose={onPremiumClose} />
+      <RealEstatePlan isOpen={isRealEstateOpen} onClose={onRealEstateClose} />
     </Box>
   );
 };

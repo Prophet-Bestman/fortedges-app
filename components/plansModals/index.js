@@ -1,3 +1,4 @@
-const { default: PremiumPlan } = require("./PremiumPlan");
+import PremiumPlan from "./PremiumPlan";
+import RealEstatePlan from "./RealEstatePlan";
 
-export { PremiumPlan };
+export { PremiumPlan, RealEstatePlan };

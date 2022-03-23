@@ -60,10 +60,10 @@ export const buttonStyle = {
       },
     },
     green: {
-      bg: "#449562",
+      bg: "#0E7C7B",
       color: "white",
       _hover: {
-        bg: "#338541",
+        bg: "#0d6b6a",
       },
     },
     yellow: {

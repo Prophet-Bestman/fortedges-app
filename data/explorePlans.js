@@ -6,7 +6,7 @@ const explorePlans = [
     color: "text.brown",
   },
   {
-    name: "ReaL Estate",
+    name: "Real Estate",
     returnType: "Moderate Return ",
     img: "/img/emojis/home2.png",
     color: "others.green",

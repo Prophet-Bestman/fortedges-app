@@ -18,7 +18,7 @@ import HistoricalPerformance from "./HistoricalPerformance";
 import { portfolioBrands } from "data";
 import Link from "next/link";
 
-const PremiumPlan = ({ isOpen, onClose }) => {
+const RealEstatePlan = ({ isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -31,13 +31,13 @@ const PremiumPlan = ({ isOpen, onClose }) => {
             onClick={onClose}
           />
           <Text fontSize="24px" fontWeight={500} mx="auto">
-            Premium Stock
+            Real Estate
           </Text>
         </ModalHeader>
         {/* <ModalCloseButton /> */}
         <ModalBody>
           <Flex justify="center">
-            <Image src="/img/premium.png" />
+            <Image src="/img/realEstate.png" />
           </Flex>
 
           <Text
@@ -49,7 +49,7 @@ const PremiumPlan = ({ isOpen, onClose }) => {
             mb="16px"
           >
             {
-              "Our premium plan is perfect for you if you’ve got a high capital and would like to own a slice of high-growth companies like Microsoft, Netflix, and many more. We’ve delivered historical returns of 35% per annum to our Long term investors.Returns are updated every weekday."
+              "Best for those who want a balance of good returns with medium level capital. This plan invests in rented buildings and properties around the world and return is 20 - 22.5% per annum."
             }
           </Text>
 
@@ -57,7 +57,7 @@ const PremiumPlan = ({ isOpen, onClose }) => {
             <Text mb="40px" color="text.grey">
               Range -{" "}
             </Text>
-            <Text> $2,000 - $4,000</Text>
+            <Text>$50,000 - $100,000</Text>
           </Flex>
 
           <HistoricalPerformance />
@@ -83,7 +83,7 @@ const PremiumPlan = ({ isOpen, onClose }) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant="yellow" w="full" onClick={onClose}>
+          <Button variant="green" w="full" onClick={onClose}>
             Get Started
           </Button>
         </ModalFooter>
@@ -92,4 +92,4 @@ const PremiumPlan = ({ isOpen, onClose }) => {
   );
 };
 
-export default PremiumPlan;
+export default RealEstatePlan;
