@@ -6,11 +6,18 @@ import {
   PlanGraph,
   TransactionCol,
 } from "components/plans";
-import Link from "next/link";
-import React from "react";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { navActions, NavContext, navStates } from "providers/NavProvider";
+import React, { useContext, useEffect } from "react";
 
 function PlanDetails({ data }) {
+  const { dispatch: setActiveNav } = useContext(NavContext);
+
+  useEffect(() => {
+    setActiveNav({
+      type: navActions.SET_ACTIVE,
+      payload: navStates.creatPlans,
+    });
+  }, []);
   return (
     <Padding>
       <Grid
