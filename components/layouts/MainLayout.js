@@ -17,7 +17,7 @@ const MainLayout = ({ children }) => {
           display={["none", , , "block"]}
           position="relative"
         >
-          <Box position="fixed" w="full">
+          <Box top="0" position="sticky" w="full">
             <MainNav />
           </Box>
         </GridItem>

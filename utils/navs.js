@@ -27,8 +27,17 @@ export const authNavs = [
 export const mainNavs = [
   { name: "Overview", link: "/", icon: "/img/nav/dashboard.png" },
   { name: "My Plans", link: "/myplans", icon: "/img/nav/trend.png" },
-  { name: "Feeds", link: "/feeds", icon: "/img/nav/feeds.png" },
-  { name: "Account", link: "/account", icon: "/img/nav/account.png" },
+  { name: "Fund A Plan", link: "/fund_a_plan", icon: "/img/nav/fund.png" },
+  {
+    name: "Notifications",
+    link: "/notifications",
+    icon: "/img/nav/notification.png",
+  },
+  {
+    name: "Transaction History",
+    link: "transactionHistory",
+    icon: "/img/nav/history.png",
+  },
 ];
 
 export const mobileNavs = [

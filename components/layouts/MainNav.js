@@ -8,7 +8,7 @@ const MainNav = () => {
   const { navState } = useContext(NavContext);
   const active = navState.name;
   return (
-    <Box pl="40px" py="48px">
+    <Box pl="18px" py="48px" w="full">
       <Text
         fontFamily="Coustard"
         fontSize={["20px", null, null, "24px"]}
@@ -18,22 +18,24 @@ const MainNav = () => {
       >
         fortedges
       </Text>
-      <Box display="flex">
-        <Box ml="12px">
+      <Box display="flex" w="full">
+        <Box ml="12px" w="full">
           {mainNavs.map((nav, i) => (
             <Link key={i} href={nav.link}>
               <Text
                 display="flex"
                 alignItems="center"
-                my="16px"
+                my="32px"
+                w="full"
                 gap="8px"
+                textOverflow=""
                 color={active === nav.name ? "app.primary" : "text.dark"}
                 cursor="pointer"
                 _hover={{
                   color: "app.primary",
                 }}
               >
-                <img src={nav.icon} alt="" /> {nav.name}
+                <img src={nav.icon} alt="" /> <Text>{nav.name}</Text>
               </Text>
             </Link>
           ))}
