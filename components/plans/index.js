@@ -7,6 +7,7 @@ import PlanResponsive from "./PlanResponsive";
 import PlanDetailsBanner from "./PlanDetailsBanner";
 import PlanBalance from "./PlanBalance";
 import PlanGraph from "./PlanGraph";
+import TransactionCol from "./TransactionCol";
 
 export {
   PlansHeader,
@@ -18,4 +19,5 @@ export {
   PlanDetailsBanner,
   PlanBalance,
   PlanGraph,
+  TransactionCol,
 };
