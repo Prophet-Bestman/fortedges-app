@@ -1,14 +1,16 @@
 import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
-import { explorePlans, goals } from "data";
-import React, { useContext } from "react";
+import { explorePlans, goalModalProps, goals } from "data";
+import React, { useState } from "react";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Goal from "./Goal";
 import PlanResponsive from "./PlanResponsive";
 import { MdArrowForwardIos } from "react-icons/md";
-import { PremiumPlan, RealEstatePlan } from "components/plansModals";
+import { GoalsPlan, PremiumPlan, RealEstatePlan } from "components/plansModals";
+import Link from "next/link";
 
 const Explore = () => {
+  const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
   const {
     isOpen: isPremiumOpen,
     onClose: onPremiumClose,
@@ -20,17 +22,52 @@ const Explore = () => {
     onOpen: onRealEstateOpen,
   } = useDisclosure();
 
+  const {
+    isOpen: isGoalOpen,
+    onClose: onGoalClose,
+    onOpen: onGoalOpen,
+  } = useDisclosure();
+
   const handlePlan = (name) => {
     console.log("clicked");
     if (name === "Premium Stocks") {
       console.log("is Premium Stocks");
       onPremiumOpen();
-    }
-    if (name === "Real Estate") {
+    } else if (name === "Real Estate") {
       console.log("is Premium Stocks");
       onRealEstateOpen();
-    }
+    } else onGoalOpen();
   };
+
+  const handleGoal = (goalAction) => {
+    switch (goalAction) {
+      case goalModalProps.ownYourHome.title:
+        setGoalProps(goalModalProps.ownYourHome);
+        break;
+      case goalModalProps.planWedding.title:
+        setGoalProps(goalModalProps.planWedding);
+        break;
+      case goalModalProps.saveForRent.title:
+        setGoalProps(goalModalProps.saveForRent);
+        break;
+      case goalModalProps.saveForSchool.title:
+        setGoalProps(goalModalProps.saveForSchool);
+        break;
+      case goalModalProps.startBusiness.title:
+        setGoalProps(goalModalProps.startBusiness);
+        break;
+      case goalModalProps.travel.title:
+        setGoalProps(goalModalProps.travel);
+        break;
+
+      default:
+        setGoalProps(goalModalProps.fixedIncome);
+        break;
+    }
+
+    onGoalOpen();
+  };
+
   return (
     <Box py="64px">
       <Box py="16px" borderBottomWidth="1px" borderBottomColor="#E7E8ED">
@@ -119,7 +156,9 @@ const Explore = () => {
             alignItems="center"
             gap="8px"
           >
-            <Text>See All</Text>
+            <Text cursor="pointer">
+              <Link href="/myplans/create">See All</Link>
+            </Text>
             <MdArrowForwardIos fontSize="12px" />
           </Box>
         </Flex>
@@ -131,18 +170,31 @@ const Explore = () => {
           justify="center"
         >
           {goals.map((goal) => (
-            <Goal key={goal.action} goal={goal} />
+            <Goal
+              handleGoal={() => handleGoal(goal.action)}
+              key={goal.action}
+              goal={goal}
+            />
           ))}
         </Flex>
 
         <Flex display={["flex", , "none"]} gap="12px" justify="center">
           {goals.slice(0, 2).map((goal) => (
-            <Goal key={goal.action} goal={goal} />
+            <Goal
+              handleGoal={() => handleGoal(goal.action)}
+              key={goal.action}
+              goal={goal}
+            />
           ))}
         </Flex>
       </Box>
       <PremiumPlan isOpen={isPremiumOpen} onClose={onPremiumClose} />
       <RealEstatePlan isOpen={isRealEstateOpen} onClose={onRealEstateClose} />
+      <GoalsPlan
+        isOpen={isGoalOpen}
+        onClose={onGoalClose}
+        goalProps={goalProps}
+      />
     </Box>
   );
 };

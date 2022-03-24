@@ -6,6 +6,7 @@ import transactionHistory from "./transactionHistory";
 import historicalPerformance from "./historicalPerformance";
 import portfolioBrands from "./portfolioBrands";
 import portfolioCountries from "./portfolioCountries";
+import goalModalProps from "./goalModalProps";
 
 export {
   OverviewPlans,
@@ -16,4 +17,5 @@ export {
   portfolioBrands,
   historicalPerformance,
   portfolioCountries,
+  goalModalProps,
 };

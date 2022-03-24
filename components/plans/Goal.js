@@ -2,11 +2,12 @@ import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import React from "react";
 import { BsArrowRightShort } from "react-icons/bs";
 
-const Goal = ({ goal }) => {
+const Goal = ({ goal, handleGoal }) => {
   const { action, img, color } = goal;
   return (
     <Box
       bgColor={color}
+      onClick={() => handleGoal()}
       bgRepeat="no-repeat"
       cursor="pointer"
       w="full"

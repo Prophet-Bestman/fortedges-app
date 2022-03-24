@@ -1,16 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { Goal, PlanResponsive } from "components/plans";
-import { explorePlans, goals } from "data";
+import { explorePlans, goalModalProps, goals } from "data";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { MdArrowForwardIos } from "react-icons/md";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
 import { Padding } from "components/layouts";
-import { PremiumPlan, RealEstatePlan } from "components/plansModals";
+import { GoalsPlan, PremiumPlan, RealEstatePlan } from "components/plansModals";
 
 const Create = () => {
   const { dispatch: setActiveNav } = useContext(NavContext);
+  const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
 
   const {
     isOpen: isPremiumOpen,
@@ -23,6 +24,12 @@ const Create = () => {
     onOpen: onRealEstateOpen,
   } = useDisclosure();
 
+  const {
+    isOpen: isGoalOpen,
+    onClose: onGoalClose,
+    onOpen: onGoalOpen,
+  } = useDisclosure();
+
   const handlePlan = (name) => {
     console.log("clicked");
     if (name === "Premium Stocks") {
@@ -33,6 +40,35 @@ const Create = () => {
       console.log("is Premium Stocks");
       onRealEstateOpen();
     }
+  };
+
+  const handleGoal = (goalAction) => {
+    switch (goalAction) {
+      case goalModalProps.ownYourHome.title:
+        setGoalProps(goalModalProps.ownYourHome);
+        break;
+      case goalModalProps.planWedding.title:
+        setGoalProps(goalModalProps.planWedding);
+        break;
+      case goalModalProps.saveForRent.title:
+        setGoalProps(goalModalProps.saveForRent);
+        break;
+      case goalModalProps.saveForSchool.title:
+        setGoalProps(goalModalProps.saveForSchool);
+        break;
+      case goalModalProps.startBusiness.title:
+        setGoalProps(goalModalProps.startBusiness);
+        break;
+      case goalModalProps.travel.title:
+        setGoalProps(goalModalProps.travel);
+        break;
+
+      default:
+        setGoalProps(goalModalProps.fixedIncome);
+        break;
+    }
+
+    onGoalOpen();
   };
 
   useEffect(() => {
@@ -134,7 +170,11 @@ const Create = () => {
 
             <Flex flexWrap="wrap" gap="12px" justify="center">
               {goals.map((goal) => (
-                <Goal key={goal.action} goal={goal} />
+                <Goal
+                  handleGoal={() => handleGoal(goal.action)}
+                  key={goal.action}
+                  goal={goal}
+                />
               ))}
             </Flex>
           </Box>
@@ -142,6 +182,11 @@ const Create = () => {
       </Padding>
       <PremiumPlan isOpen={isPremiumOpen} onClose={onPremiumClose} />
       <RealEstatePlan isOpen={isRealEstateOpen} onClose={onRealEstateClose} />
+      <GoalsPlan
+        isOpen={isGoalOpen}
+        onClose={onGoalClose}
+        goalProps={goalProps}
+      />
     </Box>
   );
 };
