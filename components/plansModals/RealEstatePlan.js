@@ -19,9 +19,9 @@ import Link from "next/link";
 
 const RealEstatePlan = ({ isOpen, onClose }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent py="30px" color="text.black">
+    <Modal isOpen={isOpen} size="full">
+      <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
+      <ModalContent py="30px" color="text.black" maxW="400px">
         <ModalHeader alignItems="center" display="flex">
           <AiOutlineArrowLeft
             style={{
@@ -61,8 +61,16 @@ const RealEstatePlan = ({ isOpen, onClose }) => {
 
           <HistoricalPerformance />
           <Box mt={"48px"}>
-            <Text textAlign="center" fontSize="13px">
-              Companies in our porfolio
+            <Text
+              display="flex"
+              justifyContent="center"
+              textAlign="center"
+              fontSize="13px"
+            >
+              Assets in our portfolio
+              <Text ml="2px" color="text.grey">
+                (By country)
+              </Text>
             </Text>
 
             <Flex my="24px" justifyContent="center" gap={"-5px"}>

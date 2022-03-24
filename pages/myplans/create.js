@@ -168,7 +168,12 @@ const Create = () => {
               </Box>
             </Flex>
 
-            <Flex flexWrap="wrap" gap="12px" justify="center">
+            <Flex
+              display={["none", , "flex"]}
+              flexWrap="wrap"
+              gap="12px"
+              justify="center"
+            >
               {goals.map((goal) => (
                 <Goal
                   handleGoal={() => handleGoal(goal.action)}
@@ -177,6 +182,49 @@ const Create = () => {
                 />
               ))}
             </Flex>
+            <Box display={["block", , "none"]}>
+              <Swiper
+                slidesPerView={2}
+                spaceBetween={10}
+                pagination={{
+                  clickable: true,
+                }}
+                breakpoints={{
+                  767: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                  },
+                }}
+                modules={[Pagination]}
+                className="mySwiper"
+                style={{
+                  paddingBottom: "50px",
+                  width: "full",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                {goals.map((goal) => (
+                  <SwiperSlide
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handlePlan(goal.name)}
+                    key={goal.name}
+                  >
+                    <Goal
+                      handleGoal={() => handleGoal(goal.action)}
+                      key={goal.action}
+                      goal={goal}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </Box>
           </Box>
         </Box>
       </Padding>

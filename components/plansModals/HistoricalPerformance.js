@@ -39,7 +39,9 @@ const HistoricalPerformance = () => {
             <Text fontSize="13px" color={"text.grey"} mb="8px">
               {record.year}
             </Text>
-            <Text color="text.green">{record.profit}</Text>
+            <Text fontWeight={600} color="text.green">
+              {record.profit}
+            </Text>
           </Box>
         ))}
       </Grid>

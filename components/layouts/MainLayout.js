@@ -9,7 +9,7 @@ const MainLayout = ({ children }) => {
     <Box>
       <Grid
         minH="100vh"
-        templateColumns={["repeat(1, 1fr)", , , "repeat(12, 1fr)"]}
+        templateColumns={["repeat(1, 1fr)", , , "repeat(11, 1fr)"]}
       >
         <GridItem
           bg="#F8FAFC"
@@ -21,7 +21,7 @@ const MainLayout = ({ children }) => {
             <MainNav />
           </Box>
         </GridItem>
-        <GridItem position="relative" bg="" colSpan={10}>
+        <GridItem position="relative" bg="" colSpan={9}>
           <MainHeader />
 
           {children}

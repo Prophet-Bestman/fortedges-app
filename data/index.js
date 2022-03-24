@@ -7,6 +7,7 @@ import historicalPerformance from "./historicalPerformance";
 import portfolioBrands from "./portfolioBrands";
 import portfolioCountries from "./portfolioCountries";
 import goalModalProps from "./goalModalProps";
+import goalSteps from "./goalSteps";
 
 export {
   OverviewPlans,
@@ -18,4 +19,5 @@ export {
   historicalPerformance,
   portfolioCountries,
   goalModalProps,
+  goalSteps,
 };

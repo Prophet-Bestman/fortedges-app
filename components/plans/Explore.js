@@ -166,7 +166,7 @@ const Explore = () => {
         <Flex
           display={["none", , "flex"]}
           flexWrap="wrap"
-          gap="12px"
+          gap="10px"
           justify="center"
         >
           {goals.map((goal) => (

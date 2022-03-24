@@ -11,7 +11,7 @@ const Goal = ({ goal, handleGoal }) => {
       bgRepeat="no-repeat"
       cursor="pointer"
       w="full"
-      maxW={"170px"}
+      maxW={"150px"}
       h="195px"
       p="16px"
       display="flex"

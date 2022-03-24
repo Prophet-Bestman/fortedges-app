@@ -1,7 +1,9 @@
 import {
   Box,
   Button,
+  Circle,
   Flex,
+  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -61,7 +63,10 @@ const MainMobileNav = ({ isOpen, onClose }) => {
                       color: "app.primary",
                     }}
                   >
-                    <img src={nav.icon} alt="" /> {nav.name}
+                    <Circle size="32px" bg="#1D24410D">
+                      <Image w="20px" src={nav.icon} alt="" />
+                    </Circle>{" "}
+                    {nav.name}
                   </Text>
                 </Link>
               ))}

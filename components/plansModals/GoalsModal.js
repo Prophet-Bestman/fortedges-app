@@ -15,15 +15,15 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import HistoricalPerformance from "./HistoricalPerformance";
-import { portfolioBrands } from "data";
+import { goalSteps, portfolioBrands } from "data";
 import Link from "next/link";
 
 const GoalsPlan = ({ isOpen, onClose, goalProps }) => {
   const { title, text, color, icon } = goalProps;
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent py="30px" color="text.black">
+    <Modal isOpen={isOpen} size="full">
+      <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
+      <ModalContent py="30px" color="text.black" maxW="400px">
         <ModalHeader alignItems="center" display="flex">
           <AiOutlineArrowLeft
             style={{
@@ -60,25 +60,25 @@ const GoalsPlan = ({ isOpen, onClose, goalProps }) => {
               <Image w="48px" src={icon} />
             </Circle>
           </Flex>
-          <HistoricalPerformance />
-          <Box mt={"48px"}>
-            <Text textAlign="center" fontSize="13px">
-              Companies in our porfolio
-            </Text>
 
-            <Flex my="24px" justifyContent="center" gap={"-5px"}>
-              {portfolioBrands.map((brand) => (
-                <Image mr="-18px" src={brand} key={brand} />
-              ))}
-            </Flex>
-            <Text textAlign="center" fontSize="13px">
-              To learn more about our assets, go to{" "}
-              <Link href="#">
-                <Text textDecor={"underline"} cursor="pointer">
-                  See our Porfolio
-                </Text>
-              </Link>
-            </Text>
+          {/* Steps */}
+          <Box color="text.black" mt="40px" mb="90px">
+            {goalSteps.map((goal) => (
+              <Flex key={goal.title} mb="32px">
+                <Circle mr="12px" size="40px" bg="#F1F2F4">
+                  <Image src={goal.icon} />
+                </Circle>
+
+                <Box>
+                  <Text fontWeight={600} fontSize="14px" mb="8px">
+                    {goal.title}
+                  </Text>
+                  <Text color="text.grey" fontSize="13px">
+                    {goal.text}
+                  </Text>
+                </Box>
+              </Flex>
+            ))}
           </Box>
         </ModalBody>
 

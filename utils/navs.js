@@ -25,28 +25,33 @@ export const authNavs = [
 ];
 
 export const mainNavs = [
-  { name: "Overview", link: "/", icon: "/img/nav/dashboard.png" },
-  { name: "My Plans", link: "/myplans", icon: "/img/nav/trend.png" },
-  { name: "Fund A Plan", link: "/fund_a_plan", icon: "/img/nav/fund.png" },
+  { name: "Overview", link: "/", icon: "/img/nav/dashboard.svg" },
+  { name: "My Plans", link: "/myplans", icon: "/img/nav/trend.svg" },
+  { name: "Fund A Plan", link: "/fund_a_plan", icon: "/img/nav/fund.svg" },
   {
     name: "Notifications",
     link: "/notifications",
-    icon: "/img/nav/notification.png",
+    icon: "/img/nav/notification.svg",
   },
   {
     name: "Transaction History",
     link: "transactionHistory",
-    icon: "/img/nav/history.png",
+    icon: "/img/nav/history.svg",
   },
 ];
 
 export const mobileNavs = [
-  { name: "Overview", link: "/", icon: "/img/nav/dashboard.png" },
-  { name: "My Plans", link: "/myplans", icon: "/img/nav/trend.png" },
+  { name: "Overview", link: "/", icon: "/img/nav/dashboard.svg" },
+  { name: "My Plans", link: "/myplans", icon: "/img/nav/trend.svg" },
+  { name: "Fund A Plan", link: "/fund_a_plan", icon: "/img/nav/fund.svg" },
   {
     name: "Notifications",
     link: "/notifications",
-    icon: "/img/nav/notification.png",
+    icon: "/img/nav/notification.svg",
   },
-  { name: "Fund A Plan", link: "/fund_a_plan", icon: "/img/nav/fund.png" },
+  {
+    name: "Transaction History",
+    link: "transactionHistory",
+    icon: "/img/nav/history.svg",
+  },
 ];

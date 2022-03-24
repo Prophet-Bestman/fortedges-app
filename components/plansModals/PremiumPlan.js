@@ -20,9 +20,9 @@ import Link from "next/link";
 
 const PremiumPlan = ({ isOpen, onClose }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent py="30px" color="text.black">
+    <Modal isOpen={isOpen} size="full">
+      <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
+      <ModalContent py="30px" color="text.black" maxW="400px">
         <ModalHeader alignItems="center" display="flex">
           <AiOutlineArrowLeft
             style={{
