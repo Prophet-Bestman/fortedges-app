@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import HistoricalPerformance from "./HistoricalPerformance";
-import { portfolioBrands } from "data";
+import { portfolioBrands, portfolioCountries } from "data";
 import Link from "next/link";
 
 const RealEstatePlan = ({ isOpen, onClose }) => {
@@ -67,8 +67,8 @@ const RealEstatePlan = ({ isOpen, onClose }) => {
             </Text>
 
             <Flex my="24px" justifyContent="center" gap={"-5px"}>
-              {portfolioBrands.map((brand) => (
-                <Image mr="-18px" src={brand} key={brand} />
+              {portfolioCountries.map((country) => (
+                <Image mr="-18px" src={country} key={country} />
               ))}
             </Flex>
             <Text textAlign="center" fontSize="13px">
@@ -84,7 +84,7 @@ const RealEstatePlan = ({ isOpen, onClose }) => {
 
         <ModalFooter>
           <Button variant="green" w="full" onClick={onClose}>
-            Get Started
+            Get Stared
           </Button>
         </ModalFooter>
       </ModalContent>

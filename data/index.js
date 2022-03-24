@@ -5,6 +5,7 @@ import goals from "./goals";
 import transactionHistory from "./transactionHistory";
 import historicalPerformance from "./historicalPerformance";
 import portfolioBrands from "./portfolioBrands";
+import portfolioCountries from "./portfolioCountries";
 
 export {
   OverviewPlans,
@@ -14,4 +15,5 @@ export {
   transactionHistory,
   portfolioBrands,
   historicalPerformance,
+  portfolioCountries,
 };
