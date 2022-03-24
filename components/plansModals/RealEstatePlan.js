@@ -6,7 +6,6 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
   Button,
   Text,
   Flex,
@@ -15,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import HistoricalPerformance from "./HistoricalPerformance";
-import { portfolioBrands, portfolioCountries } from "data";
+import { portfolioCountries } from "data";
 import Link from "next/link";
 
 const RealEstatePlan = ({ isOpen, onClose }) => {

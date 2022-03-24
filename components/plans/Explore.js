@@ -81,7 +81,13 @@ const Explore = () => {
           }}
         >
           {explorePlans.map((plan) => (
-            <SwiperSlide onClick={() => handlePlan(plan.name)} key={plan.name}>
+            <SwiperSlide
+              style={{
+                cursor: "pointer",
+              }}
+              onClick={() => handlePlan(plan.name)}
+              key={plan.name}
+            >
               <PlanResponsive plan={plan} />
             </SwiperSlide>
           ))}

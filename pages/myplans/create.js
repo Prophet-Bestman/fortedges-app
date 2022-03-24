@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { Goal, PlanResponsive } from "components/plans";
 import { explorePlans, goals } from "data";
 import { Pagination } from "swiper";
@@ -7,9 +7,33 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { MdArrowForwardIos } from "react-icons/md";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
 import { Padding } from "components/layouts";
+import { PremiumPlan, RealEstatePlan } from "components/plansModals";
 
 const Create = () => {
   const { dispatch: setActiveNav } = useContext(NavContext);
+
+  const {
+    isOpen: isPremiumOpen,
+    onClose: onPremiumClose,
+    onOpen: onPremiumOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isRealEstateOpen,
+    onClose: onRealEstateClose,
+    onOpen: onRealEstateOpen,
+  } = useDisclosure();
+
+  const handlePlan = (name) => {
+    console.log("clicked");
+    if (name === "Premium Stocks") {
+      console.log("is Premium Stocks");
+      onPremiumOpen();
+    }
+    if (name === "Real Estate") {
+      console.log("is Premium Stocks");
+      onRealEstateOpen();
+    }
+  };
 
   useEffect(() => {
     setActiveNav({
@@ -61,7 +85,13 @@ const Create = () => {
               }}
             >
               {explorePlans.map((plan) => (
-                <SwiperSlide key={plan.name}>
+                <SwiperSlide
+                  key={plan.name}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handlePlan(plan.name)}
+                >
                   <PlanResponsive plan={plan} />
                 </SwiperSlide>
               ))}
@@ -110,6 +140,8 @@ const Create = () => {
           </Box>
         </Box>
       </Padding>
+      <PremiumPlan isOpen={isPremiumOpen} onClose={onPremiumClose} />
+      <RealEstatePlan isOpen={isRealEstateOpen} onClose={onRealEstateClose} />
     </Box>
   );
 };

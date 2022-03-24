@@ -8,6 +8,7 @@ const Goal = ({ goal }) => {
     <Box
       bgColor={color}
       bgRepeat="no-repeat"
+      cursor="pointer"
       w="full"
       maxW={"170px"}
       h="195px"
