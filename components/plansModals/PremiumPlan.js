@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -6,7 +6,6 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
   Button,
   Text,
   Flex,
@@ -17,8 +16,10 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import HistoricalPerformance from "./HistoricalPerformance";
 import { portfolioBrands } from "data";
 import Link from "next/link";
+import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 
 const PremiumPlan = ({ isOpen, onClose }) => {
+  const { dispatch: setOpen } = useContext(PlanFormContext);
   return (
     <Modal isOpen={isOpen} size="full">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
@@ -83,7 +84,14 @@ const PremiumPlan = ({ isOpen, onClose }) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant="yellow" w="full" onClick={onClose}>
+          <Button
+            variant="yellow"
+            w="full"
+            onClick={() => {
+              onClose();
+              setOpen({ type: planFormActions.OPEN_FORM });
+            }}
+          >
             Get Started
           </Button>
         </ModalFooter>

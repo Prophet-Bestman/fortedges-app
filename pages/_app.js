@@ -5,6 +5,7 @@ import "@fontsource/dm-sans";
 import "@fontsource/coustard";
 import NavProvider from "providers/NavProvider";
 import { AuthLayout, MainLayout } from "components/layouts";
+import PlanFormProvider from "providers/PlanFormProvider";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -12,7 +13,9 @@ function MyApp({ Component, pageProps }) {
       {Component.requireAuth ? (
         <NavProvider>
           <MainLayout>
-            <Component {...pageProps} />
+            <PlanFormProvider>
+              <Component {...pageProps} />
+            </PlanFormProvider>
           </MainLayout>
         </NavProvider>
       ) : (

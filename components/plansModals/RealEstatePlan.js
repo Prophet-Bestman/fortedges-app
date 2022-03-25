@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -16,8 +16,10 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import HistoricalPerformance from "./HistoricalPerformance";
 import { portfolioCountries } from "data";
 import Link from "next/link";
+import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 
 const RealEstatePlan = ({ isOpen, onClose }) => {
+  const { dispatch: setOpen } = useContext(PlanFormContext);
   return (
     <Modal isOpen={isOpen} size="full">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
@@ -90,7 +92,14 @@ const RealEstatePlan = ({ isOpen, onClose }) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant="green" w="full" onClick={onClose}>
+          <Button
+            variant="green"
+            w="full"
+            onClick={() => {
+              onClose();
+              setOpen({ type: planFormActions.OPEN_FORM });
+            }}
+          >
             Get Stared
           </Button>
         </ModalFooter>

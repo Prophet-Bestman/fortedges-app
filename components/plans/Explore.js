@@ -6,11 +6,18 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Goal from "./Goal";
 import PlanResponsive from "./PlanResponsive";
 import { MdArrowForwardIos } from "react-icons/md";
-import { GoalsPlan, PremiumPlan, RealEstatePlan } from "components/plansModals";
+import {
+  GoalsPlan,
+  PremiumPlan,
+  RealEstatePlan,
+  SubmitPlan,
+} from "components/plansModals";
 import Link from "next/link";
 
 const Explore = () => {
   const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
+  const [submitPlanOpen, setSubmitPlanOpen] = useState(false);
+
   const {
     isOpen: isPremiumOpen,
     onClose: onPremiumClose,
@@ -26,6 +33,12 @@ const Explore = () => {
     isOpen: isGoalOpen,
     onClose: onGoalClose,
     onOpen: onGoalOpen,
+  } = useDisclosure();
+
+  const {
+    isOpen: isSubmitPlanOpen,
+    onClose: onSubmitPlanClose,
+    onOpen: onSubmitPlanOpen,
   } = useDisclosure();
 
   const handlePlan = (name) => {
@@ -85,7 +98,13 @@ const Explore = () => {
         mt="36px"
         mb="40px"
       >
-        <Text mb="9px" fontSize="20px" color="text.black" fontWeight="600">
+        <Text
+          onClick={() => setSubmitPlanOpen(true)}
+          mb="9px"
+          fontSize="20px"
+          color="text.black"
+          fontWeight="600"
+        >
           Assets Class
         </Text>
         <Text fontSize="14px" color="text.grey">
@@ -194,6 +213,10 @@ const Explore = () => {
         isOpen={isGoalOpen}
         onClose={onGoalClose}
         goalProps={goalProps}
+      />
+      <SubmitPlan
+        isOpen={submitPlanOpen}
+        onClose={() => setSubmitPlanOpen(false)}
       />
     </Box>
   );
