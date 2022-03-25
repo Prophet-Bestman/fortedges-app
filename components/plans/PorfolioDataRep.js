@@ -22,7 +22,6 @@ const progress = {
 const COLORS = ["#F0B263", "#449562", "#7950DA"];
 
 const PorfolioDataRep = () => {
-  console.log(progress.premiumStocks);
   return (
     <Box>
       <Text fontSize="20px" fontWeight={600}>

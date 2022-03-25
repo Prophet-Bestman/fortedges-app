@@ -32,7 +32,7 @@ const ForgotPasswordForm = () => {
 
   const onSubmit = (data) => {
     router.push(`/auth/verify/?email=${data.email}`);
-    console.log(data);
+    log(data);
   };
 
   return (

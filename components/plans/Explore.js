@@ -1,6 +1,6 @@
 import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { explorePlans, goalModalProps, goals } from "data";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Goal from "./Goal";
@@ -14,10 +14,10 @@ import {
   SubmitPlan,
 } from "components/plansModals";
 import Link from "next/link";
+import { GoalFormContext } from "providers/GoalFormProvider";
 
 const Explore = () => {
   const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
-  const [submitPlanOpen, setSubmitPlanOpen] = useState(false);
 
   const {
     isOpen: isPremiumOpen,
@@ -37,12 +37,9 @@ const Explore = () => {
   } = useDisclosure();
 
   const handlePlan = (name) => {
-    console.log("clicked");
     if (name === "Premium Stocks") {
-      console.log("is Premium Stocks");
       onPremiumOpen();
     } else if (name === "Real Estate") {
-      console.log("is Premium Stocks");
       onRealEstateOpen();
     } else onGoalOpen();
   };

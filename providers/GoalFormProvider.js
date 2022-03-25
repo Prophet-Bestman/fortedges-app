@@ -1,3 +1,4 @@
+import { goalModalProps } from "data";
 import React, { useReducer } from "react";
 
 export const goalFormTypes = {
@@ -50,7 +51,7 @@ const goalFormQuestions = {
   },
   RENT: {
     title: "Plan Name",
-    questionOne: "Give this <plan></plan> a name",
+    questionOne: "Give this plan a name",
     questionTwo: "When should the money be ready?",
     questionThree: "How much do you need?",
   },
@@ -60,7 +61,7 @@ export const GoalFormContext = React.createContext();
 const initialState = {
   isOpen: false,
   fromType: goalFormTypes.FIXED_INCOME,
-  goalFormQuestions: goalFormQuestions.FIXED_INCOME,
+  goalFormQuestions: {},
 };
 
 export const goalFormActions = {
@@ -74,8 +75,46 @@ const reducer = (goalFormState, action) => {
       return (goalFormState = { ...goalFormState, isOpen: true });
     case goalFormActions.CLOSE_FORM:
       return (goalFormState = { ...goalFormState, isOpen: false });
-
+    case goalModalProps.fixedIncome.title:
+      return (goalFormState = {
+        ...goalFormState,
+        goalFormQuestions: goalFormQuestions.FIXED_INCOME,
+      });
+    case goalModalProps.ownYourHome.title:
+      return (goalFormState = {
+        ...goalFormState,
+        goalFormQuestions: goalFormQuestions.OWN_HOME,
+      });
+    case goalModalProps.planWedding.title:
+      return (goalFormState = {
+        ...goalFormState,
+        goalFormQuestions: goalFormQuestions.WEDDING,
+      });
+    case goalModalProps.saveForRent.title:
+      return (goalFormState = {
+        ...goalFormState,
+        goalFormQuestions: goalFormQuestions.RENT,
+      });
+    case goalModalProps.saveForSchool.title:
+      return (goalFormState = {
+        ...goalFormState,
+        goalFormQuestions: goalFormQuestions.SCHOOL,
+      });
+    case goalModalProps.startBusiness.title:
+      return (goalFormState = {
+        ...goalFormState,
+        goalFormQuestions: goalFormQuestions.START_BUSINESS,
+      });
+    case goalModalProps.travel.title:
+      return (goalFormState = {
+        ...goalFormState,
+        goalFormQuestions: goalFormQuestions.TRAVEL,
+      });
     default:
+      return (goalFormState = {
+        ...goalFormState,
+        goalFormQuestions: goalFormQuestions.FIXED_INCOME,
+      });
       break;
   }
 };

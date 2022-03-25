@@ -3,7 +3,6 @@ import TransactionMark from "components/TransactionMark";
 import React from "react";
 
 const MiniTransaction = ({ transaction }) => {
-  console.log(transaction.title);
   return (
     <Flex alignItems="" mb="32px">
       <TransactionMark status={transaction.status} />

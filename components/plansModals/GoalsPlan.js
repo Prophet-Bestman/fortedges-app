@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -20,6 +20,11 @@ import { goalFormActions, GoalFormContext } from "providers/GoalFormProvider";
 const GoalsPlan = ({ isOpen, onClose, goalProps }) => {
   const { title, text, color, icon } = goalProps;
   const { dispatch: setOpen } = useContext(GoalFormContext);
+
+  useEffect(() => {
+    setOpen({ type: goalProps.title });
+  }, [goalProps]);
+
   return (
     <Modal isOpen={isOpen} size="full">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
@@ -87,7 +92,9 @@ const GoalsPlan = ({ isOpen, onClose, goalProps }) => {
             w="full"
             onClick={() => {
               onClose();
-              setOpen({ type: goalFormActions.OPEN_FORM });
+              setOpen({
+                type: goalFormActions.OPEN_FORM,
+              });
             }}
           >
             Get Started

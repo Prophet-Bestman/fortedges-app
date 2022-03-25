@@ -1,59 +1,53 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalBody,
-  Button,
   Circle,
   Text,
   Progress,
   Box,
-  FormLabel,
-  Input,
-  Flex,
 } from "@chakra-ui/react";
 import { AiOutlineClose } from "react-icons/ai";
-import { IoIosArrowBack } from "react-icons/io";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { goalFormActions, GoalFormContext } from "providers/GoalFormProvider";
+import GoalFormOne from "./GoalFormOne";
+import GoalFormTwo from "./GoalFormTwo";
+import GoalFormThree from "./GoalFormThree";
 
 const SubmitGoal = () => {
   const { goalFormState, dispatch: setOpen } = useContext(GoalFormContext);
   const isOpen = goalFormState.isOpen;
+  const { title } = goalFormState.goalFormQuestions;
 
-  const planSchema = yup.object({
-    planName: yup.string().required().min(3),
+  const [formStep, setFormStep] = useState(1);
+  const [formState, setFormState] = useState({
+    name: "",
+    date: "",
+    amount: "",
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(planSchema),
-  });
-
-  const onClose = () => {
-    setOpen({ type: goalFormActions.CLOSE_FORM });
-  };
-
-  const submitGoal = (data) => {
-    console.log(data);
-    onClose();
-  };
+  useEffect(() => {
+    setFormStep((prev) => (prev = 1));
+    // setFormState({
+    //   name: "",
+    //   date: "",
+    //   amount: "",
+    // });
+  }, [isOpen]);
 
   return (
     <Modal isOpen={isOpen} isCentered size="sm">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
       <ModalContent py="16px">
         <ModalHeader display="flex" justifyContent="space-between">
-          <Text>Name Your Plan</Text>
+          <Text>{title}</Text>
           <Circle
-            onClick={() => setOpen({ type: goalFormActions.CLOSE_FORM })}
+            onClick={() => {
+              setFormStep((prev) => (prev = 1));
+              setOpen({ type: goalFormActions.CLOSE_FORM });
+            }}
             cursor="pointer"
             size="40px"
             bg="#F1F2F4"
@@ -67,35 +61,50 @@ const SubmitGoal = () => {
 
         <ModalBody>
           <Text fontSize={"13px"} color="text.grey">
-            Question 1 of 1
+            {formStep === 1
+              ? "Question 1 of 3"
+              : formStep === 2
+              ? "Question 2 of 3"
+              : formStep === 3
+              ? "Question 3 of 3"
+              : null}
           </Text>
-          <Progress colorScheme="purple" value={100} size="xs" rounded="full" />
+          <Progress
+            colorScheme="purple"
+            value={
+              formStep === 1
+                ? 100 / 3
+                : formStep === 2
+                ? 200 / 3
+                : formStep === 3
+                ? 100
+                : mull
+            }
+            size="xs"
+            rounded="full"
+          />
 
-          <Box mt="32px">
-            <form onSubmit={handleSubmit(submitGoal)}>
-              <FormLabel fontWeight={600}>Give your plan a name</FormLabel>
-              <Input
-                type="text"
-                h="48px"
-                placeholder="E.g Itanian Cuisine"
-                mb="32px"
-                variant={errors.planName ? "error" : "outline"}
-                {...register("planName")}
-              />
-              <Flex>
-                <Button
-                  onClick={onClose}
-                  leftIcon={<IoIosArrowBack />}
-                  variant="ghost"
-                >
-                  Back
-                </Button>
-                <Button w="full" ml={1} size="md" type="submit">
-                  Continue
-                </Button>
-              </Flex>
-            </form>
-          </Box>
+          {formStep === 1 && (
+            <GoalFormOne
+              formState={formState}
+              setFormState={setFormState}
+              setFormStep={setFormStep}
+            />
+          )}
+          {formStep === 2 && (
+            <GoalFormTwo
+              formState={formState}
+              setFormState={setFormState}
+              setFormStep={setFormStep}
+            />
+          )}
+          {formStep === 3 && (
+            <GoalFormThree
+              formState={formState}
+              setFormState={setFormState}
+              setFormStep={setFormStep}
+            />
+          )}
         </ModalBody>
       </ModalContent>
     </Modal>

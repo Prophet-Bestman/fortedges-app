@@ -14,10 +14,13 @@ import {
   SubmitGoal,
   SubmitPlan,
 } from "components/plansModals";
+import { GoalFormContext } from "providers/GoalFormProvider";
 
 const Create = () => {
   const { dispatch: setActiveNav } = useContext(NavContext);
   const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
+  const { goalFormState } = useContext(GoalFormContext);
+  const { goalFormQuestions } = goalFormState;
 
   const {
     isOpen: isPremiumOpen,
@@ -37,14 +40,13 @@ const Create = () => {
   } = useDisclosure();
 
   const handlePlan = (name) => {
-    console.log("clicked");
     if (name === "Premium Stocks") {
-      console.log("is Premium Stocks");
       onPremiumOpen();
-    }
-    if (name === "Real Estate") {
-      console.log("is Premium Stocks");
+    } else if (name === "Real Estate") {
       onRealEstateOpen();
+    } else {
+      setGoalProps(goalModalProps.fixedIncome);
+      onGoalOpen();
     }
   };
 
@@ -219,7 +221,6 @@ const Create = () => {
                     style={{
                       cursor: "pointer",
                     }}
-                    onClick={() => handlePlan(goal.name)}
                     key={goal.name}
                   >
                     <Goal
@@ -242,7 +243,7 @@ const Create = () => {
         goalProps={goalProps}
       />
       <SubmitPlan />
-      <SubmitGoal />
+      <SubmitGoal goalQuestions={goalFormQuestions} />
     </Box>
   );
 };

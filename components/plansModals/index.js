@@ -1,6 +1,6 @@
 import PremiumPlan from "./PremiumPlan";
 import RealEstatePlan from "./RealEstatePlan";
-import GoalsPlan from "./GoalsModal";
+import GoalsPlan from "./GoalsPlan";
 import SubmitPlan from "./SubmitPlan";
 import SubmitGoal from "./SubmitGoal";
 

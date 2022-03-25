@@ -1,6 +1,7 @@
 import {
   Box,
   Flex,
+  Image,
   Menu,
   MenuButton,
   MenuList,
@@ -145,7 +146,7 @@ const MainHeader = () => {
         pl="24px"
         pr="30px"
       >
-        <Text>Logo</Text>
+        <Image src="/img/fortedges_logo.svg" />
         <Box
           display={["block", null, null, "none"]}
           cursor="pointer"
