@@ -7,7 +7,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { MdArrowForwardIos } from "react-icons/md";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
 import { Padding } from "components/layouts";
-import { GoalsPlan, PremiumPlan, RealEstatePlan } from "components/plansModals";
+import {
+  GoalsPlan,
+  PremiumPlan,
+  RealEstatePlan,
+  SubmitGoal,
+  SubmitPlan,
+} from "components/plansModals";
 
 const Create = () => {
   const { dispatch: setActiveNav } = useContext(NavContext);
@@ -235,6 +241,8 @@ const Create = () => {
         onClose={onGoalClose}
         goalProps={goalProps}
       />
+      <SubmitPlan />
+      <SubmitGoal />
     </Box>
   );
 };

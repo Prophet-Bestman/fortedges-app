@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -14,12 +14,12 @@ import {
   Circle,
 } from "@chakra-ui/react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import HistoricalPerformance from "./HistoricalPerformance";
-import { goalSteps, portfolioBrands } from "data";
-import Link from "next/link";
+import { goalSteps } from "data";
+import { goalFormActions, GoalFormContext } from "providers/GoalFormProvider";
 
 const GoalsPlan = ({ isOpen, onClose, goalProps }) => {
   const { title, text, color, icon } = goalProps;
+  const { dispatch: setOpen } = useContext(GoalFormContext);
   return (
     <Modal isOpen={isOpen} size="full">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
@@ -83,7 +83,13 @@ const GoalsPlan = ({ isOpen, onClose, goalProps }) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button w="full" onClick={onClose}>
+          <Button
+            w="full"
+            onClick={() => {
+              onClose();
+              setOpen({ type: goalFormActions.OPEN_FORM });
+            }}
+          >
             Get Started
           </Button>
         </ModalFooter>

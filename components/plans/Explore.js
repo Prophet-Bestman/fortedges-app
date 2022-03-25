@@ -10,6 +10,7 @@ import {
   GoalsPlan,
   PremiumPlan,
   RealEstatePlan,
+  SubmitGoal,
   SubmitPlan,
 } from "components/plansModals";
 import Link from "next/link";
@@ -33,12 +34,6 @@ const Explore = () => {
     isOpen: isGoalOpen,
     onClose: onGoalClose,
     onOpen: onGoalOpen,
-  } = useDisclosure();
-
-  const {
-    isOpen: isSubmitPlanOpen,
-    onClose: onSubmitPlanClose,
-    onOpen: onSubmitPlanOpen,
   } = useDisclosure();
 
   const handlePlan = (name) => {
@@ -98,13 +93,7 @@ const Explore = () => {
         mt="36px"
         mb="40px"
       >
-        <Text
-          onClick={() => setSubmitPlanOpen(true)}
-          mb="9px"
-          fontSize="20px"
-          color="text.black"
-          fontWeight="600"
-        >
+        <Text mb="9px" fontSize="20px" color="text.black" fontWeight="600">
           Assets Class
         </Text>
         <Text fontSize="14px" color="text.grey">
@@ -214,10 +203,8 @@ const Explore = () => {
         onClose={onGoalClose}
         goalProps={goalProps}
       />
-      <SubmitPlan
-        isOpen={submitPlanOpen}
-        onClose={() => setSubmitPlanOpen(false)}
-      />
+      <SubmitPlan />
+      <SubmitGoal />
     </Box>
   );
 };

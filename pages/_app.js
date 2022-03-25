@@ -6,6 +6,7 @@ import "@fontsource/coustard";
 import NavProvider from "providers/NavProvider";
 import { AuthLayout, MainLayout } from "components/layouts";
 import PlanFormProvider from "providers/PlanFormProvider";
+import GoalFormProvider from "providers/GoalFormProvider";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -14,7 +15,9 @@ function MyApp({ Component, pageProps }) {
         <NavProvider>
           <MainLayout>
             <PlanFormProvider>
-              <Component {...pageProps} />
+              <GoalFormProvider>
+                <Component {...pageProps} />
+              </GoalFormProvider>
             </PlanFormProvider>
           </MainLayout>
         </NavProvider>
