@@ -29,6 +29,7 @@ const MainNav = () => {
                 mb="32px"
                 w="full"
                 gap="8px"
+                fontSize="14px"
                 textOverflow=""
                 color={active === nav.name ? "app.primary" : "text.dark"}
                 cursor="pointer"

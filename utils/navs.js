@@ -35,7 +35,7 @@ export const mainNavs = [
   },
   {
     name: "Transaction History",
-    link: "transactionHistory",
+    link: "/transaction_history",
     icon: "/img/nav/history.svg",
   },
 ];
@@ -51,7 +51,7 @@ export const mobileNavs = [
   },
   {
     name: "Transaction History",
-    link: "transactionHistory",
+    link: "/transaction_history",
     icon: "/img/nav/history.svg",
   },
 ];
