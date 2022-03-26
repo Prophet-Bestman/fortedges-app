@@ -12,17 +12,24 @@ const PlansHeader = () => {
       borderWidth={0}
     >
       <Tab
-        _focus={{
+        _selected={{
           outline: "none",
           color: "app.primary",
           borderBottomColor: "app.primary",
           borderBottomWidth: "2px",
+        }}
+        _focus={{
+          outline: "none",
+          // color: "app.primary",
+          // borderBottomColor: "app.primary",
+          // borderBottomWidth: "2px",
         }}
         _active={{
           borderBottomColor: "app.primary",
           borderBottomWidth: "2px",
         }}
         pb="0px"
+        li
         h="auto"
       >
         Plans
