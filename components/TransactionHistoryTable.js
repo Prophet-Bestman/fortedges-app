@@ -79,8 +79,8 @@ const TransactionHistoryTable = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {transactionHistory.map((transaction) => (
-            <Tr>
+          {transactionHistory.map((transaction, i) => (
+            <Tr key={i}>
               <Td fontSize={["12px", , "14px"]}>{transaction.time}</Td>
               <Td fontSize={["12px", , "14px"]}>{transaction.type}</Td>
               <Td fontSize={["12px", , "14px"]}>{transaction.plan}</Td>
