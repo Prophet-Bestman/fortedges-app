@@ -17,6 +17,10 @@ export const navStates = {
     name: "Transaction History",
     pageTitle: "Transaction History",
   },
+  settings: {
+    name: "Settings",
+    pageTitle: "Settings",
+  },
 };
 
 export const pageTitles = {

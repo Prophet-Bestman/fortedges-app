@@ -17,9 +17,15 @@ import {
   SecurityTab,
   SettingsHeader,
 } from "components/settings";
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { NavContext, navStates, navActions } from "/providers/NavProvider";
 
 const Settings = () => {
+  const { dispatch: setActiveNav } = useContext(NavContext);
+
+  useEffect(() => {
+    setActiveNav({ type: navActions.SET_ACTIVE, payload: navStates.settings });
+  }, []);
   return (
     <Box mt={["160", , , "130px"]}>
       <Padding>
@@ -45,7 +51,7 @@ const Settings = () => {
           </TabPanels>
         </Tabs>
 
-        <Accordion display={["block", , , "none"]}>
+        <Accordion allowMultiple display={["block", , , "none"]}>
           <AccordionItem border="none" mb="24px">
             <h2>
               <AccordionButton

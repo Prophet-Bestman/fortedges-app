@@ -21,3 +21,18 @@ export const forgotPassswordSchema = yup
     email: yup.string().email().required(),
   })
   .required();
+
+export const ChangePasswordSchema = yup.object().shape({
+  oldPassword: yup.string().required("Old Password is required"),
+  newPassword: yup
+    .string()
+    .min(8, "Minimum of 8 characters")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/,
+      "Password should have at least one upper and lowercase, number and special character"
+    ),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("newPassword"), null], "Passwords must match"),
+  // authCode: yup.string().required("You must enter verification code"),
+});
