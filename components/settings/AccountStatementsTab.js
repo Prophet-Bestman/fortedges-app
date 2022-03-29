@@ -33,6 +33,7 @@ const AccountStatementsTab = () => {
 
   const submitPlan = (data) => {
     console.log(data);
+    onOpen();
   };
 
   return (
@@ -164,7 +165,7 @@ const AccountStatementsTab = () => {
             Your statement will be forwarded to your email address
             l********@*****.com in few minutes
           </Text>
-          <Button onClick={onOpen} type="submit" w="full" maxW="327px">
+          <Button type="submit" w="full" maxW="327px">
             Request Statement
           </Button>
         </form>
