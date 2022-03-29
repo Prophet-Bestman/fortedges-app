@@ -8,6 +8,9 @@ import PlanDetailsBanner from "./PlanDetailsBanner";
 import PlanBalance from "./PlanBalance";
 import PlanGraph from "./PlanGraph";
 import TransactionCol from "./TransactionCol";
+import MiniTransaction from "./MiniTransaction";
+import TransactionModal from "./TransactionModal";
+import FilterModal from "./FilterModal";
 
 export {
   PlansHeader,
@@ -20,4 +23,7 @@ export {
   PlanBalance,
   PlanGraph,
   TransactionCol,
+  MiniTransaction,
+  TransactionModal,
+  FilterModal,
 };

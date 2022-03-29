@@ -5,15 +5,34 @@ import {
   InputGroup,
   Select,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Padding } from "components/layouts";
 import Link from "next/link";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TransactionHistoryTable } from "components";
+import { FiFilter } from "react-icons/fi";
+import { transactionHistory } from "data";
+import {
+  FilterModal,
+  MiniTransaction,
+  TransactionModal,
+} from "components/plans";
 
 const TransactionHisory = () => {
   const { dispatch: setActiveNav } = useContext(NavContext);
+  const [transaction, setTransaction] = useState();
+  const {
+    isOpen: isTransactionOpen,
+    onOpen: onTransactionOpen,
+    onClose: onTransactionClose,
+  } = useDisclosure();
+  const {
+    isOpen: isFilterOpen,
+    onOpen: onFilterOpen,
+    onClose: onFilterClose,
+  } = useDisclosure();
 
   useEffect(() => {
     setActiveNav({
@@ -21,15 +40,21 @@ const TransactionHisory = () => {
       payload: navStates.transactionHisory,
     });
   }, []);
+
+  const openTransactionModal = (transaction) => {
+    setTransaction(transaction);
+    onTransactionOpen();
+  };
+
   return (
     <Box mt={["160px", , , "130px"]}>
       <Padding>
         {/* ======  Filters ====== */}
         <Flex
-          flexWrap="wrap"
-          justifyContent={["space-evenly", , "start"]}
+          justifyContent={["space-between", , "start"]}
           my="24px"
           gap="24px"
+          alignItems="center"
         >
           <Box w="full" maxW={["130px", , "185px"]}>
             <FormLabel color="text.grey" fontSize={["12px", , "14px"]}>
@@ -43,7 +68,13 @@ const TransactionHisory = () => {
               _focus={{ ringColor: "none", borderColor: "app.primary" }}
             ></Select>
           </Box>
-          <Box w="full" maxW={["130px", , "185px"]}>
+
+          {/* HIDE OTHER FILTERS ON MOBILE VIEW */}
+          <Box
+            display={["none", , "block"]}
+            w="full"
+            maxW={["130px", , "185px"]}
+          >
             <FormLabel color="text.grey" fontSize={["12px", , "14px"]}>
               Time
             </FormLabel>
@@ -55,7 +86,11 @@ const TransactionHisory = () => {
               _focus={{ ringColor: "none", borderColor: "app.primary" }}
             ></Select>
           </Box>
-          <Box w="full" maxW={["130px", , "185px"]}>
+          <Box
+            display={["none", , "block"]}
+            w="full"
+            maxW={["130px", , "185px"]}
+          >
             <FormLabel color="text.grey" fontSize={["12px", , "14px"]}>
               Status
             </FormLabel>
@@ -67,7 +102,11 @@ const TransactionHisory = () => {
               _focus={{ ringColor: "none", borderColor: "app.primary" }}
             ></Select>
           </Box>
-          <Box w="full" maxW={["130px", , "185px"]}>
+          <Box
+            display={["none", , "block"]}
+            w="full"
+            maxW={["130px", , "185px"]}
+          >
             <FormLabel color="text.grey" fontSize={["12px", , "14px"]}>
               Plan
             </FormLabel>
@@ -78,6 +117,11 @@ const TransactionHisory = () => {
               placeholder="All"
               _focus={{ ringColor: "none", borderColor: "app.primary" }}
             ></Select>
+          </Box>
+
+          {/* SHOW OTHER FILTERS IN A MODAL FOR MOBILE */}
+          <Box onClick={onFilterOpen} display={["block", , "none"]}>
+            <FiFilter />
           </Box>
         </Flex>
 
@@ -92,10 +136,27 @@ const TransactionHisory = () => {
           </Text>
         </Link>
 
-        <Box my="48px">
+        {/* TRANSACTION HISTORY ON DESKTOP */}
+        <Box display={["none", , "block"]} my="48px">
           <TransactionHistoryTable />
         </Box>
+        {/* TRANSACTION HISTORY ON DESKTOP */}
+        <Box display={["block", , "none"]} my="48px">
+          {transactionHistory.map((transaction, i) => (
+            <Box key={i} onClick={() => openTransactionModal(transaction)}>
+              <MiniTransaction transaction={transaction} />
+            </Box>
+          ))}
+        </Box>
       </Padding>
+      {!!transaction && (
+        <TransactionModal
+          isOpen={isTransactionOpen}
+          onClose={onTransactionClose}
+          transaction={transaction}
+        />
+      )}
+      <FilterModal isOpen={isFilterOpen} onClose={onFilterClose} />
     </Box>
   );
 };
