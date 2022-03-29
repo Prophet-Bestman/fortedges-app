@@ -3,6 +3,7 @@ import {
   signinSchema,
   forgotPassswordSchema,
   ChangePasswordSchema,
+  changeEmailSchema,
 } from "./schemas";
 import { authNavs, mainNavs, mobileNavs } from "./navs";
 
@@ -14,4 +15,5 @@ export {
   mainNavs,
   mobileNavs,
   ChangePasswordSchema,
+  changeEmailSchema,
 };

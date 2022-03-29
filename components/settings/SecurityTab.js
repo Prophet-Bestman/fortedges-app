@@ -15,7 +15,7 @@ import React, { useState } from "react";
 import { AiFillCheckCircle, AiOutlineMail } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import ChangePassword from "./ChangePassword";
-import VerifyEmail from "./VerifyEmail";
+import ChangeEmail from "./ChangeEmail";
 
 const SecurityTab = () => {
   const [authenticated, setAuthenticated] = useState(true);
@@ -37,6 +37,13 @@ const SecurityTab = () => {
     onOpen: onConfirmEmailOpen,
     onClose: onConfirmEmailClose,
   } = useDisclosure();
+
+  const {
+    isOpen: isChangeEmailOpen,
+    onOpen: onChangeEmailOpen,
+    onClose: onChangeEmailClose,
+  } = useDisclosure();
+
   const {
     isOpen: isVerifyOpen,
     onOpen: onVerifyOpen,
@@ -156,7 +163,7 @@ const SecurityTab = () => {
       <ConfirmModal
         isOpen={isConfirmEmailOpen}
         onClose={onConfirmEmailClose}
-        openModal={onVerifyOpen}
+        openModal={onChangeEmailOpen}
         title="Are you sure you want to change your password?"
         text="Withdrawals will be disabled for 24 hours after you make this change
             to protect your account."
@@ -165,11 +172,13 @@ const SecurityTab = () => {
         isOpen={isChangePasswordOpen}
         onClose={onChangePasswordClose}
       />
-      <VerifyEmail
+
+      <ChangeEmail isOpen={isChangeEmailOpen} onClose={onChangeEmailClose} />
+      {/* <VerifyEmail
         isOpen={isVerifyOpen}
         onClose={onVerifyClose}
         email={"Bl **** @gmail.com"}
-      />
+      /> */}
     </Box>
   );
 };

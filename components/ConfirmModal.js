@@ -15,7 +15,7 @@ import { BsExclamationLg } from "react-icons/bs";
 
 const ConfirmModal = ({ isOpen, onClose, openModal, text, title }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen}>
       <ModalOverlay />
       <ModalContent py="14px" maxW="380px">
         <ModalBody color="text.black">

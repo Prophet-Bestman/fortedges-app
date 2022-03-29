@@ -5,7 +5,7 @@ import React from "react";
 
 const VerifyEmail = ({ isOpen, onClose, email }) => {
   return (
-    <Modal size="sm" h isOpen={isOpen} onClose={onClose}>
+    <Modal size="sm" h isOpen={isOpen}>
       <ModalOverlay bg="app.primary" />
       <ModalContent bg="app.primary">
         <AuthCard m="0">
@@ -28,6 +28,7 @@ const VerifyEmail = ({ isOpen, onClose, email }) => {
               mt="64px"
               color="app.primary"
               onClick={onClose}
+              cursor="pointer"
             >
               {/* <Link href="/auth/forgotpassword">{"Email didn't arrive? "}</Link> */}
               {"Email didn't arrive? "}

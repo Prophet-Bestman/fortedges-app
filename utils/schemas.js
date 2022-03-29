@@ -36,3 +36,10 @@ export const ChangePasswordSchema = yup.object().shape({
     .oneOf([yup.ref("newPassword"), null], "Passwords must match"),
   // authCode: yup.string().required("You must enter verification code"),
 });
+
+export const changeEmailSchema = yup.object().shape({
+  newEmail: yup
+    .string()
+    .email("Enter a valid emial")
+    .required("Email is required"),
+});
