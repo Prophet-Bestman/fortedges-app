@@ -11,8 +11,9 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
+import { AiOutlineCheck } from "react-icons/ai";
 
-const IDSuccess = ({ isOpen, onClose }) => {
+const AccountSuccess = ({ isOpen, onClose }) => {
   const router = useRouter();
   return (
     <Modal isOpen={isOpen}>
@@ -20,17 +21,21 @@ const IDSuccess = ({ isOpen, onClose }) => {
       <ModalContent maxW="380px">
         <ModalBody mb="40px">
           <Flex justifyContent="center">
-            <Circle mt="50px" mb="40px" size="100px" bg="#7950DA0D">
-              <Image src="/img/ID_card.svg" />
+            <Circle
+              mt="50px"
+              mb="40px"
+              size="100px"
+              bg="#7950DA0D"
+              color="app.primary"
+            >
+              <AiOutlineCheck size="40px" />
             </Circle>
           </Flex>
 
-          <Text
-            color="text.black"
-            my="24px"
-            fontWeight="600"
-            textAlign="center"
-          >
+          <Text color="text.black" my="8px" textAlign="center">
+            Request Successful
+          </Text>
+          <Text color="text.grey" my="24px" textAlign="center">
             We will now confirm your identity. You will be notified when the
             Verification is complete
           </Text>
@@ -50,4 +55,4 @@ const IDSuccess = ({ isOpen, onClose }) => {
   );
 };
 
-export default IDSuccess;
+export default AccountSuccess;

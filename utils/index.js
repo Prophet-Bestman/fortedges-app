@@ -4,6 +4,7 @@ import {
   forgotPassswordSchema,
   ChangePasswordSchema,
   changeEmailSchema,
+  accountStatementSchema,
 } from "./schemas";
 import { authNavs, mainNavs, mobileNavs } from "./navs";
 
@@ -16,4 +17,5 @@ export {
   mobileNavs,
   ChangePasswordSchema,
   changeEmailSchema,
+  accountStatementSchema,
 };

@@ -43,3 +43,9 @@ export const changeEmailSchema = yup.object().shape({
     .email("Enter a valid emial")
     .required("Email is required"),
 });
+
+export const accountStatementSchema = yup.object().shape({
+  selectPlan: yup.string().required("You have to select a plan"),
+  from: yup.string().required("Select a starting date"),
+  to: yup.string().required("Select an ending date"),
+});
