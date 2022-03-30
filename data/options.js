@@ -16,7 +16,7 @@ const options = {
   },
   bank: {
     name: "Bank Deposit",
-    time: "~ unavailable",
+    time: "",
     disable: true,
     icon: "/img/bank.svg",
   },

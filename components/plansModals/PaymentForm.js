@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Circle,
   Flex,
@@ -30,9 +31,12 @@ const optionsArr = Object.entries(options);
 console.log("options", optionsArr);
 
 const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
+  const [requestSent, setRequestSent] = React.useState(false);
   const planSchema = yup.object({
     amount: yup.number().required(),
   });
+
+  console.log(option);
 
   const {
     register,
@@ -41,6 +45,11 @@ const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
   } = useForm({
     resolver: yupResolver(planSchema),
   });
+
+  const sendRequest = () => {
+    if (requestSent) return;
+    setRequestSent(true);
+  };
 
   const submit = (data) => {
     data = { ...data, option: option.name };
@@ -142,9 +151,33 @@ const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
             </Menu>
           </Stack>
 
-          <Button w="full" type="submit">
-            Continue
-          </Button>
+          <Box>
+            {option.name === "Bank Deposit" ? (
+              <Box>
+                <Text fontSize="14px" color="text.grey">
+                  Currently, only P2P bank deposits are available in your
+                  region, click the button below to request Bank details
+                </Text>
+
+                <Button
+                  mt="30px"
+                  w="full"
+                  onClick={sendRequest}
+                  bg={requestSent ? "#71879C" : "app.primary"}
+                  isDisabled={requestSent}
+                >
+                  {requestSent ? "Request Sent" : "Request Details"}
+                </Button>
+              </Box>
+            ) : (
+              <Button w="full" type="submit">
+                Continue
+              </Button>
+            )}
+            {/* <Button w="full" type="submit">
+              Continue
+            </Button> */}
+          </Box>
         </form>
       </ModalBody>
     </ModalContent>

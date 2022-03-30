@@ -29,6 +29,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import WithdrawalSuccess from "./WithdrawalSuccess";
+import EnterVerificationCodeModal from "./EnterVerificationCodeModal";
 
 const optionsArr = Object.entries(options);
 
@@ -53,11 +54,16 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
     onOpen: onSuccessOpen,
     onClose: onSuccessClose,
   } = useDisclosure();
+  const {
+    isOpen: isVerifyOpen,
+    onOpen: onVerifyOpen,
+    onClose: onVerifyClose,
+  } = useDisclosure();
 
   const submit = (data) => {
     // data = { ...data, option: option.name };
     console.log(data);
-    onSuccessOpen();
+    onVerifyOpen();
     // setData(data);
     // setStep(2);
   };
@@ -216,6 +222,11 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
           </form>
         </ModalBody>
       </ModalContent>
+      <EnterVerificationCodeModal
+        isOpen={isVerifyOpen}
+        onClose={onVerifyClose}
+        onSuccessOpen={onSuccessOpen}
+      />
       <WithdrawalSuccess isOpen={isSuccessOpen} onClose={onSuccessClose} />
     </Modal>
   );
