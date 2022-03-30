@@ -1,10 +1,25 @@
-import { Box, Button, Circle, Flex } from "@chakra-ui/react";
+import { Box, Button, Circle, Flex, useDisclosure } from "@chakra-ui/react";
+import { FundPlan } from "components/plansModals";
+import Withdraw from "components/plansModals/Withdraw";
+import { options } from "data";
 import React from "react";
 
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 
 const TransactionActions = () => {
+  const [option, setOption] = React.useState(options.btc);
+  const {
+    isOpen: isFundOpen,
+    onOpen: onFundOpen,
+    onClose: onFundClose,
+  } = useDisclosure();
+  const {
+    isOpen: isWithdrawOpen,
+    onOpen: onWithdrawOpen,
+    onClose: onWithdrawClose,
+  } = useDisclosure();
+
   return (
     <Box borderBottomWidth="1px" borderColor="#F1F2F4" pb="24px">
       {/* Display on desktop */}
@@ -20,6 +35,7 @@ const TransactionActions = () => {
             leftIcon={<AiOutlinePlus fontSize="20px" />}
             mr="8px"
             mb="8px"
+            onClick={onFundOpen}
           >
             Fund Plan
           </Button>
@@ -28,6 +44,7 @@ const TransactionActions = () => {
             w="140px"
             h="48px"
             leftIcon={<AiOutlineMinus fontSize="20px" />}
+            onClick={onWithdrawOpen}
           >
             Withdraw
           </Button>
@@ -49,6 +66,7 @@ const TransactionActions = () => {
           size="sm"
           variant="secondary"
           leftIcon={<AiOutlinePlus fontSize="20px" />}
+          onClick={onFundOpen}
         >
           Fund Plan
         </Button>
@@ -57,10 +75,18 @@ const TransactionActions = () => {
           size="sm"
           variant="secondary"
           leftIcon={<AiOutlineMinus fontSize="20px" />}
+          onClick={onWithdrawOpen}
         >
           Withdraw
         </Button>
       </Flex>
+      <FundPlan isOpen={isFundOpen} onClose={onFundClose} />
+      <Withdraw
+        isOpen={isWithdrawOpen}
+        onClose={onWithdrawClose}
+        option={option}
+        setOption={setOption}
+      />
     </Box>
   );
 };
