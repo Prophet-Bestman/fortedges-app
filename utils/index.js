@@ -8,6 +8,7 @@ import {
 } from "./schemas";
 import { authNavs, mainNavs, mobileNavs } from "./navs";
 import formatter from "./formatter";
+import { statusBg, statusColor } from "./statusColors";
 
 export {
   signupSchema,
@@ -20,4 +21,6 @@ export {
   changeEmailSchema,
   accountStatementSchema,
   formatter,
+  statusBg,
+  statusColor,
 };

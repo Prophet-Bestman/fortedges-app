@@ -10,6 +10,7 @@ import goalModalProps from "./goalModalProps";
 import goalSteps from "./goalSteps";
 import options from "./options";
 import deposits from "./deposits";
+import users from "./users";
 
 export {
   OverviewPlans,
@@ -24,4 +25,5 @@ export {
   goalSteps,
   options,
   deposits,
+  users,
 };
