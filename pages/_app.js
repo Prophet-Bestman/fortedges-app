@@ -7,6 +7,7 @@ import NavProvider from "providers/NavProvider";
 import { AuthLayout, MainLayout } from "components/layouts";
 import PlanFormProvider from "providers/PlanFormProvider";
 import GoalFormProvider from "providers/GoalFormProvider";
+import AdminLayout from "components/layouts/AdminLayout";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -20,6 +21,16 @@ function MyApp({ Component, pageProps }) {
               </GoalFormProvider>
             </PlanFormProvider>
           </MainLayout>
+        </NavProvider>
+      ) : Component.isAdmin ? (
+        <NavProvider>
+          <AdminLayout>
+            <PlanFormProvider>
+              <GoalFormProvider>
+                <Component {...pageProps} />
+              </GoalFormProvider>
+            </PlanFormProvider>
+          </AdminLayout>
         </NavProvider>
       ) : (
         <AuthLayout>

@@ -7,6 +7,7 @@ import {
   accountStatementSchema,
 } from "./schemas";
 import { authNavs, mainNavs, mobileNavs } from "./navs";
+import formatter from "./formatter";
 
 export {
   signupSchema,
@@ -18,4 +19,5 @@ export {
   ChangePasswordSchema,
   changeEmailSchema,
   accountStatementSchema,
+  formatter,
 };

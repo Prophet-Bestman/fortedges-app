@@ -21,6 +21,14 @@ export const navStates = {
     name: "Settings",
     pageTitle: "Settings",
   },
+
+  dashboard: { name: "Dashboard", pageTitle: "Dashboard" },
+  deposits: { name: "Deposits", pageTitle: "Deposits" },
+  withdrawals: { name: "Withdrawals", pageTitle: "Withdrawals" },
+  users: { name: "Users", pageTitle: "Users" },
+  addUser: { name: "Add User", pageTitle: "Add User" },
+  idVerification: { name: "ID verification", pageTitle: "ID verification" },
+  modeOfPayment: { name: "Mode of payment", pageTitle: "Mode of payment" },
 };
 
 export const pageTitles = {

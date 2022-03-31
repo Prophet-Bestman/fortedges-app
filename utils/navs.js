@@ -55,3 +55,29 @@ export const mobileNavs = [
     icon: "/img/nav/history.svg",
   },
 ];
+
+export const adminNavs = [
+  { name: "Dashboard", link: "/", icon: "/img/nav/dashboard.svg" },
+  { name: "Deposits", link: "/deposits", icon: "/img/nav/trend.svg" },
+  { name: "WIthdrawals", link: "/wIthdrawals", icon: "/img/nav/fund.svg" },
+  {
+    name: "Users",
+    link: "/users",
+    icon: "/img/nav/notification.svg",
+  },
+  {
+    name: "Add User",
+    link: "/add_user",
+    icon: "/img/nav/history.svg",
+  },
+  {
+    name: "ID verification",
+    link: "/id_verification",
+    icon: "/img/nav/history.svg",
+  },
+  {
+    name: "Mode of payment",
+    link: "/mode_of_payment",
+    icon: "/img/nav/history.svg",
+  },
+];
