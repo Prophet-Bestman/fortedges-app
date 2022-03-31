@@ -1,4 +1,5 @@
 import { Box, Button, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
+import Link from "next/link";
 import React from "react";
 import { formatter } from "utils";
 
@@ -36,9 +37,11 @@ const Stats = () => {
             <Text color="text.black">{pendingDeposits}</Text>Pending Deposits
           </Text>
 
-          <Button px="8px" w="auto" size="sm" variant="outline">
-            Go to Deposits
-          </Button>
+          <Link href="admin/deposits">
+            <Button px="8px" w="auto" size="sm" variant="outline">
+              Go to Deposits
+            </Button>
+          </Link>
         </GridItem>
         <GridItem
           bg="white"
@@ -53,9 +56,11 @@ const Stats = () => {
             Withdrawals
           </Text>
 
-          <Button px="8px" w="auto" size="sm" variant="outline">
-            Go to Withdrawals
-          </Button>
+          <Link href="/admin/withdrawals">
+            <Button px="8px" w="auto" size="sm" variant="outline">
+              Go to Withdrawals
+            </Button>
+          </Link>
         </GridItem>
       </Grid>
 

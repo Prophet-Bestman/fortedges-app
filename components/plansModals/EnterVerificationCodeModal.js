@@ -77,9 +77,9 @@ const EnterVerificationCodeModal = ({ isOpen, onClose, onSuccessOpen }) => {
 
           <Box borderTopWidth="1px" borderColor={"#E2E0E0"} py="24px" mt="24px">
             <Text textAlign="center" fontSize="14px">
-              Security is critical at FortEdges. To help keep your account safe,
-              we'll text you a verification code when you sign in on a new
-              device.
+              {
+                " Security is critical at FortEdges. To help keep your account safe, we'll text you a verification code when you sign in on a new device."
+              }
             </Text>
           </Box>
         </ModalBody>

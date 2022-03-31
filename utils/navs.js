@@ -57,27 +57,31 @@ export const mobileNavs = [
 ];
 
 export const adminNavs = [
-  { name: "Dashboard", link: "/", icon: "/img/nav/dashboard.svg" },
-  { name: "Deposits", link: "/deposits", icon: "/img/nav/trend.svg" },
-  { name: "WIthdrawals", link: "/wIthdrawals", icon: "/img/nav/fund.svg" },
+  { name: "Dashboard", link: "/admin", icon: "/img/nav/dashboard.svg" },
+  { name: "Deposits", link: "/admin/deposits", icon: "/img/nav/trend.svg" },
+  {
+    name: "Withdrawals",
+    link: "/admin/withdrawals",
+    icon: "/img/nav/fund.svg",
+  },
   {
     name: "Users",
-    link: "/users",
+    link: "/admin/users",
     icon: "/img/nav/notification.svg",
   },
   {
     name: "Add User",
-    link: "/add_user",
+    link: "/admin/add_user",
     icon: "/img/nav/history.svg",
   },
   {
     name: "ID verification",
-    link: "/id_verification",
+    link: "/admin/id_verification",
     icon: "/img/nav/history.svg",
   },
   {
     name: "Mode of payment",
-    link: "/mode_of_payment",
+    link: "/admin/mode_of_payment",
     icon: "/img/nav/history.svg",
   },
 ];

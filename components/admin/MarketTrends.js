@@ -18,6 +18,9 @@ import { formatter } from "utils";
 const MarketTrends = () => {
   return (
     <Box>
+      <Text my="24px" fontSize="24px" fontWeight={600} mt="40px">
+        Market Trend
+      </Text>
       <TableContainer>
         <Table variant="unstyled">
           <Thead>

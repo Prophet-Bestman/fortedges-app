@@ -9,6 +9,7 @@ import portfolioCountries from "./portfolioCountries";
 import goalModalProps from "./goalModalProps";
 import goalSteps from "./goalSteps";
 import options from "./options";
+import deposits from "./deposits";
 
 export {
   OverviewPlans,
@@ -22,4 +23,5 @@ export {
   goalModalProps,
   goalSteps,
   options,
+  deposits,
 };
