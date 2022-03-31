@@ -26,6 +26,7 @@ export const navStates = {
   deposits: { name: "Deposits", pageTitle: "Deposits" },
   withdrawals: { name: "Withdrawals", pageTitle: "Withdrawals" },
   users: { name: "Users", pageTitle: "Users" },
+  userDetails: { name: "Users" },
   addUser: { name: "Add User", pageTitle: "Add User" },
   idVerification: { name: "ID verification", pageTitle: "ID verification" },
   modeOfPayment: { name: "Mode of payment", pageTitle: "Mode of payment" },

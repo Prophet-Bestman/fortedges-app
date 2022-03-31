@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import Link from "next/link";
 
-const YourPlans = () => {
+const YourPlans = ({ title }) => {
   return (
     <Box my="64px">
       <Padding>
@@ -21,7 +21,7 @@ const YourPlans = () => {
         >
           <GridItem colSpan={2}>
             <Text fontSize={["16px", "18px", "20px", "24px"]} mb="24px">
-              Your Plans
+              {title}
             </Text>
             <Box>
               <Swiper

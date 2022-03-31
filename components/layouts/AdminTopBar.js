@@ -36,11 +36,13 @@ const AdminTopBar = () => {
           <AiOutlineUser />
         </Box>
       </Box>
-      <Box py="24px" px="24px">
-        <Text fontSize="34px" fontWeight={600}>
-          {pageTitle}
-        </Text>
-      </Box>
+      {pageTitle && (
+        <Box py="24px" px="24px">
+          <Text fontSize="34px" fontWeight={600}>
+            {pageTitle}
+          </Text>
+        </Box>
+      )}
     </Box>
   );
 };

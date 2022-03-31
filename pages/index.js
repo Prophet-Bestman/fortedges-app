@@ -28,7 +28,7 @@ export default function Home() {
 
       <Box minH="100vh" bg="">
         <OverviewHeader />
-        <YourPlans />
+        <YourPlans title={"Your Plans"} />
         <News />
         <QuoteSection />
       </Box>
