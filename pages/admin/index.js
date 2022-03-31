@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import { Stats } from "components/admin";
+import { MarketTrends, Stats } from "components/admin";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
 import React, { useContext, useEffect } from "react";
 
@@ -15,6 +15,7 @@ const AdminDashoard = () => {
   return (
     <Box px="24px">
       <Stats />
+      <MarketTrends />
     </Box>
   );
 };
