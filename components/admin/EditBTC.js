@@ -1,5 +1,6 @@
 import {
   Button,
+  Flex,
   Input,
   Modal,
   ModalBody,
@@ -25,9 +26,14 @@ export const EditBTC = ({ isOpen, onClose }) => {
               <Input bg="white" type="text" w-full />
             </Stack>
 
-            <Button size={"sm"} type="submit">
-              Save
-            </Button>
+            <Flex gap="12px">
+              <Button size={"sm"} type="submit">
+                Save
+              </Button>
+              <Button size={"sm"} variant="secondary" type="submit">
+                Cancel
+              </Button>
+            </Flex>
           </form>
         </ModalContent>
       </ModalBody>
@@ -51,9 +57,14 @@ export const EditETH = ({ isOpen, onClose }) => {
               <Input bg="white" type="text" w-full />
             </Stack>
 
-            <Button size={"sm"} type="submit">
-              Save
-            </Button>
+            <Flex gap="12px">
+              <Button size={"sm"} type="submit">
+                Save
+              </Button>
+              <Button size={"sm"} variant="secondary" type="submit">
+                Cancel
+              </Button>
+            </Flex>
           </form>
         </ModalContent>
       </ModalBody>
