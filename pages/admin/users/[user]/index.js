@@ -1,7 +1,6 @@
 import { Box, Button, Flex } from "@chakra-ui/react";
 import { TransactionHistoryTable } from "components";
 import { UserDetails, UserPlans } from "components/admin";
-import { YourPlans } from "components/overview";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
 import React, { useContext, useEffect } from "react";
 
