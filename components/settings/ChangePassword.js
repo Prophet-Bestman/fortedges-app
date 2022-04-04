@@ -21,6 +21,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ChangePasswordSchema } from "utils";
 import { MdError } from "react-icons/md";
+import { AiOutlineClose } from "react-icons/ai";
 
 const ChangePassword = ({ isOpen, onClose }) => {
   const {
@@ -42,16 +43,10 @@ const ChangePassword = ({ isOpen, onClose }) => {
       <ModalOverlay />
       <form onSubmit={handleSubmit(handleChangePassword)}>
         <ModalContent py="24px" px="12px" maxW="380px">
-          <ModalHeader>
-            <Text>Change Password</Text>
+          <ModalHeader d="flex" justifyContent="space-between">
+            <Text>Change Email Address</Text>
+            <AiOutlineClose onClick={onClose} />
           </ModalHeader>
-          <ModalCloseButton
-            mt="24px"
-            rounded="full"
-            _focus={{
-              outline: "none",
-            }}
-          />
           <ModalBody>
             <Stack mb="32px">
               <Text fontWeight="400" color="text.grey" fontSize="14px">
@@ -179,7 +174,6 @@ const ChangePassword = ({ isOpen, onClose }) => {
               </Box>
             </Box>
           </ModalBody>
-
           <ModalFooter display="flex" gap="12px" justifyContent="space-between">
             <Button size="md" onClick={onClose} variant="secondary">
               Close

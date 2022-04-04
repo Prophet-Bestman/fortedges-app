@@ -6,6 +6,7 @@ import UserDetails from "./UserDetails";
 import UserPlans from "./UserPlans";
 import PendingWithdrawals from "./PendingWithdrawals";
 import WithdrwalHistory from "./WithdrawalHistory";
+import PendingVerifications from "./PendingVerifications";
 
 export {
   Stats,
@@ -16,4 +17,5 @@ export {
   UserPlans,
   PendingWithdrawals,
   WithdrwalHistory,
+  PendingVerifications,
 };

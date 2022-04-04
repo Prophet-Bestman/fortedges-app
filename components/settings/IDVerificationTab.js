@@ -124,11 +124,7 @@ const IDVerificationTab = () => {
               </Box>
             </Flex>
           ) : (
-            <Flex
-              onClick={onVerifyOpen}
-              alignItems="center"
-              gap={[0, , "16px"]}
-            >
+            <Flex alignItems="center" gap={[0, , "16px"]}>
               <Flex
                 color={"white"}
                 bg="red.00"
@@ -140,6 +136,7 @@ const IDVerificationTab = () => {
                 Not Verified
               </Flex>
               <Button
+                onClick={onVerifyOpen}
                 display={["none", , "unset"]}
                 variant="secondary"
                 size="sm"
@@ -157,7 +154,7 @@ const IDVerificationTab = () => {
         isOpen={isConfirmEmailOpen}
         onClose={onConfirmEmailClose}
         openModal={onChangeEmailOpen}
-        title="Are you sure you want to change your password?"
+        title="Are you sure you want to change your Email?"
         text="Withdrawals will be disabled for 24 hours after you make this change
             to protect your account."
       />

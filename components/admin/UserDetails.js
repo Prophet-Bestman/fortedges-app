@@ -6,11 +6,15 @@ import {
   Grid,
   GridItem,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import React from "react";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import ViewVerification from "./ViewVerification";
 
 const UserDetails = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box py="40px" color="text.black">
       <Grid templateColumns="repeat(3, 1fr)">
@@ -32,9 +36,11 @@ const UserDetails = () => {
         </GridItem>
         <GridItem>
           <Flex flexDir="column">
-            <Button ml="auto" size="sm" mb="16px">
-              Edit
-            </Button>
+            <Link href="/admin/users/user/edit">
+              <Button ml="auto" size="sm" mb="16px">
+                Edit
+              </Button>
+            </Link>
             <Text color="text.grey" mb="16px">
               Portugal
             </Text>
@@ -51,7 +57,7 @@ const UserDetails = () => {
               </Text>
               <BsFillCheckCircleFill />
             </Flex>
-            <Button variant="outline" size="sm" w="auto">
+            <Button onClick={onOpen} variant="outline" size="sm" w="auto">
               View Verification
             </Button>
           </Flex>
@@ -84,6 +90,7 @@ const UserDetails = () => {
           </Text>
         </Box>
       </Flex>
+      <ViewVerification isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 };

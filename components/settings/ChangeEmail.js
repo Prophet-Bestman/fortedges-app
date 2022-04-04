@@ -23,6 +23,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { changeEmailSchema } from "utils";
 import { MdError } from "react-icons/md";
 import VerifyEmail from "./VerifyEmail";
+import { AiOutlineClose } from "react-icons/ai";
 
 const ChangeEmail = ({ isOpen, onClose }) => {
   const {
@@ -49,16 +50,19 @@ const ChangeEmail = ({ isOpen, onClose }) => {
     <Modal isOpen={isOpen} size="full">
       <ModalOverlay />
       <ModalContent py="24px" px="12px" maxW="380px">
-        <ModalHeader>
+        <ModalHeader d="flex" justifyContent="space-between">
           <Text>Change Email Address</Text>
+          <AiOutlineClose onClick={onClose} />
         </ModalHeader>
-        <ModalCloseButton
+        {/* <ModalCloseButton
           mt="24px"
           rounded="full"
+          onClick={onClose}
           _focus={{
             outline: "none",
           }}
-        />
+        /> */}
+
         <ModalBody>
           <form onSubmit={handleSubmit(handleChangeEmail)}>
             <Stack mb="32px">
@@ -141,6 +145,7 @@ const ChangeEmail = ({ isOpen, onClose }) => {
                 </Text>
               </Box>
             </Box>
+
             <Flex mt="30px" gap="12px">
               <Button size="md" onClick={onClose} variant="secondary">
                 Close

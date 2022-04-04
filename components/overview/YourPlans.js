@@ -78,7 +78,7 @@ const YourPlans = ({ title }) => {
             </Text>
 
             <Box>
-              <Link href="#">
+              <Link href="/settings ">
                 <Box
                   color="text.grey"
                   display="flex"
@@ -98,7 +98,7 @@ const YourPlans = ({ title }) => {
                   <MdOutlineKeyboardArrowRight fontSize="24px" />
                 </Box>
               </Link>
-              <Link href="#">
+              <Link href="/myplans/create">
                 <Box
                   color="text.grey"
                   display="flex"

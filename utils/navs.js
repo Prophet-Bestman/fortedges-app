@@ -70,18 +70,13 @@ export const adminNavs = [
     icon: "/img/nav/notification.svg",
   },
   {
-    name: "Add User",
-    link: "/admin/add_user",
-    icon: "/img/nav/history.svg",
-  },
-  {
     name: "ID verification",
-    link: "/admin/id_verification",
+    link: "/admin/id_verifications",
     icon: "/img/nav/history.svg",
   },
   {
     name: "Mode of payment",
-    link: "/admin/mode_of_payment",
+    link: "/admin/mop",
     icon: "/img/nav/history.svg",
   },
 ];
