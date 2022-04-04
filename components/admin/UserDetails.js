@@ -8,6 +8,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { users } from "data";
 import Link from "next/link";
 import React from "react";
 import { BsFillCheckCircleFill } from "react-icons/bs";
@@ -90,7 +91,11 @@ const UserDetails = () => {
           </Text>
         </Box>
       </Flex>
-      <ViewVerification isOpen={isOpen} onClose={onClose} />
+      <ViewVerification
+        isOpen={isOpen}
+        onClose={onClose}
+        verificationDetails={users[0].verificationDetails}
+      />
     </Box>
   );
 };

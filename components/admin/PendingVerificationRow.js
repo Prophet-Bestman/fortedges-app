@@ -16,7 +16,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import ViewVerification from "./ViewVerification";
 
 const PedingVerificationRow = ({ verification }) => {
@@ -51,22 +50,6 @@ const PedingVerificationRow = ({ verification }) => {
           Approve Verification
         </Button>
       </Td>
-      {/* <Td>
-        <Menu>
-          <MenuButton
-            w="40px"
-            h="40px"
-            as={IconButton}
-            aria-label="Options"
-            icon={<BsThreeDotsVertical />}
-            variant="secondary"
-          />
-          <MenuList>
-            <MenuItem>Confirm</MenuItem>
-            <MenuItem>Decline</MenuItem>
-          </MenuList>
-        </Menu>
-      </Td> */}
 
       <ViewVerification
         isOpen={isPOPOpen}

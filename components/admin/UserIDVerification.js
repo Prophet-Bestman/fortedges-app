@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { MdKeyboardArrowRight } from "react-icons/md";
 
 const UserIDVerification = ({ isOpen, onClose, idVerificationDetails }) => {
   return (
