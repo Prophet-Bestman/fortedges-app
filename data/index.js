@@ -11,6 +11,7 @@ import goalSteps from "./goalSteps";
 import options from "./options";
 import deposits from "./deposits";
 import users from "./users";
+import withdrawals from "./withdrawals";
 
 export {
   OverviewPlans,
@@ -26,4 +27,5 @@ export {
   options,
   deposits,
   users,
+  withdrawals,
 };

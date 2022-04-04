@@ -24,7 +24,7 @@ const AdminLayout = ({ children }) => {
             <AdminNav />
           </Box>
         </GridItem>
-        <GridItem position="relative" colSpan={9} bg="#FAFAFA">
+        <GridItem w={"full"} position="relative" colSpan={9} bg="#FAFAFA">
           <AdminTopBar />
 
           {children}

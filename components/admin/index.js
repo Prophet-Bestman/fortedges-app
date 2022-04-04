@@ -4,6 +4,8 @@ import PendingDeposits from "./PendingDeposits";
 import DepositHistory from "./DepositHistory";
 import UserDetails from "./UserDetails";
 import UserPlans from "./UserPlans";
+import PendingWithdrawals from "./PendingWithdrawals";
+import WithdrwalHistory from "./WithdrawalHistory";
 
 export {
   Stats,
@@ -12,4 +14,6 @@ export {
   DepositHistory,
   UserDetails,
   UserPlans,
+  PendingWithdrawals,
+  WithdrwalHistory,
 };
