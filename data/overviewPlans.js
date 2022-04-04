@@ -6,6 +6,7 @@ const OverviewPlans = [
     amount: 1200.12,
     color: "text.brown",
     gain: "12.66%",
+    profit: 4019.12,
   },
   {
     name: "Clash",
@@ -14,6 +15,7 @@ const OverviewPlans = [
     amount: 1200.12,
     color: "others.green",
     gain: "12.66%",
+    profit: 4019.12,
   },
   {
     name: "Clash",
@@ -22,6 +24,7 @@ const OverviewPlans = [
     amount: 1200.12,
     color: "others.blue",
     gain: "12.66%",
+    profit: 4019.12,
   },
 ];
 

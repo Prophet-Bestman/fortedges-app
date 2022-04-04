@@ -6,7 +6,7 @@ const OverviewPlan = ({ plan }) => {
   const { amount, color, img, name, category } = plan;
 
   return (
-    <Link href="myplans/plan">
+    <Link href="/myplans/plan">
       <Box
         bgColor={color}
         cursor="pointer"

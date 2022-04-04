@@ -2,14 +2,12 @@ import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 import { Padding } from "components/layouts";
 import { OverviewPlans } from "data";
 import React from "react";
-import OverviewPlan from "components/overview/OverviewPlan";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
-import { IoMdTime } from "react-icons/io";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import "swiper/css";
 import "swiper/css/pagination";
 import Link from "next/link";
+import UserPlan from "./UserPlan";
 
 const UserPlans = () => {
   return (
@@ -56,7 +54,7 @@ const UserPlans = () => {
                 </SwiperSlide>
                 {OverviewPlans.map((plan) => (
                   <SwiperSlide key={plan.name}>
-                    <OverviewPlan plan={plan} />
+                    <UserPlan plan={plan} />
                   </SwiperSlide>
                 ))}
               </Swiper>
