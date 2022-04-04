@@ -9,7 +9,7 @@ const IDVerifications = () => {
   useEffect(() => {
     setActiveNav({
       type: navActions.SET_ACTIVE,
-      payload: navStates.deposits,
+      payload: navStates.idVerification,
     });
   }, []);
   return (

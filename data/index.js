@@ -12,6 +12,7 @@ import options from "./options";
 import deposits from "./deposits";
 import users from "./users";
 import withdrawals from "./withdrawals";
+import notifications from "./notifications";
 
 export {
   OverviewPlans,
@@ -28,4 +29,5 @@ export {
   deposits,
   users,
   withdrawals,
+  notifications,
 };

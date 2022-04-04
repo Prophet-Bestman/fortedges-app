@@ -27,7 +27,7 @@ export const authNavs = [
 export const mainNavs = [
   { name: "Overview", link: "/", icon: "/img/nav/dashboard.svg" },
   { name: "My Plans", link: "/myplans", icon: "/img/nav/trend.svg" },
-  { name: "Fund A Plan", link: "/fund_a_plan", icon: "/img/nav/fund.svg" },
+  { name: "Fund A Plan", link: "/myplans/create", icon: "/img/nav/fund.svg" },
   {
     name: "Notifications",
     link: "/notifications",
@@ -43,7 +43,7 @@ export const mainNavs = [
 export const mobileNavs = [
   { name: "Overview", link: "/", icon: "/img/nav/dashboard.svg" },
   { name: "My Plans", link: "/myplans", icon: "/img/nav/trend.svg" },
-  { name: "Fund A Plan", link: "/fund_a_plan", icon: "/img/nav/fund.svg" },
+  { name: "Fund A Plan", link: "/myplans/create", icon: "/img/nav/fund.svg" },
   {
     name: "Notifications",
     link: "/notifications",
