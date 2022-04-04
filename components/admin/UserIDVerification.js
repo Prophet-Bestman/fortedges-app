@@ -27,7 +27,7 @@ const UserIDVerification = ({ isOpen, onClose, idVerificationDetails }) => {
           {idVerificationDetails.length > 0 ? (
             <Box>
               {idVerificationDetails.map((item, i) => (
-                <Flex justifyContent="center">
+                <Flex justifyContent="center" key={i}>
                   <Image src={item.img} w="400px" mb="4" objectFit="contain" />
                 </Flex>
               ))}
