@@ -4,6 +4,8 @@ import GoalsPlan from "./GoalsPlan";
 import SubmitPlan from "./SubmitPlan";
 import SubmitGoal from "./SubmitGoal";
 import FundPlan from "./FundPlan";
+import WithdrawalSuccess from "./WithdrawalSuccess";
+import RequestSuccess from "./RequestSuccess";
 
 export {
   PremiumPlan,
@@ -12,4 +14,6 @@ export {
   SubmitPlan,
   SubmitGoal,
   FundPlan,
+  WithdrawalSuccess,
+  RequestSuccess,
 };

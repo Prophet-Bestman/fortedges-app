@@ -15,6 +15,7 @@ import {
   ModalContent,
   Stack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
 import {
@@ -25,18 +26,27 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { options } from "data";
+import { RequestSuccess } from "components/plansModals";
 
 const optionsArr = Object.entries(options);
 
 console.log("options", optionsArr);
 
-const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
+const AdminPaymentForm = ({ setStep }) => {
+  const [option, setOption] = React.useState(options.btc);
+  const [data, setData] = React.useState({});
   const [requestSent, setRequestSent] = React.useState(false);
   const planSchema = yup.object({
     amount: yup.number().required(),
   });
 
   console.log(option);
+
+  const {
+    isOpen: isSuccessOpen,
+    onOpen: onSuccessOpen,
+    onClose: onSuccessClose,
+  } = useDisclosure();
 
   const {
     register,
@@ -55,12 +65,17 @@ const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
     data = { ...data, option: option.name };
     console.log(data);
     setData(data);
-    setStep(2);
+    onSuccessOpen();
   };
   return (
     <ModalContent py="24px" px="24px" maxW="380px">
       <Flex mb="40px" justifyContent="space-between" alignItems="center">
-        <Circle onClick={onClose} cursor="pointer" bg="#F1F2F400" size="40px">
+        <Circle
+          onClick={() => setStep(1)}
+          cursor="pointer"
+          bg="#F1F2F400"
+          size="40px"
+        >
           <MdOutlineKeyboardBackspace />
         </Circle>
         <Text fontSize="20px" color="text.black" fontWeight={600}>
@@ -107,7 +122,7 @@ const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
 
           <Stack mb="32px">
             <Text fontSize={"12px"} color="text.grey">
-              Mode of payment
+              Mode Of Payment
             </Text>
             <Menu w="full">
               <MenuButton
@@ -180,8 +195,9 @@ const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
           </Box>
         </form>
       </ModalBody>
+      <RequestSuccess isOpen={isSuccessOpen} onClose={onSuccessClose} />
     </ModalContent>
   );
 };
 
-export default PaymentForm;
+export default AdminPaymentForm;

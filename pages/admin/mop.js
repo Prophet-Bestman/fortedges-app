@@ -1,10 +1,20 @@
 import { Box, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { BiCopy } from "react-icons/bi";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { EditBTC, EditETH } from "components/admin/EditBTC";
+import { navActions, NavContext, navStates } from "providers/NavProvider";
 
 const Mop = () => {
+  const { dispatch: setActiveNav } = useContext(NavContext);
+
+  useEffect(() => {
+    setActiveNav({
+      type: navActions.SET_ACTIVE,
+      payload: navStates.modeOfPayment,
+    });
+  }, []);
+
   const [walletAddress, setWalletAddress] = React.useState(
     "1232878973egueh3e8273927397al02"
   );

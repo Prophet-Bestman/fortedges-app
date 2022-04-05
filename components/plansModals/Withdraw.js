@@ -37,7 +37,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
   const [daysLeft, setDaysLeft] = React.useState(0);
 
   const withdrawSchema = yup.object().shape({
-    amount: yup.string().required(),
+    amount: yup.number().required(),
     walletAddress: yup.string().required(),
   });
 
@@ -150,7 +150,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
 
             <Stack mb="32px">
               <Text fontSize={"12px"} color="text.grey">
-                Amount
+                Mode of payment
               </Text>
               <Menu w="full">
                 <MenuButton

@@ -71,7 +71,7 @@ const UserPlan = ({ plan }) => {
 export default UserPlan;
 
 const PlanBalance = ({ isOpen, onClose, plan }) => {
-  const { amount, profit, gain, name, category } = plan;
+  const { amount, profit, gain } = plan;
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xs" isCentered>
       <ModalOverlay />
@@ -98,7 +98,13 @@ const PlanBalance = ({ isOpen, onClose, plan }) => {
             Profits
           </Text>
 
-          <Text d="flex" justifyContent={"center"} color="green.300" gap="6px">
+          <Text
+            fontSize="13px"
+            d="flex"
+            justifyContent={"center"}
+            color="green.300"
+            gap="6px"
+          >
             <Text>+{formatter.format(profit)}</Text>
             <Text>+{gain}</Text>
           </Text>

@@ -10,12 +10,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { transactionHistory } from "data";
+import { useRouter } from "next/router";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
-const RequestSuccess = ({ isOpen, onClose }) => {
+const RequestSuccess = ({ isOpen }) => {
   const { date, modeOfPayment, status, transactionRef, amount } =
     transactionHistory[0];
+
+  const router = useRouter();
 
   return (
     <Modal isOpen={isOpen} size>
@@ -34,7 +37,7 @@ const RequestSuccess = ({ isOpen, onClose }) => {
           <Circle
             pos="absolute"
             right={0}
-            onClick={onClose}
+            onClick={() => router.reload()}
             cursor="pointer"
             size="40px"
           >

@@ -45,7 +45,7 @@ const ConfirmModal = ({ isOpen, onClose, openModal, text, title }) => {
           <Button
             colorScheme="blue"
             onClick={async () => {
-              await openModal();
+              openModal && (await openModal());
               onClose();
             }}
           >

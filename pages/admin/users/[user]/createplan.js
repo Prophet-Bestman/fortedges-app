@@ -16,7 +16,7 @@ import {
 } from "components/plansModals";
 import { GoalFormContext } from "providers/GoalFormProvider";
 
-const Create = () => {
+const AdminCreatePlan = () => {
   const { dispatch: setActiveNav } = useContext(NavContext);
   const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
   const { goalFormState } = useContext(GoalFormContext);
@@ -248,6 +248,6 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default AdminCreatePlan;
 
-Create.requireAuth = true;
+AdminCreatePlan.isAdmin = true;

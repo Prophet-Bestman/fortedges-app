@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Circle,
   Flex,
@@ -15,7 +14,10 @@ import {
   ModalContent,
   Stack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { options } from "data";
+import Link from "next/link";
 import React from "react";
 import {
   MdOutlineKeyboardBackspace,
@@ -24,47 +26,53 @@ import {
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { options } from "data";
+import { WithdrawalSuccess } from "components/plansModals";
 
 const optionsArr = Object.entries(options);
 
-console.log("options", optionsArr);
+const AdminWithdraw = ({ setStep }) => {
+  const [option, setOption] = React.useState(options.btc);
 
-const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
-  const [requestSent, setRequestSent] = React.useState(false);
-  const planSchema = yup.object({
+  const withdrawSchema = yup.object().shape({
     amount: yup.number().required(),
+    walletAddress: yup.string().required(),
   });
-
-  console.log(option);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(planSchema),
+    resolver: yupResolver(withdrawSchema),
   });
 
-  const sendRequest = () => {
-    if (requestSent) return;
-    setRequestSent(true);
-  };
+  const {
+    isOpen: isSuccessOpen,
+    onOpen: onSuccessOpen,
+    onClose: onSuccessClose,
+  } = useDisclosure();
 
   const submit = (data) => {
-    data = { ...data, option: option.name };
+    // data = { ...data, option: option.name };
     console.log(data);
-    setData(data);
-    setStep(2);
+    onSuccessOpen();
+    // setData(data);
+    // setStep(2);
   };
+
   return (
     <ModalContent py="24px" px="24px" maxW="380px">
       <Flex mb="40px" justifyContent="space-between" alignItems="center">
-        <Circle onClick={onClose} cursor="pointer" bg="#F1F2F400" size="40px">
+        <Circle
+          onClick={() => setStep(1)}
+          cursor="pointer"
+          bg="#F1F2F400"
+          size="40px"
+        >
           <MdOutlineKeyboardBackspace />
         </Circle>
         <Text fontSize="20px" color="text.black" fontWeight={600}>
-          Fund Plan
+          Withdraw
         </Text>
         <Circle cursor="pointer" bg="#F1F2F4" size="30px">
           <Text fontSize="16px" fontWeight="600">
@@ -73,7 +81,7 @@ const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
         </Circle>
       </Flex>
 
-      <ModalBody>
+      <ModalBody px="0">
         <form onSubmit={handleSubmit(submit)}>
           <Stack>
             <Text fontSize={"12px"} color="text.grey">
@@ -98,7 +106,6 @@ const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
                 h="48px"
                 placeholder="10,000"
                 mb="32px"
-                // defaultValue={formState.amount}
                 variant={errors.amount ? "error" : "outline"}
                 {...register("amount")}
               />
@@ -107,7 +114,7 @@ const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
 
           <Stack mb="32px">
             <Text fontSize={"12px"} color="text.grey">
-              Mode of payment
+              Select Mode of payment
             </Text>
             <Menu w="full">
               <MenuButton
@@ -150,38 +157,32 @@ const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
               </MenuList>
             </Menu>
           </Stack>
+          <Stack>
+            <Text fontSize={"12px"} color="text.grey">
+              {option.name} Address
+            </Text>
 
-          <Box>
-            {option.name === "Bank Deposit" ? (
-              <Box>
-                <Text fontSize="14px" color="text.grey">
-                  Currently, only P2P bank deposits are available in your
-                  region, click the button below to request Bank details
-                </Text>
+            <InputGroup>
+              <Input
+                pl="40px"
+                type="text"
+                h="48px"
+                placeholder=""
+                mb="32px"
+                variant={errors.walletAddress ? "error" : "outline"}
+                {...register("walletAddress")}
+              />
+            </InputGroup>
+          </Stack>
 
-                <Button
-                  mt="30px"
-                  w="full"
-                  onClick={sendRequest}
-                  bg={requestSent ? "#71879C" : "app.primary"}
-                  isDisabled={requestSent}
-                >
-                  {requestSent ? "Request Sent" : "Request Details"}
-                </Button>
-              </Box>
-            ) : (
-              <Button w="full" type="submit">
-                Continue
-              </Button>
-            )}
-            {/* <Button w="full" type="submit">
-              Continue
-            </Button> */}
-          </Box>
+          <Button w="full" type="submit">
+            Withdraw
+          </Button>
         </form>
       </ModalBody>
+      <WithdrawalSuccess isOpen={isSuccessOpen} onClose={onSuccessClose} />
     </ModalContent>
   );
 };
 
-export default PaymentForm;
+export default AdminWithdraw;

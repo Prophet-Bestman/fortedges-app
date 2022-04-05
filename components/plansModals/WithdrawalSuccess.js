@@ -12,10 +12,13 @@ import {
 import { transactionHistory } from "data";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { useRouter } from "next/router";
 
 const WithdrawalSuccess = ({ isOpen, onClose }) => {
   const { date, modeOfPayment, status, transactionRef, amount } =
     transactionHistory[0];
+
+  const router = useRouter();
 
   return (
     <Modal isOpen={isOpen} size>
@@ -34,7 +37,7 @@ const WithdrawalSuccess = ({ isOpen, onClose }) => {
           <Circle
             pos="absolute"
             right={0}
-            onClick={onClose}
+            onClick={() => router.reload()}
             cursor="pointer"
             size="40px"
           >
