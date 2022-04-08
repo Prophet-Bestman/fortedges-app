@@ -5,9 +5,11 @@ import {
   Grid,
   GridItem,
   Input,
+  position,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AuthCard from "./AuthCard";
 
 import { useForm } from "react-hook-form";
@@ -17,8 +19,11 @@ import { MdOutlineErrorOutline } from "react-icons/md";
 import { signupSchema } from "../../utils";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSignUp } from "api/auth";
+import config from "utils/config";
 
 const SignupForm = () => {
+  const [canSubmit, setCanSubmit] = useState(false);
   const {
     register,
     handleSubmit,
@@ -26,13 +31,70 @@ const SignupForm = () => {
   } = useForm({
     resolver: yupResolver(signupSchema),
   });
-
   const router = useRouter();
 
-  const onSubmit = (data) => {
-    router.push(`/auth/verify/?email=${data.email}`);
-    console.log(data);
+  const toast = useToast();
+  const errorToast = () => {
+    toast({
+      title: "Sign Up Error",
+      description: "This email is already taken",
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
   };
+  const successToast = () => {
+    toast({
+      title: "Sign Up Successful",
+      description: "Redirecting to dashboard...",
+      status: "success",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+
+  // ======= SIGN UP LOGIC ==========
+  const { mutate: signUp, isLoading, data: signUpData, error } = useSignUp();
+
+  const onSubmit = (data) => {
+    data = {
+      firstname: data.firstName,
+      lastname: data.lastName,
+      email: data.email,
+      password: data.password,
+      device: {},
+    };
+    console.log(data);
+    signUp(data);
+    // router.push(`/auth/verify/?email=${data.email}`);
+  };
+
+  useEffect(() => {
+    if (error) {
+      console.log(error.message);
+      if ((error.message = "Request failed with status code 409")) errorToast();
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (!signUpData) {
+    }
+    if (signUpData?.user) {
+      console.log(signUpData);
+      const user = config.key.user;
+      const token = config.key.token;
+      const result = JSON.stringify(signUpData.user);
+      localStorage.setItem(user, result);
+      localStorage.setItem(token, signUpData.user.access_token);
+      successToast();
+      router.push("/");
+    }
+  }, [signUpData]);
+
   return (
     <Box
       w="full"
@@ -156,7 +218,11 @@ const SignupForm = () => {
             )}
           </Box>
           <Box display="flex" mb="32px">
-            <Checkbox mr="12px" size="lg"></Checkbox>
+            <Checkbox
+              onChange={() => setCanSubmit(!canSubmit)}
+              mr="12px"
+              size="lg"
+            ></Checkbox>
             <Text>
               I certify that I am 18years of age or older, and agree to the{" "}
               <Box display="inline" color="app.primary">
@@ -169,7 +235,12 @@ const SignupForm = () => {
             </Text>
           </Box>
 
-          <Button type="submit" w="full">
+          <Button
+            isLoading={isLoading}
+            disabled={!canSubmit}
+            type="submit"
+            w="full"
+          >
             Create Account
           </Button>
         </form>

@@ -5,7 +5,15 @@ export const signupSchema = yup
     firstName: yup.string().required().min(3).max(20),
     lastName: yup.string().required().min(3).max(20),
     email: yup.string().email().required(),
-    password: yup.string().required().min(8).max(20),
+    password: yup
+      .string()
+      .required()
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/,
+        "Password should have at least one upper and lowercase, number and special character"
+      )
+      .min(8)
+      .max(20),
   })
   .required();
 

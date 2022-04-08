@@ -9,6 +9,7 @@ import {
 import { authNavs, mainNavs, mobileNavs } from "./navs";
 import formatter from "./formatter";
 import { statusBg, statusColor } from "./statusColors";
+import config from "./config";
 
 export {
   signupSchema,
@@ -23,4 +24,5 @@ export {
   formatter,
   statusBg,
   statusColor,
+  config,
 };
