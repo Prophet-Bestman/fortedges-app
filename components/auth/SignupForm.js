@@ -48,7 +48,7 @@ const SignupForm = () => {
   const successToast = () => {
     toast({
       title: "Sign Up Successful",
-      description: "Redirecting to dashboard...",
+      description: "Sending you a confirmation email...",
       status: "success",
       duration: 4000,
       isClosable: true,
@@ -68,14 +68,11 @@ const SignupForm = () => {
       password: data.password,
       device: {},
     };
-    console.log(data);
     signUp(data);
-    // router.push(`/auth/verify/?email=${data.email}`);
   };
 
   useEffect(() => {
     if (error) {
-      console.log(error.message);
       if ((error.message = "Request failed with status code 409")) errorToast();
     }
   }, [error]);
@@ -84,14 +81,14 @@ const SignupForm = () => {
     if (!signUpData) {
     }
     if (signUpData?.user) {
-      console.log(signUpData);
       const user = config.key.user;
       const token = config.key.token;
       const result = JSON.stringify(signUpData.user);
       localStorage.setItem(user, result);
       localStorage.setItem(token, signUpData.user.access_token);
       successToast();
-      router.push("/");
+      // router.push("/");
+      router.push(`/auth/verify/?email=${signUpData.user.email}`);
     }
   }, [signUpData]);
 

@@ -37,7 +37,7 @@ const VerifyResponse = ({ email }) => {
         </Box>
       </AuthCard>
 
-      <Link href="#">
+      <Link href="/auth/signup">
         <Text
           cursor="pointer"
           fontWeight="600"
