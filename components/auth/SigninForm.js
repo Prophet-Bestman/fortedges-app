@@ -1,15 +1,13 @@
 import {
   Box,
   Button,
-  Checkbox,
-  Grid,
-  GridItem,
   Input,
   InputGroup,
   InputRightElement,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AuthCard from "./AuthCard";
 
 import { useForm } from "react-hook-form";
@@ -17,8 +15,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { signinSchema } from "utils";
+import { config, signinSchema } from "utils";
 import Link from "next/link";
+import { useLogIn } from "api/auth";
+import { useRouter } from "next/router";
 
 const SigninForm = () => {
   const [show, setShow] = useState(false);
@@ -35,7 +35,70 @@ const SigninForm = () => {
     resolver: yupResolver(signinSchema),
   });
 
-  const onSubmit = (data) => console.log(data);
+  const router = useRouter();
+  const toast = useToast();
+
+  const inValidCredentialsToast = () => {
+    toast({
+      title: "Invalid Email or Password",
+      description: "Check your login details and try again",
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+  const successToast = () => {
+    toast({
+      title: "Logged In",
+      description: "Redirecting to dashboard...",
+      status: "success",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+
+  // ======= SIGN UP LOGIC ==========
+  const { mutate: login, isLoading, data: loginData, error } = useLogIn();
+
+  const onSubmit = (data) => {
+    data = {
+      email: data.email,
+      password: data.password,
+      device: {},
+    };
+    console.log(data);
+    login(data);
+  };
+
+  useEffect(() => {
+    if (error) {
+      if ((error.message = "Request failed with status code 400"))
+        inValidCredentialsToast();
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (!loginData) {
+    }
+    if (loginData?.user) {
+      const user = config.key.user;
+      const token = config.key.token;
+      const wallet = config.key.wallet;
+      const result = JSON.stringify(loginData.user);
+      const walletData = JSON.stringify(loginData.wallet);
+      localStorage.clear();
+      localStorage.setItem(user, result);
+      localStorage.setItem(token, loginData.user.access_token);
+      localStorage.setItem(wallet, walletData);
+      successToast();
+      // router.push("/");
+      router.push(`/`);
+    }
+  }, [loginData]);
 
   return (
     <Box
@@ -102,7 +165,7 @@ const SigninForm = () => {
             )}
           </Box>
 
-          <Button type="submit" w="full">
+          <Button isLoading={isLoading} type="submit" w="full">
             Sign In
           </Button>
         </form>

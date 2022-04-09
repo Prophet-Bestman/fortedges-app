@@ -83,11 +83,14 @@ const SignupForm = () => {
     if (signUpData?.user) {
       const user = config.key.user;
       const token = config.key.token;
+      const wallet = config.key.wallet;
       const result = JSON.stringify(signUpData.user);
+      const walletData = JSON.stringify(signUpData.wallet);
+      localStorage.clear();
       localStorage.setItem(user, result);
       localStorage.setItem(token, signUpData.user.access_token);
+      localStorage.setItem(wallet, walletData);
       successToast();
-      // router.push("/");
       router.push(`/auth/verify/?email=${signUpData.user.email}`);
     }
   }, [signUpData]);

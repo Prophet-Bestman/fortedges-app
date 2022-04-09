@@ -15,4 +15,10 @@ const useSignUp = () => {
   );
 };
 
-export { useSignUp };
+const useLogIn = () => {
+  return useMutation((values) =>
+    request.post("/auth/login", values).then((res) => res.data)
+  );
+};
+
+export { useSignUp, useLogIn };
