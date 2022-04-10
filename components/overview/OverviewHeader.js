@@ -1,14 +1,49 @@
-import { Box, Button, Flex, Grid, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, Text, useQuery } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineEyeInvisible, AiOutlinePlus } from "react-icons/ai";
 import OverviewCard from "./OverviewCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
+import { useGetUser } from "api/user";
+import { config } from "utils";
+import configOptions from "api/config";
 
 const OverviewHeader = () => {
+  const [user, setUser] = useState({});
+  const [wallet, setWallet] = useState({});
+
+  const { data: userData, error } = useGetUser();
+
+  console.log("User: ", user);
+  console.log("Wallet: ", wallet);
+
+  useEffect(() => {
+    const localWallet = localStorage.getItem(config.key.wallet);
+    if (localWallet != undefined) {
+      const wallet = JSON.parse(localWallet);
+      setWallet(wallet);
+    }
+  }, []);
+
+  useEffect(() => {
+    let user;
+    if (userData != undefined) {
+      console.log(userData);
+      setUser(userData);
+      user = JSON.stringify(userData);
+      localStorage.setItem(config.key.user, user);
+    } else console.log("No data");
+  }, [userData]);
+
+  React.useEffect(() => {
+    if (error != undefined) {
+      console.log(error.message);
+    } else console.log("No Error");
+  }, [error]);
+
   return (
     <Box
       pt="128px"
@@ -17,7 +52,7 @@ const OverviewHeader = () => {
       pr={["24px", null, "32px", , "64px"]}
     >
       <Text fontStyle="13px" color="text.black">
-        Good Afternoon Billy ☀️
+        Good Afternoon {user.firstname} ☀️
       </Text>
       <Flex
         display={["none", , "flex"]}
@@ -85,16 +120,23 @@ const OverviewHeader = () => {
       >
         <SwiperSlide>
           <OverviewCard
-            amount={"$2000.93"}
-            gains="14 %"
+            amount={wallet.balance ? wallet.balance : "$0.00"}
+            gains={wallet?.gains ? wallet.gails : "0%"}
             title="Total Balance"
           />
         </SwiperSlide>
         <SwiperSlide>
-          <OverviewCard amount={"$1800.00"} title="Total Invested" />
+          <OverviewCard
+            amount={wallet.balance ? wallet.balance : "$0.00"}
+            title="Total Invested"
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <OverviewCard amount={"$200.93"} gains="14 %" title="Total Profit" />
+          <OverviewCard
+            amount={wallet.balance ? wallet.balance : "$0.00"}
+            gains={wallet?.gains ? wallet.gails : "0%"}
+            title="Total Profit"
+          />
         </SwiperSlide>
       </Swiper>
 

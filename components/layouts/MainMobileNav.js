@@ -73,7 +73,7 @@ const MainMobileNav = ({ isOpen, onClose }) => {
             </Box>
             <Box px="16px" pt="32px" color="text.black">
               <Text _hover={{ color: "app.primary" }} mb="16px">
-                <Link href="#">Settings</Link>
+                <Link href="/settings">Settings</Link>
               </Text>
               <Text _hover={{ color: "app.primary" }} mb="16px">
                 <Link href="#">Help</Link>

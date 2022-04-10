@@ -30,7 +30,7 @@ const OverviewCard = ({ title, amount, gains, className }) => {
       </Text>
 
       {gains && (
-        <Flex gap="15px" alignItems="center">
+        <Flex gap="5px" alignItems="center">
           <Text fontSize="13px" color="text.grey">
             Total Gains
           </Text>

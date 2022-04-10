@@ -54,7 +54,7 @@ const SigninForm = () => {
       title: "Logged In",
       description: "Redirecting to dashboard...",
       status: "success",
-      duration: 4000,
+      duration: 1000,
       isClosable: true,
       variant: "left-accent",
       position: "top",
@@ -88,12 +88,14 @@ const SigninForm = () => {
       const user = config.key.user;
       const token = config.key.token;
       const wallet = config.key.wallet;
+      const userID = config.key.userID;
       const result = JSON.stringify(loginData.user);
       const walletData = JSON.stringify(loginData.wallet);
       localStorage.clear();
       localStorage.setItem(user, result);
       localStorage.setItem(token, loginData.user.access_token);
       localStorage.setItem(wallet, walletData);
+      localStorage.setItem(userID, loginData.user._id);
       successToast();
       // router.push("/");
       router.push(`/`);

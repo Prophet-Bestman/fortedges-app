@@ -10,6 +10,7 @@ import {
   TodaysQuote,
   YourPlans,
 } from "components/overview";
+import { QueryClient } from "react-query";
 
 export default function Home() {
   const { dispatch: setActiveNav } = useContext(NavContext);

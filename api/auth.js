@@ -1,10 +1,6 @@
 import axios from "axios";
 import { useMutation } from "react-query";
 
-import configOptions from "./config";
-
-import { config } from "utils";
-
 const request = axios.create({
   baseURL: "https://fortedges-api.herokuapp.com",
 });

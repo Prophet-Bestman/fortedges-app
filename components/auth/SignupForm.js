@@ -50,7 +50,7 @@ const SignupForm = () => {
       title: "Sign Up Successful",
       description: "Sending you a confirmation email...",
       status: "success",
-      duration: 4000,
+      duration: 2000,
       isClosable: true,
       variant: "left-accent",
       position: "top",
@@ -84,12 +84,14 @@ const SignupForm = () => {
       const user = config.key.user;
       const token = config.key.token;
       const wallet = config.key.wallet;
+      const userID = config.key.userID;
       const result = JSON.stringify(signUpData.user);
       const walletData = JSON.stringify(signUpData.wallet);
       localStorage.clear();
       localStorage.setItem(user, result);
       localStorage.setItem(token, signUpData.user.access_token);
       localStorage.setItem(wallet, walletData);
+      localStorage.setItem(userID, signUpData.user._id);
       successToast();
       router.push(`/auth/verify/?email=${signUpData.user.email}`);
     }

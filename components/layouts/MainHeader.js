@@ -17,15 +17,36 @@ import MainMobileNav from "./MainMobileNav";
 import { NavContext } from "providers/NavProvider";
 import MobilePageTitle from "components/MobilePageTitle";
 import { useRouter } from "next/router";
+import { config } from "utils";
+import { useGetUser } from "api/user";
 
 const MainHeader = () => {
   const notificationCount = 10;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { navState } = useContext(NavContext);
   const pageTitle = navState.pageTitle;
+  const [user, setUser] = React.useState({});
 
   const router = useRouter();
+  const { data: userData, error } = useGetUser();
 
+  console.log("User: ", user);
+
+  React.useEffect(() => {
+    let user;
+    if (userData != undefined) {
+      console.log(userData);
+      setUser(userData);
+      user = JSON.stringify(userData);
+      localStorage.setItem(config.key.user, user);
+    } else console.log("No data");
+  }, [userData]);
+
+  React.useEffect(() => {
+    if (error != undefined) {
+      console.log(error.message);
+    } else console.log("No Error");
+  }, [error]);
   return (
     <Box position="absolute" top="0" left={0} w="full">
       <Box
@@ -111,12 +132,16 @@ const MainHeader = () => {
                     bg="gray"
                     mb="16px"
                   ></Box>
-                  <Text fontSize="16px" fontWeight={600}>
-                    {"User’s name"}
-                  </Text>
-                  <Text fontSize="14px" color="text.grey" fontWeight={400}>
-                    {"User’s Email Address"}
-                  </Text>
+                  {!!user && (
+                    <>
+                      <Text fontSize="16px" fontWeight={600}>
+                        {`${user?.firstname} ${user?.lastname}`}
+                      </Text>
+                      <Text fontSize="14px" color="text.grey" fontWeight={400}>
+                        {user?.email}
+                      </Text>
+                    </>
+                  )}
                 </Flex>
                 <Box px="16px" pt="32px" color="text.black">
                   <Text _hover={{ color: "app.primary" }} mb="16px">

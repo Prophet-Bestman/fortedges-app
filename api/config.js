@@ -9,11 +9,27 @@ const configOptions = () => {
 
   if (!!accessToken) {
     return {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+      "x-access-token": accessToken,
     };
   }
+};
+
+export const getUserID = () => {
+  if (typeof window === "undefined") return {};
+
+  if (!window.localStorage.getItem(config.key.userID)) return {};
+
+  const userID = window.localStorage.getItem(config.key.userID);
+
+  if (!!userID) {
+    return userID;
+  }
+};
+
+export const getHeaders = (accessToken) => {
+  return {
+    "x-access-token": accessToken,
+  };
 };
 
 export default configOptions;
