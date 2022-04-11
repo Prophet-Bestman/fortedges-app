@@ -8,7 +8,7 @@ import {
   Input,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { BiCheck } from "react-icons/bi";
 import {
   AiOutlineClose,
@@ -16,17 +16,23 @@ import {
   AiOutlineArrowLeft,
 } from "react-icons/ai";
 import IDSuccess from "./IDSuccess";
+import { useVerifyID } from "api/verification";
 
-const IdPageTwo = ({ setIDPage, title }) => {
+const IdPageTwo = ({ setIDPage, title, type }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedFile, setSelctedFile] = useState(null);
   const [selectedFileTwo, setSelctedFileTwo] = useState(null);
   const filePickerRef = useRef(null);
   const filePickerRefTwo = useRef(null);
+  const [result, setResult] = useState({});
 
   const prev = () => {
     setIDPage(1);
   };
+
+  console.log(type);
+
+  const { mutate: verifyID, isLoading, data: verifiedData } = useVerifyID();
 
   const addImg = (e) => {
     const reader = new FileReader();
@@ -46,6 +52,26 @@ const IdPageTwo = ({ setIDPage, title }) => {
       setSelctedFileTwo(readerEvent.target.result);
     };
   };
+
+  const submitID = () => {
+    console.log(selectedFile);
+    const ID = {
+      front: selectedFile,
+      back: selectedFileTwo,
+      type: type,
+    };
+
+    verifyID(ID);
+  };
+
+  useEffect(() => {
+    console.log("Data returned");
+    if (verifiedData !== undefined) {
+      setResult(verifiedData);
+    }
+  }, [verifiedData]);
+
+  console.log("Result: ", result);
 
   return (
     <Box mb="40px">
@@ -214,10 +240,10 @@ const IdPageTwo = ({ setIDPage, title }) => {
 
           <Button
             disabled={!selectedFile || !selectedFileTwo}
-            // disabled
+            isLoading={isLoading}
             my="24px"
             w="full"
-            onClick={onOpen}
+            onClick={submitID}
           >
             Continue
           </Button>

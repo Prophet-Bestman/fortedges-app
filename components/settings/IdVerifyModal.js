@@ -12,6 +12,7 @@ import IdPageTwo from "./IdPageTwo";
 const IDVerifyModal = ({ isOpen, onClose }) => {
   const [IDPage, setIDPage] = useState(1);
   const [title, setTitle] = useState("");
+  const [type, setType] = useState("");
 
   return (
     <Modal isOpen={isOpen} size="full">
@@ -23,10 +24,13 @@ const IDVerifyModal = ({ isOpen, onClose }) => {
               <IdPageOne
                 setTitle={setTitle}
                 onClose={onClose}
+                setType={setType}
                 setIDPage={setIDPage}
               />
             )}
-            {IDPage === 2 && <IdPageTwo title={title} setIDPage={setIDPage} />}
+            {IDPage === 2 && (
+              <IdPageTwo title={title} setIDPage={setIDPage} type={type} />
+            )}
           </Box>
         </ModalBody>
       </ModalContent>

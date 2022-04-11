@@ -3,8 +3,9 @@ import React from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
-const IdPageOne = ({ setIDPage, setTitle, onClose }) => {
-  const next = (title) => {
+const IdPageOne = ({ setIDPage, setTitle, onClose, setType }) => {
+  const next = (title, type) => {
+    setType(type);
     setTitle(title);
     setIDPage(2);
   };
@@ -36,7 +37,9 @@ const IdPageOne = ({ setIDPage, setTitle, onClose }) => {
             borderBottomWidth={"1px"}
             borderColor="#E0E1E4"
             cursor="pointer"
-            onClick={() => next("Upload Image of Driver's Licence")}
+            onClick={() =>
+              next("Upload Image of Driver's Licence", "drivers_licence")
+            }
           >
             <Text>{"Driver’s licence"}</Text>
             <MdKeyboardArrowRight />
@@ -49,7 +52,7 @@ const IdPageOne = ({ setIDPage, setTitle, onClose }) => {
             borderBottomWidth={"1px"}
             borderColor="#E0E1E4"
             cursor="pointer"
-            onClick={() => next("Upload Image of ID Card")}
+            onClick={() => next("Upload Image of ID Card", "gov_issued_card")}
           >
             <Text>Government-issued ID Card </Text>
             <MdKeyboardArrowRight />
@@ -62,7 +65,9 @@ const IdPageOne = ({ setIDPage, setTitle, onClose }) => {
             borderBottomWidth={"1px"}
             borderColor="#E0E1E4"
             cursor="pointer"
-            onClick={() => next("Upload Image of International Passport")}
+            onClick={() =>
+              next("Upload Image of International Passport", "passport")
+            }
           >
             <Text>International Passport</Text>
             <MdKeyboardArrowRight />

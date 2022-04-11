@@ -86,8 +86,6 @@ const ProfileTab = () => {
     data: userData2,
   } = useUpdateUser();
 
-  console.log(user);
-
   // ================= TOASTS ====================
 
   const handleSuccessToast = useCallback(
@@ -125,22 +123,17 @@ const ProfileTab = () => {
     let builder = {};
     validateProfile(builder, user, profileDetails, setCredError);
 
-    console.log("builder: ", builder);
     if (Object.keys(builder).length !== 0) {
       updateUserProfile(builder);
     }
   };
 
   const submitProfile2 = (data) => {
-    console.log("Personal info");
     let builder = { address: {} };
-    console.log(data);
 
     validatePersonalInfo(builder, user, data, setCredError);
-    console.log(builder);
 
     if (Object.keys(builder).length !== 0) {
-      console.log(builder);
       updateUserProfile2(builder);
     }
   };

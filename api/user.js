@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { config } from "utils";
 import configOptions, { getUserID } from "./config";
 
 const request = axios.create({
@@ -32,7 +31,8 @@ const useUpdateUser = () => {
     (values) =>
       request
         .put(`/${user_id}`, values, { headers: headers })
-        .then((res) => res.data),
+        .then((res) => res.data)
+        .catch((err) => err.response.status),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("user");
