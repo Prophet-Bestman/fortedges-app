@@ -26,6 +26,18 @@ export const getUserID = () => {
   }
 };
 
+export const getUserFromLocalStorage = () => {
+  if (typeof window === "undefined") return {};
+
+  if (!window.localStorage.getItem(config.key.user)) return {};
+
+  const user = window.localStorage.getItem(config.key.user);
+
+  if (!!user) {
+    return JSON.parse(user);
+  }
+};
+
 export const getHeaders = (accessToken) => {
   return {
     "x-access-token": accessToken,

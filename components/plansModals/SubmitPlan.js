@@ -42,7 +42,6 @@ const SubmitPlan = () => {
   };
 
   const submitPlan = (data) => {
-    console.log(data);
     data = { planName: "" };
     onClose();
   };

@@ -70,7 +70,6 @@ const SigninForm = () => {
       password: data.password,
       device: {},
     };
-    console.log(data);
     login(data);
   };
 

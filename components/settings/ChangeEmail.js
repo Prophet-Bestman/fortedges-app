@@ -42,7 +42,6 @@ const ChangeEmail = ({ isOpen, onClose }) => {
   } = useDisclosure();
 
   const handleChangeEmail = async (data) => {
-    console.log(data);
     onVerifyOpen();
   };
 

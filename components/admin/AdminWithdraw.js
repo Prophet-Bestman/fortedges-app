@@ -53,11 +53,7 @@ const AdminWithdraw = ({ setStep }) => {
   } = useDisclosure();
 
   const submit = (data) => {
-    // data = { ...data, option: option.name };
-    console.log(data);
     onSuccessOpen();
-    // setData(data);
-    // setStep(2);
   };
 
   return (

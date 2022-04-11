@@ -41,7 +41,6 @@ const AddBonus = ({ setStep, onActionOpen }) => {
   });
 
   const submit = (data) => {
-    console.log(data);
     setTitle("Add Bonus");
     setText("Are you sure you want to add bonus to this user?");
     onConfirmOpen();

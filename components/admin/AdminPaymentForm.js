@@ -30,8 +30,6 @@ import { RequestSuccess } from "components/plansModals";
 
 const optionsArr = Object.entries(options);
 
-console.log("options", optionsArr);
-
 const AdminPaymentForm = ({ setStep }) => {
   const [option, setOption] = React.useState(options.btc);
   const [data, setData] = React.useState({});
@@ -39,8 +37,6 @@ const AdminPaymentForm = ({ setStep }) => {
   const planSchema = yup.object({
     amount: yup.number().required(),
   });
-
-  console.log(option);
 
   const {
     isOpen: isSuccessOpen,
@@ -63,7 +59,7 @@ const AdminPaymentForm = ({ setStep }) => {
 
   const submit = (data) => {
     data = { ...data, option: option.name };
-    console.log(data);
+
     setData(data);
     onSuccessOpen();
   };

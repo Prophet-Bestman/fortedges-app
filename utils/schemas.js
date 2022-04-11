@@ -57,3 +57,19 @@ export const accountStatementSchema = yup.object().shape({
   from: yup.string().required("Select a starting date"),
   to: yup.string().required("Select an ending date"),
 });
+
+export const profileSchema = yup.object().shape({
+  display_name: yup
+    .string()
+    .min(4, "Minimum of 4 characters")
+    .max(250, "maximum of 250 characters")
+    .required(),
+  email: yup.string().email("Enter A valid Email").required(),
+});
+
+export const personalInfoSchema = yup.object().shape({
+  dob: yup.string().required(),
+  country: yup.string().required(),
+  state: yup.string().required(),
+  city: yup.string().required(),
+});

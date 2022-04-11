@@ -8,7 +8,6 @@ const AdminNav = () => {
   const { navState } = useContext(NavContext);
   const active = navState.name;
 
-  console.log(active);
   return (
     <Box py="48px" w="full">
       <Text

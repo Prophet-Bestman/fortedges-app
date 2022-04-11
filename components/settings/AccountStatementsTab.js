@@ -32,7 +32,6 @@ const AccountStatementsTab = () => {
   });
 
   const submitPlan = (data) => {
-    console.log(data);
     onOpen();
   };
 

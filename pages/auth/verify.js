@@ -8,7 +8,6 @@ import React from "react";
 const Verify = () => {
   const router = useRouter();
   const { email } = router.query;
-  console.log(email);
   return (
     <Box>
       <Head>

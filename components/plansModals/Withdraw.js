@@ -61,8 +61,6 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
   } = useDisclosure();
 
   const submit = (data) => {
-    // data = { ...data, option: option.name };
-    console.log(data);
     onVerifyOpen();
     // setData(data);
     // setStep(2);

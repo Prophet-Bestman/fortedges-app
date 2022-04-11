@@ -48,7 +48,6 @@ const AddBalance = ({ setStep, onActionOpen }) => {
   } = useDisclosure();
 
   const submit = (data) => {
-    console.log(data);
     setTitle("Add Balance");
     setText("Are you sure you want to add balance to this user?");
     onConfirmOpen();

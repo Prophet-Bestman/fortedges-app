@@ -1,7 +1,7 @@
 import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 import { Padding } from "components/layouts";
 import { OverviewPlans } from "data";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import OverviewPlan from "./OverviewPlan";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
@@ -10,8 +10,17 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import "swiper/css";
 import "swiper/css/pagination";
 import Link from "next/link";
+import { useGetPlans } from "api/plans";
 
 const YourPlans = ({ title }) => {
+  const [plans, setPlans] = useState([]);
+
+  const { data: plansData } = useGetPlans();
+
+  useEffect(() => {
+    if (plansData != undefined) setPlans(plansData);
+  }, [plansData]);
+
   return (
     <Box my="64px">
       <Padding>
@@ -21,7 +30,7 @@ const YourPlans = ({ title }) => {
         >
           <GridItem colSpan={2}>
             <Text fontSize={["16px", "18px", "20px", "24px"]} mb="24px">
-              {title}
+              {/* {title} */}
             </Text>
             <Box>
               <Swiper
@@ -54,11 +63,12 @@ const YourPlans = ({ title }) => {
                     </Link>
                   </Flex>
                 </SwiperSlide>
-                {OverviewPlans.map((plan) => (
-                  <SwiperSlide key={plan.name}>
-                    <OverviewPlan plan={plan} />
-                  </SwiperSlide>
-                ))}
+                {plans?.length > 0 &&
+                  plans.map((plan) => (
+                    <SwiperSlide key={plan.name}>
+                      <OverviewPlan plan={plan} />
+                    </SwiperSlide>
+                  ))}
               </Swiper>
             </Box>
           </GridItem>

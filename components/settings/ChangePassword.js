@@ -33,10 +33,7 @@ const ChangePassword = ({ isOpen, onClose }) => {
     resolver: yupResolver(ChangePasswordSchema),
   });
 
-  const handleChangePassword = (data) => {
-    console.log(data);
-    console.log("Password", errors.oldPassword);
-  };
+  const handleChangePassword = (data) => {};
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="full">

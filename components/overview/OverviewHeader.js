@@ -17,9 +17,6 @@ const OverviewHeader = () => {
 
   const { data: userData, error } = useGetUser();
 
-  console.log("User: ", user);
-  console.log("Wallet: ", wallet);
-
   useEffect(() => {
     const localWallet = localStorage.getItem(config.key.wallet);
     if (localWallet != undefined) {
@@ -31,17 +28,17 @@ const OverviewHeader = () => {
   useEffect(() => {
     let user;
     if (userData != undefined) {
-      console.log(userData);
       setUser(userData);
       user = JSON.stringify(userData);
       localStorage.setItem(config.key.user, user);
-    } else console.log("No data");
+    } else {
+    }
   }, [userData]);
 
   React.useEffect(() => {
     if (error != undefined) {
-      console.log(error.message);
-    } else console.log("No Error");
+    } else {
+    }
   }, [error]);
 
   return (

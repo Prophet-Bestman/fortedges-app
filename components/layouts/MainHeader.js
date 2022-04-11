@@ -30,22 +30,20 @@ const MainHeader = () => {
   const router = useRouter();
   const { data: userData, error } = useGetUser();
 
-  console.log("User: ", user);
-
   React.useEffect(() => {
     let user;
     if (userData != undefined) {
-      console.log(userData);
       setUser(userData);
       user = JSON.stringify(userData);
       localStorage.setItem(config.key.user, user);
-    } else console.log("No data");
+    } else {
+    }
   }, [userData]);
 
   React.useEffect(() => {
     if (error != undefined) {
-      console.log(error.message);
-    } else console.log("No Error");
+    } else {
+    }
   }, [error]);
   return (
     <Box position="absolute" top="0" left={0} w="full">

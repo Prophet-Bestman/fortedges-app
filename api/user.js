@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { config } from "utils";
 import configOptions, { getUserID } from "./config";
 
 const request = axios.create({
@@ -15,7 +16,29 @@ const useGetUser = () => {
         headers: headers,
       })
       .then((res) => res.data)
+      .catch((err) => {
+        if (err.response.status === 403) {
+          localStorage.clear();
+        } else return err;
+      })
   );
 };
 
-export { useGetUser };
+const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  const user_id = getUserID();
+  return useMutation(
+    (values) =>
+      request
+        .put(`/${user_id}`, values, { headers: headers })
+        .then((res) => res.data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("user");
+      },
+    }
+  );
+};
+
+export { useGetUser, useUpdateUser };

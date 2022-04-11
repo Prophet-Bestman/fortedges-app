@@ -28,15 +28,11 @@ import { options } from "data";
 
 const optionsArr = Object.entries(options);
 
-console.log("options", optionsArr);
-
 const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
   const [requestSent, setRequestSent] = React.useState(false);
   const planSchema = yup.object({
     amount: yup.number().required(),
   });
-
-  console.log(option);
 
   const {
     register,
@@ -53,7 +49,6 @@ const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
 
   const submit = (data) => {
     data = { ...data, option: option.name };
-    console.log(data);
     setData(data);
     setStep(2);
   };
