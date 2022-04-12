@@ -53,17 +53,13 @@ const Explore = () => {
     if (error !== undefined) setFetchErr(error);
   }, [error]);
 
-  console.log(fetchErr);
-  console.log(plansData);
-  console.log(explorePlans);
-
-  const handlePlan = (name) => {
-    if (name === "Premium Stocks") {
-      onPremiumOpen();
-    } else if (name === "Real Estate") {
-      onRealEstateOpen();
-    } else onGoalOpen();
-  };
+  // const handlePlan = (name) => {
+  //   if (name === "Premium Stocks") {
+  //     onPremiumOpen();
+  //   } else if (name === "Real Estate") {
+  //     onRealEstateOpen();
+  //   } else onGoalOpen();
+  // };
 
   const handleGoal = (goalAction) => {
     switch (goalAction) {
@@ -203,6 +199,7 @@ const Explore = () => {
               handleGoal={() => handleGoal(goal.action)}
               key={goal.action}
               goal={goal}
+              // plan={}
             />
           ))}
         </Flex>
@@ -221,11 +218,12 @@ const Explore = () => {
       </Box>
       {/* <PremiumPlan isOpen={isPremiumOpen} onClose={onPremiumClose} planID={} />
       <RealEstatePlan isOpen={isRealEstateOpen} onClose={onRealEstateClose} planID={} /> */}
-      <GoalsPlan
+      {/* <GoalsPlan
         isOpen={isGoalOpen}
         onClose={onGoalClose}
         goalProps={goalProps}
-      />
+        plan={}
+      /> */}
       <SubmitPlan />
       <SubmitGoal />
     </Box>

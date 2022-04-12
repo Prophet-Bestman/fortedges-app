@@ -31,7 +31,6 @@ import SuccessModal from "components/SuccessModal";
 
 const SubmitPlan = () => {
   const { planFormState, dispatch: setOpen } = useContext(PlanFormContext);
-  const { dispatch: openSuccess } = useContext(SuccessModalContext);
   const [wallet, setWallet] = useState({});
   const [planCreated, setPlanCreated] = useState({});
   const [planError, setPlanError] = useState();

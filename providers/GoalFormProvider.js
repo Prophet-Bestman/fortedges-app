@@ -62,11 +62,13 @@ const initialState = {
   isOpen: false,
   fromType: goalFormTypes.FIXED_INCOME,
   goalFormQuestions: {},
+  id: "",
 };
 
 export const goalFormActions = {
   OPEN_FORM: "OPEN_FORM",
   CLOSE_FORM: "CLOSE_FORM",
+  SET_ID: "SET-ID",
 };
 
 const reducer = (goalFormState, action) => {
@@ -109,6 +111,11 @@ const reducer = (goalFormState, action) => {
       return (goalFormState = {
         ...goalFormState,
         goalFormQuestions: goalFormQuestions.TRAVEL,
+      });
+    case goalFormActions.SET_ID:
+      return (goalFormState = {
+        ...goalFormState,
+        id: action.payload,
       });
     default:
       return (goalFormState = {

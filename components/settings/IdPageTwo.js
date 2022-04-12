@@ -17,20 +17,26 @@ import {
 } from "react-icons/ai";
 import IDSuccess from "./IDSuccess";
 import { useVerifyID } from "api/verification";
+import ErrorModal from "components/ErrorModal";
 
 const IdPageTwo = ({ setIDPage, title, type }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedFile, setSelctedFile] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isErrorOpen,
+    onOpen: onErrorOpen,
+    onClose: onErrorClose,
+  } = useDisclosure();
   const [selectedFileTwo, setSelctedFileTwo] = useState(null);
   const filePickerRef = useRef(null);
   const filePickerRefTwo = useRef(null);
-  const [result, setResult] = useState({});
+  const [uploadedImg, setUploadedImg] = useState();
+  const [uploadedImgTwo, setUploadedImgTwo] = useState();
+  // const {isOpen, onOpen} = useDisclosure()
 
   const prev = () => {
     setIDPage(1);
   };
-
-  console.log(type);
 
   const { mutate: verifyID, isLoading, data: verifiedData } = useVerifyID();
 
@@ -42,6 +48,7 @@ const IdPageTwo = ({ setIDPage, title, type }) => {
     reader.onload = (readerEvent) => {
       setSelctedFile(readerEvent.target.result);
     };
+    setUploadedImg(e.target.files[0]);
   };
   const addImgTwo = (e) => {
     const reader = new FileReader();
@@ -51,27 +58,27 @@ const IdPageTwo = ({ setIDPage, title, type }) => {
     reader.onload = (readerEvent) => {
       setSelctedFileTwo(readerEvent.target.result);
     };
+    setUploadedImgTwo(e.target.files[0]);
   };
 
   const submitID = () => {
-    console.log(selectedFile);
-    const ID = {
-      front: selectedFile,
-      back: selectedFileTwo,
-      type: type,
-    };
+    const ID = new FormData();
+    ID.append("front", uploadedImg);
+    ID.append("back", uploadedImgTwo);
+    ID.append("type", type);
 
     verifyID(ID);
   };
 
   useEffect(() => {
-    console.log("Data returned");
     if (verifiedData !== undefined) {
-      setResult(verifiedData);
+      if (verifiedData === 409) {
+        onErrorOpen();
+      } else {
+        onOpen();
+      }
     }
   }, [verifiedData]);
-
-  console.log("Result: ", result);
 
   return (
     <Box mb="40px">
@@ -239,7 +246,7 @@ const IdPageTwo = ({ setIDPage, title, type }) => {
           </Box>
 
           <Button
-            disabled={!selectedFile || !selectedFileTwo}
+            // disabled={!selectedFile || !selectedFileTwo}
             isLoading={isLoading}
             my="24px"
             w="full"
@@ -250,6 +257,13 @@ const IdPageTwo = ({ setIDPage, title, type }) => {
         </Box>
       </Box>
       <IDSuccess onClose={onClose} isOpen={isOpen} />
+      <ErrorModal
+        onClose={onErrorClose}
+        isOpen={isErrorOpen}
+        msg={`An ID has already been submitted.
+      Await Confirmation
+      `}
+      />
     </Box>
   );
 };

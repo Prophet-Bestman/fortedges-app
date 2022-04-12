@@ -15,11 +15,14 @@ import ChangeEmail from "./ChangeEmail";
 import IDVerifyModal from "./IdVerifyModal";
 import VerifyEmail from "./VerifyEmail";
 import { getUserFromLocalStorage } from "api/config";
+import { useGetVerifications } from "api/verification";
 
 const IDVerificationTab = () => {
   const [user, setUser] = useState();
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isIdVerified, setIdVerified] = useState(false);
+  const [verificationsData, setVerificationsData] = useState({});
+  const [idStatus, setIdStatus] = useState("");
 
   useEffect(() => {
     const userDetails = getUserFromLocalStorage();
@@ -32,6 +35,17 @@ const IDVerificationTab = () => {
       setIdVerified(user?.is_verified);
     }
   }, [user]);
+
+  const { data } = useGetVerifications();
+
+  useEffect(() => {
+    if (data !== undefined) {
+      setVerificationsData(data);
+      setIdStatus(data.status);
+    }
+  }, [data]);
+
+  console.log("Verificaitons Data: ", verificationsData);
 
   console.log("user: ", user);
   console.log(isIdVerified);
@@ -124,7 +138,7 @@ const IDVerificationTab = () => {
         >
           <Text>ID Verification</Text>
 
-          {isIdVerified ? (
+          {idStatus === "verified" ? (
             <Flex>
               <Flex
                 color={"white"}
@@ -135,6 +149,22 @@ const IDVerificationTab = () => {
                 rounded="full"
               >
                 Verified
+              </Flex>
+              <Box display={["unset", , "none"]}>
+                <MdKeyboardArrowRight />
+              </Box>
+            </Flex>
+          ) : idStatus === "in-review" ? (
+            <Flex>
+              <Flex
+                color={"white"}
+                bg="yellow.500"
+                px="12px"
+                py="2px"
+                fontSize="12px"
+                rounded="full"
+              >
+                In Review
               </Flex>
               <Box display={["unset", , "none"]}>
                 <MdKeyboardArrowRight />

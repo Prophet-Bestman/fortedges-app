@@ -12,8 +12,9 @@ import {
 import { useRouter } from "next/router";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { BiErrorCircle } from "react-icons/bi";
 
-const SuccessModal = ({ isOpen, msg }) => {
+const ErrorModal = ({ isOpen, msg }) => {
   const router = useRouter();
 
   return (
@@ -40,13 +41,12 @@ const SuccessModal = ({ isOpen, msg }) => {
             flexDir="column"
             mb="20px"
           >
-            <Image src="/img/success.svg" mb="20px" />
-
+            <BiErrorCircle opacity={0.7} color="red" size="100px" />
             <Box w="full" maxW={"380px"}>
               <Text
                 textAlign="center"
                 fontWeight="600"
-                mb="40px"
+                my="40px"
                 fontSize={"20px"}
               >
                 {msg}
@@ -59,4 +59,4 @@ const SuccessModal = ({ isOpen, msg }) => {
   );
 };
 
-export default SuccessModal;
+export default ErrorModal;

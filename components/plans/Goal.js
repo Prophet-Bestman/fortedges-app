@@ -1,13 +1,15 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { GoalsPlan } from "components/plansModals";
 import React from "react";
 import { BsArrowRightShort } from "react-icons/bs";
 
-const Goal = ({ goal, handleGoal }) => {
+const Goal = ({ goal, plan }) => {
   const { action, img, color } = goal;
+
   return (
     <Box
       bgColor={color}
-      onClick={() => handleGoal()}
+      // onClick={() => handleGoal()}
       bgRepeat="no-repeat"
       cursor="pointer"
       w="full"
@@ -34,6 +36,12 @@ const Goal = ({ goal, handleGoal }) => {
         <Text fontSize={"13px"}>{action}</Text>
         <BsArrowRightShort />
       </Box>
+      {/* <GoalsPlan
+        isOpen={isGoalOpen}
+        onClose={onGoalClose}
+        goalProps={goalProps}
+        plan={plan}
+      /> */}
     </Box>
   );
 };

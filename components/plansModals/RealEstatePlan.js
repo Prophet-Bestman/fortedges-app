@@ -99,6 +99,7 @@ const RealEstatePlan = ({ isOpen, onClose, plan }) => {
             w="full"
             onClick={() => {
               onClose();
+              setOpen({ type: planFormActions.SET_ID, payload: _id });
               setOpen({ type: planFormActions.OPEN_FORM });
             }}
           >

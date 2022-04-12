@@ -30,6 +30,7 @@ const PlanResponsive = ({ plan }) => {
       switch (plan.name) {
         case "Fixed Income":
           setCurrentPlanProps(planProps.fixedIncome);
+          setGoalProps(goalModalProps.fixedIncome);
           break;
         case "Real Estate":
           setCurrentPlanProps(planProps.realEstate);
@@ -87,7 +88,6 @@ const PlanResponsive = ({ plan }) => {
       <PremiumPlan
         isOpen={isPremiumOpen}
         onClose={onPremiumClose}
-        planID={_id}
         plan={plan}
       />
       <RealEstatePlan
