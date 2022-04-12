@@ -3,11 +3,13 @@ import React, { useReducer } from "react";
 export const PlanFormContext = React.createContext();
 const initialState = {
   isOpen: false,
+  id: "",
 };
 
 export const planFormActions = {
   OPEN_FORM: "OPEN_FORM",
   CLOSE_FORM: "CLOSE_FORM",
+  SET_ID: "SET_ID",
 };
 
 const reducer = (planFormState, action) => {
@@ -16,6 +18,8 @@ const reducer = (planFormState, action) => {
       return (planFormState = { ...planFormState, isOpen: true });
     case planFormActions.CLOSE_FORM:
       return (planFormState = { ...planFormState, isOpen: false });
+    case planFormActions.SET_ID:
+      return (planFormState = { ...planFormState, id: action.payload });
 
     default:
       break;

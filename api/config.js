@@ -37,6 +37,17 @@ export const getUserFromLocalStorage = () => {
     return JSON.parse(user);
   }
 };
+export const getLocalWallet = () => {
+  if (typeof window === "undefined") return {};
+
+  if (!window.localStorage.getItem(config.key.wallet)) return {};
+
+  const wallet = window.localStorage.getItem(config.key.wallet);
+
+  if (!!wallet) {
+    return JSON.parse(wallet);
+  }
+};
 
 export const getHeaders = (accessToken) => {
   return {

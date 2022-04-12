@@ -1,6 +1,6 @@
 import OverviewPlans from "./overviewPlans";
 import newsList from "./newsList";
-import explorePlans from "./explorePlans";
+import explorePlans, { planProps } from "./explorePlans";
 import goals from "./goals";
 import transactionHistory from "./transactionHistory";
 import historicalPerformance from "./historicalPerformance";
@@ -30,4 +30,5 @@ export {
   users,
   withdrawals,
   notifications,
+  planProps,
 };

@@ -17,8 +17,10 @@ import HistoricalPerformance from "./HistoricalPerformance";
 import { portfolioCountries } from "data";
 import Link from "next/link";
 import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
+import { formatter } from "utils";
 
-const RealEstatePlan = ({ isOpen, onClose }) => {
+const RealEstatePlan = ({ isOpen, onClose, plan }) => {
+  const { min, max, description, _id } = plan;
   const { dispatch: setOpen } = useContext(PlanFormContext);
   return (
     <Modal isOpen={isOpen} size="full">
@@ -49,16 +51,16 @@ const RealEstatePlan = ({ isOpen, onClose }) => {
             fontSize="14px"
             mb="16px"
           >
-            {
-              "Best for those who want a balance of good returns with medium level capital. This plan invests in rented buildings and properties around the world and return is 20 - 22.5% per annum."
-            }
+            {description}
           </Text>
 
           <Flex justify="center" fontSize="14px">
             <Text mb="40px" color="text.grey">
               Range -{" "}
             </Text>
-            <Text>$50,000 - $100,000</Text>
+            <Text>
+              {formatter.format(min)} - {formatter.format(max)}
+            </Text>
           </Flex>
 
           <HistoricalPerformance />

@@ -10,6 +10,7 @@ import GoalFormProvider from "providers/GoalFormProvider";
 import AdminLayout from "components/layouts/AdminLayout";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import SuccessModalProvider from "providers/SuccessModalProvider";
 
 function MyApp({ Component, pageProps }) {
   const [queryClient] = React.useState(() => new QueryClient());
@@ -22,11 +23,13 @@ function MyApp({ Component, pageProps }) {
           {Component.requireAuth ? (
             <NavProvider>
               <MainLayout>
-                <PlanFormProvider>
-                  <GoalFormProvider>
-                    <Component {...pageProps} />
-                  </GoalFormProvider>
-                </PlanFormProvider>
+                <SuccessModalProvider>
+                  <PlanFormProvider>
+                    <GoalFormProvider>
+                      <Component {...pageProps} />
+                    </GoalFormProvider>
+                  </PlanFormProvider>
+                </SuccessModalProvider>
               </MainLayout>
             </NavProvider>
           ) : Component.isAdmin ? (

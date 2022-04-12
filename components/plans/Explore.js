@@ -1,6 +1,6 @@
 import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
-import { explorePlans, goalModalProps, goals } from "data";
-import React, { useState, useContext } from "react";
+import { goalModalProps, goals } from "data";
+import React, { useState, useEffect, useContext } from "react";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Goal from "./Goal";
@@ -14,27 +14,48 @@ import {
   SubmitPlan,
 } from "components/plansModals";
 import Link from "next/link";
-import { GoalFormContext } from "providers/GoalFormProvider";
+import { useGetAllPlans } from "api/plans";
 
 const Explore = () => {
   const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
+  const [explorePlans, setExplorePlans] = useState([]);
+  const [fetchErr, setFetchErr] = useState("");
 
-  const {
-    isOpen: isPremiumOpen,
-    onClose: onPremiumClose,
-    onOpen: onPremiumOpen,
-  } = useDisclosure();
-  const {
-    isOpen: isRealEstateOpen,
-    onClose: onRealEstateClose,
-    onOpen: onRealEstateOpen,
-  } = useDisclosure();
+  // const {
+  //   isOpen: isPremiumOpen,
+  //   onClose: onPremiumClose,
+  //   onOpen: onPremiumOpen,
+  // } = useDisclosure();
+  // const {
+  //   isOpen: isRealEstateOpen,
+  //   onClose: onRealEstateClose,
+  //   onOpen: onRealEstateOpen,
+  // } = useDisclosure();
 
   const {
     isOpen: isGoalOpen,
     onClose: onGoalClose,
     onOpen: onGoalOpen,
   } = useDisclosure();
+
+  const { data: plansData, error } = useGetAllPlans();
+  useEffect(() => {
+    setExplorePlans([]);
+    if (plansData !== undefined) {
+      if (plansData !== explorePlans) {
+        const plans = plansData;
+        setExplorePlans(plans);
+      }
+    }
+  }, [plansData]);
+
+  useEffect(() => {
+    if (error !== undefined) setFetchErr(error);
+  }, [error]);
+
+  console.log(fetchErr);
+  console.log(plansData);
+  console.log(explorePlans);
 
   const handlePlan = (name) => {
     if (name === "Premium Stocks") {
@@ -98,43 +119,45 @@ const Explore = () => {
         </Text>
       </Box>
 
-      <Box>
-        <Swiper
-          slidesPerView={2}
-          spaceBetween={10}
-          pagination={{
-            clickable: true,
-          }}
-          breakpoints={{
-            767: {
-              slidesPerView: 3,
-              spaceBetween: 30,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 30,
-            },
-          }}
-          modules={[Pagination]}
-          className="mySwiper"
-          style={{
-            paddingBottom: "50px",
-            width: "full",
-          }}
-        >
-          {explorePlans.map((plan) => (
-            <SwiperSlide
-              style={{
-                cursor: "pointer",
-              }}
-              onClick={() => handlePlan(plan.name)}
-              key={plan.name}
-            >
-              <PlanResponsive plan={plan} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Box>
+      {explorePlans.length > 0 && (
+        <Box>
+          <Swiper
+            slidesPerView={2}
+            spaceBetween={10}
+            pagination={{
+              clickable: true,
+            }}
+            breakpoints={{
+              767: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+              },
+            }}
+            modules={[Pagination]}
+            className="mySwiper"
+            style={{
+              paddingBottom: "50px",
+              width: "full",
+            }}
+          >
+            {explorePlans.map((plan) => (
+              <SwiperSlide
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => {}}
+                key={plan._id}
+              >
+                <PlanResponsive plan={plan} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </Box>
+      )}
       <Box>
         <Flex
           justifyContent="space-between"
@@ -168,6 +191,7 @@ const Explore = () => {
           </Box>
         </Flex>
 
+        {/* LARGE SCREENS VIEW */}
         <Flex
           display={["none", , "flex"]}
           flexWrap="wrap"
@@ -183,6 +207,8 @@ const Explore = () => {
           ))}
         </Flex>
 
+        {/* MOBILE VIEW */}
+
         <Flex display={["flex", , "none"]} gap="12px" justify="center">
           {goals.slice(0, 2).map((goal) => (
             <Goal
@@ -193,8 +219,8 @@ const Explore = () => {
           ))}
         </Flex>
       </Box>
-      <PremiumPlan isOpen={isPremiumOpen} onClose={onPremiumClose} />
-      <RealEstatePlan isOpen={isRealEstateOpen} onClose={onRealEstateClose} />
+      {/* <PremiumPlan isOpen={isPremiumOpen} onClose={onPremiumClose} planID={} />
+      <RealEstatePlan isOpen={isRealEstateOpen} onClose={onRealEstateClose} planID={} /> */}
       <GoalsPlan
         isOpen={isGoalOpen}
         onClose={onGoalClose}

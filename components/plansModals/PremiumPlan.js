@@ -17,8 +17,10 @@ import HistoricalPerformance from "./HistoricalPerformance";
 import { portfolioBrands } from "data";
 import Link from "next/link";
 import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
+import { formatter } from "utils";
 
-const PremiumPlan = ({ isOpen, onClose }) => {
+const PremiumPlan = ({ isOpen, onClose, plan }) => {
+  const { min, max, description, _id } = plan;
   const { dispatch: setOpen } = useContext(PlanFormContext);
   return (
     <Modal isOpen={isOpen} size="full">
@@ -49,16 +51,17 @@ const PremiumPlan = ({ isOpen, onClose }) => {
             fontSize="14px"
             mb="16px"
           >
-            {
-              "Our premium plan is perfect for you if you’ve got a high capital and would like to own a slice of high-growth companies like Microsoft, Netflix, and many more. We’ve delivered historical returns of 35% per annum to our Long term investors.Returns are updated every weekday."
-            }
+            {description}
           </Text>
 
           <Flex justify="center" fontSize="14px">
             <Text mb="40px" color="text.grey">
               Range -{" "}
             </Text>
-            <Text> $2,000 - $4,000</Text>
+            <Text>
+              {" "}
+              {formatter.format(min)} - {formatter.format(max)}
+            </Text>
           </Flex>
 
           <HistoricalPerformance />
@@ -89,6 +92,7 @@ const PremiumPlan = ({ isOpen, onClose }) => {
             w="full"
             onClick={() => {
               onClose();
+              setOpen({ type: planFormActions.SET_ID, payload: _id });
               setOpen({ type: planFormActions.OPEN_FORM });
             }}
           >

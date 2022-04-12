@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -13,6 +13,7 @@ import {
   FormLabel,
   Input,
   Flex,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 import { AiOutlineClose } from "react-icons/ai";
@@ -20,10 +21,34 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { getLocalWallet } from "api/config.js";
+import { useCreateCustomPlan } from "api/plans";
+import {
+  successModalActions,
+  SuccessModalContext,
+} from "providers/SuccessModalProvider";
+import SuccessModal from "components/SuccessModal";
 
 const SubmitPlan = () => {
   const { planFormState, dispatch: setOpen } = useContext(PlanFormContext);
+  const { dispatch: openSuccess } = useContext(SuccessModalContext);
+  const [wallet, setWallet] = useState({});
+  const [planCreated, setPlanCreated] = useState({});
+  const [planError, setPlanError] = useState();
+
+  const {
+    isOpen: isSuccessOpen,
+    onClose: onSuccessClose,
+    onOpen: onSuccessOpen,
+  } = useDisclosure();
+
   const isOpen = planFormState.isOpen;
+  const id = planFormState.id;
+
+  useEffect(() => {
+    const localWallet = getLocalWallet();
+    setWallet(localWallet);
+  }, []);
 
   const planSchema = yup.object({
     planName: yup.string().required().min(3),
@@ -33,18 +58,50 @@ const SubmitPlan = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(planSchema),
   });
 
   const onClose = () => {
+    reset();
     setOpen({ type: planFormActions.CLOSE_FORM });
   };
 
+  const {
+    mutate: createPlan,
+    isLoading,
+    error,
+    data: createdPlan,
+  } = useCreateCustomPlan();
+
   const submitPlan = (data) => {
-    data = { planName: "" };
-    onClose();
+    const plan = {
+      name: data.planName,
+      wallet_id: wallet._id,
+      parent_plan_id: id,
+      description: "",
+    };
+    console.log(plan);
+    createPlan(plan);
+    // onClose();
   };
+
+  useEffect(() => {
+    if (createdPlan !== undefined) {
+      setPlanCreated(createdPlan);
+      onSuccessOpen();
+    }
+  }, [createdPlan]);
+
+  useEffect(() => {
+    if (error !== undefined) {
+      setPlanError(error);
+    }
+  }, [error]);
+
+  console.log("Created Plan: ", planCreated);
+  console.log("Plan Error: ", planError);
 
   return (
     <Modal isOpen={isOpen} isCentered size="sm">
@@ -90,7 +147,13 @@ const SubmitPlan = () => {
                 >
                   Back
                 </Button>
-                <Button w="full" ml={1} size="md" type="submit">
+                <Button
+                  isLoading={isLoading}
+                  w="full"
+                  ml={1}
+                  size="md"
+                  type="submit"
+                >
                   Continue
                 </Button>
               </Flex>
@@ -98,6 +161,7 @@ const SubmitPlan = () => {
           </Box>
         </ModalBody>
       </ModalContent>
+      <SuccessModal isOpen={isSuccessOpen} msg="Plan Creation Successful" />
     </Modal>
   );
 };

@@ -19,4 +19,10 @@ const explorePlans = [
   },
 ];
 
+export const planProps = {
+  fixedIncome: { img: "/img/emojis/money.png", color: "others.blue" },
+  realEstate: { img: "/img/emojis/home2.png", color: "others.green" },
+  premiumStock: { img: "/img/emojis/star.png", color: "text.brown" },
+};
+
 export default explorePlans;

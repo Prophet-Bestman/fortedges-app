@@ -5,6 +5,7 @@ import TransactionHistoryTable from "./TransactionHistoryTable";
 import ConfirmModal from "./ConfirmModal";
 import Notification from "./Notification";
 import ControlledInput from "./ControlledInput";
+import SuccessModal from "./SuccessModal";
 
 export {
   Capsule,
@@ -14,4 +15,5 @@ export {
   ConfirmModal,
   Notification,
   ControlledInput,
+  SuccessModal,
 };
