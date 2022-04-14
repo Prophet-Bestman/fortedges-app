@@ -1,14 +1,13 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { YourPlans } from "components/overview";
 import OverviewPlan from "components/overview/OverviewPlan";
-import { OverviewPlans } from "data";
 import Link from "next/link";
 import React from "react";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import PlanLarge from "./PlanLarge";
 
-const PlansTab = () => {
+const PlansTab = ({ plans }) => {
   return (
     <Box>
       <Text mt="65px" mb="40px" fontSize="20px">
@@ -46,11 +45,12 @@ const PlansTab = () => {
               </Link>
             </Flex>
           </SwiperSlide>
-          {OverviewPlans.map((plan) => (
-            <SwiperSlide key={plan.name}>
-              <OverviewPlan plan={plan} />
-            </SwiperSlide>
-          ))}
+          {!!plans &&
+            plans.map((plan) => (
+              <SwiperSlide key={plan._id}>
+                <OverviewPlan plan={plan} />
+              </SwiperSlide>
+            ))}
         </Swiper>
       </Box>
 
@@ -79,11 +79,12 @@ const PlansTab = () => {
             width: "full",
           }}
         >
-          {OverviewPlans.map((plan) => (
-            <SwiperSlide key={plan.name}>
-              <PlanLarge plan={plan} />
-            </SwiperSlide>
-          ))}
+          {!!plans &&
+            plans.map((plan) => (
+              <SwiperSlide key={plan._id}>
+                <PlanLarge plan={plan} />
+              </SwiperSlide>
+            ))}
         </Swiper>
       </Box>
     </Box>

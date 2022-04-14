@@ -1,22 +1,47 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { planProps } from "data";
 import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
 
 const PlanLarge = ({ plan }) => {
-  const { amount: initial, color, img, name, category, gain } = plan;
+  const { investment, name, balance, parent_plan_name, profit } = plan;
+  const [currentPlanProps, setCurrentPlanProps] = useState({});
+
+  console.log("Custom Plan: ", plan);
+
+  useEffect(() => {
+    if (plan !== undefined) {
+      switch (parent_plan_name) {
+        case "Fixed Income":
+          setCurrentPlanProps(planProps.fixedIncome);
+          break;
+        case "Real Estate":
+          setCurrentPlanProps(planProps.realEstate);
+          break;
+        case "Premium Stock":
+          setCurrentPlanProps(planProps.premiumStock);
+          break;
+
+        // default:
+        //   break;
+      }
+    }
+  }, [plan]);
+
+  console.log("Plan: ", plan);
+
+  console.log("Plan Props", currentPlanProps);
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   });
-
-  const amount = formatter.format(initial);
   return (
-    <Link href={"/myplans/plan"}>
+    <Link href={`/myplans/${plan._id}`}>
       <Box
         cursor="pointer"
-        bgColor={color}
+        bgColor={currentPlanProps?.color}
         bgRepeat="no-repeat"
         w="full"
         maxW="327px"
@@ -33,7 +58,7 @@ const PlanLarge = ({ plan }) => {
             style={{
               filter: "blur(4px)",
             }}
-            src={img}
+            src={currentPlanProps?.img}
             objectPosition="center"
             w="full"
           />
@@ -52,7 +77,7 @@ const PlanLarge = ({ plan }) => {
             <Text fontWeight="200" fontSize="12px" maxW="90px" mb="8px">
               {name}
             </Text>
-            <Text>{amount}</Text>
+            <Text>{formatter.format(investment)}</Text>
           </Box>
           <Box>
             <Text
@@ -65,9 +90,9 @@ const PlanLarge = ({ plan }) => {
               mb="8px"
             >
               <FiArrowUpRight fontSize="18px" />
-              {gain}
+              {profit}%
             </Text>
-            <Text>{amount}</Text>
+            <Text>{formatter.format(balance)}</Text>
           </Box>
         </Flex>
       </Box>

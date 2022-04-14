@@ -6,13 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Goal from "./Goal";
 import PlanResponsive from "./PlanResponsive";
 import { MdArrowForwardIos } from "react-icons/md";
-import {
-  GoalsPlan,
-  PremiumPlan,
-  RealEstatePlan,
-  SubmitGoal,
-  SubmitPlan,
-} from "components/plansModals";
+import { GoalsPlan, SubmitGoal, SubmitPlan } from "components/plansModals";
 import Link from "next/link";
 import { useGetAllPlans } from "api/plans";
 
@@ -20,17 +14,6 @@ const Explore = () => {
   const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
   const [explorePlans, setExplorePlans] = useState([]);
   const [fetchErr, setFetchErr] = useState("");
-
-  // const {
-  //   isOpen: isPremiumOpen,
-  //   onClose: onPremiumClose,
-  //   onOpen: onPremiumOpen,
-  // } = useDisclosure();
-  // const {
-  //   isOpen: isRealEstateOpen,
-  //   onClose: onRealEstateClose,
-  //   onOpen: onRealEstateOpen,
-  // } = useDisclosure();
 
   const {
     isOpen: isGoalOpen,
@@ -52,14 +35,6 @@ const Explore = () => {
   useEffect(() => {
     if (error !== undefined) setFetchErr(error);
   }, [error]);
-
-  // const handlePlan = (name) => {
-  //   if (name === "Premium Stocks") {
-  //     onPremiumOpen();
-  //   } else if (name === "Real Estate") {
-  //     onRealEstateOpen();
-  //   } else onGoalOpen();
-  // };
 
   const handleGoal = (goalAction) => {
     switch (goalAction) {
@@ -218,12 +193,12 @@ const Explore = () => {
       </Box>
       {/* <PremiumPlan isOpen={isPremiumOpen} onClose={onPremiumClose} planID={} />
       <RealEstatePlan isOpen={isRealEstateOpen} onClose={onRealEstateClose} planID={} /> */}
-      {/* <GoalsPlan
+      <GoalsPlan
         isOpen={isGoalOpen}
         onClose={onGoalClose}
         goalProps={goalProps}
-        plan={}
-      /> */}
+        // plan={}
+      />
       <SubmitPlan />
       <SubmitGoal />
     </Box>

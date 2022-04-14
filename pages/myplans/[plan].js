@@ -8,9 +8,13 @@ import {
 } from "components/plans";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
 import React, { useContext, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useGetSingleCustomPlan } from "api/plans";
 
-function PlanDetails({ data }) {
+function PlanDetails() {
   const { dispatch: setActiveNav } = useContext(NavContext);
+  const [planID, setPlanID] = React.useState("");
+  const [planDetails, setPlanDetails] = React.useState({});
 
   useEffect(() => {
     setActiveNav({
@@ -18,6 +22,28 @@ function PlanDetails({ data }) {
       payload: navStates.creatPlans,
     });
   }, []);
+
+  const router = useRouter();
+  const query = router.query;
+
+  useEffect(() => {
+    if (!!query) {
+      setPlanID(query.plan);
+    }
+  }, [query]);
+
+  console.log("ID", planID);
+
+  const { data: planData, error: planError } = useGetSingleCustomPlan(planID);
+
+  useEffect(() => {
+    if (!!planData) {
+      if (!planData.isArray) setPlanDetails(planData);
+    }
+  }, [planData]);
+
+  console.log("Plan Details: ", planDetails);
+
   return (
     <Padding>
       <Grid
@@ -30,14 +56,14 @@ function PlanDetails({ data }) {
           borderRightColor="#F1F2F4"
           borderRightWidth={[0, , , "1px"]}
         >
-          <PlanDetailsBanner name={"School Fees"} category={"Premium Stock"} />
-          <PlanBalance />
+          {!!planData && <PlanDetailsBanner plan={planData} />}
+          {!!planData && <PlanBalance plan={planData} />}
           <Box display={["none", , "block"]}>
             <PlanGraph />
           </Box>
         </GridItem>
         <GridItem pl={[, , , "18px"]} colSpan={5}>
-          <TransactionCol />
+          {!!planData && <TransactionCol plan={planDetails} />}
         </GridItem>
       </Grid>
     </Padding>
@@ -48,12 +74,11 @@ export default PlanDetails;
 
 PlanDetails.requireAuth = true;
 
-export const getServerSideProps = ({ params }) => {
-  const { plan } = params;
-  return {
-    props: {
-      data: plan,
-      //   plan,
-    },
-  };
-};
+// export const getServerSideProps = ({ params }) => {
+//   const { id } = params;
+//   return {
+//     props: {
+//       id,
+//     },
+//   };
+// };

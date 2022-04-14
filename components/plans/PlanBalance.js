@@ -1,7 +1,8 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
+import { formatter } from "utils";
 
-const PlanBalance = () => {
+const PlanBalance = ({ plan }) => {
   return (
     <Box my="24px">
       <Text
@@ -31,7 +32,7 @@ const PlanBalance = () => {
             Plan Balance
           </Text>
           <Text color="text.black" fontSize={"24px"} fontWeight="600">
-            $12,831.07
+            {!!plan && formatter.format(plan.balance)}
           </Text>
         </Box>
         <Box my="12px" display={["none", , "block"]}>
@@ -44,7 +45,7 @@ const PlanBalance = () => {
             Total Deposit
           </Text>
           <Text color="text.black" fontSize={"24px"} fontWeight="600">
-            $12,831.07
+            {!!plan && formatter.format(plan.investment)}
           </Text>
         </Box>
         <Box my="12px">
@@ -57,7 +58,7 @@ const PlanBalance = () => {
             Profits
           </Text>
           <Text color="text.green" fontSize={"13px"}>
-            +4,019.12 | + 32 %
+            +{formatter.format(plan.profit)}
           </Text>
         </Box>
       </Flex>

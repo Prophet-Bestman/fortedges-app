@@ -1,14 +1,14 @@
 import { Box, Image, Text } from "@chakra-ui/react";
 import React from "react";
 
-const PlanDetailsBanner = ({ category, name }) => {
+const PlanDetailsBanner = ({ plan }) => {
   return (
     <Box
       h="120px"
       bg={
-        category === "Premium Stock"
+        plan?.parent_plan_name === "Premium Stock"
           ? "text.brown"
-          : category === "Real Estate"
+          : plan?.parent_plan_name === "Real Estate"
           ? "others.green"
           : "others.blue"
       }
@@ -20,9 +20,9 @@ const PlanDetailsBanner = ({ category, name }) => {
         ml="140px"
         filter={"blur(3px)"}
         src={
-          category === "Premium Stock"
+          plan?.parent_plan_name === "Premium Stock"
             ? "/img/emojis/star.png"
-            : category === "Real Estate"
+            : plan?.parent_plan_name === "Real Estate"
             ? "/img/emojis/home2.png"
             : "/img/emojis/money.png"
         }
@@ -39,10 +39,12 @@ const PlanDetailsBanner = ({ category, name }) => {
         alignItems="center"
       >
         <Box color="white" textAlign="center">
-          <Text fontSize="20px" fontWeight={500}>
-            {name}
-          </Text>
-          <Text fontSize="14px">{category}</Text>
+          {!!plan && (
+            <Text fontSize="20px" fontWeight={500}>
+              {plan.name}
+            </Text>
+          )}
+          {!!plan && <Text fontSize="14px">{plan.parent_plan_name}</Text>}
         </Box>
       </Box>
     </Box>

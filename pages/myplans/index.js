@@ -1,8 +1,9 @@
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import { useGetCustomPlans } from "api/plans";
 import { Padding } from "components/layouts";
 import { Explore, PlansHeader, PlansTab, PortfolioTab } from "components/plans";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 export default function MyPlans() {
   const { dispatch: setActiveNav } = useContext(NavContext);
@@ -10,17 +11,30 @@ export default function MyPlans() {
   useEffect(() => {
     setActiveNav({ type: navActions.SET_ACTIVE, payload: navStates.myPlans });
   }, []);
+
+  const [customPlans, setCustomPlans] = useState();
+
+  const { data: plansData, error } = useGetCustomPlans();
+
+  useEffect(() => {
+    if (plansData !== undefined) {
+      setCustomPlans(plansData);
+    }
+  }, [plansData]);
+
+  console.log("My Plans: ", customPlans);
+
   return (
     <Padding>
       <Tabs variant="line" defaultIndex={0}>
         <PlansHeader />
         <TabPanels>
           <TabPanel>
-            <PlansTab />
+            <PlansTab plans={customPlans} />
             <Explore />
           </TabPanel>
           <TabPanel>
-            <PortfolioTab />
+            <PortfolioTab plans={customPlans} />
           </TabPanel>
         </TabPanels>
       </Tabs>

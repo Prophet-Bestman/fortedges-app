@@ -1,10 +1,32 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { RiArrowRightSLine } from "react-icons/ri";
+import { config, formatter } from "utils";
 import PorfolioDataRep from "./PorfolioDataRep";
 
-const PortfolioTab = () => {
+const PortfolioTab = ({ plans }) => {
+  const [assetClasses, setAssetClasses] = useState([]);
+  const [netWorth, setNetWorth] = useState("");
+  const [wallet, setWallet] = useState({});
+
+  useEffect(() => {
+    const localWallet = localStorage.getItem(config.key.wallet);
+    if (localWallet != undefined) {
+      const wallet = JSON.parse(localWallet);
+      setWallet(wallet);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (plans !== undefined) {
+      const clasees = plans.filter((plan) => plan.type === "plan");
+      setAssetClasses(clasees);
+    }
+  }, [plans]);
+
+  console.log("Networth", netWorth);
+
   return (
     <Box>
       <Flex
@@ -44,7 +66,7 @@ const PortfolioTab = () => {
             Net worth
           </Text>
           <Text fontWeight={600} color="text.black">
-            $20,000.00
+            {formatter.format(wallet?.balance)}
           </Text>
         </Box>
         <Box
@@ -59,7 +81,7 @@ const PortfolioTab = () => {
             Asset Classes
           </Text>
           <Text fontWeight={600} color="text.black">
-            3
+            {!!assetClasses && assetClasses?.length}
           </Text>
         </Box>
       </Flex>

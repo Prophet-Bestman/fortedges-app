@@ -1,3 +1,4 @@
+import { useQuery } from "@chakra-ui/react";
 import axios from "axios";
 import { useMutation } from "react-query";
 
@@ -16,5 +17,9 @@ const useLogIn = () => {
     request.post("/auth/login", values).then((res) => res.data)
   );
 };
+
+const useSendChangeLoginCode = () =>{
+  return useMutation((values) => request.post('/auth/change-email'))
+}
 
 export { useSignUp, useLogIn };

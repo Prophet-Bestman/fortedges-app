@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { Goal, PlanResponsive } from "components/plans";
-import { explorePlans, goalModalProps, goals } from "data";
+import { goalModalProps, goals } from "data";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { MdArrowForwardIos } from "react-icons/md";
@@ -15,23 +15,26 @@ import {
   SubmitPlan,
 } from "components/plansModals";
 import { GoalFormContext } from "providers/GoalFormProvider";
+import { useGetAllPlans } from "api/plans";
 
 const Create = () => {
   const { dispatch: setActiveNav } = useContext(NavContext);
   const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
   const { goalFormState } = useContext(GoalFormContext);
   const { goalFormQuestions } = goalFormState;
+  const [explorePlans, setExplorePlans] = useState([]);
+  const [fetchErr, setFetchErr] = useState("");
 
-  const {
-    isOpen: isPremiumOpen,
-    onClose: onPremiumClose,
-    onOpen: onPremiumOpen,
-  } = useDisclosure();
-  const {
-    isOpen: isRealEstateOpen,
-    onClose: onRealEstateClose,
-    onOpen: onRealEstateOpen,
-  } = useDisclosure();
+  // const {
+  //   isOpen: isPremiumOpen,
+  //   onClose: onPremiumClose,
+  //   onOpen: onPremiumOpen,
+  // } = useDisclosure();
+  // const {
+  //   isOpen: isRealEstateOpen,
+  //   onClose: onRealEstateClose,
+  //   onOpen: onRealEstateOpen,
+  // } = useDisclosure();
 
   const {
     isOpen: isGoalOpen,
@@ -39,16 +42,31 @@ const Create = () => {
     onOpen: onGoalOpen,
   } = useDisclosure();
 
-  const handlePlan = (name) => {
-    if (name === "Premium Stocks") {
-      onPremiumOpen();
-    } else if (name === "Real Estate") {
-      onRealEstateOpen();
-    } else {
-      setGoalProps(goalModalProps.fixedIncome);
-      onGoalOpen();
+  const { data: plansData, error } = useGetAllPlans();
+  useEffect(() => {
+    setExplorePlans([]);
+    if (plansData !== undefined) {
+      if (plansData !== explorePlans) {
+        const plans = plansData;
+        setExplorePlans(plans);
+      }
     }
-  };
+  }, [plansData]);
+
+  useEffect(() => {
+    if (error !== undefined) setFetchErr(error);
+  }, [error]);
+
+  // const handlePlan = (name) => {
+  //   if (name === "Premium Stocks") {
+  //     onPremiumOpen();
+  //   } else if (name === "Real Estate") {
+  //     onRealEstateOpen();
+  //   } else {
+  //     setGoalProps(goalModalProps.fixedIncome);
+  //     onGoalOpen();
+  //   }
+  // };
 
   const handleGoal = (goalAction) => {
     switch (goalAction) {
@@ -134,7 +152,6 @@ const Create = () => {
                   style={{
                     cursor: "pointer",
                   }}
-                  onClick={() => handlePlan(plan.name)}
                 >
                   <PlanResponsive plan={plan} />
                 </SwiperSlide>
@@ -235,8 +252,8 @@ const Create = () => {
           </Box>
         </Box>
       </Padding>
-      <PremiumPlan isOpen={isPremiumOpen} onClose={onPremiumClose} />
-      <RealEstatePlan isOpen={isRealEstateOpen} onClose={onRealEstateClose} />
+      {/* <PremiumPlan isOpen={isPremiumOpen} onClose={onPremiumClose} />
+      <RealEstatePlan isOpen={isRealEstateOpen} onClose={onRealEstateClose} /> */}
       <GoalsPlan
         isOpen={isGoalOpen}
         onClose={onGoalClose}

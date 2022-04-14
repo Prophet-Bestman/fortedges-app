@@ -49,6 +49,17 @@ const SigninForm = () => {
       position: "top",
     });
   };
+  const loginErrorToast = () => {
+    toast({
+      title: "Login Error",
+      description: "An error occured, try again later",
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
   const successToast = () => {
     toast({
       title: "Logged In",
@@ -74,9 +85,17 @@ const SigninForm = () => {
   };
 
   useEffect(() => {
-    if (error) {
-      if ((error.message = "Request failed with status code 400"))
+    if (!!error) {
+      if (error.message === "Request failed with status code 400") {
+        // inValidCredentialsToast();
+        loginErrorToast();
+      } else if (
+        error.message === "Request failed with status code 404" ||
+        error.message === "Request failed with status code 500"
+      ) {
         inValidCredentialsToast();
+        // loginErrorToast();
+      }
     }
   }, [error]);
 

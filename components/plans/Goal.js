@@ -3,13 +3,13 @@ import { GoalsPlan } from "components/plansModals";
 import React from "react";
 import { BsArrowRightShort } from "react-icons/bs";
 
-const Goal = ({ goal, plan }) => {
+const Goal = ({ goal, plan, handleGoal }) => {
   const { action, img, color } = goal;
 
   return (
     <Box
       bgColor={color}
-      // onClick={() => handleGoal()}
+      onClick={() => handleGoal()}
       bgRepeat="no-repeat"
       cursor="pointer"
       w="full"

@@ -10,12 +10,12 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import "swiper/css";
 import "swiper/css/pagination";
 import Link from "next/link";
-import { useGetAllPlans } from "api/plans";
+import { useGetAllPlans, useGetCustomPlans } from "api/plans";
 
 const YourPlans = ({ title }) => {
   const [plans, setPlans] = useState([]);
 
-  const { data: plansData } = useGetAllPlans();
+  const { data: plansData } = useGetCustomPlans();
 
   useEffect(() => {
     if (plansData != undefined) setPlans(plansData);

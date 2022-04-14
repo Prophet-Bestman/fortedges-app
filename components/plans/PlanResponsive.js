@@ -53,8 +53,6 @@ const PlanResponsive = ({ plan }) => {
     } else onGoalOpen();
   };
 
-  console.log(plan);
-
   return (
     <Box
       bgColor={currentPlanProps?.color}

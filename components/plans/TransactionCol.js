@@ -6,13 +6,13 @@ import AccountSummary from "./AccountSummary";
 import TransactionActions from "./TransactionActions";
 import TransactionHistory from "./TransactionHistory";
 
-const TransactionCol = () => {
+const TransactionCol = ({ plan }) => {
   return (
     <Box>
       {/* Display on desktop */}
       <TransactionActions />
       <TransactionHistory />
-      <AccountSummary />
+      <AccountSummary plan={plan} />
     </Box>
   );
 };
