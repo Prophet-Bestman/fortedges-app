@@ -1,7 +1,9 @@
 import { Box, Image, Text } from "@chakra-ui/react";
-import React from "react";
+import { PlanContext } from "providers/PlanProvider";
+import React, { useContext } from "react";
 
-const PlanDetailsBanner = ({ plan }) => {
+const PlanDetailsBanner = () => {
+  const { plan } = useContext(PlanContext);
   return (
     <Box
       h="120px"

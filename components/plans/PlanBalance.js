@@ -1,8 +1,21 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import { PlanContext } from "providers/PlanProvider";
+import React, { useContext } from "react";
 import { formatter } from "utils";
 
-const PlanBalance = ({ plan }) => {
+const PlanBalance = () => {
+  const { plan } = useContext(PlanContext);
+
+  const [balance, setBalance] = React.useState();
+  const [profit, setProfit] = React.useState();
+
+  React.useEffect(() => {
+    if (plan !== undefined) {
+      setBalance(plan.balance);
+      setProfit(plan.profit);
+    }
+  }, [plan]);
+
   return (
     <Box my="24px">
       <Text
@@ -32,7 +45,7 @@ const PlanBalance = ({ plan }) => {
             Plan Balance
           </Text>
           <Text color="text.black" fontSize={"24px"} fontWeight="600">
-            {!!plan && formatter.format(plan.balance)}
+            {!!balance && balance == NaN ? balance : "$0.00"}
           </Text>
         </Box>
         <Box my="12px" display={["none", , "block"]}>
@@ -45,7 +58,7 @@ const PlanBalance = ({ plan }) => {
             Total Deposit
           </Text>
           <Text color="text.black" fontSize={"24px"} fontWeight="600">
-            {!!plan && formatter.format(plan.investment)}
+            {!!profit && profit !== NaN ? profit : "$0.00"}
           </Text>
         </Box>
         <Box my="12px">

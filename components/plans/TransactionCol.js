@@ -10,9 +10,9 @@ const TransactionCol = ({ plan }) => {
   return (
     <Box>
       {/* Display on desktop */}
-      <TransactionActions />
+      <TransactionActions plan={plan} />
       <TransactionHistory />
-      <AccountSummary plan={plan} />
+      <AccountSummary />
     </Box>
   );
 };

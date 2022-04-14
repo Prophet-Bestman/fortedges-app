@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { Padding } from "components/layouts";
 import {
   PlanBalance,
@@ -10,11 +10,14 @@ import { navActions, NavContext, navStates } from "providers/NavProvider";
 import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useGetSingleCustomPlan } from "api/plans";
+import PlanProvider, { planActions, PlanContext } from "providers/PlanProvider";
+import PlanComponents from "components/plans/PlanComponents";
 
 function PlanDetails() {
   const { dispatch: setActiveNav } = useContext(NavContext);
   const [planID, setPlanID] = React.useState("");
-  const [planDetails, setPlanDetails] = React.useState({});
+  // const [planDetails, setPlanDetails] = React.useState({});
+  // const { plan, dispatch: setPlan } = useContext(PlanContext);
 
   useEffect(() => {
     setActiveNav({
@@ -34,39 +37,10 @@ function PlanDetails() {
 
   console.log("ID", planID);
 
-  const { data: planData, error: planError } = useGetSingleCustomPlan(planID);
-
-  useEffect(() => {
-    if (!!planData) {
-      if (!planData.isArray) setPlanDetails(planData);
-    }
-  }, [planData]);
-
-  console.log("Plan Details: ", planDetails);
-
   return (
-    <Padding>
-      <Grid
-        mt={["180", , , "130px"]}
-        templateColumns={["repeat(1, 1fr)", , , "repeat(12, 1fr)"]}
-      >
-        <GridItem
-          colSpan={7}
-          pr={[, , , "50px"]}
-          borderRightColor="#F1F2F4"
-          borderRightWidth={[0, , , "1px"]}
-        >
-          {!!planData && <PlanDetailsBanner plan={planData} />}
-          {!!planData && <PlanBalance plan={planData} />}
-          <Box display={["none", , "block"]}>
-            <PlanGraph />
-          </Box>
-        </GridItem>
-        <GridItem pl={[, , , "18px"]} colSpan={5}>
-          {!!planData && <TransactionCol plan={planDetails} />}
-        </GridItem>
-      </Grid>
-    </Padding>
+    <PlanProvider>
+      <PlanComponents planID={planID} />
+    </PlanProvider>
   );
 }
 
