@@ -13,8 +13,6 @@ const GoalFormOne = ({ setFormStep, formState, setFormState }) => {
 
   const id = goalFormState.id;
 
-  console.log("Gaol ID: ", id);
-
   const planSchema = yup.object({
     goalName: yup.string().required().min(3),
   });

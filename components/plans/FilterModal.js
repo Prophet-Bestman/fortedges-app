@@ -10,10 +10,20 @@ import {
   Select,
   Stack,
   Button,
+  Box,
+  FormLabel,
 } from "@chakra-ui/react";
 import { AiOutlineClose } from "react-icons/ai";
 
-const FilterModal = ({ onClose, isOpen }) => {
+const FilterModal = ({
+  onClose,
+  isOpen,
+  plans,
+  setPlan,
+  plan,
+  status,
+  setStatus,
+}) => {
   return (
     <Modal size="full" isOpen={isOpen}>
       <ModalOverlay />
@@ -28,44 +38,63 @@ const FilterModal = ({ onClose, isOpen }) => {
         </Flex>
         <ModalBody my="32px">
           <form>
-            <Stack mb="32px">
-              <Text fontSize="14px" color="text.grey">
-                Time
-              </Text>
-              <Select
-                h={["48px", , "56px"]}
-                _focus={{
-                  outline: "none",
-                  borderColor: "app.primary",
-                }}
-              >
-                <option value="Past 30 days">Past 30 days</option>
-                <option value="Past 3 months">Past 3 months</option>
-                <option value="Past 1 year">Past 1 year</option>
-                <option value="All time">All times</option>
-              </Select>
-            </Stack>
-            <Stack mb="32px">
-              <Text fontSize="14px" color="text.grey">
+            <Box w="full" mb="16px">
+              <FormLabel color="text.grey" fontSize={["12px", , "14px"]}>
                 Status
-              </Text>
+              </FormLabel>
               <Select
-                h={["48px", , "56px"]}
-                _focus={{
-                  outline: "none",
-                  borderColor: "app.primary",
-                }}
+                fontSize={["14px", , "14px", "16px"]}
+                h={["50px"]}
+                w="full"
+                placeholder="All"
+                _focus={{ ringColor: "none", borderColor: "app.primary" }}
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
               >
-                <option value="Successful">Successful</option>
-                <option value="Pending">Pending</option>
+                <option value="incomplete">Incomplete</option>
+                <option value="processing">Processing</option>
+                <option value="successfull">Successfull</option>
+                <option value="declined">Declined</option>
               </Select>
-            </Stack>
-
+            </Box>
+            <Box w="full" mb="16px">
+              <FormLabel color="text.grey" fontSize={["12px", , "14px"]}>
+                Plan
+              </FormLabel>
+              {!!plans && (
+                <Select
+                  fontSize={["14px", , "14px", "16px"]}
+                  h={["50px"]}
+                  w="full"
+                  placeholder="All"
+                  _focus={{ ringColor: "none", borderColor: "app.primary" }}
+                  value={plan}
+                  onChange={(e) => setPlan(e.target.value)}
+                >
+                  <>
+                    {plans.map((plan) => (
+                      <option value={plan._id} key={plan._id}>
+                        {plan.name}
+                      </option>
+                    ))}
+                  </>
+                </Select>
+              )}
+            </Box>
             <Flex gap="12px">
-              <Button w="full" variant="secondary">
+              <Button
+                onClick={() => {
+                  setPlan("");
+                  setStatus("");
+                }}
+                w="full"
+                variant="secondary"
+              >
                 Reset
               </Button>
-              <Button w="full">Search</Button>
+              <Button w="full" onClick={onClose}>
+                Search
+              </Button>
             </Flex>
           </form>
         </ModalBody>

@@ -71,7 +71,7 @@ const AccountSummary = () => {
         <Text color="text.black">
           {/* {plan.createdAt} */}
           {!!plan.createdAt &&
-            formatDistance(new Date(plan.createdAt), new Date(), {
+            tance(new Date(plan.createdAt), new Date(), {
               addSuffix: true,
             })}
         </Text>

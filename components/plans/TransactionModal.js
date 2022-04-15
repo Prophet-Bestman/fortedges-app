@@ -9,11 +9,14 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
+import { format } from "date-fns";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { formatter } from "utils";
 
 const TransactionModal = ({ isOpen, onClose, transaction }) => {
-  const { status, date, amount, transactionRef, modeOfPayment } = transaction;
+  const { is_complete, status, createdAt, type, amount, id, mode_of_payment } =
+    transaction;
   return (
     <Modal isOpen={isOpen} size>
       <ModalOverlay />
@@ -28,8 +31,13 @@ const TransactionModal = ({ isOpen, onClose, transaction }) => {
         minH="300px"
       >
         <Flex justifyContent="space-between" alignItems="center">
-          <Text fontSize="20px" color="text.black" fontWeight={600}>
-            Deposit Details
+          <Text
+            fontSize="20px"
+            color="text.black"
+            fontWeight={600}
+            textTransform="capitalize"
+          >
+            {type} Details
           </Text>
           <Circle onClick={onClose} cursor="pointer" bg="#F1F2F4" size="40px">
             <AiOutlineClose />
@@ -41,13 +49,15 @@ const TransactionModal = ({ isOpen, onClose, transaction }) => {
               Status
             </Text>
             <Text fontWeight={600} color="text.black" fontSize="14px">
-              {status === "Pending" ? (
+              {!is_complete ? (
                 <Flex alignItems="center" gap="12px">
-                  <Circle size="6px" bg="yellow.400"></Circle> System Processing
+                  <Circle size="6px" bg="yellow.400"></Circle>
+                  <Text textTransform={"capitalize"}>{status}</Text>
                 </Flex>
               ) : (
                 <Flex alignItems="center" gap="12px">
-                  <Circle size="6px" bg="green.300"></Circle> Successful
+                  <Circle size="6px" bg="green.300"></Circle>
+                  <Text>{status}</Text>
                 </Flex>
               )}
             </Text>
@@ -57,7 +67,7 @@ const TransactionModal = ({ isOpen, onClose, transaction }) => {
               Date
             </Text>
             <Text fontWeight={600} color="text.black" fontSize="14px">
-              {date}
+              {format(new Date(createdAt), "dd/MM/yyyy")}
             </Text>
           </Flex>
           <Flex justifyContent={"space-between"} alignItems="center" mb="20px">
@@ -65,7 +75,7 @@ const TransactionModal = ({ isOpen, onClose, transaction }) => {
               Amount
             </Text>
             <Text fontWeight={600} color="text.black" fontSize="14px">
-              {amount}
+              {formatter.format(amount)}
             </Text>
           </Flex>
           <Flex justifyContent={"space-between"} alignItems="center" mb="20px">
@@ -73,15 +83,20 @@ const TransactionModal = ({ isOpen, onClose, transaction }) => {
               Transaction Ref
             </Text>
             <Text fontWeight={600} color="text.black" fontSize="14px">
-              {transactionRef}
+              {id}
             </Text>
           </Flex>
           <Flex justifyContent={"space-between"} alignItems="center" mb="20px">
             <Text color="text.grey" fontSize="13px">
               Payment Method
             </Text>
-            <Text fontWeight={600} color="text.black" fontSize="14px">
-              {modeOfPayment}
+            <Text
+              fontWeight={600}
+              color="text.black"
+              fontSize="14px"
+              textTransform="uppercase"
+            >
+              {mode_of_payment}
             </Text>
           </Flex>
         </ModalBody>

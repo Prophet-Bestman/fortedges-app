@@ -22,8 +22,6 @@ export default function MyPlans() {
     }
   }, [plansData]);
 
-  console.log("My Plans: ", customPlans);
-
   return (
     <Padding>
       <Tabs variant="line" defaultIndex={0}>

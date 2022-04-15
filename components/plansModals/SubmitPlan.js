@@ -81,7 +81,6 @@ const SubmitPlan = () => {
       parent_plan_id: id,
       description: "",
     };
-    console.log(plan);
     createPlan(plan);
     // onClose();
   };
@@ -98,9 +97,6 @@ const SubmitPlan = () => {
       setPlanError(error);
     }
   }, [error]);
-
-  console.log("Created Plan: ", planCreated);
-  console.log("Plan Error: ", planError);
 
   return (
     <Modal isOpen={isOpen} isCentered size="sm">

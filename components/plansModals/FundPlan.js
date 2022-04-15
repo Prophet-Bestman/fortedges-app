@@ -18,6 +18,7 @@ const FundPlan = ({ onClose, isOpen }) => {
           setStep={setStep}
           onClose={onClose}
           setData={setData}
+          data={data}
         />
       )}
       {step === 2 && (

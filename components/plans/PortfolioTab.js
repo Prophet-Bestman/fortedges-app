@@ -25,8 +25,6 @@ const PortfolioTab = ({ plans }) => {
     }
   }, [plans]);
 
-  console.log("Networth", netWorth);
-
   return (
     <Box>
       <Flex

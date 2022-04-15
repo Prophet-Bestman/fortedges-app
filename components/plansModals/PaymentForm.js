@@ -16,7 +16,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   MdOutlineKeyboardBackspace,
   MdKeyboardArrowDown,
@@ -25,14 +25,25 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { options } from "data";
+import { PlanContext } from "providers/PlanProvider";
+import { useDeposit } from "api/transactions";
 
 const optionsArr = Object.entries(options);
 
-const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
-  const [requestSent, setRequestSent] = React.useState(false);
+const PaymentForm = ({
+  onClose,
+  setStep,
+  option,
+  setOption,
+  setData,
+  data,
+}) => {
+  const { plan } = useContext(PlanContext);
+  const [requestSent, setRequestSent] = useState(false);
   const planSchema = yup.object({
     amount: yup.number().required(),
   });
+  const [transactionData, setTransactionData] = useState();
 
   const {
     register,
@@ -47,11 +58,32 @@ const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
     setRequestSent(true);
   };
 
+  const { data: depositData, isLoading, mutate: createDeposit } = useDeposit();
+
   const submit = (data) => {
     data = { ...data, option: option.name };
+
+    const payload = {
+      amount: data.amount,
+      plan_id: plan._id,
+      mode_of_payment: option.name.toLowerCase(),
+    };
+
+    console.log("Payload", payload);
+    createDeposit(payload);
+
     setData(data);
-    setStep(2);
   };
+
+  useEffect(() => {
+    if (depositData !== undefined) {
+      setData(depositData);
+      setStep(2);
+    }
+  }, [depositData]);
+
+  console.log("Transaction Data: ", data);
+
   return (
     <ModalContent py="24px" px="24px" maxW="380px">
       <Flex mb="40px" justifyContent="space-between" alignItems="center">
@@ -165,7 +197,7 @@ const PaymentForm = ({ onClose, setStep, option, setOption, setData }) => {
                 </Button>
               </Box>
             ) : (
-              <Button w="full" type="submit">
+              <Button w="full" type="submit" isLoading={isLoading}>
                 Continue
               </Button>
             )}

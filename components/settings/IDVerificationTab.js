@@ -45,11 +45,6 @@ const IDVerificationTab = () => {
     }
   }, [data]);
 
-  console.log("Verificaitons Data: ", verificationsData);
-
-  console.log("user: ", user);
-  console.log(isIdVerified);
-
   const {
     isOpen: isConfirmEmailOpen,
     onOpen: onConfirmEmailOpen,

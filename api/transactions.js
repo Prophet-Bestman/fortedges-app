@@ -14,9 +14,38 @@ const useDeposit = () => {
       request.post("", values, { headers: headers }).then((res) => res.data),
     // .catch((err) => err.response.status),
     {
-      onSuccess: () => queryClient.invalidateQueries("uaer-transactions"),
+      onSuccess: () => queryClient.invalidateQueries("user-transactions"),
     }
   );
 };
 
-export { useDeposit };
+const useSendPOP = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .put(`/${values.id}`, values, { headers: headers })
+        .then((res) => res.data),
+    // .catch((err) => err.response.status),
+    {
+      onSuccess: () => queryClient.invalidateQueries("my-transactions"),
+    }
+  );
+};
+
+const useGetAllMyTransactions = (limit, page, plan) => {
+  const headers = configOptions();
+  return useQuery(["my-transactions", plan, page, limit], () =>
+    request
+      .get(`?plan=${plan}&limit=${limit}&page=${page}`, { headers: headers })
+      .then((res) => res.data)
+      .catch((err) => {
+        if (err.response.status === 403) {
+          localStorage.clear();
+        } else return err;
+      })
+  );
+};
+
+export { useDeposit, useSendPOP, useGetAllMyTransactions };

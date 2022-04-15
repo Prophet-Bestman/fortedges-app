@@ -35,8 +35,6 @@ function PlanDetails() {
     }
   }, [query]);
 
-  console.log("ID", planID);
-
   return (
     <PlanProvider>
       <PlanComponents planID={planID} />

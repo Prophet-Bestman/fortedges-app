@@ -1,11 +1,11 @@
 const options = {
   btc: {
-    name: "BTC",
+    name: "btc",
     time: "~ 10 mins",
     icon: "/img/btc.svg",
   },
   eth: {
-    name: "ETH",
+    name: "eth",
     time: "~ 5 mins",
     icon: "/img/eth.svg",
   },

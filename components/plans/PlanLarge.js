@@ -8,8 +8,6 @@ const PlanLarge = ({ plan }) => {
   const { investment, name, balance, parent_plan_name, profit } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState({});
 
-  console.log("Custom Plan: ", plan);
-
   useEffect(() => {
     if (plan !== undefined) {
       switch (parent_plan_name) {
@@ -28,10 +26,6 @@ const PlanLarge = ({ plan }) => {
       }
     }
   }, [plan]);
-
-  console.log("Plan: ", plan);
-
-  console.log("Plan Props", currentPlanProps);
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",

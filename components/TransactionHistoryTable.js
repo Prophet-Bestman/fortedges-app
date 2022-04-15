@@ -12,9 +12,9 @@ import {
   Text,
   TableContainer,
 } from "@chakra-ui/react";
-import { transactionHistory } from "data";
+import TransactionRow from "./TransactionRow";
 
-const TransactionHistoryTable = () => {
+const TransactionHistoryTable = ({ transactions, type }) => {
   return (
     <Box overflowX={"scroll"} pb="24px">
       <TableContainer bg="white" p="24px">
@@ -80,42 +80,24 @@ const TransactionHistoryTable = () => {
               </Th>
             </Tr>
           </Thead>
-          <Tbody>
-            {transactionHistory.map((transaction, i) => (
-              <Tr key={i} h="60px">
-                <Td fontSize={["12px", , "14px"]}>{transaction.time}</Td>
-                <Td fontSize={["12px", , "14px"]}>{transaction.type}</Td>
-                <Td fontSize={["12px", , "14px"]}>{transaction.plan}</Td>
-                <Td fontSize={["12px", , "14px"]}>{transaction.amount}</Td>
-                <Td fontSize={["12px", , "14px"]}>
-                  {transaction.transactionRef}
-                </Td>
-                <Td fontSize={["12px", , "14px"]}>
-                  {transaction.modeOfPayment}
-                </Td>
-                <Td>
-                  <Text
-                    bg={
-                      transaction.status === "Success"
-                        ? "green.50"
-                        : "#E9C46A33"
-                    }
-                    color={
-                      transaction.status === "Success" ? "green.400" : "#E9C46A"
-                    }
-                    fontSize={["11px", , "12px"]}
-                    //   w="full"
-                    textAlign="center"
-                    w="137px"
-                    rounded="md"
-                    py="4px"
-                  >
-                    {transaction.status}
-                  </Text>
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
+          {transactions !== undefined &&
+            transactions?.transactions?.length > 0 && (
+              <Tbody>
+                {transactions.transactions
+                  .filter((transaction) => {
+                    if (type === "") return transaction;
+                    return transaction.type == type;
+                  })
+                  ?.slice(0)
+                  ?.reverse()
+                  ?.map((transaction) => (
+                    <TransactionRow
+                      key={transaction.id}
+                      transaction={transaction}
+                    />
+                  ))}
+              </Tbody>
+            )}
         </Table>
       </TableContainer>
     </Box>

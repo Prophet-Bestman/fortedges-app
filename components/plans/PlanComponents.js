@@ -22,8 +22,6 @@ const PlanComponents = ({ planID }) => {
     }
   }, [planData]);
 
-  console.log("Plan Details: ", plan);
-
   return (
     <Padding>
       <Grid
