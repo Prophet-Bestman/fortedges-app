@@ -11,8 +11,14 @@ const useDeposit = () => {
   const headers = configOptions();
   return useMutation(
     (values) =>
-      request.post("", values, { headers: headers }).then((res) => res.data),
-    // .catch((err) => err.response.status),
+      request
+        .post("", values, { headers: headers })
+        .then((res) => res.data)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
     {
       onSuccess: () => queryClient.invalidateQueries("user-transactions"),
     }
@@ -26,8 +32,13 @@ const useSendPOP = () => {
     (values) =>
       request
         .put(`/${values.id}`, values, { headers: headers })
-        .then((res) => res.data),
-    // .catch((err) => err.response.status),
+        .then((res) => res.data)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+
     {
       onSuccess: () => queryClient.invalidateQueries("my-transactions"),
     }
@@ -38,7 +49,7 @@ const useGetAllMyTransactions = (limit, page, plan) => {
   const headers = configOptions();
   return useQuery(["my-transactions", plan, page, limit], () =>
     request
-      .get(`?plan=${plan}&limit=${limit}&page=${page}`, { headers: headers })
+      .get(`?plan=${plan}&page=${page}`, { headers: headers })
       .then((res) => res.data)
       .catch((err) => {
         if (err.response.status === 403) {

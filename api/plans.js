@@ -54,8 +54,12 @@ const useCreateCustomPlan = () => {
     (values) =>
       request
         .post("/custom-plans", values, { headers: headers })
-        .then((res) => res.data),
-    // .catch((err) => err.response.status),
+        .then((res) => res.data)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
     {
       onSuccess: () => queryClient.invalidateQueries("custom-plans"),
     }

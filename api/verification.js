@@ -14,7 +14,11 @@ const useVerifyID = () => {
       request
         .post(``, values, { headers: headers })
         .then((res) => res.data)
-        .catch((err) => err.response.status),
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("user");

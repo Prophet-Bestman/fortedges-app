@@ -18,8 +18,8 @@ const useLogIn = () => {
   );
 };
 
-const useSendChangeLoginCode = () =>{
-  return useMutation((values) => request.post('/auth/change-email'))
-}
+const useSendChangeLoginCode = () => {
+  return useMutation((values) => request.post("/auth/change-email"));
+};
 
 export { useSignUp, useLogIn };
