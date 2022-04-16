@@ -44,6 +44,25 @@ const useSendPOP = () => {
     }
   );
 };
+const useWithdraw = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .put(`/withdraw`, values, { headers: headers })
+        .then((res) => res.data)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+
+    {
+      onSuccess: () => queryClient.invalidateQueries("my-transactions"),
+    }
+  );
+};
 
 const useGetAllMyTransactions = (plan, page, limit) => {
   const headers = configOptions();
@@ -59,4 +78,4 @@ const useGetAllMyTransactions = (plan, page, limit) => {
   );
 };
 
-export { useDeposit, useSendPOP, useGetAllMyTransactions };
+export { useDeposit, useSendPOP, useGetAllMyTransactions, useWithdraw };

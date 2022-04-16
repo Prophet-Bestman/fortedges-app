@@ -66,13 +66,14 @@ const TransactionHistory = () => {
       </Box>
       <Flex color="text.black" justifyContent={"space-between"} mb="32px">
         <Text fontSize="18px">Recent Transactions</Text>
-        <Link href="#">
+        <Link href="/transaction_history">
           <Text
             textDecor="underline"
             fontSize="16px"
             _hover={{
               color: "app.primary",
             }}
+            cursor="pointer"
           >
             See All
           </Text>
@@ -86,8 +87,8 @@ const TransactionHistory = () => {
             ?.slice(0)
             ?.reverse()
             ?.slice(0, 4)
-            ?.map((transaction, i) => (
-              <MiniTransaction key={i} transaction={transaction} />
+            ?.map((transaction) => (
+              <MiniTransaction key={transaction.id} transaction={transaction} />
             ))}
         </Box>
       )}

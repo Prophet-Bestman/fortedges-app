@@ -71,6 +71,8 @@ const PaymentForm = ({
       plan_id: plan._id,
       mode_of_payment: option.name.toLowerCase(),
     };
+
+    createDeposit(payload);
   };
 
   useEffect(() => {

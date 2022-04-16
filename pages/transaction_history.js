@@ -115,22 +115,7 @@ const TransactionHisory = () => {
           </Box>
 
           {/* HIDE OTHER FILTERS ON MOBILE VIEW */}
-          {/* <Box
-            display={["none", , "block"]}
-            w="full"
-            maxW={["130px", , "185px"]}
-          >
-            <FormLabel color="text.grey" fontSize={["12px", , "14px"]}>
-              Time
-            </FormLabel>
-            <Select
-              fontSize={["14px", , "14px", "16px"]}
-              h={["36px", , "42px"]}
-              w="full"
-              placeholder="Past 30 days"
-              _focus={{ ringColor: "none", borderColor: "app.primary" }}
-            ></Select>
-          </Box> */}
+
           <Box
             display={["none", , "block"]}
             w="full"
