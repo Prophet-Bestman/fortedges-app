@@ -9,11 +9,11 @@ const options = {
     time: "~ 5 mins",
     icon: "/img/eth.svg",
   },
-  tron: {
-    name: "USDT(Trc20)",
-    time: "~ 5 mins",
-    icon: "/img/tron.svg",
-  },
+  // tron: {
+  //   name: "USDT(Trc20)",
+  //   time: "~ 5 mins",
+  //   icon: "/img/tron.svg",
+  // },
   bank: {
     name: "Bank Deposit",
     time: "",

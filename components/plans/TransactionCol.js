@@ -1,16 +1,13 @@
-import { Box, Button, Circle, Flex } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React from "react";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import AccountSummary from "./AccountSummary";
 import TransactionActions from "./TransactionActions";
 import TransactionHistory from "./TransactionHistory";
 
-const TransactionCol = ({ plan }) => {
+const TransactionCol = () => {
   return (
     <Box>
-      {/* Display on desktop */}
-      <TransactionActions plan={plan} />
+      <TransactionActions />
       <TransactionHistory />
       <AccountSummary />
     </Box>

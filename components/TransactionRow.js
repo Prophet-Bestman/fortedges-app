@@ -16,7 +16,6 @@ const TransactionRow = ({ transaction }) => {
     }
   }, [planData]);
 
-  console.log(transaction);
   return (
     <Tr h="60px">
       <Td fontSize={["12px", , "14px"]}>

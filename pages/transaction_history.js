@@ -67,9 +67,9 @@ const TransactionHisory = () => {
   }, [plansData, page]);
 
   const { data: transData, refetch } = useGetAllMyTransactions(
-    limit,
+    plan,
     page,
-    plan
+    limit
   );
 
   useEffect(() => {

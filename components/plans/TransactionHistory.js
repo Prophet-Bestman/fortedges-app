@@ -1,11 +1,38 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { transactionHistory } from "data";
 import MiniTransaction from "./MiniTransaction";
+import { PlanContext } from "providers/PlanProvider";
+import { useGetAllMyTransactions } from "api/transactions";
 
 const TransactionHistory = () => {
+  const { plan } = useContext(PlanContext);
+  const [transactions, setTransactions] = useState([]);
+
+  const [error, setError] = React.useState("");
+
+  console.log("plan:", plan);
+
+  const { data: transData, error: transError } = useGetAllMyTransactions(
+    plan._id
+  );
+
+  useEffect(() => {
+    if (transData != undefined) {
+      setTransactions(transData);
+    }
+  }, [transData]);
+  useEffect(() => {
+    if (transError != undefined) {
+      setError(transError);
+    }
+  }, [transError]);
+
+  console.log("Transactions: ", transactions);
+  console.log("Error: ", error);
+
   return (
     <Box mt="32px" borderBottomWidth="1px" borderColor="#F1F2F4" pb="24px">
       <Box
@@ -53,11 +80,17 @@ const TransactionHistory = () => {
       </Flex>
 
       {/* Transaction History */}
-      <Box borderBottomWidth="0px" borderColor="#F1F2F4">
-        {transactionHistory.slice(0, 3).map((transaction, i) => (
-          <MiniTransaction key={i} transaction={transaction} />
-        ))}
-      </Box>
+      {Array.isArray(transactions.transactions) && (
+        <Box borderBottomWidth="0px" borderColor="#F1F2F4">
+          {transactions.transactions
+            ?.slice(0)
+            ?.reverse()
+            ?.slice(0, 4)
+            ?.map((transaction, i) => (
+              <MiniTransaction key={i} transaction={transaction} />
+            ))}
+        </Box>
+      )}
 
       {/* Graph */}
 

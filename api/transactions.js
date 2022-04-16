@@ -45,7 +45,7 @@ const useSendPOP = () => {
   );
 };
 
-const useGetAllMyTransactions = (limit, page, plan) => {
+const useGetAllMyTransactions = (plan, page, limit) => {
   const headers = configOptions();
   return useQuery(["my-transactions", plan, page, limit], () =>
     request

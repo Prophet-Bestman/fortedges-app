@@ -66,8 +66,6 @@ const ProofOfPayment = ({ onClose, option, data, setStep }) => {
 
     const payload = { pop: pop, id: data.id };
 
-    console.log(payload.id);
-
     sendPOP(payload);
   };
 
@@ -75,14 +73,10 @@ const ProofOfPayment = ({ onClose, option, data, setStep }) => {
     if (depositData !== undefined) {
       setPOPResponse(depositData);
       if (depositData.pop !== undefined) {
-        console.log("Created POP");
         onReqOpen();
       }
     }
   }, [depositData]);
-
-  console.log("POP Response: ", POPResponse);
-  console.log("Transaction Data: ", data);
 
   return (
     <ModalContent

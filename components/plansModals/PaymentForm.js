@@ -71,11 +71,6 @@ const PaymentForm = ({
       plan_id: plan._id,
       mode_of_payment: option.name.toLowerCase(),
     };
-
-    console.log("Payload", payload);
-    createDeposit(payload);
-
-    // setData(data);
   };
 
   useEffect(() => {
@@ -88,8 +83,6 @@ const PaymentForm = ({
       }
     }
   }, [depositData]);
-
-  console.log("Transaction Data: ", paymentData);
 
   return (
     <ModalContent py="24px" px="24px" maxW="380px">
