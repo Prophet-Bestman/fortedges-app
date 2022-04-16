@@ -13,6 +13,7 @@ export const navStates = {
   feeds: { name: "Feeds", pageTitle: "Feeds" },
   account: { name: "Account", pageTitle: "Account" },
   creatPlans: { name: "My Plans", pageTitle: "Create Plans" },
+  planDetials: { name: "My Plans", pageTitle: "Plan Details" },
   transactionHisory: {
     name: "Transaction History",
     pageTitle: "Transaction History",

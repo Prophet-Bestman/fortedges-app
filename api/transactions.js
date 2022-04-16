@@ -31,7 +31,7 @@ const useSendPOP = () => {
   return useMutation(
     (values) =>
       request
-        .put(`/${values.id}`, values, { headers: headers })
+        .put(`/${values.id}`, values.pop, { headers: headers })
         .then((res) => res.data)
         .catch((err) => {
           if (err.response.status === 403) {

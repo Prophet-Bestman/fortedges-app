@@ -9,14 +9,14 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import { transactionHistory } from "data";
+import { format } from "date-fns";
 import { useRouter } from "next/router";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { formatter } from "utils";
 
-const RequestSuccess = ({ isOpen }) => {
-  const { date, modeOfPayment, status, transactionRef, amount } =
-    transactionHistory[0];
+const RequestSuccess = ({ isOpen, data }) => {
+  const { createdAt, mode_of_payment, status, type, pop, id, amount } = data;
 
   const router = useRouter();
 
@@ -61,8 +61,9 @@ const RequestSuccess = ({ isOpen }) => {
                 fontWeight="600"
                 mb="40px"
                 fontSize={"20px"}
+                textTransform="capitalize"
               >
-                Deposit Request <br /> Submitted
+                {type} Request <br /> Submitted
               </Text>
 
               <Flex
@@ -75,14 +76,14 @@ const RequestSuccess = ({ isOpen }) => {
                   Status
                 </Text>
                 <Text fontWeight={600} color="text.black" fontSize="14px">
-                  {status === "Pending" ? (
+                  {status === "successful" ? (
                     <Flex alignItems="center" gap="12px">
-                      <Circle size="6px" bg="yellow.400"></Circle> System
-                      Processing
+                      <Circle size="6px" bg="green.300"></Circle> Successful
                     </Flex>
                   ) : (
                     <Flex alignItems="center" gap="12px">
-                      <Circle size="6px" bg="green.300"></Circle> Successful
+                      <Circle size="6px" bg="yellow.400"></Circle>
+                      <Text textTransform="capitalize">{status}</Text>
                     </Flex>
                   )}
                 </Text>
@@ -96,7 +97,7 @@ const RequestSuccess = ({ isOpen }) => {
                   Date
                 </Text>
                 <Text fontWeight={600} color="text.black" fontSize="14px">
-                  {date}
+                  {!!createdAt && format(new Date(createdAt), "dd/MM/yyyy")}
                 </Text>
               </Flex>
               <Flex
@@ -108,7 +109,7 @@ const RequestSuccess = ({ isOpen }) => {
                   Amount
                 </Text>
                 <Text fontWeight={600} color="text.black" fontSize="14px">
-                  {amount}
+                  {!!amount && formatter.format(amount)}
                 </Text>
               </Flex>
               <Flex
@@ -120,7 +121,7 @@ const RequestSuccess = ({ isOpen }) => {
                   Transaction Ref
                 </Text>
                 <Text fontWeight={600} color="text.black" fontSize="14px">
-                  {transactionRef}
+                  {id}
                 </Text>
               </Flex>
               <Flex
@@ -131,10 +132,27 @@ const RequestSuccess = ({ isOpen }) => {
                 <Text color="text.grey" fontSize="13px">
                   Payment Method
                 </Text>
-                <Text fontWeight={600} color="text.black" fontSize="14px">
-                  {modeOfPayment}
+                <Text
+                  fontWeight={600}
+                  color="text.black"
+                  fontSize="14px"
+                  textTransform="uppercase"
+                >
+                  {mode_of_payment}
                 </Text>
               </Flex>
+              {pop !== undefined && (
+                <Flex
+                  justifyContent={"space-between"}
+                  alignItems="start"
+                  mb="20px"
+                >
+                  <Text color="text.grey" fontSize="13px">
+                    Payment Method
+                  </Text>
+                  <Image src={pop.path} w="160px" objectFit={"contain"} />
+                </Flex>
+              )}
             </Box>
           </Flex>
         </ModalBody>

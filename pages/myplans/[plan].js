@@ -22,7 +22,7 @@ function PlanDetails() {
   useEffect(() => {
     setActiveNav({
       type: navActions.SET_ACTIVE,
-      payload: navStates.creatPlans,
+      payload: navStates.planDetials,
     });
   }, []);
 

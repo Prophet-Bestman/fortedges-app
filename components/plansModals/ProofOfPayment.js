@@ -10,10 +10,12 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { CgSoftwareUpload } from "react-icons/cg";
 import RequestSuccess from "./RequestSuccess";
+import { useSendPOP } from "api/transactions";
+import ErrorModal from "components/ErrorModal";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -24,15 +26,18 @@ const ProofOfPayment = ({ onClose, option, data, setStep }) => {
   const [walletAddress, setWalletAddress] = React.useState(
     "1232878973egueh3e8273927397al02"
   );
-  const [copied, setCopied] = React.useState("Copy");
-  const [selectedFile, setSelctedFile] = React.useState(null);
-  const filePickerRef = React.useRef(null);
+  const [copied, setCopied] = useState("Copy");
+  const [selectedFile, setSelctedFile] = useState(null);
+  const [POPImg, setPOPImg] = useState(null);
+  const filePickerRef = useRef(null);
+  const [POPResponse, setPOPResponse] = useState({});
 
   const {
     isOpen: isReqOpen,
     onOpen: onReqOpen,
     onClose: onReqClose,
   } = useDisclosure();
+  const { isOpen: isErrorOpen, onOpen: onErrorOpen } = useDisclosure();
 
   const addImg = (e) => {
     const reader = new FileReader();
@@ -42,6 +47,7 @@ const ProofOfPayment = ({ onClose, option, data, setStep }) => {
     reader.onload = (readerEvent) => {
       setSelctedFile(readerEvent.target.result);
     };
+    setPOPImg(e.target.files[0]);
   };
 
   const handleCopy = () => {
@@ -51,6 +57,32 @@ const ProofOfPayment = ({ onClose, option, data, setStep }) => {
       setCopied("Copy");
     }, 3000);
   };
+
+  const { mutate: sendPOP, isLoading, data: depositData } = useSendPOP();
+
+  const handleSendPOP = () => {
+    const pop = new FormData();
+    pop.append("pop", POPImg);
+
+    const payload = { pop: pop, id: data.id };
+
+    console.log(payload.id);
+
+    sendPOP(payload);
+  };
+
+  useEffect(() => {
+    if (depositData !== undefined) {
+      setPOPResponse(depositData);
+      if (depositData.pop !== undefined) {
+        console.log("Created POP");
+        onReqOpen();
+      }
+    }
+  }, [depositData]);
+
+  console.log("POP Response: ", POPResponse);
+  console.log("Transaction Data: ", data);
 
   return (
     <ModalContent
@@ -199,17 +231,28 @@ const ProofOfPayment = ({ onClose, option, data, setStep }) => {
             </Button>
 
             <Button
-              onClick={onReqOpen}
+              onClick={handleSendPOP}
               isDisabled={!selectedFile}
               w="full"
               my="16px"
+              isLoading={isLoading}
             >
               Continue
             </Button>
           </Box>
         </Box>
       </ModalBody>
-      <RequestSuccess isOpen={isReqOpen} onClose={onReqClose} />
+      {POPResponse.pop !== undefined && (
+        <RequestSuccess
+          isOpen={isReqOpen}
+          onClose={onReqClose}
+          data={POPResponse}
+        />
+      )}
+      <ErrorModal
+        isOpen={isErrorOpen}
+        msg={"Error ccurred creating deposit request"}
+      />
     </ModalContent>
   );
 };

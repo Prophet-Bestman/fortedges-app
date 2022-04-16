@@ -47,6 +47,7 @@ const ErrorModal = ({ isOpen, msg }) => {
                 textAlign="center"
                 fontWeight="600"
                 my="40px"
+                textTransform="uppercase"
                 fontSize={"20px"}
               >
                 {msg}

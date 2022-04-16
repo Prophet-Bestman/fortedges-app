@@ -12,8 +12,13 @@ import PlanProvider, { planActions, PlanContext } from "providers/PlanProvider";
 
 const PlanComponents = ({ planID }) => {
   const { plan, dispatch: setPlan } = useContext(PlanContext);
+  const [error, setError] = React.useState("");
 
-  const { data: planData, error: planError } = useGetSingleCustomPlan(planID);
+  const {
+    data: planData,
+    error: planError,
+    refetch,
+  } = useGetSingleCustomPlan(planID);
 
   useEffect(() => {
     if (!!planData) {
@@ -21,6 +26,15 @@ const PlanComponents = ({ planID }) => {
         setPlan({ type: planActions.SET_PLAN, payload: planData });
     }
   }, [planData]);
+
+  useEffect(() => {
+    if (planError !== undefined) {
+      setError(planError);
+    }
+  }, [planError]);
+
+  console.log("Plan Details: ", plan);
+  console.log("Error: ", error);
 
   return (
     <Padding>

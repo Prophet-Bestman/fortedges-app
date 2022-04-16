@@ -15,6 +15,7 @@ import {
   ModalContent,
   Stack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useContext } from "react";
 import {
@@ -27,16 +28,16 @@ import * as yup from "yup";
 import { options } from "data";
 import { PlanContext } from "providers/PlanProvider";
 import { useDeposit } from "api/transactions";
+import ErrorModal from "components/ErrorModal";
 
 const optionsArr = Object.entries(options);
-
 const PaymentForm = ({
   onClose,
   setStep,
   option,
   setOption,
   setData,
-  data,
+  data: paymentData,
 }) => {
   const { plan } = useContext(PlanContext);
   const [requestSent, setRequestSent] = useState(false);
@@ -44,6 +45,8 @@ const PaymentForm = ({
     amount: yup.number().required(),
   });
   const [transactionData, setTransactionData] = useState();
+
+  const { isOpen: isErrorOpen, onOpen: onErrorOpen } = useDisclosure();
 
   const {
     register,
@@ -72,17 +75,21 @@ const PaymentForm = ({
     console.log("Payload", payload);
     createDeposit(payload);
 
-    setData(data);
+    // setData(data);
   };
 
   useEffect(() => {
     if (depositData !== undefined) {
-      setData(depositData);
-      setStep(2);
+      if (depositData.toString().includes("Error")) {
+        onErrorOpen();
+      } else {
+        setData(depositData);
+        setStep(2);
+      }
     }
   }, [depositData]);
 
-  console.log("Transaction Data: ", data);
+  console.log("Transaction Data: ", paymentData);
 
   return (
     <ModalContent py="24px" px="24px" maxW="380px">
@@ -201,12 +208,13 @@ const PaymentForm = ({
                 Continue
               </Button>
             )}
-            {/* <Button w="full" type="submit">
-              Continue
-            </Button> */}
           </Box>
         </form>
       </ModalBody>
+      <ErrorModal
+        isOpen={isErrorOpen}
+        msg={"Error ccurred creating deposit request"}
+      />
     </ModalContent>
   );
 };
