@@ -127,7 +127,7 @@ const SelectNewPlan = ({ isOpen, onClose, action }) => {
             />
           </ModalHeader>
           <ModalBody>
-            <Box>
+            <Box maxW={"100vw"}>
               <Swiper
                 slidesPerView={2}
                 spaceBetween={10}

@@ -21,7 +21,7 @@ const UserPlans = () => {
             <Text fontSize={["16px", "18px", "20px", "24px"]} mb="24px">
               User Plans
             </Text>
-            <Box>
+            <Box maxW="100vw">
               <Swiper
                 slidesPerView={2}
                 spaceBetween={10}

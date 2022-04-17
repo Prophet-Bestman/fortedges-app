@@ -92,50 +92,52 @@ const OverviewHeader = () => {
         </Button>
       </Flex>
 
-      <Swiper
-        slidesPerView={1}
-        spaceBetween={10}
-        pagination={{
-          clickable: true,
-        }}
-        breakpoints={{
-          767: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-          },
-          1024: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-          },
-        }}
-        modules={[Pagination]}
-        className="mySwiper"
-        style={{
-          paddingBottom: "50px",
-          width: "full",
-        }}
-      >
-        <SwiperSlide>
-          <OverviewCard
-            amount={wallet.balance ? wallet.balance : "$0.00"}
-            gains={wallet?.gains ? wallet.gails : "0%"}
-            title="Total Balance"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <OverviewCard
-            amount={wallet.balance ? wallet.balance : "$0.00"}
-            title="Total Invested"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <OverviewCard
-            amount={wallet.balance ? wallet.balance : "$0.00"}
-            gains={wallet?.gains ? wallet.gails : "0%"}
-            title="Total Profit"
-          />
-        </SwiperSlide>
-      </Swiper>
+      <Box maxW={["90vw", , , "75vw"]}>
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={10}
+          pagination={{
+            clickable: true,
+          }}
+          breakpoints={{
+            767: {
+              slidesPerView: 3,
+              spaceBetween: 10,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 10,
+            },
+          }}
+          modules={[Pagination]}
+          className="mySwiper"
+          style={{
+            paddingBottom: "50px",
+            width: "full",
+          }}
+        >
+          <SwiperSlide>
+            <OverviewCard
+              amount={wallet.balance ? wallet.balance : "$0.00"}
+              gains={wallet?.gains ? wallet.gails : "0%"}
+              title="Total Balance"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <OverviewCard
+              amount={wallet.balance ? wallet.balance : "$0.00"}
+              title="Total Invested"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <OverviewCard
+              amount={wallet.balance ? wallet.balance : "$0.00"}
+              gains={wallet?.gains ? wallet.gails : "0%"}
+              title="Total Profit"
+            />
+          </SwiperSlide>
+        </Swiper>
+      </Box>
 
       <Button
         variant="secondary"

@@ -11,7 +11,7 @@ import { newsList } from "data";
 
 const News = () => {
   return (
-    <Box mb="80px">
+    <Box mb="80px" maxW={["90vw", , , "80vw"]}>
       <Padding>
         <Text fontSize={["16px", "18px", "20px", "24px"]} mb="24px">
           News-get financial insight

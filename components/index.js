@@ -7,6 +7,7 @@ import Notification from "./Notification";
 import ControlledInput from "./ControlledInput";
 import SuccessModal from "./SuccessModal";
 import ErrorModal from "./ErrorModal";
+import VerifyEmailModal from "./VerifyEmailModal";
 
 export {
   Capsule,
@@ -18,4 +19,5 @@ export {
   ControlledInput,
   SuccessModal,
   ErrorModal,
+  VerifyEmailModal,
 };

@@ -11,27 +11,13 @@ const TransactionHistory = () => {
   const { plan } = useContext(PlanContext);
   const [transactions, setTransactions] = useState([]);
 
-  const [error, setError] = React.useState("");
-
-  console.log("plan:", plan);
-
-  const { data: transData, error: transError } = useGetAllMyTransactions(
-    plan._id
-  );
+  const { data: transData } = useGetAllMyTransactions(plan._id);
 
   useEffect(() => {
     if (transData != undefined) {
       setTransactions(transData);
     }
   }, [transData]);
-  useEffect(() => {
-    if (transError != undefined) {
-      setError(transError);
-    }
-  }, [transError]);
-
-  console.log("Transactions: ", transactions);
-  console.log("Error: ", error);
 
   return (
     <Box mt="32px" borderBottomWidth="1px" borderColor="#F1F2F4" pb="24px">

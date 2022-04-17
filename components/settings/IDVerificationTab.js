@@ -16,6 +16,7 @@ import IDVerifyModal from "./IdVerifyModal";
 import VerifyEmail from "./VerifyEmail";
 import { getUserFromLocalStorage } from "api/config";
 import { useGetVerifications } from "api/verification";
+import { VerifyEmailModal } from "components";
 
 const IDVerificationTab = () => {
   const [user, setUser] = useState();
@@ -192,13 +193,13 @@ const IDVerificationTab = () => {
           )}
         </Flex>
       </Box>
-      <ConfirmModal
+      <VerifyEmailModal
         isOpen={isConfirmEmailOpen}
         onClose={onConfirmEmailClose}
-        openModal={onChangeEmailOpen}
-        title="Are you sure you want to change your Email?"
-        text="Withdrawals will be disabled for 24 hours after you make this change
-            to protect your account."
+        // openModal={onChangeEmailOpen}
+        // title="Are you sure you want to change your Email?"
+        // text="Withdrawals will be disabled for 24 hours after you make this change
+        //     to protect your account."
       />
 
       <ChangeEmail isOpen={isChangeEmailOpen} onClose={onChangeEmailClose} />

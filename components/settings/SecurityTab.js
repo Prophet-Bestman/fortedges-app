@@ -50,10 +50,6 @@ const SecurityTab = () => {
   //   onClose: onVerifyClose,
   // } = useDisclosure();
 
-
-
-  
-
   const router = useRouter();
 
   return (
@@ -168,7 +164,7 @@ const SecurityTab = () => {
         isOpen={isConfirmEmailOpen}
         onClose={onConfirmEmailClose}
         openModal={onChangeEmailOpen}
-        action = {sendConfirmationEmail}
+        // action={sendConfirmationEmail}
         title="Are you sure you want to change your Email?"
         text="Withdrawals will be disabled for 24 hours after you make this change
             to protect your account."

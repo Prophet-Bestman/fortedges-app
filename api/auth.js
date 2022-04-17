@@ -1,25 +1,63 @@
-import { useQuery } from "@chakra-ui/react";
 import axios from "axios";
-import { useMutation } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import configOptions from "./config";
 
 const request = axios.create({
   baseURL: "https://fortedges-api.herokuapp.com",
 });
 
 const useSignUp = () => {
-  return useMutation((values) =>
-    request.post("/auth/signup", values).then((res) => res.data)
+  const queryClient = useQueryClient();
+  return useMutation(
+    (values) => request.post("/auth/signup", values).then((res) => res.data),
+    {
+      onSuccess: () => queryClient.invalidateQueries("user"),
+    }
   );
 };
 
 const useLogIn = () => {
-  return useMutation((values) =>
-    request.post("/auth/login", values).then((res) => res.data)
+  const queryClient = useQueryClient();
+  return useMutation(
+    (values) => request.post("/auth/login", values).then((res) => res.data),
+    {
+      onSuccess: () => queryClient.invalidateQueries("user"),
+    }
   );
 };
 
-const useSendChangeLoginCode = () => {
-  return useMutation((values) => request.post("/auth/change-email"));
+const useSendEmailVerification = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .post(`/auth/verify-email`, values, { headers: headers })
+        .then((res) => res.data)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+
+    {
+      onSuccess: () => queryClient.invalidateQueries("user"),
+    }
+  );
 };
 
-export { useSignUp, useLogIn };
+const useVerifyEmail = (code) => {
+  const headers = configOptions();
+  return useQuery(["user", code], () =>
+    request
+      .get(`/auth/verify-email?code=${code}`, { headers: headers })
+      .then((res) => res.data)
+      .catch((err) => {
+        if (err.response.status === 403) {
+          localStorage.clear();
+        } else return err;
+      })
+  );
+};
+
+export { useSignUp, useLogIn, useSendEmailVerification, useVerifyEmail };
