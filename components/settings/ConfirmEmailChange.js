@@ -78,8 +78,6 @@ const ConfirmEmailChange = ({ isOpen, onClose, openModal }) => {
     }
   }, [sendCodeResp]);
 
-  console.log("Response: ", sendCodeResponse);
-
   return (
     <Modal isOpen={isOpen}>
       <ModalOverlay />

@@ -11,7 +11,7 @@ const GoalFormOne = ({ setFormStep, formState, setFormState }) => {
   const { goalFormState, dispatch: setOpen } = useContext(GoalFormContext);
   const { questionOne: question } = goalFormState.goalFormQuestions;
 
-  const id = goalFormState.id;
+  // const id = goalFormState.id;
 
   const planSchema = yup.object({
     goalName: yup.string().required().min(3),
@@ -36,7 +36,6 @@ const GoalFormOne = ({ setFormStep, formState, setFormState }) => {
   const submitGoal = (data) => {
     updateFormState(data);
     setFormStep((prev) => prev + 1);
-    // onClose();
   };
 
   return (

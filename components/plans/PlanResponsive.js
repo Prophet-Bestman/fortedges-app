@@ -98,6 +98,7 @@ const PlanResponsive = ({ plan }) => {
         onClose={onGoalClose}
         goalProps={goalProps}
         plan={plan}
+        id={_id}
       />
     </Box>
   );

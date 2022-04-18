@@ -8,17 +8,25 @@ import { IoIosArrowBack } from "react-icons/io";
 import { goalFormActions, GoalFormContext } from "providers/GoalFormProvider";
 import DatePicker from "react-datepicker";
 
+function padTo2Digits(num) {
+  return num.toString().padStart(2, "0");
+}
+
+function formatDate(date) {
+  return [
+    date.getFullYear(),
+    padTo2Digits(date.getMonth() + 1),
+    padTo2Digits(date.getDate()),
+  ].join("-");
+}
+
 const GoalFormTwo = ({ setFormStep, formState, setFormState }) => {
-  const { goalFormState, dispatch: setOpen } = useContext(GoalFormContext);
+  const { goalFormState } = useContext(GoalFormContext);
   const { questionTwo: question } = goalFormState.goalFormQuestions;
 
   const planSchema = yup.object({
     goalDate: yup.string().required(),
   });
-
-  const onClose = () => {
-    setOpen({ type: goalFormActions.CLOSE_FORM });
-  };
 
   const {
     register,
@@ -29,13 +37,18 @@ const GoalFormTwo = ({ setFormStep, formState, setFormState }) => {
   });
 
   const updateFormState = (data) => {
-    setFormState({ ...formState, date: data.goalDate });
+    setFormState({
+      ...formState,
+      duration: {
+        from: formatDate(new Date()),
+        to: data.goalDate,
+      },
+    });
   };
 
   const submitGoal = (data) => {
     updateFormState(data);
     setFormStep((prev) => prev + 1);
-    // onClose();
   };
 
   return (

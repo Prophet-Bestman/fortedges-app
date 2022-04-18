@@ -48,6 +48,28 @@ export const getLocalWallet = () => {
     return JSON.parse(wallet);
   }
 };
+export const getParentPlanID = () => {
+  if (typeof window === "undefined") return {};
+
+  if (!window.localStorage.getItem(config.key.parentID)) return {};
+
+  const parentID = window.localStorage.getItem(config.key.parentID);
+
+  if (!!parentID) {
+    return parentID;
+  }
+};
+export const saveParentPlanId = (id) => {
+  if (typeof window === "undefined") return {};
+
+  // if (!window.localStorage.setItem(config.key.wallet)) return {};
+
+  window.localStorage.getItem(config.key.parentID, id);
+
+  // if (!!wallet) {
+  //   return JSON.parse(wallet);
+  // }
+};
 
 export const getHeaders = (accessToken) => {
   return {

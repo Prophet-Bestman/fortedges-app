@@ -1,15 +1,52 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Text, useDisclosure } from "@chakra-ui/react";
 import { GoalsPlan } from "components/plansModals";
-import React from "react";
+import { goalModalProps } from "data";
+import React, { useState } from "react";
 import { BsArrowRightShort } from "react-icons/bs";
 
-const Goal = ({ goal, plan, handleGoal }) => {
+const Goal = ({ goal }) => {
   const { action, img, color } = goal;
+  const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
+
+  const {
+    isOpen: isGoalOpen,
+    onClose: onGoalClose,
+    onOpen: onGoalOpen,
+  } = useDisclosure();
+
+  const handleGoal = (goalAction) => {
+    switch (goalAction) {
+      case goalModalProps.ownYourHome.title:
+        setGoalProps(goalModalProps.ownYourHome);
+        break;
+      case goalModalProps.planWedding.title:
+        setGoalProps(goalModalProps.planWedding);
+        break;
+      case goalModalProps.saveForRent.title:
+        setGoalProps(goalModalProps.saveForRent);
+        break;
+      case goalModalProps.saveForSchool.title:
+        setGoalProps(goalModalProps.saveForSchool);
+        break;
+      case goalModalProps.startBusiness.title:
+        setGoalProps(goalModalProps.startBusiness);
+        break;
+      case goalModalProps.travel.title:
+        setGoalProps(goalModalProps.travel);
+        break;
+
+      default:
+        setGoalProps(goalModalProps.fixedIncome);
+        break;
+    }
+
+    onGoalOpen();
+  };
 
   return (
     <Box
       bgColor={color}
-      onClick={() => handleGoal()}
+      onClick={() => handleGoal(action)}
       bgRepeat="no-repeat"
       cursor="pointer"
       w="full"
@@ -36,12 +73,12 @@ const Goal = ({ goal, plan, handleGoal }) => {
         <Text fontSize={"13px"}>{action}</Text>
         <BsArrowRightShort />
       </Box>
-      {/* <GoalsPlan
+      <GoalsPlan
         isOpen={isGoalOpen}
         onClose={onGoalClose}
         goalProps={goalProps}
-        plan={plan}
-      /> */}
+        plan={goal}
+      />
     </Box>
   );
 };

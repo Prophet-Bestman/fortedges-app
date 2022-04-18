@@ -6,27 +6,29 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
-  Text,
+  useDisclosure,
 } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { IoIosArrowBack } from "react-icons/io";
 import { goalFormActions, GoalFormContext } from "providers/GoalFormProvider";
+import { useCreateCustomPlan } from "api/plans";
+import SuccessModal from "components/SuccessModal";
+import ErrorModal from "components/ErrorModal";
 
-const GoalFormThree = ({ setFormStep, formState, setFormState }) => {
-  const { goalFormState, dispatch: setOpen } = useContext(GoalFormContext);
+const GoalFormThree = ({ setFormStep, formState, parentGaalName }) => {
+  const { goalFormState } = useContext(GoalFormContext);
   const { questionThree: question } = goalFormState.goalFormQuestions;
+
+  const { isOpen: isSuccessOpen, onOpen: onSuccessOpen } = useDisclosure();
+  const { isOpen: isErrorOpen, onOpen: onErrorOpen } = useDisclosure();
 
   const planSchema = yup.object({
     targetAmount: yup.number().required().min(3),
   });
-
-  const onClose = () => {
-    setOpen({ type: goalFormActions.CLOSE_FORM });
-  };
 
   const {
     register,
@@ -36,13 +38,37 @@ const GoalFormThree = ({ setFormStep, formState, setFormState }) => {
     resolver: yupResolver(planSchema),
   });
 
-  const updateFormState = (data) => {
-    setFormState({ ...formState, amount: data.targetAmount });
+  const {
+    mutate: createGoal,
+    isLoading,
+    data: createdGoal,
+    error,
+  } = useCreateCustomPlan();
+
+  let payload = {
+    parent_goal_name: parentGaalName,
   };
 
-  const submitGoal = (data) => {
-    updateFormState(data);
+  const submitGoal = async (data) => {
+    payload = { ...formState, target: data.targetAmount };
+    console.log("Submitted Goal: ", payload);
+
+    createGoal(payload);
   };
+
+  useEffect(() => {
+    if (createdGoal !== undefined) {
+      if (createdGoal.toString().includes("Error")) {
+        onErrorOpen();
+      } else onSuccessOpen();
+    }
+  }, [createdGoal]);
+
+  useEffect(() => {
+    if (!!error) {
+      onErrorOpen();
+    }
+  }, [error]);
 
   return (
     <Box mt="32px">
@@ -79,11 +105,13 @@ const GoalFormThree = ({ setFormStep, formState, setFormState }) => {
           >
             Back
           </Button>
-          <Button w="full" ml={1} size="md" type="submit">
+          <Button w="full" ml={1} size="md" type="submit" isLoading={isLoading}>
             Continue
           </Button>
         </Flex>
       </form>
+      <SuccessModal isOpen={isSuccessOpen} msg="Goal Creation Successful" />
+      <ErrorModal isOpen={isErrorOpen} msg="Error Occurred. Try again later" />
     </Box>
   );
 };

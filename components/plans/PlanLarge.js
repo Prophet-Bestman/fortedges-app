@@ -20,9 +20,6 @@ const PlanLarge = ({ plan }) => {
         case "Premium Stock":
           setCurrentPlanProps(planProps.premiumStock);
           break;
-
-        // default:
-        //   break;
       }
     }
   }, [plan]);

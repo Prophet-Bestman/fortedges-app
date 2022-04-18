@@ -23,23 +23,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { getLocalWallet } from "api/config.js";
 import { useCreateCustomPlan } from "api/plans";
-import {
-  successModalActions,
-  SuccessModalContext,
-} from "providers/SuccessModalProvider";
 import SuccessModal from "components/SuccessModal";
+import ErrorModal from "components/ErrorModal";
 
 const SubmitPlan = () => {
   const { planFormState, dispatch: setOpen } = useContext(PlanFormContext);
   const [wallet, setWallet] = useState({});
-  const [planCreated, setPlanCreated] = useState({});
-  const [planError, setPlanError] = useState();
 
-  const {
-    isOpen: isSuccessOpen,
-    onClose: onSuccessClose,
-    onOpen: onSuccessOpen,
-  } = useDisclosure();
+  const { isOpen: isSuccessOpen, onOpen: onSuccessOpen } = useDisclosure();
+  const { isOpen: isErrorOpen, onOpen: onErrorOpen } = useDisclosure();
 
   const isOpen = planFormState.isOpen;
   const id = planFormState.id;
@@ -82,19 +74,19 @@ const SubmitPlan = () => {
       description: "",
     };
     createPlan(plan);
-    // onClose();
   };
 
   useEffect(() => {
     if (createdPlan !== undefined) {
-      setPlanCreated(createdPlan);
-      onSuccessOpen();
+      if (createPlan.toString().includes("Error")) {
+        onErrorOpen();
+      } else onSuccessOpen();
     }
   }, [createdPlan]);
 
   useEffect(() => {
-    if (error !== undefined) {
-      setPlanError(error);
+    if (!!error) {
+      onErrorOpen();
     }
   }, [error]);
 
@@ -157,6 +149,7 @@ const SubmitPlan = () => {
         </ModalBody>
       </ModalContent>
       <SuccessModal isOpen={isSuccessOpen} msg="Plan Creation Successful" />
+      <ErrorModal isOpen={isErrorOpen} msg="Error Occurred. Try again later" />
     </Modal>
   );
 };

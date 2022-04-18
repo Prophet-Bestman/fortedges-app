@@ -14,18 +14,21 @@ export const goalFormTypes = {
 const goalFormQuestions = {
   FIXED_INCOME: {
     title: "Plan Name",
+    parentPlan: goalModalProps.fixedIncome.title,
     questionOne: "Give your plan a name?",
     questionTwo: "When should this plan end?",
     questionThree: "How much is your target?",
   },
   START_BUSINESS: {
     title: "Plan Name",
+    parentPlan: goalModalProps.startBusiness.title,
     questionOne: "What is the name of your business?",
     questionTwo: "When do you want to start your business?",
     questionThree: "How much do you need for your business?",
   },
   SCHOOL: {
     title: "School Name",
+    parentPlan: goalModalProps.saveForSchool.title,
     questionOne: "What school would you like to attend?",
     questionTwo: "When do you want to resume school?",
     questionThree: "How much do you need ?",
@@ -33,24 +36,28 @@ const goalFormQuestions = {
 
   TRAVEL: {
     title: "Destination",
+    parentPlan: goalModalProps.travel.title,
     questionOne: "Where is your travel Destination?",
     questionTwo: "When do you want to travel?",
     questionThree: "How much would the trip cost?",
   },
   WEDDING: {
     title: "Wedding Name",
+    parentPlan: goalModalProps.planWedding.title,
     questionOne: "Give your wedding a name",
     questionTwo: "When should the money be ready?",
     questionThree: "What is your wedding budget?",
   },
   OWN_HOME: {
     title: "Plan Name",
+    parentPlan: goalModalProps.ownYourHome.title,
     questionOne: "Give this plan a name",
     questionTwo: "When should the money be ready?",
     questionThree: "How much do you need?",
   },
   RENT: {
     title: "Plan Name",
+    parentPlan: goalModalProps.saveForRent.title,
     questionOne: "Give this plan a name",
     questionTwo: "When should the money be ready?",
     questionThree: "How much do you need?",
@@ -62,13 +69,14 @@ const initialState = {
   isOpen: false,
   fromType: goalFormTypes.FIXED_INCOME,
   goalFormQuestions: {},
-  id: "",
+  parent_plan_id: "",
+  parentPlanName: "",
 };
 
 export const goalFormActions = {
   OPEN_FORM: "OPEN_FORM",
   CLOSE_FORM: "CLOSE_FORM",
-  SET_ID: "SET-ID",
+  SET_ID: "SET_ID",
 };
 
 const reducer = (goalFormState, action) => {
@@ -81,6 +89,7 @@ const reducer = (goalFormState, action) => {
       return (goalFormState = {
         ...goalFormState,
         goalFormQuestions: goalFormQuestions.FIXED_INCOME,
+        parentPlanName: goalModalProps.fixedIncome.title,
       });
     case goalModalProps.ownYourHome.title:
       return (goalFormState = {
@@ -115,7 +124,7 @@ const reducer = (goalFormState, action) => {
     case goalFormActions.SET_ID:
       return (goalFormState = {
         ...goalFormState,
-        id: action.payload,
+        parent_plan_id: action.payload,
       });
     default:
       return (goalFormState = {

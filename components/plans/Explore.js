@@ -9,17 +9,14 @@ import { MdArrowForwardIos } from "react-icons/md";
 import { GoalsPlan, SubmitGoal, SubmitPlan } from "components/plansModals";
 import Link from "next/link";
 import { useGetAllPlans } from "api/plans";
+import { saveParentPlanId } from "api/config";
+import { config } from "utils";
 
 const Explore = () => {
-  const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
+  // const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
   const [explorePlans, setExplorePlans] = useState([]);
   const [fetchErr, setFetchErr] = useState("");
-
-  const {
-    isOpen: isGoalOpen,
-    onClose: onGoalClose,
-    onOpen: onGoalOpen,
-  } = useDisclosure();
+  const [goalID, setGoalID] = useState();
 
   const { data: plansData, error } = useGetAllPlans();
   useEffect(() => {
@@ -28,6 +25,9 @@ const Explore = () => {
       if (plansData !== explorePlans) {
         const plans = plansData;
         setExplorePlans(plans);
+        const goal = plansData.filter((plan) => plan.name === "Fixed Income");
+        // saveParentPlanId(goal[0]._id);
+        localStorage.setItem(config.key.parentID, goal[0]._id);
       }
     }
   }, [plansData]);
@@ -35,35 +35,6 @@ const Explore = () => {
   useEffect(() => {
     if (error !== undefined) setFetchErr(error);
   }, [error]);
-
-  const handleGoal = (goalAction) => {
-    switch (goalAction) {
-      case goalModalProps.ownYourHome.title:
-        setGoalProps(goalModalProps.ownYourHome);
-        break;
-      case goalModalProps.planWedding.title:
-        setGoalProps(goalModalProps.planWedding);
-        break;
-      case goalModalProps.saveForRent.title:
-        setGoalProps(goalModalProps.saveForRent);
-        break;
-      case goalModalProps.saveForSchool.title:
-        setGoalProps(goalModalProps.saveForSchool);
-        break;
-      case goalModalProps.startBusiness.title:
-        setGoalProps(goalModalProps.startBusiness);
-        break;
-      case goalModalProps.travel.title:
-        setGoalProps(goalModalProps.travel);
-        break;
-
-      default:
-        setGoalProps(goalModalProps.fixedIncome);
-        break;
-    }
-
-    onGoalOpen();
-  };
 
   return (
     <Box py="64px">
@@ -170,12 +141,7 @@ const Explore = () => {
           justify="center"
         >
           {goals.map((goal) => (
-            <Goal
-              handleGoal={() => handleGoal(goal.action)}
-              key={goal.action}
-              goal={goal}
-              // plan={}
-            />
+            <Goal key={goal.action} goal={goal} />
           ))}
         </Flex>
 
@@ -183,22 +149,15 @@ const Explore = () => {
 
         <Flex display={["flex", , "none"]} gap="12px" justify="center">
           {goals.slice(0, 2).map((goal) => (
-            <Goal
-              handleGoal={() => handleGoal(goal.action)}
-              key={goal.action}
-              goal={goal}
-            />
+            <Goal key={goal.action} goal={goal} />
           ))}
         </Flex>
       </Box>
-      {/* <PremiumPlan isOpen={isPremiumOpen} onClose={onPremiumClose} planID={} />
-      <RealEstatePlan isOpen={isRealEstateOpen} onClose={onRealEstateClose} planID={} /> */}
-      <GoalsPlan
+      {/* <GoalsPlan
         isOpen={isGoalOpen}
         onClose={onGoalClose}
         goalProps={goalProps}
-        // plan={}
-      />
+      /> */}
       <SubmitPlan />
       <SubmitGoal />
     </Box>

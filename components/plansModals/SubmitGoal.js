@@ -15,27 +15,42 @@ import { goalFormActions, GoalFormContext } from "providers/GoalFormProvider";
 import GoalFormOne from "./GoalFormOne";
 import GoalFormTwo from "./GoalFormTwo";
 import GoalFormThree from "./GoalFormThree";
+import { getLocalWallet, getParentPlanID } from "api/config.js";
 
-const SubmitGoal = () => {
+const planID = getParentPlanID();
+
+const SubmitGoal = ({ id }) => {
   const { goalFormState, dispatch: setOpen } = useContext(GoalFormContext);
   const isOpen = goalFormState.isOpen;
   const { title } = goalFormState.goalFormQuestions;
+  // const [parentPlan, setParentPlan] = useState("");
 
   const [formStep, setFormStep] = useState(1);
+  const [wallet, setWallet] = useState("");
   const [formState, setFormState] = useState({
-    name: "",
-    date: "",
-    amount: "",
+    type: "goal",
+    description: "",
+    parent_plan_id: planID,
   });
 
   useEffect(() => {
+    const localWallet = getLocalWallet();
+    setWallet(localWallet._id);
+  }, []);
+
+  useEffect(() => {
+    setFormState({
+      ...formState,
+      wallet_id: wallet,
+    });
+  }, [wallet]);
+
+  useEffect(() => {
     setFormStep((prev) => (prev = 1));
-    // setFormState({
-    //   name: "",
-    //   date: "",
-    //   amount: "",
-    // });
   }, [isOpen]);
+
+  console.log("Goal form: ", goalFormState);
+  console.log("Form State: ", formState);
 
   return (
     <Modal isOpen={isOpen} isCentered size="sm">
@@ -103,6 +118,7 @@ const SubmitGoal = () => {
               formState={formState}
               setFormState={setFormState}
               setFormStep={setFormStep}
+              // parentGoalName={parentPlan}
             />
           )}
         </ModalBody>

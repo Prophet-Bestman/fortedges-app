@@ -64,13 +64,11 @@ const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
 
   // CHANGE EMAIL LOGIC
   const handleChangeEmail = async (data) => {
-    console.log("Data: ", data);
     const payload = {
       new_email: data.newEmail,
       code: code,
     };
     changeEmail(payload);
-    console.log(payload);
   };
 
   useEffect(() => {
@@ -88,8 +86,6 @@ const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
       }
     }
   }, emailChngeResp);
-
-  console.log("Email Change Resp: ", emailChangeData);
 
   const handleResend = () => {
     openConfirmEmailChange();
