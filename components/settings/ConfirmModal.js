@@ -4,6 +4,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalBody,
+  Box,
   Button,
   Flex,
   Circle,
@@ -12,7 +13,7 @@ import {
 import React from "react";
 import { BsExclamationLg } from "react-icons/bs";
 
-const ConfirmModal = ({ isOpen, onClose, openModal, text, title }) => {
+const ConfirmEmailChange = ({ isOpen, onClose, openModal, text, title }) => {
   return (
     <Modal isOpen={isOpen}>
       <ModalOverlay />
@@ -24,7 +25,7 @@ const ConfirmModal = ({ isOpen, onClose, openModal, text, title }) => {
             </Circle>
           </Flex>
           <Text fontSize="20px" fontWeight={600} textAlign="center" my="32px">
-            {title}
+            Change Email!
           </Text>
 
           <Text
@@ -33,11 +34,12 @@ const ConfirmModal = ({ isOpen, onClose, openModal, text, title }) => {
             textAlign="center"
             mb="24px"
           >
-            {text}
+            Are you sure you want to change email
           </Text>
-        </ModalBody>
 
-        <ModalFooter>
+          <Box>
+            <form></form>
+          </Box>
           <Button mr="16px" variant="secondary" onClick={onClose}>
             Cancel
           </Button>
@@ -50,11 +52,11 @@ const ConfirmModal = ({ isOpen, onClose, openModal, text, title }) => {
           >
             Confirm
           </Button>
-        </ModalFooter>
+        </ModalBody>
       </ModalContent>
       {/* {children} */}
     </Modal>
   );
 };
 
-export default ConfirmModal;
+export default ConfirmEmailChange;

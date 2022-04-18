@@ -16,11 +16,12 @@ import { AiFillCheckCircle, AiOutlineMail } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import ChangePassword from "./ChangePassword";
 import ChangeEmail from "./ChangeEmail";
+import ConfirmEmailChange from "./ConfirmEmailChange";
 
 const SecurityTab = () => {
   const [authenticated, setAuthenticated] = useState(true);
   const [idVerified, setIdVerified] = useState(false);
-  const [emailVerified, setEmailVerified] = useState(true);
+  const [emailVerified, setEmailVerified] = useState(false);
 
   const {
     isOpen: isConfirmPasswordOpen,
@@ -43,12 +44,6 @@ const SecurityTab = () => {
     onOpen: onChangeEmailOpen,
     onClose: onChangeEmailClose,
   } = useDisclosure();
-
-  // const {
-  //   isOpen: isVerifyOpen,
-  //   onOpen: onVerifyOpen,
-  //   onClose: onVerifyClose,
-  // } = useDisclosure();
 
   const router = useRouter();
 
@@ -160,26 +155,25 @@ const SecurityTab = () => {
         text="Withdrawals will be disabled for 24 hours after you make this change
             to protect your account."
       />
-      <ConfirmModal
+      <ConfirmEmailChange
         isOpen={isConfirmEmailOpen}
         onClose={onConfirmEmailClose}
         openModal={onChangeEmailOpen}
-        // action={sendConfirmationEmail}
-        title="Are you sure you want to change your Email?"
-        text="Withdrawals will be disabled for 24 hours after you make this change
-            to protect your account."
+        // // action={sendConfirmationEmail}
+        // title="Are you sure you want to change your Email?"
+        // text="Withdrawals will be disabled for 24 hours after you make this change
+        //     to protect your account."
       />
       <ChangePassword
         isOpen={isChangePasswordOpen}
         onClose={onChangePasswordClose}
       />
 
-      <ChangeEmail isOpen={isChangeEmailOpen} onClose={onChangeEmailClose} />
-      {/* <VerifyEmail
-        isOpen={isVerifyOpen}
-        onClose={onVerifyClose}
-        email={"Bl **** @gmail.com"}
-      /> */}
+      <ChangeEmail
+        isOpen={isChangeEmailOpen}
+        onClose={onChangeEmailClose}
+        openConfirmEmailChange={onConfirmEmailOpen}
+      />
     </Box>
   );
 };

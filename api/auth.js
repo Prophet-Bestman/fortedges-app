@@ -59,5 +59,50 @@ const useVerifyEmail = (code) => {
       })
   );
 };
+const useSendChangeEmailCode = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .post(`/auth/change-email`, values, { headers: headers })
+        .then((res) => res.data)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
 
-export { useSignUp, useLogIn, useSendEmailVerification, useVerifyEmail };
+    {
+      onSuccess: () => queryClient.invalidateQueries("user"),
+    }
+  );
+};
+const useChangeEmail = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .put(`/auth/change-email`, values, { headers: headers })
+        .then((res) => res.data)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+
+    {
+      onSuccess: () => queryClient.invalidateQueries("user"),
+    }
+  );
+};
+
+export {
+  useSignUp,
+  useLogIn,
+  useSendEmailVerification,
+  useVerifyEmail,
+  useChangeEmail,
+  useSendChangeEmailCode,
+};

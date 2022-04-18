@@ -3,9 +3,7 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
-  ModalCloseButton,
   Box,
   Button,
   Text,
@@ -16,16 +14,21 @@ import {
   Stack,
   Flex,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { changeEmailSchema } from "utils";
 import { MdError } from "react-icons/md";
-import VerifyEmail from "./VerifyEmail";
 import { AiOutlineClose } from "react-icons/ai";
+import { useChangeEmail, useSendChangeEmailCode } from "api/auth";
+import { useRouter } from "next/router";
+import ErrorModal from "components/ErrorModal";
 
-const ChangeEmail = ({ isOpen, onClose }) => {
+const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
+  const [code, setCode] = useState("");
+  const [emailChangeData, setEmailChangeData] = useState("");
   const {
     control,
     register,
@@ -35,14 +38,64 @@ const ChangeEmail = ({ isOpen, onClose }) => {
     resolver: yupResolver(changeEmailSchema),
   });
 
-  const {
-    isOpen: isVerifyOpen,
-    onOpen: onVerifyOpen,
-    onClose: onVerifyClose,
-  } = useDisclosure();
+  const router = useRouter();
 
+  const { isOpen: isErrorOpen, onOpen: onErrorOpen } = useDisclosure();
+
+  const {
+    mutate: changeEmail,
+    isLoading,
+    data: emailChngeResp,
+  } = useChangeEmail();
+
+  const toast = useToast();
+
+  const emailChangedToast = () => {
+    toast({
+      title: "Email Changed",
+      description: "Your email has been successfully changed!",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+
+  // CHANGE EMAIL LOGIC
   const handleChangeEmail = async (data) => {
-    onVerifyOpen();
+    console.log("Data: ", data);
+    const payload = {
+      new_email: data.newEmail,
+      code: code,
+    };
+    changeEmail(payload);
+    console.log(payload);
+  };
+
+  useEffect(() => {
+    if (emailChngeResp !== undefined) {
+      if (emailChngeResp.toString().includes("Error")) {
+        // onErrorOpen();
+        setEmailChangeData(emailChngeResp);
+      } else {
+        setEmailChangeData(emailChngeResp);
+        emailChangedToast();
+        router.reload();
+        setTimeout(() => {
+          onClose();
+        }, 1000);
+      }
+    }
+  }, emailChngeResp);
+
+  console.log("Email Change Resp: ", emailChangeData);
+
+  const handleResend = () => {
+    openConfirmEmailChange();
+    setTimeout(() => {
+      onClose();
+    }, 1000);
   };
 
   return (
@@ -53,14 +106,6 @@ const ChangeEmail = ({ isOpen, onClose }) => {
           <Text>Change Email Address</Text>
           <AiOutlineClose onClick={onClose} />
         </ModalHeader>
-        {/* <ModalCloseButton
-          mt="24px"
-          rounded="full"
-          onClick={onClose}
-          _focus={{
-            outline: "none",
-          }}
-        /> */}
 
         <ModalBody>
           <form onSubmit={handleSubmit(handleChangeEmail)}>
@@ -106,7 +151,12 @@ const ChangeEmail = ({ isOpen, onClose }) => {
                   px="12px"
                   py="4px"
                 >
-                  <PinInput>
+                  <PinInput
+                    onChange={(e) => setCode(e)}
+                    otp
+                    mask
+                    type="alphanumeric"
+                  >
                     <PinInputField required border="none" w="12px" />
                     <PinInputField required border="none" w="12px" />
                     <PinInputField required border="none" w="12px" />
@@ -139,7 +189,16 @@ const ChangeEmail = ({ isOpen, onClose }) => {
                   {"Didn’t recieve the code? "}
                 </Text>
                 <Box></Box>
-                <Text cursor="pointer" color="app.primary">
+                <Text
+                  cursor="pointer"
+                  color="app.primary"
+                  onClick={() => {
+                    openConfirmEmailChange();
+                    setTimeout(() => {
+                      onClose();
+                    }, 500);
+                  }}
+                >
                   Re-send
                 </Text>
               </Box>
@@ -149,17 +208,16 @@ const ChangeEmail = ({ isOpen, onClose }) => {
               <Button size="md" onClick={onClose} variant="secondary">
                 Close
               </Button>
-              <Button type="submit" size="md">
+              <Button type="submit" size="md" isLoading={isLoading}>
                 Confirm
               </Button>
             </Flex>
           </form>
         </ModalBody>
       </ModalContent>
-      <VerifyEmail
-        email={"Bl **** @gmail.com"}
-        isOpen={isVerifyOpen}
-        onClose={onVerifyClose}
+      <ErrorModal
+        isOpen={isErrorOpen}
+        msg={"An Error Occurred. Try Again Later "}
       />
     </Modal>
   );
