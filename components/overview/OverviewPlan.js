@@ -1,14 +1,36 @@
 import { Box, Image, Text } from "@chakra-ui/react";
+import { planProps } from "data";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { formatter } from "utils";
 
 const OverviewPlan = ({ plan }) => {
-  const { amount, color, img, name, category } = plan;
+  const { investment, name, balance, parent_plan_name, profit } = plan;
+  const [currentPlanProps, setCurrentPlanProps] = useState({});
+
+  useEffect(() => {
+    if (plan !== undefined) {
+      switch (parent_plan_name) {
+        case "Fixed Income":
+          setCurrentPlanProps(planProps.fixedIncome);
+          break;
+        case "Real Estate":
+          setCurrentPlanProps(planProps.realEstate);
+          break;
+        case "Premium Stock":
+          setCurrentPlanProps(planProps.premiumStock);
+          break;
+
+        // default:
+        //   break;
+      }
+    }
+  }, [plan]);
 
   return (
     <Link href={`/myplans/${plan._id}`}>
       <Box
-        bgColor={color}
+        bgColor={currentPlanProps?.color}
         cursor="pointer"
         bgRepeat="no-repeat"
         w="full"
@@ -37,7 +59,7 @@ const OverviewPlan = ({ plan }) => {
             style={{
               filter: "blur(4px)",
             }}
-            src={img}
+            src={currentPlanProps?.img}
             w="101px"
           />
         </Box>
@@ -47,10 +69,10 @@ const OverviewPlan = ({ plan }) => {
             {name}
           </Text>
           <Text mb="4px" fontSize="15px" fontWeight={600}>
-            ${amount}
+            {formatter.format(balance)}
           </Text>
           <Text mb="4px" fontSize="13px">
-            {category}
+            {parent_plan_name}
           </Text>
         </Box>
       </Box>
