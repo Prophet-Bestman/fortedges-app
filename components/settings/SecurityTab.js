@@ -1,27 +1,32 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Modal,
-  ModalContent,
-  ModalOverlay,
-  Text,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { VerifyResponse } from "components/auth";
+import { Box, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import ConfirmModal from "components/ConfirmModal";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiFillCheckCircle, AiOutlineMail } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import ChangePassword from "./ChangePassword";
 import ChangeEmail from "./ChangeEmail";
 import ConfirmEmailChange from "./ConfirmEmailChange";
+import { getUserFromLocalStorage } from "api/config";
 
 const SecurityTab = () => {
-  const [authenticated, setAuthenticated] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
   const [idVerified, setIdVerified] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
+  const [email, setEmail] = useState("");
+
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const localUser = getUserFromLocalStorage();
+    setUser(localUser);
+    setEmailVerified(localUser.is_email_verified);
+    setAuthenticated(localUser.is_email_verified);
+    setIdVerified(localUser.is_verified);
+    setEmail(localUser.email);
+  }, []);
+
+  const maskedEmail = email.substring(0, 2) + "*****" + email.substring(2 + 5);
 
   const {
     isOpen: isConfirmPasswordOpen,
@@ -128,7 +133,7 @@ const SecurityTab = () => {
               ) : (
                 <MdCancel color="#aaa" />
               )}
-              <Text>Bl **** @gmail.com</Text>
+              {!!maskedEmail && <Text>{maskedEmail}</Text>}
             </Flex>
           </Box>
 
