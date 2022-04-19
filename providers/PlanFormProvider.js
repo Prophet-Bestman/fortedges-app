@@ -4,12 +4,14 @@ export const PlanFormContext = React.createContext();
 const initialState = {
   isOpen: false,
   id: "",
+  parent_plan_name: "",
 };
 
 export const planFormActions = {
   OPEN_FORM: "OPEN_FORM",
   CLOSE_FORM: "CLOSE_FORM",
   SET_ID: "SET_ID",
+  SET_PARENT_NAME: "SET_PARENT_NAME",
 };
 
 const reducer = (planFormState, action) => {
@@ -20,6 +22,11 @@ const reducer = (planFormState, action) => {
       return (planFormState = { ...planFormState, isOpen: false });
     case planFormActions.SET_ID:
       return (planFormState = { ...planFormState, id: action.payload });
+    case planFormActions.SET_PARENT_NAME:
+      return (planFormState = {
+        ...planFormState,
+        parent_plan_name: action.payload,
+      });
 
     default:
       break;

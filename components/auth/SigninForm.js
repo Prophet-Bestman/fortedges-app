@@ -21,7 +21,7 @@ import { useLogIn } from "api/auth";
 import AuthCard from "./AuthCard";
 import { AuthContext, userActions } from "providers/AuthProvider";
 
-const SigninForm = () => {
+const AdminSigninForm = () => {
   const { dispatch, getRedirect, clearRedirect } = useContext(AuthContext);
   const [show, setShow] = useState(false);
 
@@ -212,4 +212,4 @@ const SigninForm = () => {
   );
 };
 
-export default SigninForm;
+export default AdminSigninForm;

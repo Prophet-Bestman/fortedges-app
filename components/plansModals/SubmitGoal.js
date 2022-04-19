@@ -19,7 +19,7 @@ import { getLocalWallet, getParentPlanID } from "api/config.js";
 
 const planID = getParentPlanID();
 
-const SubmitGoal = ({ id }) => {
+const SubmitGoal = ({ goal }) => {
   const { goalFormState, dispatch: setOpen } = useContext(GoalFormContext);
   const isOpen = goalFormState.isOpen;
   const { title } = goalFormState.goalFormQuestions;
@@ -31,6 +31,7 @@ const SubmitGoal = ({ id }) => {
     type: "goal",
     description: "",
     parent_plan_id: planID,
+    parent_goal_name: goal?.action || "Fixed Income",
   });
 
   useEffect(() => {

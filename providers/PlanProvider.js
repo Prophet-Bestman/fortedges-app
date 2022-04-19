@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 
-export const PlanContext = React.createContext();
+export const PlanContext = React.createContext({});
 const initialPlanState = {};
 
 export const planActions = {

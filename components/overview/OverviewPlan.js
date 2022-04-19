@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { formatter } from "utils";
 
 const OverviewPlan = ({ plan }) => {
-  const { investment, name, balance, parent_plan_name, type } = plan;
+  const { investment, name, profit, parent_plan_name } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState({});
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const OverviewPlan = ({ plan }) => {
             {name}
           </Text>
           <Text mb="4px" fontSize="15px" fontWeight={600}>
-            {formatter.format(balance)}
+            {formatter.format(investment + profit)}
           </Text>
           <Text mb="4px" fontSize="13px">
             {parent_plan_name}

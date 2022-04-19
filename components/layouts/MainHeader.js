@@ -50,11 +50,11 @@ const MainHeader = () => {
     }
   }, [error]);
 
-  // const { data: notificationData } = useGetNotifications();
+  const { data: notificationData } = useGetNotifications();
 
-  // useEffect(() => {
-  //   if (notificationData !== undefined) setNotifications(notificationData);
-  // }, [notificationData]);
+  useEffect(() => {
+    if (notificationData !== undefined) setNotifications(notificationData);
+  }, [notificationData]);
 
   // console.log("Notifications: ", notifications);
 

@@ -70,13 +70,14 @@ const initialState = {
   fromType: goalFormTypes.FIXED_INCOME,
   goalFormQuestions: {},
   parent_plan_id: "",
-  parentPlanName: "",
+  parent_goal_name: "",
 };
 
 export const goalFormActions = {
   OPEN_FORM: "OPEN_FORM",
   CLOSE_FORM: "CLOSE_FORM",
   SET_ID: "SET_ID",
+  SET_PARENT_GOAL_NAME: "SET_PARENT_GOAL_NAME",
 };
 
 const reducer = (goalFormState, action) => {
@@ -125,6 +126,11 @@ const reducer = (goalFormState, action) => {
       return (goalFormState = {
         ...goalFormState,
         parent_plan_id: action.payload,
+      });
+    case goalFormActions.SET_PARENT_GOAL_NAME:
+      return (goalFormState = {
+        ...goalFormState,
+        parent_goal_name: action.payload,
       });
     default:
       return (goalFormState = {

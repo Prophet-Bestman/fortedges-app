@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
 
 const PlanLarge = ({ plan }) => {
-  const { investment, name, balance, parent_plan_name, profit } = plan;
+  const { investment, name, parent_plan_name, profit } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState({});
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const PlanLarge = ({ plan }) => {
               <FiArrowUpRight fontSize="18px" />
               {profit}%
             </Text>
-            <Text>{formatter.format(balance)}</Text>
+            <Text>{formatter.format(investment + profit)}</Text>
           </Box>
         </Flex>
       </Box>

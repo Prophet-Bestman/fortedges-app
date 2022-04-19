@@ -18,7 +18,7 @@ export default function MyPlans() {
 
   useEffect(() => {
     if (plansData !== undefined) {
-      setCustomPlans(plansData);
+      setCustomPlans(plansData.custom_plans);
     }
   }, [plansData]);
 

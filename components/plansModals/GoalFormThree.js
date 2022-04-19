@@ -47,12 +47,11 @@ const GoalFormThree = ({ setFormStep, formState, parentGaalName }) => {
   } = useCreateCustomPlan();
 
   let payload = {
-    parent_goal_name: parentGaalName,
+    // parent_goal_name: parentGaalName,
   };
 
   const submitGoal = async (data) => {
     payload = { ...formState, target: data.targetAmount };
-
     createGoal(payload);
   };
 

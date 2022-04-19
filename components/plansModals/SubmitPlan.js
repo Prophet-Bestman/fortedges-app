@@ -25,16 +25,19 @@ import { getLocalWallet } from "api/config.js";
 import { useCreateCustomPlan } from "api/plans";
 import SuccessModal from "components/SuccessModal";
 import ErrorModal from "components/ErrorModal";
+import { PlanContext } from "providers/PlanProvider";
 
 const SubmitPlan = () => {
   const { planFormState, dispatch: setOpen } = useContext(PlanFormContext);
   const [wallet, setWallet] = useState({});
+  const [newPlan, setnewPlan] = useState({});
 
   const { isOpen: isSuccessOpen, onOpen: onSuccessOpen } = useDisclosure();
   const { isOpen: isErrorOpen, onOpen: onErrorOpen } = useDisclosure();
 
   const isOpen = planFormState.isOpen;
   const id = planFormState.id;
+  const parent_plan_name = planFormState.parent_plan_name;
 
   useEffect(() => {
     const localWallet = getLocalWallet();
@@ -72,7 +75,9 @@ const SubmitPlan = () => {
       wallet_id: wallet._id,
       parent_plan_id: id,
       description: "",
+      parent_plan_name: parent_plan_name,
     };
+
     createPlan(plan);
   };
 
@@ -81,6 +86,8 @@ const SubmitPlan = () => {
       if (createPlan.toString().includes("Error")) {
         onErrorOpen();
       } else onSuccessOpen();
+
+      setnewPlan(createdPlan);
     }
   }, [createdPlan]);
 

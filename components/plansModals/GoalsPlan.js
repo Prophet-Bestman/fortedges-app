@@ -16,14 +16,16 @@ import {
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { goalSteps } from "data";
 import { goalFormActions, GoalFormContext } from "providers/GoalFormProvider";
+import SubmitGoal from "./SubmitGoal";
 
-const GoalsPlan = ({ isOpen, onClose, goalProps }) => {
+const GoalsPlan = ({ isOpen, onClose, goalProps, goal }) => {
   const { title, text, color, icon } = goalProps;
   const { dispatch: setOpen } = useContext(GoalFormContext);
+  const { dispatch: setparentGoalName } = useContext(GoalFormContext);
 
   useEffect(() => {
-    setOpen({ type: goalProps.title });
-  }, [goalProps]);
+    if (isOpen) setOpen({ type: goalFormActions, payload: goalProps.title });
+  }, [goalProps, isOpen]);
 
   return (
     <Modal isOpen={isOpen} size="full">
@@ -91,9 +93,13 @@ const GoalsPlan = ({ isOpen, onClose, goalProps }) => {
           <Button
             w="full"
             onClick={() => {
-              onClose();
+              // onClose();
               setOpen({
                 type: goalFormActions.OPEN_FORM,
+              });
+              setparentGoalName({
+                type: goalFormActions.SET_PARENT_GOAL_NAME,
+                payload: goalProps.title,
               });
             }}
           >
@@ -101,6 +107,7 @@ const GoalsPlan = ({ isOpen, onClose, goalProps }) => {
           </Button>
         </ModalFooter>
       </ModalContent>
+      <SubmitGoal goal={goal} />
     </Modal>
   );
 };

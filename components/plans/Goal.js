@@ -77,7 +77,7 @@ const Goal = ({ goal }) => {
         isOpen={isGoalOpen}
         onClose={onGoalClose}
         goalProps={goalProps}
-        plan={goal}
+        goal={goal}
       />
     </Box>
   );

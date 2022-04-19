@@ -9,14 +9,13 @@ import { MdArrowForwardIos } from "react-icons/md";
 import { GoalsPlan, SubmitGoal, SubmitPlan } from "components/plansModals";
 import Link from "next/link";
 import { useGetAllPlans } from "api/plans";
-import { saveParentPlanId } from "api/config";
 import { config } from "utils";
 
 const Explore = () => {
   // const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
   const [explorePlans, setExplorePlans] = useState([]);
   const [fetchErr, setFetchErr] = useState("");
-  const [goalID, setGoalID] = useState();
+  // const [goalID, setGoalID] = useState();
 
   const { data: plansData, error } = useGetAllPlans();
   useEffect(() => {
@@ -159,7 +158,7 @@ const Explore = () => {
         goalProps={goalProps}
       /> */}
       <SubmitPlan />
-      <SubmitGoal />
+      {/* <SubmitGoal /> */}
     </Box>
   );
 };

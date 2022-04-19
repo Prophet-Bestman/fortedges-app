@@ -20,8 +20,9 @@ import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 import { formatter } from "utils";
 
 const RealEstatePlan = ({ isOpen, onClose, plan }) => {
-  const { min, max, description, _id } = plan;
+  const { min, max, description, _id, name } = plan;
   const { dispatch: setOpen } = useContext(PlanFormContext);
+
   return (
     <Modal isOpen={isOpen} size="full">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
@@ -99,6 +100,7 @@ const RealEstatePlan = ({ isOpen, onClose, plan }) => {
             w="full"
             onClick={() => {
               onClose();
+              setOpen({ type: planFormActions.SET_PARENT_NAME, payload: name });
               setOpen({ type: planFormActions.SET_ID, payload: _id });
               setOpen({ type: planFormActions.OPEN_FORM });
             }}

@@ -252,8 +252,6 @@ const Create = () => {
           </Box>
         </Box>
       </Padding>
-      {/* <PremiumPlan isOpen={isPremiumOpen} onClose={onPremiumClose} />
-      <RealEstatePlan isOpen={isRealEstateOpen} onClose={onRealEstateClose} /> */}
       <GoalsPlan
         isOpen={isGoalOpen}
         onClose={onGoalClose}

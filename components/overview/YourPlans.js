@@ -18,7 +18,7 @@ const YourPlans = ({ title }) => {
   const { data: plansData } = useGetCustomPlans();
 
   useEffect(() => {
-    if (plansData != undefined) setPlans(plansData);
+    if (plansData != undefined) setPlans(plansData.custom_plans);
   }, [plansData]);
 
   return (

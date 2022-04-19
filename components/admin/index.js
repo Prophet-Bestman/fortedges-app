@@ -9,6 +9,7 @@ import WithdrwalHistory from "./WithdrawalHistory";
 import PendingVerifications from "./PendingVerifications";
 import SelectPlan from "./SelectPlan";
 import SelectNewPlan from "./SelectNewPlan";
+import UserDetailsPage from "./UserDetailsPage";
 
 export {
   Stats,
@@ -22,4 +23,5 @@ export {
   SelectPlan,
   PendingVerifications,
   SelectNewPlan,
+  UserDetailsPage,
 };
