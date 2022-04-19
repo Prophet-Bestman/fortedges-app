@@ -8,7 +8,7 @@ import {
   InputLeftAddon,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -22,6 +22,7 @@ import ErrorModal from "components/ErrorModal";
 const GoalFormThree = ({ setFormStep, formState, parentGaalName }) => {
   const { goalFormState } = useContext(GoalFormContext);
   const { questionThree: question } = goalFormState.goalFormQuestions;
+  const [newGoal, setNewGoal] = useState({});
 
   const { isOpen: isSuccessOpen, onOpen: onSuccessOpen } = useDisclosure();
   const { isOpen: isErrorOpen, onOpen: onErrorOpen } = useDisclosure();
@@ -59,6 +60,7 @@ const GoalFormThree = ({ setFormStep, formState, parentGaalName }) => {
   useEffect(() => {
     if (createdGoal !== undefined) {
       if (createdGoal.toString().includes("Error")) {
+        setNewGoal(createdGoal);
         onErrorOpen();
       } else onSuccessOpen();
     }
@@ -69,6 +71,8 @@ const GoalFormThree = ({ setFormStep, formState, parentGaalName }) => {
       onErrorOpen();
     }
   }, [error]);
+
+  console.log("New Goal: ", newGoal);
 
   return (
     <Box mt="32px">

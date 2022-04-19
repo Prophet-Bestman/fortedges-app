@@ -7,20 +7,22 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
-import AuthCard from "./AuthCard";
+import React, { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { MdOutlineErrorOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { MdOutlineErrorOutline } from "react-icons/md";
+
 import { config, signinSchema } from "utils";
 import Link from "next/link";
 import { useLogIn } from "api/auth";
-import { useRouter } from "next/router";
+import AuthCard from "./AuthCard";
+import { AuthContext, userActions } from "providers/AuthProvider";
 
 const SigninForm = () => {
+  const { dispatch, getRedirect, clearRedirect } = useContext(AuthContext);
   const [show, setShow] = useState(false);
 
   const handleShow = () => {
@@ -110,13 +112,16 @@ const SigninForm = () => {
       const result = JSON.stringify(loginData.user);
       const walletData = JSON.stringify(loginData.wallet);
       localStorage.clear();
-      localStorage.setItem(user, result);
+      dispatch({ type: userActions.LOGIN, payload: loginData.user });
+      // localStorage.setItem(user, result);
       localStorage.setItem(token, loginData.user.access_token);
       localStorage.setItem(wallet, walletData);
       localStorage.setItem(userID, loginData.user._id);
       successToast();
-      // router.push("/");
-      router.push(`/`);
+
+      const redirect = getRedirect();
+      clearRedirect();
+      !!redirect ? router.push(redirect) : router.push("/");
     }
   }, [loginData]);
 

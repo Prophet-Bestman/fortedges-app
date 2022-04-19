@@ -5,6 +5,7 @@ const config = {
     wallet: "___@fortedges_wallet",
     userID: "___@fortedges_user_id",
     parentID: "___@fortedges_parent_plan_id",
+    redirect: "___@fortedges_redirect",
   },
 };
 

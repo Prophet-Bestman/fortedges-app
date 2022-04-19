@@ -44,7 +44,6 @@ const PaymentForm = ({
   const planSchema = yup.object({
     amount: yup.number().required(),
   });
-  const [transactionData, setTransactionData] = useState();
 
   const { isOpen: isErrorOpen, onOpen: onErrorOpen } = useDisclosure();
 

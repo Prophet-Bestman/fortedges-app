@@ -45,12 +45,3 @@ function PlanDetails() {
 export default PlanDetails;
 
 PlanDetails.requireAuth = true;
-
-// export const getServerSideProps = ({ params }) => {
-//   const { id } = params;
-//   return {
-//     props: {
-//       id,
-//     },
-//   };
-// };

@@ -11,46 +11,52 @@ import AdminLayout from "components/layouts/AdminLayout";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import SuccessModalProvider from "providers/SuccessModalProvider";
+import AuthProvider from "providers/AuthProvider";
+import AuthGuard from "providers/AuthGuard";
 
 function MyApp({ Component, pageProps }) {
   const [queryClient] = React.useState(() => new QueryClient());
 
   return (
-    <ChakraProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <CSSReset />
-          {Component.requireAuth ? (
-            <NavProvider>
-              <MainLayout>
-                <SuccessModalProvider>
+    <AuthProvider>
+      <ChakraProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <CSSReset />
+            {Component.requireAuth ? (
+              <AuthGuard>
+                <NavProvider>
+                  <MainLayout>
+                    <SuccessModalProvider>
+                      <PlanFormProvider>
+                        <GoalFormProvider>
+                          <Component {...pageProps} />
+                        </GoalFormProvider>
+                      </PlanFormProvider>
+                    </SuccessModalProvider>
+                  </MainLayout>
+                </NavProvider>
+              </AuthGuard>
+            ) : Component.isAdmin ? (
+              <NavProvider>
+                <AdminLayout>
                   <PlanFormProvider>
                     <GoalFormProvider>
                       <Component {...pageProps} />
                     </GoalFormProvider>
                   </PlanFormProvider>
-                </SuccessModalProvider>
-              </MainLayout>
-            </NavProvider>
-          ) : Component.isAdmin ? (
-            <NavProvider>
-              <AdminLayout>
-                <PlanFormProvider>
-                  <GoalFormProvider>
-                    <Component {...pageProps} />
-                  </GoalFormProvider>
-                </PlanFormProvider>
-              </AdminLayout>
-            </NavProvider>
-          ) : (
-            <AuthLayout>
-              <Component {...pageProps} />
-            </AuthLayout>
-          )}
-          <ReactQueryDevtools initialIsOpen={false} />
-        </Hydrate>
-      </QueryClientProvider>
-    </ChakraProvider>
+                </AdminLayout>
+              </NavProvider>
+            ) : (
+              <AuthLayout>
+                <Component {...pageProps} />
+              </AuthLayout>
+            )}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </Hydrate>
+        </QueryClientProvider>
+      </ChakraProvider>
+    </AuthProvider>
   );
 }
 

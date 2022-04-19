@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { options } from "data";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
 import {
   MdOutlineKeyboardBackspace,
   MdKeyboardArrowDown,
@@ -30,11 +30,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import WithdrawalSuccess from "./WithdrawalSuccess";
 import EnterVerificationCodeModal from "./EnterVerificationCodeModal";
+import { PlanContext } from "providers/PlanProvider";
+import { useWithdraw } from "api/transactions";
 
 const optionsArr = Object.entries(options);
 
 const Withdraw = ({ onClose, isOpen, option, setOption }) => {
   const [daysLeft, setDaysLeft] = React.useState(0);
+  const { plan } = useContext(PlanContext);
+  const [error, setError] = useState("");
+  const [withdrawData, setWithdrawData] = useState({});
 
   const withdrawSchema = yup.object().shape({
     amount: yup.number().required(),
@@ -60,11 +65,30 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
     onClose: onVerifyClose,
   } = useDisclosure();
 
+  const { mutate: withdraw, data, isLoading } = useWithdraw();
+
   const submit = (data) => {
-    onVerifyOpen();
-    // setData(data);
-    // setStep(2);
+    const payload = {
+      amount: data.amount,
+      address: data.walletAddress,
+      mode_of_payment: option.name,
+      plan_id: plan._id,
+    };
+
+    console.log(payload);
+    withdraw(payload);
   };
+
+  useEffect(() => {
+    if (data !== undefined) {
+      if (data.toString().includes("Error")) {
+        setError(data);
+      } else setWithdrawData(data);
+    }
+  }, [data]);
+
+  console.log("Error: ", error);
+  console.log("withdrawData: ", withdrawData);
 
   return (
     <Modal isOpen={isOpen}>
@@ -214,7 +238,12 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
               </InputGroup>
             </Stack>
 
-            <Button isDisabled={daysLeft > 0} w="full" type="submit">
+            <Button
+              isDisabled={daysLeft > 0}
+              w="full"
+              type="submit"
+              isLoading={isLoading}
+            >
               Continue
             </Button>
           </form>

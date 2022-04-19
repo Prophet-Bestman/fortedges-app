@@ -5,11 +5,12 @@ import React, { useEffect, useState } from "react";
 import { formatter } from "utils";
 
 const OverviewPlan = ({ plan }) => {
-  const { investment, name, balance, parent_plan_name, profit } = plan;
+  const { investment, name, balance, parent_plan_name, type } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState({});
 
   useEffect(() => {
     if (plan !== undefined) {
+      // if(type ==='goal')
       switch (parent_plan_name) {
         case "Fixed Income":
           setCurrentPlanProps(planProps.fixedIncome);
@@ -20,9 +21,6 @@ const OverviewPlan = ({ plan }) => {
         case "Premium Stock":
           setCurrentPlanProps(planProps.premiumStock);
           break;
-
-        // default:
-        //   break;
       }
     }
   }, [plan]);

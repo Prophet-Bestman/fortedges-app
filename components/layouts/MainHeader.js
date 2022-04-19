@@ -9,7 +9,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { AiOutlineMenu } from "react-icons/ai";
@@ -19,18 +19,20 @@ import MobilePageTitle from "components/MobilePageTitle";
 import { useRouter } from "next/router";
 import { config } from "utils";
 import { useGetUser } from "api/user";
+import { useGetNotifications } from "api/notifications";
 
 const MainHeader = () => {
-  const notificationCount = 10;
+  const [notificationCount, setNotificationCount] = useState(10);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { navState } = useContext(NavContext);
   const pageTitle = navState.pageTitle;
-  const [user, setUser] = React.useState({});
+  const [user, setUser] = useState({});
+  const [notifications, setNotifications] = useState([]);
 
   const router = useRouter();
   const { data: userData, error } = useGetUser();
 
-  React.useEffect(() => {
+  useEffect(() => {
     let user;
     if (userData != undefined) {
       setUser(userData);
@@ -40,11 +42,20 @@ const MainHeader = () => {
     }
   }, [userData]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (error != undefined) {
     } else {
     }
   }, [error]);
+
+  // const { data: notificationData } = useGetNotifications();
+
+  // useEffect(() => {
+  //   if (notificationData !== undefined) setNotifications(notificationData);
+  // }, [notificationData]);
+
+  // console.log("Notifications: ", notifications);
+
   return (
     <Box position="absolute" top="0" left={0} w="full">
       <Box
