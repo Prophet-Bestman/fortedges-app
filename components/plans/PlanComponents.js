@@ -33,7 +33,6 @@ const PlanComponents = ({ planID }) => {
     }
   }, [planError]);
 
-  console.log(plan);
   return (
     <Padding>
       <Grid

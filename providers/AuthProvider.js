@@ -70,8 +70,6 @@ const AuthProvider = ({ children }) => {
     }
   }, [localUser]);
 
-  console.log("LOCAL USER: ", localUser);
-
   const value = {
     user,
     loading,

@@ -52,7 +52,6 @@ const GoalFormThree = ({ setFormStep, formState, parentGaalName }) => {
 
   const submitGoal = async (data) => {
     payload = { ...formState, target: data.targetAmount };
-    console.log("Submitted Goal: ", payload);
 
     createGoal(payload);
   };
@@ -71,8 +70,6 @@ const GoalFormThree = ({ setFormStep, formState, parentGaalName }) => {
       onErrorOpen();
     }
   }, [error]);
-
-  console.log("New Goal: ", newGoal);
 
   return (
     <Box mt="32px">

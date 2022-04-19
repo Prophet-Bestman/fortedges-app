@@ -8,9 +8,6 @@ const AuthGuard = ({ children }) => {
 
   const [userState, setUserState] = useState("");
 
-  console.log("Auth user: ", user);
-  console.log("User State", userState);
-
   useEffect(() => {
     if (!loading) {
       //auth is initialized and there is no user

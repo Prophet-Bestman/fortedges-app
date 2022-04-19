@@ -74,8 +74,6 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
       mode_of_payment: option.name,
       plan_id: plan._id,
     };
-
-    console.log(payload);
     withdraw(payload);
   };
 
@@ -86,9 +84,6 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
       } else setWithdrawData(data);
     }
   }, [data]);
-
-  console.log("Error: ", error);
-  console.log("withdrawData: ", withdrawData);
 
   return (
     <Modal isOpen={isOpen}>

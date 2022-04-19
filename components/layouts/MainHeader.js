@@ -20,11 +20,13 @@ import { useRouter } from "next/router";
 import { config } from "utils";
 import { useGetUser } from "api/user";
 import { useGetNotifications } from "api/notifications";
+import { AuthContext, userActions } from "providers/AuthProvider";
 
 const MainHeader = () => {
   const [notificationCount, setNotificationCount] = useState(10);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { navState } = useContext(NavContext);
+  const { dispatch: logout } = useContext(AuthContext);
   const pageTitle = navState.pageTitle;
   const [user, setUser] = useState({});
   const [notifications, setNotifications] = useState([]);
@@ -163,6 +165,9 @@ const MainHeader = () => {
                     _hover={{ color: "red.700" }}
                     color="red.500"
                     cursor="pointer"
+                    onClick={() => {
+                      logout({ type: userActions.LOGOUT });
+                    }}
                   >
                     Sign out
                   </Text>

@@ -49,9 +49,6 @@ const SubmitGoal = ({ id }) => {
     setFormStep((prev) => (prev = 1));
   }, [isOpen]);
 
-  console.log("Goal form: ", goalFormState);
-  console.log("Form State: ", formState);
-
   return (
     <Modal isOpen={isOpen} isCentered size="sm">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />

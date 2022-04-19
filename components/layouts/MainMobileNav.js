@@ -12,6 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { AuthContext, userActions } from "providers/AuthProvider";
 import { NavContext, navStates } from "providers/NavProvider";
 import React, { useContext, useEffect } from "react";
 import { mobileNavs } from "utils";
@@ -19,6 +20,7 @@ import { mobileNavs } from "utils";
 const MainMobileNav = ({ isOpen, onClose }) => {
   const { navState } = useContext(NavContext);
   const active = navState.name;
+  const { dispatch: logout } = useContext(AuthContext);
 
   useEffect(() => {
     onClose();
@@ -82,6 +84,9 @@ const MainMobileNav = ({ isOpen, onClose }) => {
                 _hover={{ color: "red.600" }}
                 color="red.500"
                 cursor="pointer"
+                onClick={() => {
+                  logout({ type: userActions.LOGOUT });
+                }}
               >
                 Sign out
               </Text>
