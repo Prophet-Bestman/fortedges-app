@@ -19,13 +19,27 @@ import { useCreateCustomPlan } from "api/plans";
 import SuccessModal from "components/SuccessModal";
 import ErrorModal from "components/ErrorModal";
 
-const GoalFormThree = ({ setFormStep, formState, parentGaalName }) => {
+const GoalFormThree = ({ setFormStep, formState, onParentClose }) => {
   const { goalFormState } = useContext(GoalFormContext);
   const { questionThree: question } = goalFormState.goalFormQuestions;
   const [newGoal, setNewGoal] = useState({});
 
-  const { isOpen: isSuccessOpen, onOpen: onSuccessOpen } = useDisclosure();
-  const { isOpen: isErrorOpen, onOpen: onErrorOpen } = useDisclosure();
+  const {
+    isOpen: isSuccessOpen,
+    onClose: onSuccessClose,
+    onOpen: onSuccessOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isErrorOpen,
+    onClose: onErrorClose,
+    onOpen: onErrorOpen,
+  } = useDisclosure();
+
+  const closeParent = () => {
+    onParentClose();
+    onSuccessClose();
+    onErrorClose();
+  };
 
   const planSchema = yup.object({
     targetAmount: yup.number().required().min(3),
@@ -110,8 +124,16 @@ const GoalFormThree = ({ setFormStep, formState, parentGaalName }) => {
           </Button>
         </Flex>
       </form>
-      <SuccessModal isOpen={isSuccessOpen} msg="Goal Creation Successful" />
-      <ErrorModal isOpen={isErrorOpen} msg="Error Occurred. Try again later" />
+      <SuccessModal
+        isOpen={isSuccessOpen}
+        msg="Goal Creation Successful"
+        closeParent={closeParent}
+      />
+      <ErrorModal
+        isOpen={isErrorOpen}
+        msg="Error Occurred. Try again later"
+        closeParent={onParentClose}
+      />
     </Box>
   );
 };

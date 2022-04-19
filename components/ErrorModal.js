@@ -14,7 +14,7 @@ import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 
-const ErrorModal = ({ isOpen, msg }) => {
+const ErrorModal = ({ isOpen, msg, closeParent }) => {
   const router = useRouter();
 
   return (
@@ -25,7 +25,7 @@ const ErrorModal = ({ isOpen, msg }) => {
           <Circle
             pos="absolute"
             right={0}
-            onClick={() => router.reload()}
+            onClick={closeParent}
             cursor="pointer"
             size="40px"
           >

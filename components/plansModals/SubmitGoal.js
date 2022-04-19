@@ -19,11 +19,16 @@ import { getLocalWallet, getParentPlanID } from "api/config.js";
 
 const planID = getParentPlanID();
 
-const SubmitGoal = ({ goal }) => {
+const SubmitGoal = ({ goal, closeParent }) => {
   const { goalFormState, dispatch: setOpen } = useContext(GoalFormContext);
   const isOpen = goalFormState.isOpen;
   const { title } = goalFormState.goalFormQuestions;
   // const [parentPlan, setParentPlan] = useState("");
+
+  const closeForm = () => {
+    closeParent();
+    setOpen({ type: goalFormActions.CLOSE_FORM });
+  };
 
   const [formStep, setFormStep] = useState(1);
   const [wallet, setWallet] = useState("");
@@ -116,7 +121,7 @@ const SubmitGoal = ({ goal }) => {
               formState={formState}
               setFormState={setFormState}
               setFormStep={setFormStep}
-              // parentGoalName={parentPlan}
+              onParentClose={closeForm}
             />
           )}
         </ModalBody>

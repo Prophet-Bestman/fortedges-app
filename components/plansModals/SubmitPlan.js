@@ -27,13 +27,28 @@ import SuccessModal from "components/SuccessModal";
 import ErrorModal from "components/ErrorModal";
 import { PlanContext } from "providers/PlanProvider";
 
-const SubmitPlan = () => {
+const SubmitPlan = ({ closeParent }) => {
   const { planFormState, dispatch: setOpen } = useContext(PlanFormContext);
   const [wallet, setWallet] = useState({});
   const [newPlan, setnewPlan] = useState({});
 
-  const { isOpen: isSuccessOpen, onOpen: onSuccessOpen } = useDisclosure();
-  const { isOpen: isErrorOpen, onOpen: onErrorOpen } = useDisclosure();
+  const {
+    isOpen: isSuccessOpen,
+    onClose: onSuccessClose,
+    onOpen: onSuccessOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isErrorOpen,
+    onClose: onErrorClose,
+    onOpen: onErrorOpen,
+  } = useDisclosure();
+
+  const onParentClose = () => {
+    closeParent();
+    setOpen({ type: planFormActions.CLOSE_FORM });
+    onErrorClose();
+    onSuccessClose();
+  };
 
   const isOpen = planFormState.isOpen;
   const id = planFormState.id;
@@ -155,8 +170,16 @@ const SubmitPlan = () => {
           </Box>
         </ModalBody>
       </ModalContent>
-      <SuccessModal isOpen={isSuccessOpen} msg="Plan Creation Successful" />
-      <ErrorModal isOpen={isErrorOpen} msg="Error Occurred. Try again later" />
+      <SuccessModal
+        isOpen={isSuccessOpen}
+        msg="Plan Creation Successful"
+        closeParent={onParentClose}
+      />
+      <ErrorModal
+        isOpen={isErrorOpen}
+        msg="Error Occurred. Try again later"
+        closeParent={onParentClose}
+      />
     </Modal>
   );
 };

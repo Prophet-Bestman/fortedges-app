@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
-const SuccessModal = ({ isOpen, msg }) => {
+const SuccessModal = ({ isOpen, msg, closeParent }) => {
   const router = useRouter();
 
   return (
@@ -24,7 +24,7 @@ const SuccessModal = ({ isOpen, msg }) => {
           <Circle
             pos="absolute"
             right={0}
-            onClick={() => router.reload()}
+            onClick={closeParent}
             cursor="pointer"
             size="40px"
           >

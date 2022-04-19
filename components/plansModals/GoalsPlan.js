@@ -107,7 +107,7 @@ const GoalsPlan = ({ isOpen, onClose, goalProps, goal }) => {
           </Button>
         </ModalFooter>
       </ModalContent>
-      <SubmitGoal goal={goal} />
+      <SubmitGoal goal={goal} closeParent={onClose} />
     </Modal>
   );
 };

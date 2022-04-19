@@ -12,10 +12,8 @@ import { useGetAllPlans } from "api/plans";
 import { config } from "utils";
 
 const Explore = () => {
-  // const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
   const [explorePlans, setExplorePlans] = useState([]);
   const [fetchErr, setFetchErr] = useState("");
-  // const [goalID, setGoalID] = useState();
 
   const { data: plansData, error } = useGetAllPlans();
   useEffect(() => {
@@ -25,7 +23,6 @@ const Explore = () => {
         const plans = plansData;
         setExplorePlans(plans);
         const goal = plansData.filter((plan) => plan.name === "Fixed Income");
-        // saveParentPlanId(goal[0]._id);
         localStorage.setItem(config.key.parentID, goal[0]._id);
       }
     }
@@ -157,8 +154,7 @@ const Explore = () => {
         onClose={onGoalClose}
         goalProps={goalProps}
       /> */}
-      <SubmitPlan />
-      {/* <SubmitGoal /> */}
+      {/* <SubmitPlan /> */}
     </Box>
   );
 };

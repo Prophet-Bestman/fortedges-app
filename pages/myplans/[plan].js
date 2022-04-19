@@ -16,8 +16,6 @@ import PlanComponents from "components/plans/PlanComponents";
 function PlanDetails() {
   const { dispatch: setActiveNav } = useContext(NavContext);
   const [planID, setPlanID] = React.useState("");
-  // const [planDetails, setPlanDetails] = React.useState({});
-  // const { plan, dispatch: setPlan } = useContext(PlanContext);
 
   useEffect(() => {
     setActiveNav({

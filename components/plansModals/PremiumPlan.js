@@ -18,6 +18,7 @@ import { portfolioBrands } from "data";
 import Link from "next/link";
 import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 import { formatter } from "utils";
+import SubmitPlan from "./SubmitPlan";
 
 const PremiumPlan = ({ isOpen, onClose, plan }) => {
   const { min, max, description, _id, name } = plan;
@@ -91,7 +92,6 @@ const PremiumPlan = ({ isOpen, onClose, plan }) => {
             variant="yellow"
             w="full"
             onClick={() => {
-              onClose();
               setOpen({ type: planFormActions.SET_PARENT_NAME, payload: name });
               setOpen({ type: planFormActions.SET_ID, payload: _id });
               setOpen({ type: planFormActions.OPEN_FORM });
@@ -101,6 +101,7 @@ const PremiumPlan = ({ isOpen, onClose, plan }) => {
           </Button>
         </ModalFooter>
       </ModalContent>
+      <SubmitPlan closeParent={onClose} />
     </Modal>
   );
 };
