@@ -68,7 +68,7 @@ const useGetAllMyTransactions = (plan, page, limit) => {
   const headers = configOptions();
   return useQuery(["my-transactions", plan, page, limit], () =>
     request
-      .get(`?plan=${plan}&page=${page}`, { headers: headers })
+      .get(`?plan=${plan || ""}&page=${page || 1}`, { headers: headers })
       .then((res) => res.data)
       .catch((err) => {
         if (err.response.status === 403) {

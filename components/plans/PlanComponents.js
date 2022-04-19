@@ -23,7 +23,7 @@ const PlanComponents = ({ planID }) => {
   useEffect(() => {
     if (!!planData) {
       if (!planData.isArray)
-        setPlan({ type: planActions.SET_PLAN, payload: planData.custom_plans });
+        setPlan({ type: planActions.SET_PLAN, payload: planData });
     }
   }, [planData]);
 

@@ -62,7 +62,7 @@ const TransactionHisory = () => {
 
   useEffect(() => {
     if (plansData !== undefined) {
-      setPlans(plansData);
+      setPlans(plansData.custom_plans);
     }
   }, [plansData, page]);
 
