@@ -19,6 +19,7 @@ import Link from "next/link";
 import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 import { formatter } from "utils";
 import SubmitPlan from "./SubmitPlan";
+import { saveParentPlanId } from "api/config";
 
 const PremiumPlan = ({ isOpen, onClose, plan }) => {
   const { min, max, description, _id, name } = plan;
@@ -92,8 +93,9 @@ const PremiumPlan = ({ isOpen, onClose, plan }) => {
             variant="yellow"
             w="full"
             onClick={() => {
-              setOpen({ type: planFormActions.SET_PARENT_NAME, payload: name });
-              setOpen({ type: planFormActions.SET_ID, payload: _id });
+              // setOpen({ type: planFormActions.SET_PARENT_NAME, payload: name });
+              // setOpen({ type: planFormActions.SET_ID, payload: _id });
+              saveParentPlanId(_id);
               setOpen({ type: planFormActions.OPEN_FORM });
             }}
           >

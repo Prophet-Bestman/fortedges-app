@@ -150,7 +150,7 @@ const RequestSuccess = ({ isOpen, data, closeParent }) => {
                   <Text color="text.grey" fontSize="13px">
                     Payment Method
                   </Text>
-                  <Image src={pop.path} w="160px" objectFit={"contain"} />
+                  <Image src={pop.path} h="120px" objectFit={"contain"} />
                 </Flex>
               )}
             </Box>

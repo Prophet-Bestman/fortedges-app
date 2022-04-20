@@ -19,22 +19,12 @@ import { useGetAllPlans } from "api/plans";
 
 const AdminCreatePlan = () => {
   const { dispatch: setActiveNav } = useContext(NavContext);
+
   const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
   const { goalFormState } = useContext(GoalFormContext);
   const { goalFormQuestions } = goalFormState;
   const [explorePlans, setExplorePlans] = useState([]);
   const [fetchErr, setFetchErr] = useState("");
-
-  // const {
-  //   isOpen: isPremiumOpen,
-  //   onClose: onPremiumClose,
-  //   onOpen: onPremiumOpen,
-  // } = useDisclosure();
-  // const {
-  //   isOpen: isRealEstateOpen,
-  //   onClose: onRealEstateClose,
-  //   onOpen: onRealEstateOpen,
-  // } = useDisclosure();
 
   const {
     isOpen: isGoalOpen,

@@ -39,6 +39,8 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
   const [daysLeft, setDaysLeft] = React.useState(0);
   const { plan } = useContext(PlanContext);
   const [withdrawData, setWithdrawData] = useState({});
+  // const [payload, setPayload] = useState({ code: "" });
+  const [withdrawForm, setWithdrawForm] = useState({});
 
   const withdrawSchema = yup.object().shape({
     amount: yup.number().required(),
@@ -48,6 +50,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(withdrawSchema),
@@ -65,13 +68,20 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
     onClose: onVerifyClose,
   } = useDisclosure();
 
+  const closeParent = () => {
+    onVerifyClose();
+    onErrorClose();
+    onClose();
+  };
+
   const { mutate: withdraw, data, isLoading, error } = useWithdraw();
 
-  let payload;
+  let payload = { code: "" };
 
   const submit = (data) => {
     payload = {
-      code: "",
+      ...payload,
+
       data: {
         amount: data.amount,
         address: data.walletAddress,
@@ -80,8 +90,9 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
       },
     };
 
-    console.log(payload);
+    console.log("Withdraw", payload);
     withdraw(payload);
+    setWithdrawForm(payload);
   };
 
   useEffect(() => {
@@ -92,16 +103,16 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
         setWithdrawData(data);
         onVerifyOpen();
       }
+      reset();
     }
   }, [data]);
 
   useEffect(() => {
     if (error !== undefined) {
-      onErrorOpen;
+      onErrorOpen();
     }
+    reset();
   }, [error]);
-
-  console.log(withdrawData);
 
   return (
     <Modal isOpen={isOpen}>
@@ -264,12 +275,12 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
       </ModalContent>
       <EnterVerificationCodeModal
         isOpen={isVerifyOpen}
-        onClose={onVerifyClose}
-        payload={payload}
+        onClose={closeParent}
+        payload={withdrawForm}
       />
       <ErrorModal
         isOpen={isErrorOpen}
-        closeParent={onErrorClose}
+        closeParent={closeParent}
         msg={"An Error Occurred! Try Again Later."}
       />
       {/* <WithdrawalSuccess isOpen={isSuccessOpen} onClose={onSuccessClose} /> */}

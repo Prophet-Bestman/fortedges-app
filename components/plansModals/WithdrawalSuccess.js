@@ -9,16 +9,13 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import { transactionHistory } from "data";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { useRouter } from "next/router";
+import { format } from "date-fns";
+import { formatter } from "utils";
 
-const WithdrawalSuccess = ({ isOpen, closeParent }) => {
-  const { date, modeOfPayment, status, transactionRef, amount } =
-    transactionHistory[0];
-
-  const router = useRouter();
+const WithdrawalSuccess = ({ isOpen, onClose, data }) => {
+  const { status, updatedAt, amount, id, mode_of_payment, address } = data;
 
   return (
     <Modal isOpen={isOpen} size>
@@ -37,7 +34,7 @@ const WithdrawalSuccess = ({ isOpen, closeParent }) => {
           <Circle
             pos="absolute"
             right={0}
-            onClick={closeParent}
+            onClick={onClose}
             cursor="pointer"
             size="40px"
           >
@@ -75,7 +72,7 @@ const WithdrawalSuccess = ({ isOpen, closeParent }) => {
                   Status
                 </Text>
                 <Text fontWeight={600} color="text.black" fontSize="14px">
-                  {status === "Pending" ? (
+                  {status === "processing" ? (
                     <Flex alignItems="center" gap="12px">
                       <Circle size="6px" bg="yellow.400"></Circle> System
                       Processing
@@ -96,7 +93,7 @@ const WithdrawalSuccess = ({ isOpen, closeParent }) => {
                   Date
                 </Text>
                 <Text fontWeight={600} color="text.black" fontSize="14px">
-                  {date}
+                  {format(new Date(updatedAt), "dd/MM/yyyy")}
                 </Text>
               </Flex>
               <Flex
@@ -108,7 +105,7 @@ const WithdrawalSuccess = ({ isOpen, closeParent }) => {
                   Amount
                 </Text>
                 <Text fontWeight={600} color="text.black" fontSize="14px">
-                  {amount}
+                  {formatter.format(amount)}
                 </Text>
               </Flex>
               <Flex
@@ -120,7 +117,19 @@ const WithdrawalSuccess = ({ isOpen, closeParent }) => {
                   Transaction Ref
                 </Text>
                 <Text fontWeight={600} color="text.black" fontSize="14px">
-                  {transactionRef}
+                  {id}
+                </Text>
+              </Flex>
+              <Flex
+                justifyContent={"space-between"}
+                alignItems="center"
+                mb="20px"
+              >
+                <Text color="text.grey" fontSize="13px">
+                  Wallet Address
+                </Text>
+                <Text fontWeight={600} color="text.black" fontSize="14px">
+                  {address}
                 </Text>
               </Flex>
               <Flex
@@ -132,7 +141,7 @@ const WithdrawalSuccess = ({ isOpen, closeParent }) => {
                   Payment Method
                 </Text>
                 <Text fontWeight={600} color="text.black" fontSize="14px">
-                  {modeOfPayment}
+                  {mode_of_payment}
                 </Text>
               </Flex>
             </Box>

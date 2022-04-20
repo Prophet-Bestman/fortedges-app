@@ -48,6 +48,12 @@ const EnterVerificationCodeModal = ({ isOpen, onClose, payload }) => {
     onClose: onErrorClose,
   } = useDisclosure();
 
+  const closeParent = () => {
+    onErrorClose();
+    onSuccessClose();
+    onClose();
+  };
+
   const { mutate: withdraw, data, isLoading, error } = useWithdraw();
 
   const handleSubmit = (e) => {
@@ -56,15 +62,17 @@ const EnterVerificationCodeModal = ({ isOpen, onClose, payload }) => {
       ...payload,
       code: code,
     };
-
-    console.log(payload);
     withdraw(payload);
   };
+
+  // console.log("Payload: ", payload);
 
   useEffect(() => {
     if (data !== undefined) {
       if (data.toString().includes("Error")) {
-        onErrorOpen();
+        if (data.toString().includes("400")) {
+          invalidCodeToast();
+        } else onErrorOpen();
       } else {
         setWithdrawData(data);
         onSuccessOpen();
@@ -73,19 +81,14 @@ const EnterVerificationCodeModal = ({ isOpen, onClose, payload }) => {
   }, [data]);
 
   useEffect(() => {
-    if (error !== undefined) {
+    if (!!error) {
       setErrorMessage("Invalid Code");
+      onErrorOpen();
       return setErrorMessage("");
     }
   }, [error]);
-  useEffect(() => {
-    if (!!errorMessage) {
-      invalidCodeToast();
-    }
-  }, [errorMessage]);
 
-  console.log(withdrawData);
-  console.log("Error: ", errorMessage);
+  // console.log("Error: ", errorMessage);
 
   return (
     <>
@@ -167,10 +170,16 @@ const EnterVerificationCodeModal = ({ isOpen, onClose, payload }) => {
       </Modal>
       <ErrorModal
         isOpen={isErrorOpen}
-        closeParent={onErrorClose}
+        closeParent={closeParent}
         msg={"An Error Occurred! Try Again Later."}
       />
-      <WithdrawalSuccess isOpen={isSuccessOpen} onClose={onSuccessClose} />
+      {!!withdrawData && Object.keys(withdrawData).length > 0 && (
+        <WithdrawalSuccess
+          isOpen={isSuccessOpen}
+          onClose={closeParent}
+          data={withdrawData}
+        />
+      )}
     </>
   );
 };

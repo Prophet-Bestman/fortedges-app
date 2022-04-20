@@ -14,15 +14,15 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import HistoricalPerformance from "./HistoricalPerformance";
-import { portfolioCountries } from "data";
 import Link from "next/link";
 import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 import { formatter } from "utils";
+import SubmitPlan from "./SubmitPlan";
+import { portfolioCountries } from "data";
 
 const RealEstatePlan = ({ isOpen, onClose, plan }) => {
   const { min, max, description, _id, name } = plan;
   const { dispatch: setOpen } = useContext(PlanFormContext);
-
   return (
     <Modal isOpen={isOpen} size="full">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
@@ -60,6 +60,7 @@ const RealEstatePlan = ({ isOpen, onClose, plan }) => {
               Range -{" "}
             </Text>
             <Text>
+              {" "}
               {formatter.format(min)} - {formatter.format(max)}
             </Text>
           </Flex>
@@ -99,18 +100,20 @@ const RealEstatePlan = ({ isOpen, onClose, plan }) => {
             variant="green"
             w="full"
             onClick={() => {
-              onClose();
               setOpen({ type: planFormActions.SET_PARENT_NAME, payload: name });
               setOpen({ type: planFormActions.SET_ID, payload: _id });
               setOpen({ type: planFormActions.OPEN_FORM });
             }}
           >
-            Get Stared
+            Get Started
           </Button>
         </ModalFooter>
       </ModalContent>
+      <SubmitPlan closeParent={onClose} />
     </Modal>
   );
 };
 
 export default RealEstatePlan;
+
+<></>;

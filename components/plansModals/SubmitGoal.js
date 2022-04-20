@@ -17,9 +17,8 @@ import GoalFormTwo from "./GoalFormTwo";
 import GoalFormThree from "./GoalFormThree";
 import { getLocalWallet, getParentPlanID } from "api/config.js";
 
-const planID = getParentPlanID();
-
 const SubmitGoal = ({ goal, closeParent }) => {
+  const planID = getParentPlanID();
   const { goalFormState, dispatch: setOpen } = useContext(GoalFormContext);
   const isOpen = goalFormState.isOpen;
   const { title } = goalFormState.goalFormQuestions;

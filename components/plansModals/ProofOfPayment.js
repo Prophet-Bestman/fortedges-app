@@ -43,11 +43,11 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
   //   onOpen: onErrorOpen,
   // } = useDisclosure();
 
-  // const closeParent = () => {
-  //   onReqClose();
-  //   onErrorClose();
-  //   // onClose();
-  // };
+  const closeParent = () => {
+    onReqClose();
+    setStep(1);
+    onClose();
+  };
 
   const addImg = (e) => {
     const reader = new FileReader();
