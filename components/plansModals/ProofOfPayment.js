@@ -15,14 +15,13 @@ import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { CgSoftwareUpload } from "react-icons/cg";
 import RequestSuccess from "./RequestSuccess";
 import { useSendPOP } from "api/transactions";
-import ErrorModal from "components/ErrorModal";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 });
 
-const ProofOfPayment = ({ onClose, option, data, setStep }) => {
+const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
   const [walletAddress, setWalletAddress] = React.useState(
     "1232878973egueh3e8273927397al02"
   );
@@ -37,7 +36,18 @@ const ProofOfPayment = ({ onClose, option, data, setStep }) => {
     onOpen: onReqOpen,
     onClose: onReqClose,
   } = useDisclosure();
-  const { isOpen: isErrorOpen, onOpen: onErrorOpen } = useDisclosure();
+
+  // const {
+  //   isOpen: isErrorOpen,
+  //   onClose: onErrorClose,
+  //   onOpen: onErrorOpen,
+  // } = useDisclosure();
+
+  // const closeParent = () => {
+  //   onReqClose();
+  //   onErrorClose();
+  //   // onClose();
+  // };
 
   const addImg = (e) => {
     const reader = new FileReader();
@@ -58,7 +68,7 @@ const ProofOfPayment = ({ onClose, option, data, setStep }) => {
     }, 3000);
   };
 
-  const { mutate: sendPOP, isLoading, data: depositData } = useSendPOP();
+  const { mutate: sendPOP, isLoading, data: depositData, error } = useSendPOP();
 
   const handleSendPOP = () => {
     const pop = new FormData();
@@ -71,12 +81,21 @@ const ProofOfPayment = ({ onClose, option, data, setStep }) => {
 
   useEffect(() => {
     if (depositData !== undefined) {
-      setPOPResponse(depositData);
-      if (depositData.pop !== undefined) {
+      if (depositData.toString().includes("Error")) {
+        openError();
+      } else if (depositData.pop !== undefined) {
+        setPOPResponse(depositData);
         onReqOpen();
       }
     }
   }, [depositData]);
+
+  useEffect(() => {
+    if (!!error) {
+      setStep(1);
+      openError();
+    }
+  }, [error]);
 
   return (
     <ModalContent
@@ -239,14 +258,10 @@ const ProofOfPayment = ({ onClose, option, data, setStep }) => {
       {POPResponse.pop !== undefined && (
         <RequestSuccess
           isOpen={isReqOpen}
-          onClose={onReqClose}
+          closeParent={closeParent}
           data={POPResponse}
         />
       )}
-      <ErrorModal
-        isOpen={isErrorOpen}
-        msg={"Error ccurred creating deposit request"}
-      />
     </ModalContent>
   );
 };

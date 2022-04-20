@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import { SigninForm } from "components/auth";
+import { AdminSigninForm } from "components/admin";
 import Head from "next/head";
 import React from "react";
 
@@ -19,7 +19,7 @@ const AdminSignin = () => {
         flexDir="column"
         color="text.black"
       >
-        <SigninForm />
+        <AdminSigninForm />
       </Box>
     </Box>
   );

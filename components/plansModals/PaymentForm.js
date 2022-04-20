@@ -34,6 +34,8 @@ const optionsArr = Object.entries(options);
 const PaymentForm = ({
   onClose,
   setStep,
+  openError,
+  closeParent,
   option,
   setOption,
   setData,
@@ -44,8 +46,6 @@ const PaymentForm = ({
   const planSchema = yup.object({
     amount: yup.number().required(),
   });
-
-  const { isOpen: isErrorOpen, onOpen: onErrorOpen } = useDisclosure();
 
   const {
     register,
@@ -60,7 +60,12 @@ const PaymentForm = ({
     setRequestSent(true);
   };
 
-  const { data: depositData, isLoading, mutate: createDeposit } = useDeposit();
+  const {
+    data: depositData,
+    isLoading,
+    mutate: createDeposit,
+    error,
+  } = useDeposit();
 
   const submit = (data) => {
     data = { ...data, option: option.name };
@@ -77,13 +82,19 @@ const PaymentForm = ({
   useEffect(() => {
     if (depositData !== undefined) {
       if (depositData.toString().includes("Error")) {
-        onErrorOpen();
+        openError();
       } else {
-        setData(depositData);
         setStep(2);
+        setData(depositData);
       }
     }
   }, [depositData]);
+
+  useEffect(() => {
+    if (!!error) {
+      openError();
+    }
+  }, [error]);
 
   return (
     <ModalContent py="24px" px="24px" maxW="380px">
@@ -205,10 +216,6 @@ const PaymentForm = ({
           </Box>
         </form>
       </ModalBody>
-      <ErrorModal
-        isOpen={isErrorOpen}
-        msg={"Error ccurred creating deposit request"}
-      />
     </ModalContent>
   );
 };

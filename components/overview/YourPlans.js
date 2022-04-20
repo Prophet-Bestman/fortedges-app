@@ -64,7 +64,7 @@ const YourPlans = ({ title }) => {
                   </Flex>
                 </SwiperSlide>
                 {plans?.length > 0 &&
-                  plans.map((plan) => (
+                  plans.slice(0, 3).map((plan) => (
                     <SwiperSlide key={plan.name}>
                       <OverviewPlan plan={plan} />
                     </SwiperSlide>

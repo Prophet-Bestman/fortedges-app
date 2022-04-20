@@ -28,17 +28,16 @@ import {
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import WithdrawalSuccess from "./WithdrawalSuccess";
 import EnterVerificationCodeModal from "./EnterVerificationCodeModal";
 import { PlanContext } from "providers/PlanProvider";
 import { useWithdraw } from "api/transactions";
+import ErrorModal from "components/ErrorModal";
 
 const optionsArr = Object.entries(options);
 
 const Withdraw = ({ onClose, isOpen, option, setOption }) => {
   const [daysLeft, setDaysLeft] = React.useState(0);
   const { plan } = useContext(PlanContext);
-  const [error, setError] = useState("");
   const [withdrawData, setWithdrawData] = useState({});
 
   const withdrawSchema = yup.object().shape({
@@ -55,35 +54,54 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
   });
 
   const {
-    isOpen: isSuccessOpen,
-    onOpen: onSuccessOpen,
-    onClose: onSuccessClose,
+    isOpen: isErrorOpen,
+    onOpen: onErrorOpen,
+    onClose: onErrorClose,
   } = useDisclosure();
+
   const {
     isOpen: isVerifyOpen,
     onOpen: onVerifyOpen,
     onClose: onVerifyClose,
   } = useDisclosure();
 
-  const { mutate: withdraw, data, isLoading } = useWithdraw();
+  const { mutate: withdraw, data, isLoading, error } = useWithdraw();
+
+  let payload;
 
   const submit = (data) => {
-    const payload = {
-      amount: data.amount,
-      address: data.walletAddress,
-      mode_of_payment: option.name,
-      plan_id: plan._id,
+    payload = {
+      code: "",
+      data: {
+        amount: data.amount,
+        address: data.walletAddress,
+        mode_of_payment: option.name,
+        plan_id: plan._id,
+      },
     };
+
+    console.log(payload);
     withdraw(payload);
   };
 
   useEffect(() => {
     if (data !== undefined) {
       if (data.toString().includes("Error")) {
-        setError(data);
-      } else setWithdrawData(data);
+        onErrorOpen;
+      } else {
+        setWithdrawData(data);
+        onVerifyOpen();
+      }
     }
   }, [data]);
+
+  useEffect(() => {
+    if (error !== undefined) {
+      onErrorOpen;
+    }
+  }, [error]);
+
+  console.log(withdrawData);
 
   return (
     <Modal isOpen={isOpen}>
@@ -247,9 +265,14 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
       <EnterVerificationCodeModal
         isOpen={isVerifyOpen}
         onClose={onVerifyClose}
-        onSuccessOpen={onSuccessOpen}
+        payload={payload}
       />
-      <WithdrawalSuccess isOpen={isSuccessOpen} onClose={onSuccessClose} />
+      <ErrorModal
+        isOpen={isErrorOpen}
+        closeParent={onErrorClose}
+        msg={"An Error Occurred! Try Again Later."}
+      />
+      {/* <WithdrawalSuccess isOpen={isSuccessOpen} onClose={onSuccessClose} /> */}
     </Modal>
   );
 };

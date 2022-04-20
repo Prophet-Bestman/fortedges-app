@@ -10,6 +10,7 @@ import PendingVerifications from "./PendingVerifications";
 import SelectPlan from "./SelectPlan";
 import SelectNewPlan from "./SelectNewPlan";
 import UserDetailsPage from "./UserDetailsPage";
+import AdminSigninForm from "./AdminSigninForm";
 
 export {
   Stats,
@@ -24,4 +25,5 @@ export {
   PendingVerifications,
   SelectNewPlan,
   UserDetailsPage,
+  AdminSigninForm,
 };

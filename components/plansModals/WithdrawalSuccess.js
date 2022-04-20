@@ -14,7 +14,7 @@ import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/router";
 
-const WithdrawalSuccess = ({ isOpen, onClose }) => {
+const WithdrawalSuccess = ({ isOpen, closeParent }) => {
   const { date, modeOfPayment, status, transactionRef, amount } =
     transactionHistory[0];
 
@@ -37,7 +37,7 @@ const WithdrawalSuccess = ({ isOpen, onClose }) => {
           <Circle
             pos="absolute"
             right={0}
-            onClick={() => router.reload()}
+            onClick={closeParent}
             cursor="pointer"
             size="40px"
           >

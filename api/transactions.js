@@ -50,7 +50,9 @@ const useWithdraw = () => {
   return useMutation(
     (values) =>
       request
-        .put(`/withdraw`, values, { headers: headers })
+        .post(`/withdraw?code=${values.code}`, values.data, {
+          headers: headers,
+        })
         .then((res) => res.data)
         .catch((err) => {
           if (err.response.status === 403) {

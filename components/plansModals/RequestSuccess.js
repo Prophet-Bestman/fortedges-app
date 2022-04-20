@@ -15,7 +15,7 @@ import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { formatter } from "utils";
 
-const RequestSuccess = ({ isOpen, data }) => {
+const RequestSuccess = ({ isOpen, data, closeParent }) => {
   const { createdAt, mode_of_payment, status, type, pop, id, amount } = data;
 
   const router = useRouter();
@@ -37,7 +37,7 @@ const RequestSuccess = ({ isOpen, data }) => {
           <Circle
             pos="absolute"
             right={0}
-            onClick={() => router.reload()}
+            onClick={closeParent}
             cursor="pointer"
             size="40px"
           >

@@ -13,6 +13,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import SuccessModalProvider from "providers/SuccessModalProvider";
 import AuthProvider from "providers/AuthProvider";
 import AuthGuard from "providers/AuthGuard";
+import AdminGuard from "providers/AdminGuard";
 
 function MyApp({ Component, pageProps }) {
   const [queryClient] = React.useState(() => new QueryClient());
@@ -38,15 +39,17 @@ function MyApp({ Component, pageProps }) {
                 </NavProvider>
               </AuthGuard>
             ) : Component.isAdmin ? (
-              <NavProvider>
-                <AdminLayout>
-                  <PlanFormProvider>
-                    <GoalFormProvider>
-                      <Component {...pageProps} />
-                    </GoalFormProvider>
-                  </PlanFormProvider>
-                </AdminLayout>
-              </NavProvider>
+              <AdminGuard>
+                <NavProvider>
+                  <AdminLayout>
+                    <PlanFormProvider>
+                      <GoalFormProvider>
+                        <Component {...pageProps} />
+                      </GoalFormProvider>
+                    </PlanFormProvider>
+                  </AdminLayout>
+                </NavProvider>
+              </AdminGuard>
             ) : (
               <AuthLayout>
                 <Component {...pageProps} />
