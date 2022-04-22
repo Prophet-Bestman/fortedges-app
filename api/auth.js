@@ -59,6 +59,7 @@ const useVerifyEmail = (code) => {
       })
   );
 };
+
 const useSendChangeEmailCode = () => {
   const queryClient = useQueryClient();
   const headers = configOptions();
@@ -78,6 +79,7 @@ const useSendChangeEmailCode = () => {
     }
   );
 };
+
 const useChangeEmail = () => {
   const queryClient = useQueryClient();
   const headers = configOptions();
@@ -89,7 +91,54 @@ const useChangeEmail = () => {
         .catch((err) => {
           if (err.response.status === 403) {
             localStorage.clear();
-          } else return err;
+          } else if (err.response.status === 400) {
+            throw Error("Invalid Code");
+          }
+        }),
+
+    {
+      onSuccess: () => queryClient.invalidateQueries("user"),
+    }
+  );
+};
+
+const useSendChangePasswordCode = () => {
+  const headers = configOptions();
+  return useQuery(
+    "user",
+    () =>
+      request
+        .get(`/auth/change-password`, { headers: headers })
+        .then((res) => res)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          }
+          return err;
+        }),
+    {
+      enabled: false,
+      retry: false,
+    }
+  );
+};
+
+const useChangePassword = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .put(`/auth/change-password?code=${values.code}`, values.data, {
+          headers: headers,
+        })
+        .then((res) => res)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else if (err.response.status === 400) {
+            throw Error("Invalid Code");
+          }
         }),
 
     {
@@ -105,4 +154,6 @@ export {
   useVerifyEmail,
   useChangeEmail,
   useSendChangeEmailCode,
+  useSendChangePasswordCode,
+  useChangePassword,
 };

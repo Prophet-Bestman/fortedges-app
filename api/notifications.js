@@ -18,6 +18,7 @@ const useGetNotifications = () => {
       .catch((err) => {
         if (err.response.status === 403) {
           localStorage.clear();
+          return err;
         } else return err;
       })
   );

@@ -15,34 +15,126 @@ import {
   Input,
   Stack,
   Flex,
+  useToast,
+  Circle,
+  useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ChangePasswordSchema } from "utils";
 import { MdError } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
+import { useChangePassword } from "api/auth";
+import SuccessModal from "components/SuccessModal";
+import { useRouter } from "next/router";
 
-const ChangePassword = ({ isOpen, onClose }) => {
+const ChangePassword = ({ isOpen, onClose, closeParent }) => {
+  const [code, setCode] = useState("");
+  const [passwordData, setPasswordData] = useState();
+  const [passwordError, setPasswordError] = useState();
+
   const {
     control,
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(ChangePasswordSchema),
   });
 
-  const handleChangePassword = (data) => {};
+  const router = useRouter();
+
+  const toast = useToast();
+
+  const invalidCodeToast = () => {
+    toast({
+      title: "Validation Error",
+      description: "You entered a wrong code or incorrect old password",
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+  const successToast = () => {
+    toast({
+      title: "Successfull",
+      description: "You have changed your password successfully",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+
+  const {
+    data,
+    isLoading,
+    mutate: changePassword,
+    error,
+  } = useChangePassword();
+
+  const handleChangePassword = (data) => {
+    const payload = {
+      code: code,
+      data: {
+        old_password: data.oldPassword,
+        new_password: data.newPassword,
+        confirm_password: data.confirmPassword,
+      },
+    };
+
+    changePassword(payload);
+  };
+
+  useEffect(() => {
+    if (data !== undefined) {
+      if (data.status === 400) {
+        invalidCodeToast();
+        setPasswordError(data);
+      }
+      if (data.status === 204) {
+        successToast();
+        closeParent();
+        onClose();
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
+      }
+      setPasswordData(data);
+    }
+    // return setPasswordData("");
+  }, [data]);
+
+  useEffect(() => {
+    setPasswordError(error);
+  }, [error]);
+
+  useEffect(() => {
+    if (!!passwordError && passwordError.toString().includes("Invalid"))
+      invalidCodeToast();
+  }, [passwordError]);
+
+  const close = () => {
+    reset();
+    setPasswordData("");
+    onClose();
+  };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="full">
+    <Modal isOpen={isOpen} size="full">
       <ModalOverlay />
       <form onSubmit={handleSubmit(handleChangePassword)}>
         <ModalContent py="24px" px="12px" maxW="380px">
           <ModalHeader d="flex" justifyContent="space-between">
-            <Text>Change Email Address</Text>
-            <AiOutlineClose onClick={onClose} />
+            <Text>Change Password</Text>
+            <Circle bg="gray.100" cursor="pointer" onClick={close} size="40px">
+              <AiOutlineClose />
+            </Circle>
           </ModalHeader>
           <ModalBody>
             <Stack mb="32px">
@@ -132,7 +224,7 @@ const ChangePassword = ({ isOpen, onClose }) => {
                   px="12px"
                   py="4px"
                 >
-                  <PinInput>
+                  <PinInput onChange={(e) => setCode(e)}>
                     <PinInputField required border="none" w="12px" />
                     <PinInputField required border="none" w="12px" />
                     <PinInputField required border="none" w="12px" />
@@ -165,22 +257,23 @@ const ChangePassword = ({ isOpen, onClose }) => {
                   {"Didn’t recieve the code? "}
                 </Text>
                 <Box></Box>
-                <Text cursor="pointer" color="app.primary">
+                <Text cursor="pointer" color="app.primary" onClick={close}>
                   Re-send
                 </Text>
               </Box>
             </Box>
           </ModalBody>
           <ModalFooter display="flex" gap="12px" justifyContent="space-between">
-            <Button size="md" onClick={onClose} variant="secondary">
+            <Button size="md" onClick={close} variant="secondary">
               Close
             </Button>
-            <Button type="submit" size="md">
+            <Button type="submit" size="md" isLoading={isLoading}>
               Confirm
             </Button>
           </ModalFooter>
         </ModalContent>
       </form>
+      <SuccessModal />
     </Modal>
   );
 };

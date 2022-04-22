@@ -30,6 +30,7 @@ const MainHeader = () => {
   const pageTitle = navState.pageTitle;
   const [user, setUser] = useState({});
   const [notifications, setNotifications] = useState([]);
+  const [notificationsError, setNotificationsError] = useState("");
 
   const router = useRouter();
   const { data: userData, error } = useGetUser();
@@ -52,11 +53,25 @@ const MainHeader = () => {
 
   const { data: notificationData } = useGetNotifications();
 
-  useEffect(() => {
-    if (notificationData !== undefined) setNotifications(notificationData);
-  }, [notificationData]);
+  // useEffect(() => {
+  //   setNotificationsError(notiifyError);
+  // }, [notiifyError]);
 
-  // console.log("Notifications: ", notifications);
+  useEffect(() => {
+    if (notificationData !== undefined) {
+      if (
+        notificationData
+          .toString()
+          .includes("Request failed with status code 403")
+      ) {
+        setNotificationsError(notificationData);
+        logout({ type: userActions.LOGOUT });
+      }
+      setNotifications(notificationData);
+    } else {
+      setNotificationsError(notificationData);
+    }
+  }, [notificationData]);
 
   return (
     <Box position="absolute" top="0" left={0} w="full">

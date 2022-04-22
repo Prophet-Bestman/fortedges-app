@@ -8,6 +8,7 @@ import ChangePassword from "./ChangePassword";
 import ChangeEmail from "./ChangeEmail";
 import ConfirmEmailChange from "./ConfirmEmailChange";
 import { getUserFromLocalStorage } from "api/config";
+import ConfirmPasswordChange from "./ConfirmPasswordChange";
 
 const SecurityTab = () => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -33,11 +34,7 @@ const SecurityTab = () => {
     onOpen: onConfirmPasswordOpen,
     onClose: onConfirmPasswordClose,
   } = useDisclosure();
-  const {
-    isOpen: isChangePasswordOpen,
-    onOpen: onChangePasswordOpen,
-    onClose: onChangePasswordClose,
-  } = useDisclosure();
+
   const {
     isOpen: isConfirmEmailOpen,
     onOpen: onConfirmEmailOpen,
@@ -152,26 +149,15 @@ const SecurityTab = () => {
         </Flex>
       </Box>
 
-      <ConfirmModal
+      <ConfirmPasswordChange
         isOpen={isConfirmPasswordOpen}
         onClose={onConfirmPasswordClose}
-        openModal={onChangePasswordOpen}
-        title="Are you sure you want to change your password?"
-        text="Withdrawals will be disabled for 24 hours after you make this change
-            to protect your account."
       />
+
       <ConfirmEmailChange
         isOpen={isConfirmEmailOpen}
         onClose={onConfirmEmailClose}
         openModal={onChangeEmailOpen}
-        // // action={sendConfirmationEmail}
-        // title="Are you sure you want to change your Email?"
-        // text="Withdrawals will be disabled for 24 hours after you make this change
-        //     to protect your account."
-      />
-      <ChangePassword
-        isOpen={isChangePasswordOpen}
-        onClose={onChangePasswordClose}
       />
 
       <ChangeEmail

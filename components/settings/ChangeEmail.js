@@ -29,6 +29,7 @@ import ErrorModal from "components/ErrorModal";
 const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
   const [code, setCode] = useState("");
   const [emailChangeData, setEmailChangeData] = useState("");
+  const [emailChangeError, setEmailChangeError] = useState("");
   const {
     control,
     register,
@@ -46,6 +47,7 @@ const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
     mutate: changeEmail,
     isLoading,
     data: emailChngeResp,
+    error,
   } = useChangeEmail();
 
   const toast = useToast();
@@ -55,6 +57,18 @@ const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
       title: "Email Changed",
       description: "Your email has been successfully changed!",
       status: "success",
+      duration: 3000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+
+  const invalidCodeToast = () => {
+    toast({
+      title: "Invalid Code",
+      description: "Check your old password or verification code",
+      status: "error",
       duration: 3000,
       isClosable: true,
       variant: "left-accent",
@@ -73,16 +87,16 @@ const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
 
   useEffect(() => {
     if (emailChngeResp !== undefined) {
-      if (emailChngeResp.toString().includes("Error")) {
-        // onErrorOpen();
-        setEmailChangeData(emailChngeResp);
-      } else {
+      if (!emailChngeResp.toString().includes("Error")) {
         setEmailChangeData(emailChngeResp);
         emailChangedToast();
-        router.reload();
+        router.push("/");
         setTimeout(() => {
           onClose();
         }, 1000);
+      }
+      if (emailChngeResp.toString().includes("Invalid code")) {
+        setEmailChangeError(error);
       }
     }
   }, emailChngeResp);
@@ -91,8 +105,17 @@ const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
     openConfirmEmailChange();
     setTimeout(() => {
       onClose();
-    }, 1000);
+    }, 400);
   };
+
+  useEffect(() => {
+    setEmailChangeError(error);
+  }, [error]);
+
+  useEffect(() => {
+    if (!!emailChangeError && emailChangeError.toString().includes("Invalid"))
+      invalidCodeToast();
+  }, [emailChangeError]);
 
   return (
     <Modal isOpen={isOpen} size="full">
@@ -188,12 +211,7 @@ const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
                 <Text
                   cursor="pointer"
                   color="app.primary"
-                  onClick={() => {
-                    openConfirmEmailChange();
-                    setTimeout(() => {
-                      onClose();
-                    }, 500);
-                  }}
+                  onClick={handleResend}
                 >
                   Re-send
                 </Text>

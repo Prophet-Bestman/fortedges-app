@@ -54,8 +54,6 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     window.addEventListener("storage", () => {
-      // When local storage changes, dump the list to
-      // the console.
       setLocalUser(JSON.parse(localStorage.getItem(config.key.user)) || {});
     });
   }, []);

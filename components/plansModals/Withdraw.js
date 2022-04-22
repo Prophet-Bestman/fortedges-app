@@ -39,7 +39,6 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
   const [daysLeft, setDaysLeft] = React.useState(0);
   const { plan } = useContext(PlanContext);
   const [withdrawData, setWithdrawData] = useState({});
-  // const [payload, setPayload] = useState({ code: "" });
   const [withdrawForm, setWithdrawForm] = useState({});
 
   const withdrawSchema = yup.object().shape({

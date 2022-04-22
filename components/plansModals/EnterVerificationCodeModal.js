@@ -65,8 +65,6 @@ const EnterVerificationCodeModal = ({ isOpen, onClose, payload }) => {
     withdraw(payload);
   };
 
-  // console.log("Payload: ", payload);
-
   useEffect(() => {
     if (data !== undefined) {
       if (data.toString().includes("Error")) {
@@ -87,8 +85,6 @@ const EnterVerificationCodeModal = ({ isOpen, onClose, payload }) => {
       return setErrorMessage("");
     }
   }, [error]);
-
-  // console.log("Error: ", errorMessage);
 
   return (
     <>

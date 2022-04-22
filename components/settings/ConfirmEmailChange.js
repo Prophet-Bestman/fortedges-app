@@ -29,6 +29,7 @@ const ConfirmEmailChange = ({ isOpen, onClose, openModal }) => {
     control,
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(changeEmailSchema),
@@ -77,6 +78,12 @@ const ConfirmEmailChange = ({ isOpen, onClose, openModal }) => {
       }
     }
   }, [sendCodeResp]);
+
+  const close = () => {
+    reset();
+    setSendCodeResponse({});
+    onClose();
+  };
 
   return (
     <Modal isOpen={isOpen}>
@@ -129,7 +136,7 @@ const ConfirmEmailChange = ({ isOpen, onClose, openModal }) => {
               </Stack>
 
               <Flex gap="16px">
-                <Button mr="16px" variant="secondary" onClick={onClose}>
+                <Button mr="16px" variant="secondary" onClick={close}>
                   Cancel
                 </Button>
                 <Button colorScheme="blue" type="submit" isLoading={isLoading}>
