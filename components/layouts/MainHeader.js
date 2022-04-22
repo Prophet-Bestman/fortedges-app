@@ -73,6 +73,8 @@ const MainHeader = () => {
     }
   }, [notificationData]);
 
+  // console.log("Notification: ", notifications);
+
   return (
     <Box position="absolute" top="0" left={0} w="full">
       <Box

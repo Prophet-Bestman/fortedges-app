@@ -50,6 +50,19 @@ const AdminSigninForm = () => {
       position: "top",
     });
   };
+
+  const nonAdminToast = () => {
+    toast({
+      title: "Invalid Admin",
+      description: "You are not an admin. Login with an admin account",
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+
   const loginErrorToast = () => {
     toast({
       title: "Login Error",
@@ -104,20 +117,24 @@ const AdminSigninForm = () => {
     if (!loginData) {
     }
     if (loginData?.user) {
-      const token = config.key.token;
-      const wallet = config.key.wallet;
-      const userID = config.key.userID;
-      const walletData = JSON.stringify(loginData.wallet);
-      localStorage.clear();
-      dispatch({ type: userActions.LOGIN, payload: loginData.user });
-      localStorage.setItem(token, loginData.user.access_token);
-      localStorage.setItem(wallet, walletData);
-      localStorage.setItem(userID, loginData.user._id);
-      successToast();
+      if (loginData?.user?.access_level !== 3) {
+        nonAdminToast();
+      } else {
+        const token = config.key.token;
+        const wallet = config.key.wallet;
+        const userID = config.key.userID;
+        const walletData = JSON.stringify(loginData.wallet);
+        localStorage.clear();
+        dispatch({ type: userActions.LOGIN, payload: loginData.user });
+        localStorage.setItem(token, loginData.user.access_token);
+        localStorage.setItem(wallet, walletData);
+        localStorage.setItem(userID, loginData.user._id);
+        successToast();
 
-      const redirect = getRedirect();
-      clearRedirect();
-      !!redirect ? router.push(redirect) : router.push("/admin");
+        const redirect = getRedirect();
+        clearRedirect();
+        !!redirect ? router.push(redirect) : router.push("/admin");
+      }
     }
   }, [loginData]);
 
