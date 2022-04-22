@@ -5,7 +5,6 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
   Box,
   Button,
   Text,
@@ -17,7 +16,6 @@ import {
   Flex,
   useToast,
   Circle,
-  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -31,7 +29,6 @@ import { useRouter } from "next/router";
 
 const ChangePassword = ({ isOpen, onClose, closeParent }) => {
   const [code, setCode] = useState("");
-  const [passwordData, setPasswordData] = useState();
   const [passwordError, setPasswordError] = useState();
 
   const {
@@ -105,9 +102,7 @@ const ChangePassword = ({ isOpen, onClose, closeParent }) => {
           router.push("/");
         }, 2000);
       }
-      setPasswordData(data);
     }
-    // return setPasswordData("");
   }, [data]);
 
   useEffect(() => {
@@ -121,7 +116,6 @@ const ChangePassword = ({ isOpen, onClose, closeParent }) => {
 
   const close = () => {
     reset();
-    setPasswordData("");
     onClose();
   };
 
@@ -273,7 +267,6 @@ const ChangePassword = ({ isOpen, onClose, closeParent }) => {
           </ModalFooter>
         </ModalContent>
       </form>
-      <SuccessModal />
     </Modal>
   );
 };

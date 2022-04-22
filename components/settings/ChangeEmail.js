@@ -13,7 +13,6 @@ import {
   Input,
   Stack,
   Flex,
-  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
@@ -22,13 +21,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { changeEmailSchema } from "utils";
 import { MdError } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { useChangeEmail, useSendChangeEmailCode } from "api/auth";
+import { useChangeEmail } from "api/auth";
 import { useRouter } from "next/router";
-import ErrorModal from "components/ErrorModal";
 
 const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
   const [code, setCode] = useState("");
-  const [emailChangeData, setEmailChangeData] = useState("");
   const [emailChangeError, setEmailChangeError] = useState("");
   const {
     control,
@@ -40,8 +37,6 @@ const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
   });
 
   const router = useRouter();
-
-  const { isOpen: isErrorOpen, onOpen: onErrorOpen } = useDisclosure();
 
   const {
     mutate: changeEmail,
@@ -88,7 +83,6 @@ const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
   useEffect(() => {
     if (emailChngeResp !== undefined) {
       if (!emailChngeResp.toString().includes("Error")) {
-        setEmailChangeData(emailChngeResp);
         emailChangedToast();
         router.push("/");
         setTimeout(() => {
@@ -229,10 +223,6 @@ const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
           </form>
         </ModalBody>
       </ModalContent>
-      <ErrorModal
-        isOpen={isErrorOpen}
-        msg={"An Error Occurred. Try Again Later "}
-      />
     </Modal>
   );
 };

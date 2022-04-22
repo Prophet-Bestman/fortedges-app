@@ -16,9 +16,6 @@ import { BsExclamationLg } from "react-icons/bs";
 import ChangePassword from "./ChangePassword";
 
 const ConfirmPasswordChange = ({ isOpen, onClose }) => {
-  const [passwordData, setPasswordData] = useState("");
-  const [count, setCount] = useState(0);
-
   const {
     isOpen: isChangePasswordOpen,
     onOpen: onChangePasswordOpen,
@@ -26,7 +23,6 @@ const ConfirmPasswordChange = ({ isOpen, onClose }) => {
   } = useDisclosure();
 
   const close = () => {
-    setPasswordData("");
     onClose();
   };
 
@@ -57,21 +53,16 @@ const ConfirmPasswordChange = ({ isOpen, onClose }) => {
   } = useSendChangePasswordCode();
 
   const handleSendEmail = () => {
-    setPasswordData("");
     sendEmail();
-    // onChangePasswordOpen();
   };
 
   useEffect(() => {
     if (data !== undefined) {
       if (data.status === 200) {
-        setCount((prev) => prev + 1);
         onChangePasswordOpen();
       } else if (data.data.toString().includes("Error")) {
         errorToast();
       }
-
-      setPasswordData(data);
     }
   }, [data]);
 
@@ -119,7 +110,6 @@ const ConfirmPasswordChange = ({ isOpen, onClose }) => {
           </Flex>
         </ModalBody>
       </ModalContent>
-      {/* {children} */}
       <ChangePassword
         isOpen={isChangePasswordOpen}
         onClose={onChangePasswordClose}

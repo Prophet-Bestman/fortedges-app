@@ -1,10 +1,8 @@
 import { Box, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
-import ConfirmModal from "components/ConfirmModal";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { AiFillCheckCircle, AiOutlineMail } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
-import ChangePassword from "./ChangePassword";
 import ChangeEmail from "./ChangeEmail";
 import ConfirmEmailChange from "./ConfirmEmailChange";
 import { getUserFromLocalStorage } from "api/config";
@@ -16,11 +14,8 @@ const SecurityTab = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [email, setEmail] = useState("");
 
-  const [user, setUser] = useState({});
-
   useEffect(() => {
     const localUser = getUserFromLocalStorage();
-    setUser(localUser);
     setEmailVerified(localUser.is_email_verified);
     setAuthenticated(localUser.is_email_verified);
     setIdVerified(localUser.is_verified);
