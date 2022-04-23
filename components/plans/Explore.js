@@ -33,7 +33,7 @@ const Explore = () => {
   }, [error]);
 
   return (
-    <Box py="64px">
+    <Box py="64px" w="full">
       <Box py="16px" borderBottomWidth="1px" borderBottomColor="#E7E8ED">
         <Text mb="9px" fontSize="20px" color="text.black" fontWeight="600">
           Explore Plans
@@ -58,7 +58,7 @@ const Explore = () => {
       </Box>
 
       {explorePlans.length > 0 && (
-        <Box>
+        <Box w="full">
           <Swiper
             slidesPerView={2}
             spaceBetween={10}
@@ -96,7 +96,7 @@ const Explore = () => {
           </Swiper>
         </Box>
       )}
-      <Box>
+      <Box w="full">
         <Flex
           justifyContent="space-between"
           alignItems="center"

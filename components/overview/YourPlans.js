@@ -28,7 +28,7 @@ const YourPlans = ({ title }) => {
           templateColumns={["repeat(1, 1fr)", , , "repeat(3, 1fr)"]}
           gap="14px"
         >
-          <GridItem colSpan={2}>
+          <GridItem colSpan={2} w="full">
             <Text fontSize={["16px", "18px", "20px", "24px"]} mb="24px">
               {/* {title} */}
             </Text>

@@ -9,12 +9,12 @@ import PlanLarge from "./PlanLarge";
 
 const PlansTab = ({ plans }) => {
   return (
-    <Box>
+    <Box w="full">
       <Text mt="65px" mb="40px" fontSize="20px">
         Plans
       </Text>
       {/* Only on mobile */}
-      <Box display={["block", , "none"]}>
+      <Box display={["block", , "none"]} w="full">
         <Swiper
           slidesPerView={2}
           spaceBetween={10}
@@ -55,7 +55,7 @@ const PlansTab = ({ plans }) => {
       </Box>
 
       {/* Only on desktop */}
-      <Box display={["none", , "block"]}>
+      <Box display={["none", , "block"]} w="full">
         <Swiper
           slidesPerView={2}
           spaceBetween={10}

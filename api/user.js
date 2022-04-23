@@ -23,6 +23,38 @@ const useGetUser = () => {
   );
 };
 
+const useAdminGetUser = (user_id) => {
+  const headers = configOptions();
+  return useQuery(["user", user_id], () =>
+    request
+      .get(`/${user_id}`, {
+        headers: headers,
+      })
+      .then((res) => res.data)
+      .catch((err) => {
+        if (err.response.status === 403) {
+          localStorage.clear();
+        } else return err;
+      })
+  );
+};
+
+const useGetAllUsers = (page) => {
+  const headers = configOptions();
+  return useQuery(["users", page], () =>
+    request
+      .get(`?page=${page || 1}`, {
+        headers: headers,
+      })
+      .then((res) => res.data)
+      .catch((err) => {
+        if (err.response.status === 403) {
+          localStorage.clear();
+        } else return err;
+      })
+  );
+};
+
 const useUpdateUser = () => {
   const queryClient = useQueryClient();
   const headers = configOptions();
@@ -41,4 +73,4 @@ const useUpdateUser = () => {
   );
 };
 
-export { useGetUser, useUpdateUser };
+export { useGetUser, useUpdateUser, useGetAllUsers, useAdminGetUser };

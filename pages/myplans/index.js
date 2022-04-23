@@ -27,7 +27,7 @@ export default function MyPlans() {
       <Tabs variant="line" defaultIndex={0}>
         <PlansHeader />
         <TabPanels>
-          <TabPanel>
+          <TabPanel w={["85vw", , , "70vw"]}>
             <PlansTab plans={customPlans} />
             <Explore />
           </TabPanel>

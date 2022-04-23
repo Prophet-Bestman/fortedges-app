@@ -8,20 +8,13 @@ import {
 } from "components/admin";
 
 import Link from "next/link";
-import { navActions, NavContext, navStates } from "providers/NavProvider";
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import ActionSuccessful from "./ActionSuccessful";
 
-const UserDetailsPage = () => {
-  const { dispatch: setActiveNav } = useContext(NavContext);
+const UserDetailsPage = ({ userID }) => {
   const [action, setAction] = React.useState("");
 
-  useEffect(() => {
-    setActiveNav({
-      type: navActions.SET_ACTIVE,
-      payload: navStates.userDetails,
-    });
-  }, []);
+  console.log("User ID: ", userID);
 
   const {
     isOpen: isSelectOpen,
@@ -50,7 +43,7 @@ const UserDetailsPage = () => {
 
   return (
     <Box px="24px">
-      <UserDetails />
+      <UserDetails userID={userID} />
       <UserPlans />
       <Flex justify="space-evenly" mb="30px">
         <Button

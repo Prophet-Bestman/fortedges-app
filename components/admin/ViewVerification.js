@@ -16,61 +16,68 @@ import { AiOutlineClose } from "react-icons/ai";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import UserIDVerification from "./UserIDVerification";
 
-const ViewVerification = ({ isOpen, onClose, verificationDetails }) => {
-  const { emailVerification, idVerification, idVerificationDetails } =
-    verificationDetails;
+const ViewVerification = ({
+  isOpen,
+  onClose,
+  verificationDetails,
+  isEmailVerified,
+}) => {
+  const { idVerification, idVerificationDetails } = verificationDetails;
   const {
     isOpen: isVerifyOpen,
     onOpen: onVerifyOpen,
     onClose: onVerifyClose,
   } = useDisclosure();
+
+  console.log(verificationDetails);
   return (
     <Modal isOpen={isOpen} size="xl" isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader mt="24px" d="flex" justifyContent="space-between">
           <Text>User Verification</Text>
-          <AiOutlineClose onClick={onClose} />
+          <AiOutlineClose cursor="pointer" onClick={onClose} />
         </ModalHeader>
-        <ModalBody px="24px" py="30px">
-          <Box my="30px">
-            <Flex
-              py="16px"
-              justifyContent="space-between"
-              borderBottomWidth="1px"
-              borderColor="#E2E0E0"
-            >
-              <Text>Email Verification</Text>
+        {true && (
+          <ModalBody px="24px" py="30px">
+            <Box my="30px">
+              <Flex
+                py="16px"
+                justifyContent="space-between"
+                borderBottomWidth="1px"
+                borderColor="#E2E0E0"
+              >
+                <Text>Email Verification</Text>
 
-              {emailVerification ? (
-                <Flex>
-                  <Flex
-                    color={"white"}
-                    bg="green"
-                    px="12px"
-                    py="2px"
-                    fontSize="12px"
-                    rounded="full"
-                  >
-                    Verified
+                {isEmailVerified ? (
+                  <Flex>
+                    <Flex
+                      color={"white"}
+                      bg="green"
+                      px="12px"
+                      py="2px"
+                      fontSize="12px"
+                      rounded="full"
+                    >
+                      Verified
+                    </Flex>
+                    <Box display={["unset", , "none"]}>
+                      <MdKeyboardArrowRight />
+                    </Box>
                   </Flex>
-                  <Box display={["unset", , "none"]}>
-                    <MdKeyboardArrowRight />
-                  </Box>
-                </Flex>
-              ) : (
-                <Flex alignItems="center" gap={[0, , "16px"]}>
-                  <Flex
-                    color={"white"}
-                    bg="red.00"
-                    px="12px"
-                    py="2px"
-                    fontSize="12px"
-                    rounded="full"
-                  >
-                    Not Verified
-                  </Flex>
-                  {/* <Button
+                ) : (
+                  <Flex alignItems="center" gap={[0, , "16px"]}>
+                    <Flex
+                      color={"white"}
+                      bg="red.00"
+                      px="12px"
+                      py="2px"
+                      fontSize="12px"
+                      rounded="full"
+                    >
+                      Not Verified
+                    </Flex>
+                    {/* <Button
                     // onClick={onConfirmEmailOpen}
                     display={["none", , "unset"]}
                     variant="secondary"
@@ -81,35 +88,62 @@ const ViewVerification = ({ isOpen, onClose, verificationDetails }) => {
                   <Box display={["unset", , "none"]}>
                     <MdKeyboardArrowRight />
                   </Box> */}
-                </Flex>
-              )}
-            </Flex>
-            <Flex
-              py="32px"
-              justifyContent="space-between"
-              borderBottomWidth="1px"
-              borderColor="#E2E0E0"
-            >
-              <Text>ID Verification</Text>
-
-              {idVerification ? (
-                <Flex>
-                  <Flex
-                    color={"white"}
-                    bg="green"
-                    px="12px"
-                    py="2px"
-                    fontSize="12px"
-                    rounded="full"
-                  >
-                    Verified
                   </Flex>
-                  <Box display={["unset", , "none"]}>
-                    <MdKeyboardArrowRight />
-                  </Box>
-                </Flex>
-              ) : (
-                <Flex alignItems="center" gap={[0, , "16px"]}>
+                )}
+              </Flex>
+              <Flex
+                py="32px"
+                justifyContent="space-between"
+                borderBottomWidth="1px"
+                borderColor="#E2E0E0"
+              >
+                <Text>ID Verification</Text>
+
+                {verificationDetails.status ? (
+                  <>
+                    {verificationDetails.staus === "complete" ? (
+                      <Flex>
+                        <Flex
+                          color={"white"}
+                          bg="green"
+                          px="12px"
+                          py="2px"
+                          fontSize="12px"
+                          rounded="full"
+                        >
+                          {verificationDetails.status || "No Verification"}
+                        </Flex>
+                        <Box display={["unset", , "none"]}>
+                          <MdKeyboardArrowRight />
+                        </Box>
+                      </Flex>
+                    ) : (
+                      <Flex alignItems="center" gap={[0, , "16px"]}>
+                        <Flex
+                          color={"white"}
+                          bg="red.00"
+                          px="12px"
+                          py="2px"
+                          fontSize="12px"
+                          rounded="full"
+                        >
+                          {verificationDetails.status || "No Verification"}
+                        </Flex>
+                        <Button
+                          onClick={onVerifyOpen}
+                          display={["none", , "unset"]}
+                          variant="secondary"
+                          size="sm"
+                        >
+                          View
+                        </Button>
+                        <Box display={["unset", , "none"]}>
+                          <MdKeyboardArrowRight />
+                        </Box>
+                      </Flex>
+                    )}
+                  </>
+                ) : (
                   <Flex
                     color={"white"}
                     bg="red.00"
@@ -118,30 +152,22 @@ const ViewVerification = ({ isOpen, onClose, verificationDetails }) => {
                     fontSize="12px"
                     rounded="full"
                   >
-                    Not Verified
+                    {verificationDetails.status || "No Verification"}
                   </Flex>
-                  <Button
-                    onClick={onVerifyOpen}
-                    display={["none", , "unset"]}
-                    variant="secondary"
-                    size="sm"
-                  >
-                    View
-                  </Button>
-                  <Box display={["unset", , "none"]}>
-                    <MdKeyboardArrowRight />
-                  </Box>
-                </Flex>
-              )}
-            </Flex>
-          </Box>
-        </ModalBody>
+                )}
+              </Flex>
+            </Box>
+          </ModalBody>
+        )}
       </ModalContent>
-      <UserIDVerification
-        onClose={onVerifyClose}
-        isOpen={isVerifyOpen}
-        idVerificationDetails={idVerificationDetails}
-      />
+      {verificationDetails !== undefined &&
+        Object.keys(verificationDetails).length > 0 && (
+          <UserIDVerification
+            onClose={onVerifyClose}
+            isOpen={isVerifyOpen}
+            idVerificationDetails={verificationDetails}
+          />
+        )}
     </Modal>
   );
 };

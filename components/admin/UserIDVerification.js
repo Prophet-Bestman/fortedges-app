@@ -14,6 +14,9 @@ import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 const UserIDVerification = ({ isOpen, onClose, idVerificationDetails }) => {
+  const { image } = idVerificationDetails;
+  const { front, back } = image;
+
   return (
     <Modal isOpen={isOpen} size="full" scrollBehavior="inside">
       <ModalOverlay />
@@ -23,13 +26,15 @@ const UserIDVerification = ({ isOpen, onClose, idVerificationDetails }) => {
           <AiOutlineClose onClick={onClose} />
         </ModalHeader>
         <ModalBody px="24px" py="30px">
-          {idVerificationDetails.length > 0 ? (
+          {idVerificationDetails !== undefined &&
+          Object.keys(idVerificationDetails).length > 0 ? (
             <Box>
-              {idVerificationDetails.map((item, i) => (
-                <Flex justifyContent="center" key={i}>
-                  <Image src={item.img} w="400px" mb="4" objectFit="contain" />
-                </Flex>
-              ))}
+              <Flex justifyContent="center" h="350px" bg="gray.100" mb="20px">
+                <Image src={front.path} w="full" mb="4" objectFit="contain" />
+              </Flex>
+              <Flex justifyContent="center" h="450px" bg="gray.100">
+                <Image src={back.path} w="full" mb="4" objectFit="contain" />
+              </Flex>
               <Button onClick={onClose} w="full">
                 Verify
               </Button>
