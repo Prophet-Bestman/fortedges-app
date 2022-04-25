@@ -15,6 +15,7 @@ import {
   useDeclineTransaction,
   useDeleteTransaction,
 } from "api/transactions";
+import { format } from "date-fns";
 import React, { useEffect } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { formatter } from "utils";
@@ -31,8 +32,16 @@ const statusColor = (status) => {
 };
 
 const WithdrawalRow = ({ withdrawal }) => {
-  const { email, plan, mode_of_payment, amount, status, address, id } =
-    withdrawal;
+  const {
+    user,
+    plan,
+    mode_of_payment,
+    createdAt,
+    amount,
+    status,
+    address,
+    id,
+  } = withdrawal;
   const [copied, setCopied] = React.useState(false);
 
   const handleCopy = () => {
@@ -152,15 +161,15 @@ const WithdrawalRow = ({ withdrawal }) => {
   };
 
   useEffect(() => {
-    if (deleteData !== undefined && Object.keys(deleteData).length > 0) {
+    if (deleteData !== undefined && deleteData.status) {
       deleteToast();
     }
   }, [deleteData]);
 
   return (
     <Tr fontSize={"14px"} color="text.grey">
-      <Td>{email}</Td>
-      <Td>{plan}</Td>
+      <Td>{user.email}</Td>
+      <Td>{plan.name}</Td>
       <Td color="text.black" fontWeight={"600"} textTransform="uppercase">
         {mode_of_payment}
       </Td>
@@ -181,7 +190,7 @@ const WithdrawalRow = ({ withdrawal }) => {
         </Text>
       </Td>
       <Td color="text.black" fontWeight={"600"}>
-        {/* {creata} */}
+        {format(new Date(createdAt), "dd/MM/yyyy")}
       </Td>
       <Td color={copied ? "green.400" : "text.black"} fontWeight={"600"}>
         {copied ? "Copied!" : address}

@@ -12,8 +12,8 @@ import { deposits } from "data";
 import React from "react";
 import PendingDepositRow from "./PendingDepositRow";
 
-const PendingDeposits = () => {
-  //   const { email, investmentPlan, date, mop, amount, status } = deposits;
+const PendingDeposits = ({ deposits }) => {
+  console.log("Deposits: ", deposits);
   return (
     <Box>
       <Text fontSize="20px" fontWeight="600" mb="24px">
@@ -32,13 +32,13 @@ const PendingDeposits = () => {
               <Td>Actions</Td>
             </Tr>
           </Thead>
-          <Tbody fontSize="20px" gap="80px">
-            {deposits
-              .filter((deposit) => deposit.status === "Pending Confirmation")
-              .map((deposit, i) => (
-                <PendingDepositRow deposit={deposit} key={i} />
+          {!!deposits && deposits?.length > 0 && (
+            <Tbody fontSize="20px" gap="80px">
+              {deposits.map((deposit) => (
+                <PendingDepositRow deposit={deposit} key={deposit.id} />
               ))}
-          </Tbody>
+            </Tbody>
+          )}
         </Table>
       </TableContainer>
     </Box>

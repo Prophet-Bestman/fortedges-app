@@ -154,7 +154,7 @@ const useDeleteTransaction = () => {
         .delete(`/${values}`, {
           headers: headers,
         })
-        .then((res) => res.data),
+        .then((res) => res),
     {
       onSuccess: () => queryClient.invalidateQueries("my-transactions"),
     }

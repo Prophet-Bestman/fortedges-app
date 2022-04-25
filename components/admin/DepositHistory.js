@@ -4,19 +4,14 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
-  Th,
   Td,
-  TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
-import { deposits } from "data";
 import React from "react";
 import DepositRow from "./DepositRow";
-import PendingDepositRow from "./PendingDepositRow";
 
-const DepositHistory = () => {
+const DepositHistory = ({ deposits }) => {
   return (
     <Box my="40px">
       <Text fontSize="20px" fontWeight="600" mb="24px">
@@ -35,11 +30,13 @@ const DepositHistory = () => {
               <Td>Actions</Td>
             </Tr>
           </Thead>
-          <Tbody fontSize="20px" gap="80px">
-            {deposits.map((deposit, i) => (
-              <DepositRow deposit={deposit} key={i} />
-            ))}
-          </Tbody>
+          {!!deposits && deposits?.length > 0 && (
+            <Tbody fontSize="20px" gap="80px">
+              {deposits.map((deposit) => (
+                <DepositRow deposit={deposit} key={deposit.id} />
+              ))}
+            </Tbody>
+          )}
         </Table>
       </TableContainer>
     </Box>

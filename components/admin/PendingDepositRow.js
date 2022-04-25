@@ -10,49 +10,129 @@ import {
   ModalBody,
   ModalContent,
   ModalOverlay,
+  Spinner,
   Td,
   Text,
   Tr,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import React from "react";
+import { useConfirmTransaction, useDeclineTransaction } from "api/transactions";
+import React, { useEffect } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { formatter } from "utils";
 
 const PendingDepositRow = ({ deposit }) => {
-  const { email, investmentPlan, mop, amount, status, pop } = deposit;
+  const { user, plan, mode_of_payment, amount, status, pop, id } = deposit;
   const {
     isOpen: isPOPOpen,
     onOpen: onPOPOpen,
     onClose: onPOPClose,
   } = useDisclosure();
-  const statusBg = () => {
-    if (status === "Pending Confirmation") return "#E9C46A33";
-    else if (status === "Confirmed") return "green.100";
-    else return "red.100";
+
+  const toast = useToast();
+
+  const insufficientBalanceToast = () => {
+    toast({
+      title: "Cannot Confirm",
+      description: "User has insufficient balance",
+      status: "error",
+      duration: 2000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
   };
-  const statusColor = () => {
-    if (status === "Pending Confirmation") return "#E9C46A";
-    else if (status === "Confirmed") return "green.400";
-    else return "red.400";
+
+  const confirmToast = () => {
+    toast({
+      title: "Deposit confirmed",
+      description: "You have confimed this deposit successfully",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
   };
+
+  const declineToast = () => {
+    toast({
+      title: "Deposit declined",
+      description: "You have declined this deposit successfully",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+
+  // ======== CONFIRM DEPOSIT LOGIC =============
+
+  const {
+    mutate: confirmDeposit,
+    isLoading,
+    data: confirmData,
+    // error,
+  } = useConfirmTransaction();
+
+  const confirm = () => {
+    confirmDeposit(id);
+  };
+
+  useEffect(() => {
+    if (confirmData !== undefined && Object.keys(confirmData).length > 0) {
+      confirmToast();
+    }
+  }, [confirmData]);
+
+  // useEffect(() => {
+  //   if (
+  //     error !== undefined &&
+  //     error?.toString().includes("Request failed with status code 500")
+  //   ) {
+  //     insufficientBalanceToast();
+  //   }
+  // }, [error]);
+
+  // ======== DECLINE DEPOSIT LOGIC =============
+
+  const {
+    mutate: declineDeposit,
+    isLoading: isDeclineLoading,
+    data: declineData,
+  } = useDeclineTransaction();
+
+  const decline = () => {
+    declineDeposit(id);
+  };
+
+  useEffect(() => {
+    if (declineData !== undefined && Object.keys(declineData).length > 0) {
+      declineToast();
+    }
+  }, [declineData]);
+
   return (
     <Tr fontSize={"14px"} color="text.grey">
-      <Td>{email}</Td>
-      <Td>{investmentPlan}</Td>
+      <Td>{user.email}</Td>
+      <Td>{plan.name}</Td>
       <Td color="text.black" fontWeight={"600"}>
-        {mop.currency}({mop.number})
+        {mode_of_payment}
       </Td>
       <Td color="text.black" fontWeight={"600"}>
-        {amount}
+        {formatter.format(amount)}
       </Td>
       <Td>
         <Text
           textAlign="center"
           rounded="md"
-          bg={statusBg}
-          color={statusColor}
+          bg={"#E9C46A33"}
+          color={"#E9C46A"}
           fontWeight={600}
           fontSize="12px"
+          textTransform="capitalize"
         >
           {status}
         </Text>
@@ -69,29 +149,40 @@ const PendingDepositRow = ({ deposit }) => {
         </Button>
       </Td>
       <Td>
-        <Menu>
-          <MenuButton
-            w="40px"
-            h="40px"
-            as={IconButton}
-            aria-label="Options"
-            icon={<BsThreeDotsVertical />}
-            variant="secondary"
+        {isLoading || isDeclineLoading ? (
+          <Spinner
+            thickness="4px"
+            mx="auto"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="app.primary"
+            size="sm"
           />
-          <MenuList>
-            <MenuItem>Confirm</MenuItem>
-            <MenuItem>Decline</MenuItem>
-          </MenuList>
-        </Menu>
+        ) : (
+          <Menu>
+            <MenuButton
+              w="40px"
+              h="40px"
+              as={IconButton}
+              aria-label="Options"
+              icon={<BsThreeDotsVertical />}
+              variant="secondary"
+            />
+            <MenuList>
+              <MenuItem onClick={confirm}>Confirm</MenuItem>
+              <MenuItem onClick={decline}>Decline</MenuItem>
+            </MenuList>
+          </Menu>
+        )}
       </Td>
 
-      <Modal isOpen={isPOPOpen} onClose={onPOPClose}>
+      <Modal isOpen={isPOPOpen} onClose={onPOPClose} size="2xl">
         <ModalOverlay />
-        <ModalBody>
-          <ModalContent>
-            <Image src={pop} w="full" objectFit="contain" />
-          </ModalContent>
-        </ModalBody>
+        <ModalContent>
+          <ModalBody h="50vh">
+            <Image src={pop.path} h="full" w="full" objectFit="contain" />
+          </ModalBody>
+        </ModalContent>
       </Modal>
     </Tr>
   );

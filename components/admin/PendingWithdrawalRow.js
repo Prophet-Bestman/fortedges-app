@@ -16,7 +16,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { formatter } from "utils";
 
 const PendingWithdrawalRow = ({ withdrawal }) => {
-  const { email, plan, mode_of_payment, amount, status, address, id } =
+  const { user, plan, mode_of_payment, amount, status, address, id } =
     withdrawal;
   const toast = useToast();
   const [copied, setCopied] = React.useState(false);
@@ -113,8 +113,8 @@ const PendingWithdrawalRow = ({ withdrawal }) => {
 
   return (
     <Tr fontSize={"14px"} color="text.grey">
-      <Td>{email || ""}</Td>
-      <Td>{plan || ""}</Td>
+      <Td>{user.email || ""}</Td>
+      <Td>{plan.name || ""}</Td>
       <Td color="text.black" fontWeight={"600"} textTransform="uppercase">
         {mode_of_payment || ""}
       </Td>
