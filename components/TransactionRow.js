@@ -1,20 +1,30 @@
 import { Td, Text, Tr } from "@chakra-ui/react";
-import { useGetSingleCustomPlan } from "api/plans";
 import { format } from "date-fns";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { formatter } from "utils";
 
-const TransactionRow = ({ transaction }) => {
-  const { is_complete, status, createdAt, type, amount, id, mode_of_payment } =
-    transaction;
-  const [plan, setPlan] = useState();
-  const { data: planData } = useGetSingleCustomPlan(transaction.plan);
+const statusBg = (status) => {
+  if (status === "processing") return "#E9C46A33";
+  else if (status === "successful") return "green.100";
+  else return "red.100";
+};
+const statusColor = (status) => {
+  if (status === "processing") return "#E9C46A";
+  else if (status === "successful") return "green.400";
+  else return "red.400";
+};
 
-  useEffect(() => {
-    if (planData !== undefined) {
-      setPlan(planData);
-    }
-  }, [planData]);
+const TransactionRow = ({ transaction }) => {
+  const {
+    is_complete,
+    status,
+    createdAt,
+    type,
+    amount,
+    id,
+    mode_of_payment,
+    plan,
+  } = transaction;
 
   return (
     <Tr h="60px">
@@ -22,7 +32,7 @@ const TransactionRow = ({ transaction }) => {
         {format(new Date(createdAt), "dd/MM/yyyy")}
       </Td>
       <Td textTransform="capitalize" fontSize={["12px", , "14px"]}>
-        {transaction.type}
+        {type}
       </Td>
       <Td fontSize={["12px", , "14px"]}>{!!plan ? plan.name : ""}</Td>
       <Td fontSize={["12px", , "14px"]}>{formatter.format(amount)}</Td>
@@ -33,16 +43,15 @@ const TransactionRow = ({ transaction }) => {
       <Td>
         <Text
           textTransform={"capitalize"}
-          bg={transaction.status === "Success" ? "green.50" : "#E9C46A33"}
-          color={transaction.status === "Success" ? "green.400" : "#E9C46A"}
+          bg={() => statusBg(status)}
+          color={() => statusColor(status)}
           fontSize={["11px", , "12px"]}
-          //   w="full"
           textAlign="center"
           w="137px"
           rounded="md"
           py="4px"
         >
-          {transaction.status}
+          {status}
         </Text>
       </Td>
     </Tr>

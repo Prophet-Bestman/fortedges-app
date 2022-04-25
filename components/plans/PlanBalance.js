@@ -6,15 +6,19 @@ import { formatter } from "utils";
 const PlanBalance = () => {
   const { plan } = useContext(PlanContext);
 
-  const [balance, setBalance] = React.useState();
+  const [investment, setInvestment] = React.useState();
   const [profit, setProfit] = React.useState();
 
   React.useEffect(() => {
     if (plan !== undefined) {
-      setBalance(plan.balance);
       setProfit(plan.profit);
+      setInvestment(plan.investment);
     }
   }, [plan]);
+
+  const balance = investment + profit;
+
+  console.log("Plan: ", plan);
 
   return (
     <Box my="24px">
@@ -45,7 +49,7 @@ const PlanBalance = () => {
             Plan Balance
           </Text>
           <Text color="text.black" fontSize={"24px"} fontWeight="600">
-            {!!balance && balance == NaN ? balance : "$0.00"}
+            {!!balance && balance !== NaN ? formatter.format(balance) : "$0.00"}
           </Text>
         </Box>
         <Box my="12px" display={["none", , "block"]}>
@@ -58,7 +62,7 @@ const PlanBalance = () => {
             Total Deposit
           </Text>
           <Text color="text.black" fontSize={"24px"} fontWeight="600">
-            {!!profit && profit !== NaN ? profit : "$0.00"}
+            {!!profit && profit !== NaN ? formatter.format(profit) : "$0.00"}
           </Text>
         </Box>
         <Box my="12px">

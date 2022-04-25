@@ -1,23 +1,24 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import { useGetSingleCustomPlan } from "api/plans";
 import TransactionMark from "components/TransactionMark";
-import { format, formatDistance } from "date-fns";
-import React, { useEffect, useState } from "react";
+import { format } from "date-fns";
+import React from "react";
 import { formatter } from "utils";
 
+const statusBg = (status) => {
+  if (status === "processing") return "#E9C46A33";
+  else if (status === "successful") return "green.100";
+  else return "red.100";
+};
+const statusColor = (status) => {
+  if (status === "processing") return "#E9C46A";
+  else if (status === "successful") return "green.400";
+  else return "red.400";
+};
+
 const MiniTransaction = ({ transaction }) => {
-  const [plan, setPlan] = useState();
-  const { data: planData } = useGetSingleCustomPlan(transaction.plan);
-
-  useEffect(() => {
-    if (planData !== undefined) {
-      setPlan(planData);
-    }
-  }, [planData]);
-
   return (
     <Flex alignItems="" mb="16px" py="16px" px="12px">
-      <TransactionMark status={transaction.is_complete} />
+      <TransactionMark status={transaction.status} />
       <Box w="full" mr="36px" ml="6px">
         <Text
           fontSize="16px"
@@ -26,7 +27,7 @@ const MiniTransaction = ({ transaction }) => {
           textTransform={"capitalize"}
         >
           <strong>{transaction.type}</strong>,{" "}
-          <small>{!!plan && plan?.name}</small>
+          <small>{transaction.plan.name}</small>
         </Text>
         <Text fontSize="13px" color="text.grey">
           {!!transaction.createdAt &&

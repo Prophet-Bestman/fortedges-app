@@ -3,13 +3,9 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
-  Td,
-  TableCaption,
   Box,
-  Text,
   TableContainer,
 } from "@chakra-ui/react";
 import TransactionRow from "./TransactionRow";

@@ -1,16 +1,29 @@
 import { Circle } from "@chakra-ui/react";
 import React from "react";
-import { BiTimeFive } from "react-icons/bi";
+import { BiTimeFive, BiErrorCircle } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
 
 const TransactionMark = ({ status }) => {
   return (
     <Circle
       size="40px"
-      bg={!status ? "#E6CF7D33" : !!status === "Success" ? "#4BD96433" : ""}
+      bg={
+        status === "successful"
+          ? "#4BD96433"
+          : status === "declined"
+          ? "red.100"
+          : "#E9C46A33"
+      }
     >
-      {!status && <BiTimeFive color="#E6CF7D" />}
-      {!!status && <AiOutlineCheck color="text.green" />}
+      {/* {!status && }
+      {status  && } */}
+      {status === "declined" ? (
+        <BiErrorCircle color="red" />
+      ) : status === "successful" ? (
+        <AiOutlineCheck color="green" />
+      ) : (
+        <BiTimeFive color="#E6CF7D" />
+      )}
     </Circle>
   );
 };
