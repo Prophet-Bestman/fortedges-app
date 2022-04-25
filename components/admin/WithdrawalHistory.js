@@ -15,7 +15,7 @@ import { deposits, withdrawals } from "data";
 import React from "react";
 import WithdrawalRow from "./WithdrwalRow";
 
-const WithdrwalHistory = () => {
+const WithdrwalHistory = ({ withdrawals }) => {
   return (
     <Box my="80px">
       <Text fontSize="20px" fontWeight="600" mb="24px">
@@ -35,11 +35,13 @@ const WithdrwalHistory = () => {
               <Td>Actions</Td>
             </Tr>
           </Thead>
-          <Tbody fontSize="20px" gap="80px">
-            {withdrawals.map((withdrawal, i) => (
-              <WithdrawalRow withdrawal={withdrawal} key={i} />
-            ))}
-          </Tbody>
+          {!!withdrawals && withdrawals?.length > 0 && (
+            <Tbody fontSize="20px" gap="80px">
+              {withdrawals.map((withdrawal) => (
+                <WithdrawalRow withdrawal={withdrawal} key={withdrawal.id} />
+              ))}
+            </Tbody>
+          )}
         </Table>
       </TableContainer>
     </Box>

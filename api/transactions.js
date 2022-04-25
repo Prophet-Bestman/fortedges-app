@@ -44,6 +44,7 @@ const useSendPOP = () => {
     }
   );
 };
+
 const useWithdraw = () => {
   const queryClient = useQueryClient();
   const headers = configOptions();
@@ -70,7 +71,9 @@ const useGetAllMyTransactions = (plan, page, limit) => {
   const headers = configOptions();
   return useQuery(["my-transactions", plan, page, limit], () =>
     request
-      .get(`?plan=${plan || ""}&page=${page || 1}`, { headers: headers })
+      .get(`?plan=${plan || ""}&page=${page || 1}&limit=${limit || 10}`, {
+        headers: headers,
+      })
       .then((res) => res.data)
       .catch((err) => {
         if (err.response.status === 403) {
@@ -80,4 +83,90 @@ const useGetAllMyTransactions = (plan, page, limit) => {
   );
 };
 
-export { useDeposit, useSendPOP, useGetAllMyTransactions, useWithdraw };
+// const useConfirmTransaction = () => {
+//   const queryClient = useQueryClient();
+//   const headers = configOptions();
+//   return useMutation(
+//     (transaction_id) =>
+//       request
+//         .put(`/${transaction_id}/confirm`, {
+//           headers: headers,
+//         })
+//         .then((res) => res)
+//         .catch((err) => {
+//           if (err.response.status === 403) {
+//             // localStorage.clear();
+//           } else return err;
+//         }),
+
+//     {
+//       onSuccess: () => queryClient.invalidateQueries("my-transactions"),
+//     }
+//   );
+// };
+
+const useConfirmTransaction = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .put(
+          `/${values}/confirm`,
+          {},
+          {
+            headers: headers,
+          }
+        )
+        .then((res) => res.data),
+    {
+      onSuccess: () => queryClient.invalidateQueries("my-transactions"),
+    }
+  );
+};
+
+const useDeclineTransaction = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .put(
+          `/${values}/decline`,
+          {},
+          {
+            headers: headers,
+          }
+        )
+        .then((res) => res.data),
+    {
+      onSuccess: () => queryClient.invalidateQueries("my-transactions"),
+    }
+  );
+};
+
+const useDeleteTransaction = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .delete(`/${values}`, {
+          headers: headers,
+        })
+        .then((res) => res.data),
+    {
+      onSuccess: () => queryClient.invalidateQueries("my-transactions"),
+    }
+  );
+};
+
+export {
+  useDeposit,
+  useSendPOP,
+  useGetAllMyTransactions,
+  useWithdraw,
+  useConfirmTransaction,
+  useDeclineTransaction,
+  useDeleteTransaction,
+};

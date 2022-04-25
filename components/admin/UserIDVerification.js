@@ -10,12 +10,38 @@ import {
   Text,
   Flex,
 } from "@chakra-ui/react";
-import React from "react";
+import { useAdminVerifyID } from "api/verification";
+import React, { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 const UserIDVerification = ({ isOpen, onClose, idVerificationDetails }) => {
-  const { image } = idVerificationDetails;
+  const [verificationResponse, setVerificationResponse] = useState({});
+
+  const { image, user } = idVerificationDetails;
   const { front, back } = image;
+
+  const {
+    mutate: verifyUser,
+    data: verifyData,
+    isLoading,
+  } = useAdminVerifyID();
+
+  const handleVerified = () => {
+    const data = {
+      user_id: user,
+      payload: {
+        status: "accepted",
+      },
+    };
+
+    verifyUser(data);
+  };
+
+  useEffect(() => {
+    if (verifyData !== undefined) setVerificationResponse(verifyData);
+  }, [verifyData]);
+
+  console.log("Verification Response: ", verificationResponse);
 
   return (
     <Modal isOpen={isOpen} size="full" scrollBehavior="inside">
@@ -35,7 +61,7 @@ const UserIDVerification = ({ isOpen, onClose, idVerificationDetails }) => {
               <Flex justifyContent="center" h="450px" bg="gray.100">
                 <Image src={back.path} w="full" mb="4" objectFit="contain" />
               </Flex>
-              <Button onClick={onClose} w="full">
+              <Button onClick={handleVerified} w="full" isLoading={isLoading}>
                 Verify
               </Button>
             </Box>

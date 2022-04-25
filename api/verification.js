@@ -43,6 +43,7 @@ const useGetVerifications = () => {
       })
   );
 };
+
 const useAdminGetUserVerifications = (user_id) => {
   const headers = configOptions();
   return useQuery(["verification", user_id], () =>
@@ -59,4 +60,30 @@ const useAdminGetUserVerifications = (user_id) => {
   );
 };
 
-export { useVerifyID, useGetVerifications, useAdminGetUserVerifications };
+const useAdminVerifyID = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .put(`/${values.user_id}`, values.payload, { headers: headers })
+        .then((res) => res.data)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("users");
+      },
+    }
+  );
+};
+
+export {
+  useVerifyID,
+  useGetVerifications,
+  useAdminGetUserVerifications,
+  useAdminVerifyID,
+};

@@ -8,13 +8,12 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
-import { deposits, withdrawals } from "data";
 import React from "react";
-import PendingDepositRow from "./PendingDepositRow";
 import PendingWithdrawalRow from "./PendingWithdrawalRow";
 
-const PendingWithdrawals = () => {
+const PendingWithdrawals = ({ withdrawals }) => {
   //   const { email, investmentPlan, date, mop, amount, status } = deposits;
+
   return (
     <Box>
       <Text fontSize="20px" fontWeight="600" mb="24px">
@@ -34,15 +33,16 @@ const PendingWithdrawals = () => {
                 <Td>Actions</Td>
               </Tr>
             </Thead>
-            <Tbody fontSize="20px" gap="80px">
-              {withdrawals
-                .filter(
-                  (withdrawal) => withdrawal.status === "Pending Confirmation"
-                )
-                .map((withdrawal, i) => (
-                  <PendingWithdrawalRow withdrawal={withdrawal} key={i} />
+            {!!withdrawals && withdrawals?.length > 0 && (
+              <Tbody fontSize="20px" gap="80px">
+                {withdrawals.map((withdrawal) => (
+                  <PendingWithdrawalRow
+                    withdrawal={withdrawal}
+                    key={withdrawal._id}
+                  />
                 ))}
-            </Tbody>
+              </Tbody>
+            )}
           </Table>
         </TableContainer>
       </Box>

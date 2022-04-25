@@ -117,7 +117,7 @@ const AdminSigninForm = () => {
     if (!loginData) {
     }
     if (loginData?.user) {
-      if (loginData?.user?.access_level !== 3) {
+      if (loginData?.user?.access_level < 2) {
         nonAdminToast();
       } else {
         const token = config.key.token;
