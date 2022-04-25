@@ -18,8 +18,6 @@ const PlanBalance = () => {
 
   const balance = investment + profit;
 
-  console.log("Plan: ", plan);
-
   return (
     <Box my="24px">
       <Text

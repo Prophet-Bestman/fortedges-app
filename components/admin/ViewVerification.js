@@ -10,7 +10,6 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { users } from "data";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdKeyboardArrowRight } from "react-icons/md";
@@ -22,14 +21,11 @@ const ViewVerification = ({
   verificationDetails,
   isEmailVerified,
 }) => {
-  const { idVerification, idVerificationDetails } = verificationDetails;
   const {
     isOpen: isVerifyOpen,
     onOpen: onVerifyOpen,
     onClose: onVerifyClose,
   } = useDisclosure();
-
-  console.log(verificationDetails);
   return (
     <Modal isOpen={isOpen} size="xl" isCentered>
       <ModalOverlay />
@@ -101,7 +97,7 @@ const ViewVerification = ({
 
                 {verificationDetails.status ? (
                   <>
-                    {verificationDetails.staus === "complete" ? (
+                    {verificationDetails.status === "accepted" ? (
                       <Flex>
                         <Flex
                           color={"white"}
@@ -110,6 +106,7 @@ const ViewVerification = ({
                           py="2px"
                           fontSize="12px"
                           rounded="full"
+                          textTransform="capitalize"
                         >
                           {verificationDetails.status || "No Verification"}
                         </Flex>

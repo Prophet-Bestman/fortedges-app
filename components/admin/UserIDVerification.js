@@ -9,16 +9,29 @@ import {
   ModalOverlay,
   Text,
   Flex,
+  useToast,
 } from "@chakra-ui/react";
 import { useAdminVerifyID } from "api/verification";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 const UserIDVerification = ({ isOpen, onClose, idVerificationDetails }) => {
-  const [verificationResponse, setVerificationResponse] = useState({});
-
   const { image, user } = idVerificationDetails;
   const { front, back } = image;
+
+  const toast = useToast();
+
+  const successToast = () => {
+    toast({
+      title: "User Verified",
+      description: "You have verified this user successfully",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
 
   const {
     mutate: verifyUser,
@@ -38,10 +51,10 @@ const UserIDVerification = ({ isOpen, onClose, idVerificationDetails }) => {
   };
 
   useEffect(() => {
-    if (verifyData !== undefined) setVerificationResponse(verifyData);
+    if (verifyData !== undefined && Object.keys(verifyData).length > 0)
+      successToast();
+    onClose();
   }, [verifyData]);
-
-  console.log("Verification Response: ", verificationResponse);
 
   return (
     <Modal isOpen={isOpen} size="full" scrollBehavior="inside">

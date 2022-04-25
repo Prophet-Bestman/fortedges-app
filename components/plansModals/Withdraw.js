@@ -88,8 +88,6 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
         plan_id: plan._id,
       },
     };
-
-    console.log("Withdraw", payload);
     withdraw(payload);
     setWithdrawForm(payload);
   };

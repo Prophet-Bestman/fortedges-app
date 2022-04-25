@@ -47,7 +47,6 @@ const Users = () => {
   }, [userData]);
 
   useEffect(() => {
-    console.log("Users: ", users);
     if (users !== undefined) {
       if (users?.total_documents >= 10) {
         setPages(Math.ceil(users?.total_documents / 10));
@@ -55,9 +54,6 @@ const Users = () => {
       refetch();
     }
   }, [users]);
-
-  console.log("Page: ", page);
-  console.log("Pages: ", pages);
 
   return (
     <Box px="24px">

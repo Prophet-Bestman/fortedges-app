@@ -38,8 +38,6 @@ const UserDetails = ({ userID }) => {
     }
   }, [userData]);
 
-  console.log("User: ", user);
-
   // ========= User's Verifications Logic ==========
   const { data: verificationData } = useAdminGetUserVerifications(userID);
 

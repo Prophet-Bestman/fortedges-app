@@ -1,19 +1,8 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Modal,
-  ModalContent,
-  ModalOverlay,
-  Text,
-  useDisclosure,
-} from "@chakra-ui/react";
-import ConfirmModal from "components/ConfirmModal";
+import { Box, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import ChangeEmail from "./ChangeEmail";
 import IDVerifyModal from "./IdVerifyModal";
-import VerifyEmail from "./VerifyEmail";
 import { getUserFromLocalStorage } from "api/config";
 import { useGetVerifications } from "api/verification";
 import { VerifyEmailModal } from "components";
@@ -21,8 +10,6 @@ import { VerifyEmailModal } from "components";
 const IDVerificationTab = () => {
   const [user, setUser] = useState();
   const [isEmailVerified, setIsEmailVerified] = useState(false);
-  const [isIdVerified, setIdVerified] = useState(false);
-  const [verificationsData, setVerificationsData] = useState({});
   const [idStatus, setIdStatus] = useState("");
 
   useEffect(() => {
@@ -33,7 +20,6 @@ const IDVerificationTab = () => {
   useEffect(() => {
     if (user !== undefined) {
       setIsEmailVerified(user?.is_email_verified);
-      setIdVerified(user?.is_verified);
     }
   }, [user]);
 
@@ -41,7 +27,6 @@ const IDVerificationTab = () => {
 
   useEffect(() => {
     if (data !== undefined) {
-      setVerificationsData(data);
       setIdStatus(data.status);
     }
   }, [data]);
@@ -134,7 +119,7 @@ const IDVerificationTab = () => {
         >
           <Text>ID Verification</Text>
 
-          {idStatus === "verified" ? (
+          {idStatus === "accepted" ? (
             <Flex>
               <Flex
                 color={"white"}
