@@ -8,17 +8,21 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
-import { deposits, users } from "data";
+import { useAdminGetAllVerifications } from "api/verification";
+import { users } from "data";
 import React from "react";
-import PendingDepositRow from "./PendingDepositRow";
 import PedingVerificationRow from "./PendingVerificationRow";
 
 const PendingVerifications = () => {
   //   const { email, investmentPlan, date, mop, amount, status } = deposits;
+  const { data } = useAdminGetAllVerifications();
+
+  console.log(data);
+
   return (
     <Box>
       <Text fontSize="20px" fontWeight="600" mb="24px">
-        All Pending Deposits
+        All Pending Verifications
       </Text>
       <TableContainer bg="white" p="24px">
         <Table variant="unstyled">

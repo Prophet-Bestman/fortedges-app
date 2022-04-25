@@ -44,6 +44,22 @@ const useGetVerifications = () => {
   );
 };
 
+const useAdminGetAllVerifications = () => {
+  const headers = configOptions();
+  return useQuery("verification", () =>
+    request
+      .get(`/`, {
+        headers: headers,
+      })
+      .then((res) => res.data)
+      .catch((err) => {
+        if (err.response.status === 403) {
+          localStorage.clear();
+        } else return err;
+      })
+  );
+};
+
 const useAdminGetUserVerifications = (user_id) => {
   const headers = configOptions();
   return useQuery(["verification", user_id], () =>
@@ -86,4 +102,5 @@ export {
   useGetVerifications,
   useAdminGetUserVerifications,
   useAdminVerifyID,
+  useAdminGetAllVerifications,
 };
