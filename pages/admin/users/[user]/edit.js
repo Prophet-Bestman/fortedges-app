@@ -90,7 +90,7 @@ const Edit = () => {
       data: {
         firstname: data.firstName,
         lastname: data.lastName,
-        middlename: data.middleName,
+        display_name: data.displayName,
         dob: data.dob || user?.dob?.slice(0, 10),
         phone_number: data.phoneNumber,
         nationality: data.nationality,
@@ -155,16 +155,16 @@ const Edit = () => {
                   )}
                 </Stack>
                 <Stack mb="24px">
-                  <Text fontWeight={600}>Middle Name</Text>
+                  <Text fontWeight={600}>Display Name</Text>
                   <Input
                     bg="white"
                     type="text"
                     w-full
-                    {...register("middleName")}
-                    defaultValue={user?.middlename}
-                    variant={errors.middleName && "error"}
+                    {...register("displayName")}
+                    defaultValue={user?.display_name}
+                    variant={errors.displayName && "error"}
                   />
-                  {errors.middleName && (
+                  {errors.displayName && (
                     <Text
                       py="8px"
                       textTransform="capitalize"
@@ -175,11 +175,11 @@ const Edit = () => {
                       gap="4px"
                     >
                       <MdOutlineErrorOutline color="red" />{" "}
-                      {errors.middleName.message}
+                      {errors.displayName.message}
                     </Text>
                   )}
                 </Stack>
-                <Stack mb="24px">
+                {/* <Stack mb="24px">
                   <Text fontWeight={600}>Phone Number</Text>
                   <Input
                     bg="white"
@@ -189,7 +189,6 @@ const Edit = () => {
                     defaultValue={user?.phone_number}
                     variant={errors.phoneNumber && "error"}
                   />
-                </Stack>
                 {errors.phoneNumber && (
                   <Text
                     py="8px"
@@ -204,6 +203,7 @@ const Edit = () => {
                     {errors.phoneNumber.message}
                   </Text>
                 )}
+                </Stack> */}
                 <Stack mb="24px">
                   <Text fontWeight={600}>Date of Birth</Text>
                   <Input
@@ -280,7 +280,7 @@ const Edit = () => {
                     </Text>
                   )}
                 </Stack>
-                <Stack mb="24px">
+                {/* <Stack mb="24px">
                   <Text fontWeight={600}>Nationality</Text>
                   <Input
                     bg="white"
@@ -304,7 +304,7 @@ const Edit = () => {
                       {errors.nationality.message}
                     </Text>
                   )}
-                </Stack>
+                </Stack> */}
               </GridItem>
               <GridItem></GridItem>
             </Grid>

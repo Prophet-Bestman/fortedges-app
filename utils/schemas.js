@@ -85,7 +85,7 @@ export const editUserSchema = yup.object().shape({
     .min(3, "Minimum of 3 characters")
     .max(250, "maximum of 250 characters")
     .required(),
-  middleName: yup.string(),
+  displayName: yup.string(),
 
   email: yup.string().email("Enter A valid Email").required(),
   phoneNumber: yup.string(),
