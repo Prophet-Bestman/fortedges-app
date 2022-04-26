@@ -33,7 +33,7 @@ const UserDetails = ({ userID }) => {
   const { data: userData } = useAdminGetUser(userID);
 
   useEffect(() => {
-    if (!!userData) {
+    if (!!userData && Object.keys(userData).length > 0) {
       setUser(userData);
     }
   }, [userData]);
@@ -76,7 +76,7 @@ const UserDetails = ({ userID }) => {
           </GridItem>
           <GridItem>
             <Flex flexDir="column">
-              <Link href="/admin/users/user/edit">
+              <Link href={`/admin/users/${userID}/edit`}>
                 <Button ml="auto" size="sm" mb="16px">
                   Edit
                 </Button>
@@ -100,7 +100,7 @@ const UserDetails = ({ userID }) => {
                 <Text fontWeight={600} color="text.black">
                   Full Verification
                 </Text>
-                {user?.is_verifieed ? <BsFillCheckCircleFill /> : <FcCancel />}
+                {user?.is_verified ? <BsFillCheckCircleFill /> : <FcCancel />}
               </Flex>
               <Button onClick={onOpen} variant="outline" size="sm" w="auto">
                 View Verification

@@ -9,7 +9,7 @@ import "swiper/css/pagination";
 import Link from "next/link";
 import UserPlan from "./UserPlan";
 
-const UserPlans = () => {
+const UserPlans = ({ userID }) => {
   return (
     <Box>
       <Padding>

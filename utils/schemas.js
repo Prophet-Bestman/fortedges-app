@@ -73,3 +73,22 @@ export const personalInfoSchema = yup.object().shape({
   state: yup.string().required(),
   city: yup.string().required(),
 });
+
+export const editUserSchema = yup.object().shape({
+  firstName: yup
+    .string()
+    .min(3, "Minimum of 3 characters")
+    .max(250, "maximum of 250 characters")
+    .required(),
+  lastName: yup
+    .string()
+    .min(3, "Minimum of 3 characters")
+    .max(250, "maximum of 250 characters")
+    .required(),
+  middleName: yup.string(),
+
+  email: yup.string().email("Enter A valid Email").required(),
+  phoneNumber: yup.string(),
+  nationality: yup.string(),
+  dob: yup.string(),
+});

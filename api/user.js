@@ -73,4 +73,27 @@ const useUpdateUser = () => {
   );
 };
 
-export { useGetUser, useUpdateUser, useGetAllUsers, useAdminGetUser };
+const useAdminUpdateUser = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .put(`/${values.user_id}`, values.data, { headers: headers })
+        .then((res) => res)
+        .catch((err) => err.response.status),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("user");
+      },
+    }
+  );
+};
+
+export {
+  useGetUser,
+  useUpdateUser,
+  useGetAllUsers,
+  useAdminGetUser,
+  useAdminUpdateUser,
+};

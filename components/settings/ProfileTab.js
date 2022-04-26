@@ -16,11 +16,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { personalInfoSchema, profileSchema } from "utils/schemas";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  validateDOB,
-  validatePersonalInfo,
-  validateProfile,
-} from "utils/validation";
+import { validatePersonalInfo, validateProfile } from "utils/validation";
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { getUserFromLocalStorage } from "api/config";
 
@@ -34,16 +30,6 @@ const ProfileTab = () => {
     const userDetails = getUserFromLocalStorage();
     setUser(userDetails);
   }, []);
-
-  const yearValue = user?.dob?.slice(0, 4);
-  const monthValue = user?.dob?.slice(5, 7);
-  const dayValue = user?.dob?.slice(8, 10);
-
-  const userDOB = {
-    yearValue: yearValue,
-    monthValue: monthValue,
-    dayValue: dayValue,
-  };
 
   const {
     register,
@@ -64,11 +50,6 @@ const ProfileTab = () => {
     reset: reset2,
   } = useForm({
     resolver: yupResolver(personalInfoSchema),
-    // defaultValues: {
-    //   yearValue: yearValue,
-    //   monthValue: monthValue,
-    //   dayValue: dayValue,
-    // },
   });
 
   // const { data: userData } = useGetUser();

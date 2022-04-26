@@ -15,8 +15,6 @@ const User = () => {
     });
   }, []);
 
-  console.log("User ID: ", userID);
-
   const router = useRouter();
   const query = router.query;
 
@@ -29,8 +27,6 @@ const User = () => {
       setUserID(query.user);
     }
   }, [query]);
-
-  console.log(query);
 
   return <Box>{!!userID && <UserDetailsPage userID={userID} />}</Box>;
 };

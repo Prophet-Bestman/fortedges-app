@@ -14,8 +14,6 @@ import ActionSuccessful from "./ActionSuccessful";
 const UserDetailsPage = ({ userID }) => {
   const [action, setAction] = React.useState("");
 
-  console.log("User ID: ", userID);
-
   const {
     isOpen: isSelectOpen,
     onOpen: onSelectOpen,
@@ -44,7 +42,7 @@ const UserDetailsPage = ({ userID }) => {
   return (
     <Box px="24px">
       <UserDetails userID={userID} />
-      <UserPlans />
+      <UserPlans userID={userID} />
       <Flex justify="space-evenly" mb="30px">
         <Button
           onClick={() => openSelectModal("DEPOSIT")}
