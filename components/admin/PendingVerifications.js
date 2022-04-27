@@ -17,8 +17,6 @@ const PendingVerifications = () => {
   //   const { email, investmentPlan, date, mop, amount, status } = deposits;
   const { data } = useAdminGetAllVerifications();
 
-  console.log(data);
-
   return (
     <Box>
       <Text fontSize="20px" fontWeight="600" mb="24px">

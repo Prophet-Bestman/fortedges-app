@@ -48,11 +48,7 @@ export const EditBTC = ({ isOpen, onClose, mop }) => {
     };
 
     editBTC(payload);
-
-    console.log("Payload: ", payload);
   };
-
-  console.log("BTC Resp: ", mopEditResp);
 
   useEffect(() => {
     if (mopEditResp !== undefined && mopEditResp.status === 200) {
@@ -136,8 +132,6 @@ export const EditETH = ({ isOpen, onClose, mop }) => {
     };
 
     editETH(payload);
-
-    console.log("Payload: ", payload);
   };
 
   useEffect(() => {

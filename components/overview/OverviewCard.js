@@ -1,8 +1,11 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import { FiArrowUpRight } from "react-icons/fi";
+import { formatter } from "utils";
 
 const OverviewCard = ({ title, amount, gains, className }) => {
+  const profit = (gains / amount) * 100;
+  amount = formatter.format(amount);
   return (
     <Box
       borderColor="#E2E6EB66"
@@ -41,7 +44,7 @@ const OverviewCard = ({ title, amount, gains, className }) => {
             alignItems="center"
             gap="4px"
           >
-            <FiArrowUpRight /> {gains}
+            <FiArrowUpRight /> {profit.toFixed(3)} %
           </Text>
         </Flex>
       )}

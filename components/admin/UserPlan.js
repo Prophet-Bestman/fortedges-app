@@ -8,17 +8,38 @@ import {
   ModalContent,
   ModalBody,
 } from "@chakra-ui/react";
-import React from "react";
+import { planProps } from "data";
+import React, { useEffect, useState } from "react";
 import { formatter } from "utils";
 
 const UserPlan = ({ plan }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { amount, color, img, name, category } = plan;
+  const { investment, name, parent_plan_name, profit } = plan;
+  const [currentPlanProps, setCurrentPlanProps] = useState();
+
+  useEffect(() => {
+    if (plan !== undefined) {
+      switch (plan.parent_plan_name) {
+        case "Fixed Income":
+          setCurrentPlanProps(planProps.fixedIncome);
+          break;
+        case "Real Estate":
+          setCurrentPlanProps(planProps.realEstate);
+          break;
+        case "Premium Stock":
+          setCurrentPlanProps(planProps.premiumStock);
+          break;
+
+        default:
+          break;
+      }
+    }
+  }, [plan]);
 
   return (
     <Box
       onClick={onOpen}
-      bgColor={color}
+      bgColor={currentPlanProps?.color}
       cursor="pointer"
       bgRepeat="no-repeat"
       w="full"
@@ -47,7 +68,7 @@ const UserPlan = ({ plan }) => {
           style={{
             filter: "blur(4px)",
           }}
-          src={img}
+          src={currentPlanProps?.img}
           w="101px"
         />
       </Box>
@@ -57,10 +78,10 @@ const UserPlan = ({ plan }) => {
           {name}
         </Text>
         <Text mb="4px" fontSize="15px" fontWeight={600}>
-          {formatter.format(amount)}
+          {formatter.format(investment + profit)}
         </Text>
         <Text mb="4px" fontSize="13px">
-          {category}
+          {parent_plan_name}
         </Text>
       </Box>
       <PlanBalance isOpen={isOpen} onClose={onClose} plan={plan} />
@@ -71,7 +92,7 @@ const UserPlan = ({ plan }) => {
 export default UserPlan;
 
 const PlanBalance = ({ isOpen, onClose, plan }) => {
-  const { amount, profit, gain } = plan;
+  const { investment, profit, gain } = plan;
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xs" isCentered>
       <ModalOverlay />
@@ -87,7 +108,7 @@ const PlanBalance = ({ isOpen, onClose, plan }) => {
             fontWeight={600}
             mb="10px"
           >
-            {formatter.format(amount)}
+            {formatter.format(profit + investment)}
           </Text>
           <Text
             fontSize={"12px"}
@@ -106,7 +127,7 @@ const PlanBalance = ({ isOpen, onClose, plan }) => {
             gap="6px"
           >
             <Text>+{formatter.format(profit)}</Text>
-            <Text>+{gain}</Text>
+            {/* <Text>+{gain}</Text> */}
           </Text>
         </ModalBody>
       </ModalContent>

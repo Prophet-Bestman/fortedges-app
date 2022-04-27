@@ -1,22 +1,40 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Text, useDisclosure } from "@chakra-ui/react";
+import { planProps } from "data";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
+import { formatter } from "utils";
 
 const PlanBox = ({ plan, onClick }) => {
-  const { amount: initial, color, img, name, gain } = plan;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { investment, name, parent_plan_name, profit } = plan;
+  const [currentPlanProps, setCurrentPlanProps] = useState();
 
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
+  useEffect(() => {
+    if (plan !== undefined) {
+      switch (plan.parent_plan_name) {
+        case "Fixed Income":
+          setCurrentPlanProps(planProps.fixedIncome);
+          break;
+        case "Real Estate":
+          setCurrentPlanProps(planProps.realEstate);
+          break;
+        case "Premium Stock":
+          setCurrentPlanProps(planProps.premiumStock);
+          break;
 
-  const amount = formatter.format(initial);
+        default:
+          break;
+      }
+    }
+  }, [plan]);
+
+  const amount = formatter.format(investment + profit);
   return (
     <Box
       cursor="pointer"
       onClick={onClick}
-      bgColor={color}
+      bgColor={currentPlanProps?.color}
       bgRepeat="no-repeat"
       w="full"
       maxW="327px"
@@ -33,7 +51,7 @@ const PlanBox = ({ plan, onClick }) => {
           style={{
             filter: "blur(4px)",
           }}
-          src={img}
+          src={currentPlanProps?.img}
           objectPosition="center"
           w="full"
         />
@@ -65,9 +83,9 @@ const PlanBox = ({ plan, onClick }) => {
             mb="8px"
           >
             <FiArrowUpRight fontSize="18px" />
-            {gain}
+            {`+ ${formatter.format(profit)}`}
           </Text>
-          <Text>{amount}</Text>
+          <Text>{parent_plan_name}</Text>
         </Box>
       </Flex>
     </Box>

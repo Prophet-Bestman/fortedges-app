@@ -13,7 +13,6 @@ import React from "react";
 import PendingDepositRow from "./PendingDepositRow";
 
 const PendingDeposits = ({ deposits }) => {
-  console.log("Deposits: ", deposits);
   return (
     <Box>
       <Text fontSize="20px" fontWeight="600" mb="24px">

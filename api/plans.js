@@ -21,7 +21,7 @@ const useGetAllPlans = () => {
 
 const useGetCustomPlans = () => {
   const headers = configOptions();
-  return useQuery("custom-plans", () =>
+  return useQuery(`custom-plans?limit=1000`, () =>
     request
       .get("/custom-plans", { headers: headers })
       .then((res) => res.data)
@@ -66,9 +66,24 @@ const useCreateCustomPlan = () => {
   );
 };
 
+const useAdminGetCustomPlans = (user_id) => {
+  const headers = configOptions();
+  return useQuery(["custom-plans", user_id], () =>
+    request
+      .get(`/custom-plans?owner=${user_id}&limit=1000`, { headers: headers })
+      .then((res) => res.data)
+      .catch((err) => {
+        if (err.response.status === 403) {
+          localStorage.clear();
+        } else return err;
+      })
+  );
+};
+
 export {
   useGetAllPlans,
   useCreateCustomPlan,
   useGetCustomPlans,
   useGetSingleCustomPlan,
+  useAdminGetCustomPlans,
 };

@@ -15,10 +15,11 @@ import {
   Stack,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { options } from "data";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   MdOutlineKeyboardBackspace,
   MdKeyboardArrowDown,
@@ -27,16 +28,54 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { WithdrawalSuccess } from "components/plansModals";
+import { useAdminWithdraw } from "api/transactions";
 
 const optionsArr = Object.entries(options);
 
-const AdminWithdraw = ({ setStep }) => {
+const AdminWithdraw = ({ setStep, planID, onClose }) => {
   const [option, setOption] = React.useState(options.btc);
+  const [withdrawalData, setWithdrawalData] = React.useState({});
+
+  const {
+    isOpen: isSuccessOpen,
+    onOpen: onSuccessOpen,
+    onClose: onSuccessClose,
+  } = useDisclosure();
+
+  const closeParent = () => {
+    onClose();
+    onSuccessClose();
+  };
 
   const withdrawSchema = yup.object().shape({
     amount: yup.number().required(),
     walletAddress: yup.string().required(),
   });
+
+  const toast = useToast();
+
+  const insufficientErrorToast = () => {
+    toast({
+      title: "Withdrawal Failed",
+      description: "User Has insufficient balance",
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+  const errorToast = () => {
+    toast({
+      title: "Try Again Later",
+      description: "Error occurred while making withdrawal",
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
 
   const {
     register,
@@ -47,14 +86,44 @@ const AdminWithdraw = ({ setStep }) => {
   });
 
   const {
-    isOpen: isSuccessOpen,
-    onOpen: onSuccessOpen,
-    onClose: onSuccessClose,
-  } = useDisclosure();
+    data: withdrawResp,
+    mutate: adminWithraw,
+    isLoading,
+  } = useAdminWithdraw();
+
+  let payload = {};
 
   const submit = (data) => {
-    onSuccessOpen();
+    setWithdrawalData({});
+    payload = {
+      address: data.walletAddress,
+      plan_id: planID,
+      amount: data.amount,
+      mode_of_payment: option.name,
+    };
+
+    adminWithraw(payload);
   };
+
+  useEffect(() => {
+    if (withdrawResp !== undefined) {
+      if (
+        withdrawResp.toString().includes("Request failed with status code 500")
+      ) {
+        insufficientErrorToast();
+      }
+      if (withdrawResp?.status > 400) {
+        errorToast();
+      }
+      if (
+        withdrawResp?.status === 201 &&
+        withdrawResp.data !== withdrawalData
+      ) {
+        setWithdrawalData(withdrawResp.data);
+        onSuccessOpen();
+      }
+    }
+  }, [withdrawResp]);
 
   return (
     <ModalContent py="24px" px="24px" maxW="380px">
@@ -171,12 +240,22 @@ const AdminWithdraw = ({ setStep }) => {
             </InputGroup>
           </Stack>
 
-          <Button w="full" type="submit">
+          <Button
+            w="full"
+            type="submit"
+            disabled={option.name === "Bank Deposit"}
+            isLoading={isLoading}
+          >
             Withdraw
           </Button>
         </form>
       </ModalBody>
-      <WithdrawalSuccess isOpen={isSuccessOpen} onClose={onSuccessClose} />
+
+      <WithdrawalSuccess
+        isOpen={isSuccessOpen}
+        onClose={closeParent}
+        data={withdrawalData}
+      />
     </ModalContent>
   );
 };

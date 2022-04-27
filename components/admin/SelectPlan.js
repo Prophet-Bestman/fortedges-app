@@ -10,8 +10,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import ConfirmModal from "components/ConfirmModal";
-import { OverviewPlans } from "data";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import ActionSuccessful from "./ActionSuccessful";
 import AddBalance from "./AddBalance";
@@ -19,19 +18,32 @@ import AdminPaymentForm from "./AdminPaymentForm";
 import AdminWithdraw from "./AdminWithdraw";
 import PlanBox from "./PlanBox";
 import AddBonus from "./AddBonus";
+import { useAdminGetCustomPlans } from "api/plans";
 
-const SelectPlan = ({ isOpen, onClose, action }) => {
+const SelectPlan = ({ isOpen, onClose, action, userID }) => {
   const [step, setStep] = useState(1);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [userPlans, setUserPlans] = useState([]);
   const { isOpen: isActionOpen, onOpen: onActionOpen } = useDisclosure();
+  const [planID, setPlanID] = useState();
   const {
     isOpen: isConfirmOpen,
     onOpen: onConfirmOpen,
     onClose: onConfirmClose,
   } = useDisclosure();
 
-  const next = () => {
+  const { data: plansData } = useAdminGetCustomPlans(userID);
+
+  useEffect(() => {
+    if (plansData !== undefined) {
+      if (Object.keys(plansData).length > 0) {
+        setUserPlans(plansData.custom_plans);
+      }
+    }
+  }, [plansData]);
+
+  const next = (plan) => {
     if (action === "CLEAR_BALANCE") {
       setTitle("Clear Balance");
       setText("Are you sure you want to clear this user's balance?");
@@ -43,6 +55,7 @@ const SelectPlan = ({ isOpen, onClose, action }) => {
     } else {
       setStep(2);
     }
+    setPlanID(plan.id);
   };
 
   return (
@@ -69,8 +82,8 @@ const SelectPlan = ({ isOpen, onClose, action }) => {
               gap="20px"
               flexDir="column"
             >
-              {OverviewPlans.map((plan, i) => (
-                <PlanBox onClick={next} plan={plan} key={i} />
+              {userPlans.map((plan, i) => (
+                <PlanBox onClick={() => next(plan)} plan={plan} key={i} />
               ))}
             </Flex>
           </ModalBody>
@@ -81,7 +94,7 @@ const SelectPlan = ({ isOpen, onClose, action }) => {
         <AdminPaymentForm setStep={setStep} />
       )}
       {step === 2 && action === "WITHDRAW" && (
-        <AdminWithdraw setStep={setStep} />
+        <AdminWithdraw setStep={setStep} planID={planID} onClose={onClose} />
       )}
       {step === 2 && action === "ADD_BALANCE" && (
         <AddBalance onActionOpen={onActionOpen} setStep={setStep} />

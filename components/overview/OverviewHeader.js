@@ -35,6 +35,8 @@ const OverviewHeader = () => {
     }
   }, [userData]);
 
+  console.log("User: ", user);
+
   React.useEffect(() => {
     if (error != undefined) {
     } else {
@@ -118,21 +120,21 @@ const OverviewHeader = () => {
         >
           <SwiperSlide>
             <OverviewCard
-              amount={wallet.balance ? wallet.balance : "$0.00"}
-              gains={wallet?.gains ? wallet.gails : "0%"}
+              amount={user?.total_balance}
+              gains={user?.total_profit || "0%"}
               title="Total Balance"
             />
           </SwiperSlide>
           <SwiperSlide>
             <OverviewCard
-              amount={wallet.balance ? wallet.balance : "$0.00"}
+              amount={user?.total_investment}
               title="Total Invested"
             />
           </SwiperSlide>
           <SwiperSlide>
             <OverviewCard
-              amount={wallet.balance ? wallet.balance : "$0.00"}
-              gains={wallet?.gains ? wallet.gails : "0%"}
+              amount={user?.total_profit}
+              // gains={user?.total_profit || "0%"}
               title="Total Profit"
             />
           </SwiperSlide>

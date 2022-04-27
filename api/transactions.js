@@ -66,6 +66,27 @@ const useWithdraw = () => {
     }
   );
 };
+const useAdminWithdraw = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .post(`/admin-withdraw`, values, {
+          headers: headers,
+        })
+        .then((res) => res)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+
+    {
+      onSuccess: () => queryClient.invalidateQueries("users"),
+    }
+  );
+};
 
 const useGetAllMyTransactions = (plan, page, limit) => {
   const headers = configOptions();
@@ -82,28 +103,6 @@ const useGetAllMyTransactions = (plan, page, limit) => {
       })
   );
 };
-
-// const useConfirmTransaction = () => {
-//   const queryClient = useQueryClient();
-//   const headers = configOptions();
-//   return useMutation(
-//     (transaction_id) =>
-//       request
-//         .put(`/${transaction_id}/confirm`, {
-//           headers: headers,
-//         })
-//         .then((res) => res)
-//         .catch((err) => {
-//           if (err.response.status === 403) {
-//             // localStorage.clear();
-//           } else return err;
-//         }),
-
-//     {
-//       onSuccess: () => queryClient.invalidateQueries("my-transactions"),
-//     }
-//   );
-// };
 
 const useConfirmTransaction = () => {
   const queryClient = useQueryClient();
@@ -169,4 +168,5 @@ export {
   useConfirmTransaction,
   useDeclineTransaction,
   useDeleteTransaction,
+  useAdminWithdraw,
 };

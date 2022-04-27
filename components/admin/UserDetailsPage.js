@@ -116,7 +116,9 @@ const UserDetailsPage = ({ userID }) => {
         isOpen={isSelectOpen}
         onClose={onSelectClose}
         action={action}
+        userID={userID}
       />
+
       <SelectNewPlan
         isOpen={isSelectNewOpen}
         onClose={onSelectNewClose}

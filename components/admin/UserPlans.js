@@ -1,15 +1,28 @@
 import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 import { Padding } from "components/layouts";
 import { OverviewPlans } from "data";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import Link from "next/link";
 import UserPlan from "./UserPlan";
+import { useAdminGetCustomPlans } from "api/plans";
 
 const UserPlans = ({ userID }) => {
+  const [userPlans, setUserPlans] = useState([]);
+
+  const { data: plansData } = useAdminGetCustomPlans(userID);
+
+  useEffect(() => {
+    if (plansData !== undefined) {
+      if (Object.keys(plansData).length > 0) {
+        setUserPlans(plansData.custom_plans);
+      }
+    }
+  }, [plansData]);
+
   return (
     <Box>
       <Padding>
@@ -21,7 +34,7 @@ const UserPlans = ({ userID }) => {
             <Text fontSize={["16px", "18px", "20px", "24px"]} mb="24px">
               User Plans
             </Text>
-            <Box maxW="100vw">
+            <Box maxW={["90vw", , , , "70vw"]}>
               <Swiper
                 slidesPerView={2}
                 spaceBetween={10}
@@ -30,11 +43,11 @@ const UserPlans = ({ userID }) => {
                 }}
                 breakpoints={{
                   767: {
-                    slidesPerView: 3,
+                    slidesPerView: 4,
                     spaceBetween: 10,
                   },
                   1024: {
-                    slidesPerView: 4,
+                    slidesPerView: 5,
                     spaceBetween: 10,
                   },
                 }}
@@ -45,15 +58,15 @@ const UserPlans = ({ userID }) => {
                   width: "full",
                 }}
               >
-                <SwiperSlide>
+                {/* <SwiperSlide>
                   <Flex justifyContent="center" h="full" w="full">
                     <Link href="/myplans/create">
                       <Image src="/img/create_plan.png" h="196px" />
                     </Link>
                   </Flex>
-                </SwiperSlide>
-                {OverviewPlans.map((plan) => (
-                  <SwiperSlide key={plan.name}>
+                </SwiperSlide> */}
+                {userPlans?.map((plan, i) => (
+                  <SwiperSlide key={i}>
                     <UserPlan plan={plan} />
                   </SwiperSlide>
                 ))}

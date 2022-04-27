@@ -93,7 +93,7 @@ const WithdrawalSuccess = ({ isOpen, onClose, data }) => {
                   Date
                 </Text>
                 <Text fontWeight={600} color="text.black" fontSize="14px">
-                  {format(new Date(updatedAt), "dd/MM/yyyy")}
+                  {!!updatedAt && format(new Date(updatedAt), "dd/MM/yyyy")}
                 </Text>
               </Flex>
               <Flex
@@ -124,11 +124,17 @@ const WithdrawalSuccess = ({ isOpen, onClose, data }) => {
                 justifyContent={"space-between"}
                 alignItems="center"
                 mb="20px"
+                gap="12px"
               >
                 <Text color="text.grey" fontSize="13px">
                   Wallet Address
                 </Text>
-                <Text fontWeight={600} color="text.black" fontSize="14px">
+                <Text
+                  fontWeight={600}
+                  color="text.black"
+                  fontSize="14px"
+                  isTruncated
+                >
                   {address}
                 </Text>
               </Flex>
