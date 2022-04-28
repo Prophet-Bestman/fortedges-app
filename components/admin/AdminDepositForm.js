@@ -16,6 +16,7 @@ import {
   Stack,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import {
@@ -41,16 +42,48 @@ const AdminDepositForm = ({ setStep, planID, onClose }) => {
     amount: yup.number().required(),
   });
 
-  const {
-    isOpen: isSuccessOpen,
-    onOpen: onSuccessOpen,
-    onClose: onSuccessClose,
-  } = useDisclosure();
+  // const {
+  //   isOpen: isSuccessOpen,
+  //   onOpen: onSuccessOpen,
+  //   onClose: onSuccessClose,
+  // } = useDisclosure();
+
+  // const closeParent = () => {
+  //   onSuccessClose();
+  //   onClose();
+  // };
+
+  const toast = useToast();
+
+  const errorToast = () => {
+    toast({
+      title: "Try Again Later",
+      description: "Error occurred while adding deposit",
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+
+  const successToast = () => {
+    toast({
+      title: "Deposit Successful",
+      description: "You have successfully created a deposit",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(planSchema),
   });
@@ -63,20 +96,20 @@ const AdminDepositForm = ({ setStep, planID, onClose }) => {
   const { data: depositData, mutate: deposit, isLoading } = useAdminDeposit();
 
   const submit = (data) => {
-    data = { ...data, plan_id: planID };
-
-    console.log(data);
+    data = { ...data, plan_id: planID, description: "" };
     deposit(data);
-
-    // onSuccessOpen();
   };
 
-  console.log(depositData);
-  // useEffect(() => {
-  //   if (depositData!== undefined) {
-  //   if(depositData.status === )
-  //   }
-  // }, [depositData])
+  useEffect(() => {
+    if (depositData !== undefined) {
+      if (depositData.status === 200) {
+        successToast();
+        reset();
+        setStep(1);
+        onClose();
+      } else errorToast();
+    }
+  }, [depositData]);
 
   return (
     <ModalContent py="24px" px="24px" maxW="380px">
@@ -203,7 +236,12 @@ const AdminDepositForm = ({ setStep, planID, onClose }) => {
           </Box>
         </form>
       </ModalBody>
-      {/* <RequestSuccess isOpen={isSuccessOpen} onClose={onSuccessClose} /> */}
+      {/* <RequestSuccess
+        isOpen={isSuccessOpen}
+        onClose={onSuccessClose}
+        data={createdDeposit}
+        closeParent={closeParent}
+      /> */}
     </ModalContent>
   );
 };

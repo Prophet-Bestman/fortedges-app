@@ -39,9 +39,12 @@ const GoalFormTwo = ({ setFormStep, formState, setFormState }) => {
   const updateFormState = (data) => {
     setFormState({
       ...formState,
-      duration: {
-        from: formatDate(new Date()),
-        to: data.goalDate,
+      data: {
+        ...formState.data,
+        duration: {
+          from: formatDate(new Date()),
+          to: data.goalDate,
+        },
       },
     });
   };

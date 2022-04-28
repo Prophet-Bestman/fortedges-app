@@ -30,7 +30,10 @@ const GoalFormOne = ({ setFormStep, formState, setFormState }) => {
   });
 
   const updateFormState = (data) => {
-    setFormState({ ...formState, name: data.goalName });
+    setFormState({
+      ...formState,
+      data: { ...formState.data, name: data.goalName },
+    });
   };
 
   const submitGoal = (data) => {

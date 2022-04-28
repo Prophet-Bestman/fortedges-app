@@ -20,7 +20,7 @@ const useDeposit = () => {
           } else return err;
         }),
     {
-      onSuccess: () => queryClient.invalidateQueries("user-transactions"),
+      onSuccess: () => queryClient.invalidateQueries("my-transactions"),
     }
   );
 };
@@ -141,7 +141,7 @@ const useConfirmTransaction = () => {
         )
         .then((res) => res.data),
     {
-      onSuccess: () => queryClient.invalidateQueries("my-transactions"),
+      onSuccess: () => queryClient.invalidateQueries("users"),
     }
   );
 };
@@ -161,7 +161,7 @@ const useDeclineTransaction = () => {
         )
         .then((res) => res.data),
     {
-      onSuccess: () => queryClient.invalidateQueries("my-transactions"),
+      onSuccess: () => queryClient.invalidateQueries("users"),
     }
   );
 };
@@ -177,7 +177,10 @@ const useDeleteTransaction = () => {
         })
         .then((res) => res),
     {
-      onSuccess: () => queryClient.invalidateQueries("my-transactions"),
+      onSuccess: () => {
+        queryClient.invalidateQueries("users");
+        queryClient.invalidateQueries("my-transactions");
+      },
     }
   );
 };
@@ -192,7 +195,7 @@ const useAdminAddBonus = () => {
         })
         .then((res) => res),
     {
-      onSuccess: () => queryClient.invalidateQueries("my-transactions"),
+      onSuccess: () => queryClient.invalidateQueries("users"),
     }
   );
 };

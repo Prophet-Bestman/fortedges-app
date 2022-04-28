@@ -29,7 +29,6 @@ import { PlanContext } from "providers/PlanProvider";
 
 const SubmitPlan = ({ closeParent }) => {
   const { planFormState, dispatch: setOpen } = useContext(PlanFormContext);
-  const [wallet, setWallet] = useState({});
   const [newPlan, setnewPlan] = useState({});
 
   const {
@@ -53,11 +52,7 @@ const SubmitPlan = ({ closeParent }) => {
   const isOpen = planFormState.isOpen;
   const id = planFormState.id;
   const parent_plan_name = planFormState.parent_plan_name;
-
-  useEffect(() => {
-    const localWallet = getLocalWallet();
-    setWallet(localWallet);
-  }, []);
+  const user_id = planFormState.user_id;
 
   const planSchema = yup.object({
     planName: yup.string().required().min(3),
@@ -86,11 +81,13 @@ const SubmitPlan = ({ closeParent }) => {
 
   const submitPlan = (data) => {
     const plan = {
-      name: data.planName,
-      wallet_id: wallet._id,
-      parent_plan_id: id,
-      description: "",
-      parent_plan_name: parent_plan_name,
+      user_id: user_id,
+      data: {
+        name: data.planName,
+        parent_plan_id: id,
+        description: "",
+        parent_plan_name: parent_plan_name,
+      },
     };
 
     createPlan(plan);
@@ -98,11 +95,12 @@ const SubmitPlan = ({ closeParent }) => {
 
   useEffect(() => {
     if (createdPlan !== undefined) {
-      if (createPlan.toString().includes("Error")) {
+      if (createdPlan.status === 201) {
+        onSuccessOpen();
+        setnewPlan(createdPlan);
+      } else {
         onErrorOpen();
-      } else onSuccessOpen();
-
-      setnewPlan(createdPlan);
+      }
     }
   }, [createdPlan]);
 
@@ -111,6 +109,8 @@ const SubmitPlan = ({ closeParent }) => {
       onErrorOpen();
     }
   }, [error]);
+
+  console.log("Plan Created: ", createdPlan);
 
   return (
     <Modal isOpen={isOpen} isCentered size="sm">

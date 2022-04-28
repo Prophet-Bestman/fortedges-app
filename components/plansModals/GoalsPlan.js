@@ -18,10 +18,11 @@ import { goalSteps } from "data";
 import { goalFormActions, GoalFormContext } from "providers/GoalFormProvider";
 import SubmitGoal from "./SubmitGoal";
 
-const GoalsPlan = ({ isOpen, onClose, goalProps, goal }) => {
+const GoalsPlan = ({ isOpen, onClose, goalProps, goal, userID }) => {
   const { title, text, color, icon } = goalProps;
   const { dispatch: setOpen } = useContext(GoalFormContext);
   const { dispatch: setparentGoalName } = useContext(GoalFormContext);
+  const { dispatch: setUserID } = useContext(GoalFormContext);
 
   useEffect(() => {
     if (isOpen) setOpen({ type: goalFormActions, payload: goalProps.title });
@@ -100,6 +101,10 @@ const GoalsPlan = ({ isOpen, onClose, goalProps, goal }) => {
               setparentGoalName({
                 type: goalFormActions.SET_PARENT_GOAL_NAME,
                 payload: goalProps.title,
+              });
+              setUserID({
+                type: goalFormActions.SET_USER_ID,
+                payload: userID,
               });
             }}
           >

@@ -84,7 +84,7 @@ const UserDetailsPage = ({ userID }) => {
         >
           Add bonus
         </Button>
-        <Link href="/admin/users/user/createplan">
+        <Link href={`/admin/users/${userID}/createplan`}>
           <Button size="sm" variant="outline" w="auto">
             Create new plan
           </Button>

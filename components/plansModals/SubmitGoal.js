@@ -21,6 +21,7 @@ const SubmitGoal = ({ goal, closeParent }) => {
   const planID = getParentPlanID();
   const { goalFormState, dispatch: setOpen } = useContext(GoalFormContext);
   const isOpen = goalFormState.isOpen;
+  const user_id = goalFormState.user_id;
   const { title } = goalFormState.goalFormQuestions;
   // const [parentPlan, setParentPlan] = useState("");
 
@@ -30,29 +31,34 @@ const SubmitGoal = ({ goal, closeParent }) => {
   };
 
   const [formStep, setFormStep] = useState(1);
-  const [wallet, setWallet] = useState("");
   const [formState, setFormState] = useState({
-    type: "goal",
-    description: "",
-    parent_plan_id: planID,
-    parent_goal_name: goal?.action || "Fixed Income",
+    data: {
+      type: "goal",
+      description: "",
+      parent_plan_id: planID,
+      parent_goal_name: goal?.action || "Fixed Income",
+    },
+    user_id: user_id || "",
   });
-
-  useEffect(() => {
-    const localWallet = getLocalWallet();
-    setWallet(localWallet._id);
-  }, []);
 
   useEffect(() => {
     setFormState({
       ...formState,
-      wallet_id: wallet,
+      user_id: user_id,
+      data: {
+        type: "goal",
+        description: "",
+        parent_plan_id: planID,
+        parent_goal_name: goal?.action || "Fixed Income",
+      },
     });
-  }, [wallet]);
+  }, []);
 
   useEffect(() => {
     setFormStep((prev) => (prev = 1));
   }, [isOpen]);
+
+  console.log("USER ID: ", user_id);
 
   return (
     <Modal isOpen={isOpen} isCentered size="sm">

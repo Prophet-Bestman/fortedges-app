@@ -93,8 +93,6 @@ const AddBonus = ({ setStep, onActionOpen, planID, onClose }) => {
     }
   }, [bonusResp]);
 
-  console.log(bonusResp);
-
   return (
     <ModalContent py="24px" px="24px" maxW="380px">
       <Flex mb="40px" justifyContent="space-between" alignItems="center">

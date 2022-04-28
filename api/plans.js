@@ -53,8 +53,16 @@ const useCreateCustomPlan = () => {
   return useMutation(
     (values) =>
       request
-        .post("/custom-plans", values, { headers: headers })
-        .then((res) => res.data)
+        .post(
+          `/custom-plans${
+            values.user_id !== undefined ? `?owner=${values.user_id}` : ""
+          }`,
+          values.data,
+          {
+            headers: headers,
+          }
+        )
+        .then((res) => res)
         .catch((err) => {
           if (err.response.status === 403) {
             localStorage.clear();

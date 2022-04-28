@@ -3,7 +3,7 @@ import { GoalsPlan, PremiumPlan, RealEstatePlan } from "components/plansModals";
 import { goalModalProps, planProps } from "data";
 import React, { useState, useEffect } from "react";
 
-const PlanResponsive = ({ plan }) => {
+const PlanResponsive = ({ plan, userID }) => {
   const { name, returnType, _id } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState();
   const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
@@ -87,11 +87,13 @@ const PlanResponsive = ({ plan }) => {
         isOpen={isPremiumOpen}
         onClose={onPremiumClose}
         plan={plan}
+        userID={userID}
       />
       <RealEstatePlan
         isOpen={isRealEstateOpen}
         onClose={onRealEstateClose}
         plan={plan}
+        userID={userID}
       />
       <GoalsPlan
         isOpen={isGoalOpen}
@@ -99,6 +101,7 @@ const PlanResponsive = ({ plan }) => {
         goalProps={goalProps}
         plan={plan}
         id={_id}
+        userID={userID}
       />
     </Box>
   );

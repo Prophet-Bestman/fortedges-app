@@ -64,8 +64,11 @@ const GoalFormThree = ({ setFormStep, formState, onParentClose }) => {
     // parent_goal_name: parentGaalName,
   };
 
-  const submitGoal = async (data) => {
-    payload = { ...formState, target: data.targetAmount };
+  const submitGoal = (data) => {
+    payload = {
+      ...formState,
+      data: { ...formState.data, target: data.targetAmount },
+    };
     createGoal(payload);
   };
 

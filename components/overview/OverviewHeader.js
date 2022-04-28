@@ -35,8 +35,6 @@ const OverviewHeader = () => {
     }
   }, [userData]);
 
-  console.log("User: ", user);
-
   React.useEffect(() => {
     if (error != undefined) {
     } else {

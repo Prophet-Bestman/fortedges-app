@@ -5,6 +5,7 @@ const initialState = {
   isOpen: false,
   id: "",
   parent_plan_name: "",
+  user_id: "",
 };
 
 export const planFormActions = {
@@ -12,6 +13,7 @@ export const planFormActions = {
   CLOSE_FORM: "CLOSE_FORM",
   SET_ID: "SET_ID",
   SET_PARENT_NAME: "SET_PARENT_NAME",
+  SET_USER_ID: "SET_USER_ID",
 };
 
 const reducer = (planFormState, action) => {
@@ -22,6 +24,11 @@ const reducer = (planFormState, action) => {
       return (planFormState = { ...planFormState, isOpen: false });
     case planFormActions.SET_ID:
       return (planFormState = { ...planFormState, id: action.payload });
+    case planFormActions.SET_USER_ID:
+      return (planFormState = {
+        ...planFormState,
+        user_id: action.payload,
+      });
     case planFormActions.SET_PARENT_NAME:
       return (planFormState = {
         ...planFormState,

@@ -71,6 +71,7 @@ const initialState = {
   goalFormQuestions: {},
   parent_plan_id: "",
   parent_goal_name: "",
+  user_id: "",
 };
 
 export const goalFormActions = {
@@ -78,6 +79,7 @@ export const goalFormActions = {
   CLOSE_FORM: "CLOSE_FORM",
   SET_ID: "SET_ID",
   SET_PARENT_GOAL_NAME: "SET_PARENT_GOAL_NAME",
+  SET_USER_ID: "SET_USER_ID",
 };
 
 const reducer = (goalFormState, action) => {
@@ -126,6 +128,11 @@ const reducer = (goalFormState, action) => {
       return (goalFormState = {
         ...goalFormState,
         parent_plan_id: action.payload,
+      });
+    case goalFormActions.SET_USER_ID:
+      return (goalFormState = {
+        ...goalFormState,
+        user_id: action.payload,
       });
     case goalFormActions.SET_PARENT_GOAL_NAME:
       return (goalFormState = {

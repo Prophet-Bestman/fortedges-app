@@ -20,9 +20,12 @@ import { formatter } from "utils";
 import SubmitPlan from "./SubmitPlan";
 import { portfolioCountries } from "data";
 
-const RealEstatePlan = ({ isOpen, onClose, plan }) => {
+const RealEstatePlan = ({ isOpen, onClose, plan, userID }) => {
   const { min, max, description, _id, name } = plan;
   const { dispatch: setOpen } = useContext(PlanFormContext);
+  const { dispatch: setUserID } = useContext(PlanFormContext);
+  const { dispatch: setParentID } = useContext(PlanFormContext);
+  const { dispatch: setParentName } = useContext(PlanFormContext);
   return (
     <Modal isOpen={isOpen} size="full">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
@@ -100,9 +103,14 @@ const RealEstatePlan = ({ isOpen, onClose, plan }) => {
             variant="green"
             w="full"
             onClick={() => {
-              setOpen({ type: planFormActions.SET_PARENT_NAME, payload: name });
-              setOpen({ type: planFormActions.SET_ID, payload: _id });
+              setParentName({
+                type: planFormActions.SET_PARENT_NAME,
+                payload: name,
+              });
+              setParentID({ type: planFormActions.SET_ID, payload: _id });
+
               setOpen({ type: planFormActions.OPEN_FORM });
+              setUserID({ type: planFormActions.SET_USER_ID, payload: userID });
             }}
           >
             Get Started
