@@ -44,8 +44,8 @@ const SubmitGoal = ({ goal, closeParent }) => {
   useEffect(() => {
     setFormState({
       ...formState,
-      user_id: user_id,
       data: {
+        user_id: user_id,
         type: "goal",
         description: "",
         parent_plan_id: planID,

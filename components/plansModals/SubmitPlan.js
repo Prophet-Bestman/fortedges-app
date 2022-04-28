@@ -81,8 +81,8 @@ const SubmitPlan = ({ closeParent }) => {
 
   const submitPlan = (data) => {
     const plan = {
-      user_id: user_id,
       data: {
+        user_id: user_id,
         name: data.planName,
         parent_plan_id: id,
         description: "",
