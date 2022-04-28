@@ -17,7 +17,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   MdOutlineKeyboardBackspace,
   MdKeyboardArrowDown,
@@ -27,13 +27,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { options } from "data";
 import { RequestSuccess } from "components/plansModals";
+import { useGetMops } from "api/mop";
+import { useAdminDeposit } from "api/transactions";
 
 const optionsArr = Object.entries(options);
 
-const AdminPaymentForm = ({ setStep }) => {
-  const [option, setOption] = React.useState(options.btc);
-  const [data, setData] = React.useState({});
-  const [requestSent, setRequestSent] = React.useState(false);
+const AdminDepositForm = ({ setStep, planID, onClose }) => {
+  const [option, setOption] = useState(options.btc);
+  const [data, setData] = useState({});
+  const [mops, setMops] = useState([]);
+  const [requestSent, setRequestSent] = useState(false);
   const planSchema = yup.object({
     amount: yup.number().required(),
   });
@@ -57,12 +60,24 @@ const AdminPaymentForm = ({ setStep }) => {
     setRequestSent(true);
   };
 
-  const submit = (data) => {
-    data = { ...data, option: option.name };
+  const { data: depositData, mutate: deposit, isLoading } = useAdminDeposit();
 
-    setData(data);
-    onSuccessOpen();
+  const submit = (data) => {
+    data = { ...data, plan_id: planID };
+
+    console.log(data);
+    deposit(data);
+
+    // onSuccessOpen();
   };
+
+  console.log(depositData);
+  // useEffect(() => {
+  //   if (depositData!== undefined) {
+  //   if(depositData.status === )
+  //   }
+  // }, [depositData])
+
   return (
     <ModalContent py="24px" px="24px" maxW="380px">
       <Flex mb="40px" justifyContent="space-between" alignItems="center">
@@ -116,7 +131,7 @@ const AdminPaymentForm = ({ setStep }) => {
             </InputGroup>
           </Stack>
 
-          <Stack mb="32px">
+          {/* <Stack mb="32px">
             <Text fontSize={"12px"} color="text.grey">
               Mode Of Payment
             </Text>
@@ -160,7 +175,7 @@ const AdminPaymentForm = ({ setStep }) => {
                 ))}
               </MenuList>
             </Menu>
-          </Stack>
+          </Stack> */}
 
           <Box>
             {option.name === "Bank Deposit" ? (
@@ -185,15 +200,12 @@ const AdminPaymentForm = ({ setStep }) => {
                 Continue
               </Button>
             )}
-            {/* <Button w="full" type="submit">
-              Continue
-            </Button> */}
           </Box>
         </form>
       </ModalBody>
-      <RequestSuccess isOpen={isSuccessOpen} onClose={onSuccessClose} />
+      {/* <RequestSuccess isOpen={isSuccessOpen} onClose={onSuccessClose} /> */}
     </ModalContent>
   );
 };
 
-export default AdminPaymentForm;
+export default AdminDepositForm;

@@ -15,7 +15,6 @@ import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import ActionSuccessful from "./ActionSuccessful";
 import AddBalance from "./AddBalance";
-import AdminPaymentForm from "./AdminPaymentForm";
 import AdminWithdraw from "./AdminWithdraw";
 import PlanBox from "./PlanBox";
 import AddBonus from "./AddBonus";

@@ -9,16 +9,17 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import ConfirmModal from "components/ConfirmModal";
+import { ConfirmModal } from "components";
 import React, { useState, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import ActionSuccessful from "./ActionSuccessful";
 import AddBalance from "./AddBalance";
-import AdminPaymentForm from "./AdminPaymentForm";
 import AdminWithdraw from "./AdminWithdraw";
 import PlanBox from "./PlanBox";
 import AddBonus from "./AddBonus";
 import { useAdminGetCustomPlans } from "api/plans";
+import AdminDepositForm from "./AdminDepositForm";
+import ConfirmDeleteModal from "./ConfirmDelete";
 
 const SelectPlan = ({ isOpen, onClose, action, userID }) => {
   const [step, setStep] = useState(1);
@@ -33,6 +34,12 @@ const SelectPlan = ({ isOpen, onClose, action, userID }) => {
     onClose: onConfirmClose,
   } = useDisclosure();
 
+  const {
+    isOpen: isConfirmDeleteOpen,
+    onOpen: onConfirmDeleteOpen,
+    onClose: onConfirmDeleteClose,
+  } = useDisclosure();
+
   const { data: plansData } = useAdminGetCustomPlans(userID);
 
   useEffect(() => {
@@ -43,6 +50,12 @@ const SelectPlan = ({ isOpen, onClose, action, userID }) => {
     }
   }, [plansData]);
 
+  const closeParent = () => {
+    onClose();
+    onConfirmClose();
+    onConfirmDeleteClose();
+  };
+
   const next = (plan) => {
     if (action === "CLEAR_BALANCE") {
       setTitle("Clear Balance");
@@ -51,12 +64,14 @@ const SelectPlan = ({ isOpen, onClose, action, userID }) => {
     } else if (action === "DELETE_PLAN") {
       setTitle("Delete Plan");
       setText("Are you sure you want to delete this user's plan?");
-      onConfirmOpen();
+      onConfirmDeleteOpen();
     } else {
       setStep(2);
     }
     setPlanID(plan.id);
   };
+
+  //  ========================== ACTIONS ===================================
 
   return (
     <Modal isOpen={isOpen} size="full">
@@ -91,7 +106,7 @@ const SelectPlan = ({ isOpen, onClose, action, userID }) => {
       )}
 
       {step === 2 && action === "DEPOSIT" && (
-        <AdminPaymentForm setStep={setStep} />
+        <AdminDepositForm setStep={setStep} planID={planID} onClose={onClose} />
       )}
       {step === 2 && action === "WITHDRAW" && (
         <AdminWithdraw setStep={setStep} planID={planID} onClose={onClose} />
@@ -109,7 +124,15 @@ const SelectPlan = ({ isOpen, onClose, action, userID }) => {
         text={text}
         title={title}
       />
-      <ActionSuccessful isOpen={isActionOpen} />
+
+      <ConfirmDeleteModal
+        isOpen={isConfirmDeleteOpen}
+        onClose={onConfirmDeleteClose}
+        planID={planID}
+        closeParent={closeParent}
+      />
+
+      {/* <ActionSuccessful isOpen={isActionOpen} /> */}
     </Modal>
   );
 };

@@ -80,10 +80,30 @@ const useAdminGetCustomPlans = (user_id) => {
   );
 };
 
+const useDeletPlan = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (plan_id) =>
+      request
+        .delete(`/custom-plans/${plan_id}`, { headers: headers })
+        .then((res) => res)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+    {
+      onSuccess: () => queryClient.invalidateQueries("custom-plans"),
+    }
+  );
+};
+
 export {
   useGetAllPlans,
   useCreateCustomPlan,
   useGetCustomPlans,
   useGetSingleCustomPlan,
   useAdminGetCustomPlans,
+  useDeletPlan,
 };

@@ -88,6 +88,28 @@ const useAdminWithdraw = () => {
   );
 };
 
+const useAdminDeposit = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .post(`/add-deposit`, values, {
+          headers: headers,
+        })
+        .then((res) => res)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+
+    {
+      onSuccess: () => queryClient.invalidateQueries("users"),
+    }
+  );
+};
+
 const useGetAllMyTransactions = (plan, page, limit) => {
   const headers = configOptions();
   return useQuery(["my-transactions", plan, page, limit], () =>
@@ -169,4 +191,5 @@ export {
   useDeclineTransaction,
   useDeleteTransaction,
   useAdminWithdraw,
+  useAdminDeposit,
 };

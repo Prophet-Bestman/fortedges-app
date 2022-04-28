@@ -2,8 +2,6 @@ import { Modal, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import ErrorModal from "components/ErrorModal";
 import { options } from "data";
 import React, { useState, useEffect } from "react";
-import PaymentForm from "./PaymentForm";
-import ProofOfPayment from "./ProofOfPayment";
 
 const Deposit = ({ onClose, isOpen }) => {
   const [step, setStep] = React.useState(1);
