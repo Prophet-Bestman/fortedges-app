@@ -181,6 +181,21 @@ const useDeleteTransaction = () => {
     }
   );
 };
+const useAdminAddBonus = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .post(`/add-promo`, values, {
+          headers: headers,
+        })
+        .then((res) => res),
+    {
+      onSuccess: () => queryClient.invalidateQueries("my-transactions"),
+    }
+  );
+};
 
 export {
   useDeposit,
@@ -192,4 +207,5 @@ export {
   useDeleteTransaction,
   useAdminWithdraw,
   useAdminDeposit,
+  useAdminAddBonus,
 };

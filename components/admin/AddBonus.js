@@ -10,16 +10,18 @@ import {
   Stack,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { options } from "data";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ConfirmModal from "components/ConfirmModal";
+import { useAdminAddBonus } from "api/transactions";
 
-const AddBonus = ({ setStep, onActionOpen }) => {
+const AddBonus = ({ setStep, onActionOpen, planID, onClose }) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const {
@@ -40,11 +42,58 @@ const AddBonus = ({ setStep, onActionOpen }) => {
     resolver: yupResolver(addBalanceSchema),
   });
 
+  const toast = useToast();
+
+  const successToast = () => {
+    toast({
+      title: "Successful",
+      description: "Bonus added successfully",
+      status: "success",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+
+  const errorToast = () => {
+    toast({
+      title: "Try Again Later",
+      description: "Error occurred while adding bonus",
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+
+  const { mutate: addBonus, data: bonusResp, isLoading } = useAdminAddBonus();
+
   const submit = (data) => {
     setTitle("Add Bonus");
     setText("Are you sure you want to add bonus to this user?");
-    onConfirmOpen();
+
+    const payload = {
+      amount: data.amount,
+      plan_id: planID,
+      description: "Bonus",
+    };
+
+    addBonus(payload);
   };
+
+  useEffect(() => {
+    if (bonusResp !== undefined) {
+      if (bonusResp.status === 200) {
+        successToast();
+        setStep(1);
+        onClose();
+      } else errorToast();
+    }
+  }, [bonusResp]);
+
+  console.log(bonusResp);
 
   return (
     <ModalContent py="24px" px="24px" maxW="380px">
@@ -98,7 +147,7 @@ const AddBonus = ({ setStep, onActionOpen }) => {
             </InputGroup>
           </Stack>
 
-          <Button w="full" type="submit">
+          <Button w="full" type="submit" isLoading={isLoading}>
             Add Bonus
           </Button>
         </form>

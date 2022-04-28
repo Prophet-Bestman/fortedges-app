@@ -28,6 +28,7 @@ const SelectPlan = ({ isOpen, onClose, action, userID }) => {
   const [userPlans, setUserPlans] = useState([]);
   const { isOpen: isActionOpen, onOpen: onActionOpen } = useDisclosure();
   const [planID, setPlanID] = useState();
+
   const {
     isOpen: isConfirmOpen,
     onOpen: onConfirmOpen,
@@ -115,7 +116,12 @@ const SelectPlan = ({ isOpen, onClose, action, userID }) => {
         <AddBalance onActionOpen={onActionOpen} setStep={setStep} />
       )}
       {step === 2 && action === "ADD_BONUS" && (
-        <AddBonus onActionOpen={onActionOpen} setStep={setStep} />
+        <AddBonus
+          onActionOpen={onActionOpen}
+          setStep={setStep}
+          planID={planID}
+          onClose={onClose}
+        />
       )}
       <ConfirmModal
         isOpen={isConfirmOpen}
