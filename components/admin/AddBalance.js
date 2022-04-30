@@ -10,17 +10,19 @@ import {
   Stack,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import { options } from "data";
-import React, { useState } from "react";
+// import { options } from "data";
+import React, { useState, useEffect } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ActionSuccessful from "./ActionSuccessful";
 import ConfirmModal from "components/ConfirmModal";
+import { useAdminAddBalance } from "api/transactions";
 
-const AddBalance = ({ setStep, onActionOpen }) => {
+const AddBalance = ({ setStep, onActionOpen, planID, onClose }) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
@@ -36,6 +38,32 @@ const AddBalance = ({ setStep, onActionOpen }) => {
     resolver: yupResolver(addBalanceSchema),
   });
 
+  const toast = useToast();
+
+  const successToast = () => {
+    toast({
+      title: "Successful",
+      description: "Balance added successfully",
+      status: "success",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+
+  const errorToast = () => {
+    toast({
+      title: "Try Again Later",
+      description: "Error occurred while adding balance",
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+
   const {
     isOpen: isSuccessOpen,
     onOpen: onSuccessOpen,
@@ -47,11 +75,34 @@ const AddBalance = ({ setStep, onActionOpen }) => {
     onClose: onConfirmClose,
   } = useDisclosure();
 
+  const {
+    mutate: addBalance,
+    data: balanceResp,
+    isLoading,
+  } = useAdminAddBalance();
+
   const submit = (data) => {
-    setTitle("Add Balance");
-    setText("Are you sure you want to add balance to this user?");
-    onConfirmOpen();
+    setTitle("Add Bonus");
+    setText("Are you sure you want to add bonus to this user?");
+
+    const payload = {
+      amount: data.amount,
+      plan_id: planID,
+      description: "Bonus",
+    };
+
+    addBalance(payload);
   };
+
+  useEffect(() => {
+    if (balanceResp !== undefined) {
+      if (balanceResp.status === 200) {
+        successToast();
+        setStep(1);
+        onClose();
+      } else errorToast();
+    }
+  }, [balanceResp]);
 
   return (
     <ModalContent py="24px" px="24px" maxW="380px">
@@ -105,7 +156,7 @@ const AddBalance = ({ setStep, onActionOpen }) => {
             </InputGroup>
           </Stack>
 
-          <Button w="full" type="submit">
+          <Button w="full" type="submit" isLoading={isLoading}>
             Add Balance
           </Button>
         </form>

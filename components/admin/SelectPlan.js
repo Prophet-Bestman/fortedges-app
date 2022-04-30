@@ -20,6 +20,7 @@ import AddBonus from "./AddBonus";
 import { useAdminGetCustomPlans } from "api/plans";
 import AdminDepositForm from "./AdminDepositForm";
 import ConfirmDeleteModal from "./ConfirmDelete";
+import ConfirmClearBalance from "./ConfirmClearBalance";
 
 const SelectPlan = ({ isOpen, onClose, action, userID }) => {
   const [step, setStep] = useState(1);
@@ -41,6 +42,12 @@ const SelectPlan = ({ isOpen, onClose, action, userID }) => {
     onClose: onConfirmDeleteClose,
   } = useDisclosure();
 
+  const {
+    isOpen: isConfirmClearOpen,
+    onOpen: onConfirmClearOpen,
+    onClose: onConfirmClearClose,
+  } = useDisclosure();
+
   const { data: plansData } = useAdminGetCustomPlans(userID);
 
   useEffect(() => {
@@ -59,12 +66,8 @@ const SelectPlan = ({ isOpen, onClose, action, userID }) => {
 
   const next = (plan) => {
     if (action === "CLEAR_BALANCE") {
-      setTitle("Clear Balance");
-      setText("Are you sure you want to clear this user's balance?");
-      onConfirmOpen();
+      onConfirmClearOpen();
     } else if (action === "DELETE_PLAN") {
-      setTitle("Delete Plan");
-      setText("Are you sure you want to delete this user's plan?");
       onConfirmDeleteOpen();
     } else {
       setStep(2);
@@ -85,6 +88,7 @@ const SelectPlan = ({ isOpen, onClose, action, userID }) => {
             </Text>
 
             <AiOutlineClose
+              cursor="pointer"
               onClick={() => {
                 setStep(1);
                 onClose();
@@ -113,7 +117,12 @@ const SelectPlan = ({ isOpen, onClose, action, userID }) => {
         <AdminWithdraw setStep={setStep} planID={planID} onClose={onClose} />
       )}
       {step === 2 && action === "ADD_BALANCE" && (
-        <AddBalance onActionOpen={onActionOpen} setStep={setStep} />
+        <AddBalance
+          onActionOpen={onActionOpen}
+          setStep={setStep}
+          planID={planID}
+          onClose={onClose}
+        />
       )}
       {step === 2 && action === "ADD_BONUS" && (
         <AddBonus
@@ -134,6 +143,13 @@ const SelectPlan = ({ isOpen, onClose, action, userID }) => {
       <ConfirmDeleteModal
         isOpen={isConfirmDeleteOpen}
         onClose={onConfirmDeleteClose}
+        planID={planID}
+        closeParent={closeParent}
+      />
+
+      <ConfirmClearBalance
+        isOpen={isConfirmClearOpen}
+        onClose={onConfirmClearClose}
         planID={planID}
         closeParent={closeParent}
       />

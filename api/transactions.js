@@ -200,6 +200,25 @@ const useAdminAddBonus = () => {
   );
 };
 
+const useAdminAddBalance = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .post(`/add-balance`, values, {
+          headers: headers,
+        })
+        .then((res) => res),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("users");
+        queryClient.invalidateQueries("users");
+      },
+    }
+  );
+};
+
 export {
   useDeposit,
   useSendPOP,
@@ -211,4 +230,5 @@ export {
   useAdminWithdraw,
   useAdminDeposit,
   useAdminAddBonus,
+  useAdminAddBalance,
 };

@@ -24,11 +24,6 @@ import { useAdminAddBonus } from "api/transactions";
 const AddBonus = ({ setStep, onActionOpen, planID, onClose }) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const {
-    isOpen: isConfirmOpen,
-    onOpen: onConfirmOpen,
-    onClose: onConfirmClose,
-  } = useDisclosure();
 
   const addBalanceSchema = yup.object().shape({
     amount: yup.number().required(),
@@ -150,13 +145,6 @@ const AddBonus = ({ setStep, onActionOpen, planID, onClose }) => {
           </Button>
         </form>
       </ModalBody>
-      <ConfirmModal
-        isOpen={isConfirmOpen}
-        onClose={onConfirmClose}
-        openModal={onActionOpen}
-        text={text}
-        title={title}
-      />
     </ModalContent>
   );
 };

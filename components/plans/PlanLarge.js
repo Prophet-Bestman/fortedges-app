@@ -9,8 +9,6 @@ const PlanLarge = ({ plan }) => {
   const { investment, name, parent_plan_name, profit, parent_goal_name } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState({});
 
-  console.log("Plan: ", plan);
-
   useEffect(() => {
     if (plan !== undefined) {
       if (!!parent_goal_name) {
