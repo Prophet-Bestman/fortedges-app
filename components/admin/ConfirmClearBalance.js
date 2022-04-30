@@ -67,8 +67,6 @@ const ConfirmClearBalance = ({ isOpen, onClose, planID, closeParent }) => {
     }
   }, [clearData]);
 
-  console.log("ClearedResp: ", clearData);
-
   return (
     <Modal isOpen={isOpen}>
       <ModalOverlay />

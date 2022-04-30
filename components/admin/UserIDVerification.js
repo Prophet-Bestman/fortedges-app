@@ -41,7 +41,7 @@ const UserIDVerification = ({ isOpen, onClose, idVerificationDetails }) => {
 
   const handleVerified = () => {
     const data = {
-      user_id: user,
+      user_id: user._id,
       payload: {
         status: "accepted",
       },

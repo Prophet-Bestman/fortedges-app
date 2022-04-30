@@ -37,43 +37,44 @@ const ViewVerification = ({
         {true && (
           <ModalBody px="24px" py="30px">
             <Box my="30px">
-              <Flex
-                py="16px"
-                justifyContent="space-between"
-                borderBottomWidth="1px"
-                borderColor="#E2E0E0"
-              >
-                <Text>Email Verification</Text>
+              {isEmailVerified !== undefined && (
+                <Flex
+                  py="16px"
+                  justifyContent="space-between"
+                  borderBottomWidth="1px"
+                  borderColor="#E2E0E0"
+                >
+                  <Text>Email Verification</Text>
 
-                {isEmailVerified ? (
-                  <Flex>
-                    <Flex
-                      color={"white"}
-                      bg="green"
-                      px="12px"
-                      py="2px"
-                      fontSize="12px"
-                      rounded="full"
-                    >
-                      Verified
+                  {isEmailVerified ? (
+                    <Flex>
+                      <Flex
+                        color={"white"}
+                        bg="green"
+                        px="12px"
+                        py="2px"
+                        fontSize="12px"
+                        rounded="full"
+                      >
+                        Verified
+                      </Flex>
+                      <Box display={["unset", , "none"]}>
+                        <MdKeyboardArrowRight />
+                      </Box>
                     </Flex>
-                    <Box display={["unset", , "none"]}>
-                      <MdKeyboardArrowRight />
-                    </Box>
-                  </Flex>
-                ) : (
-                  <Flex alignItems="center" gap={[0, , "16px"]}>
-                    <Flex
-                      color={"white"}
-                      bg="red.00"
-                      px="12px"
-                      py="2px"
-                      fontSize="12px"
-                      rounded="full"
-                    >
-                      Not Verified
-                    </Flex>
-                    {/* <Button
+                  ) : (
+                    <Flex alignItems="center" gap={[0, , "16px"]}>
+                      <Flex
+                        color={"white"}
+                        bg="red.00"
+                        px="12px"
+                        py="2px"
+                        fontSize="12px"
+                        rounded="full"
+                      >
+                        Not Verified
+                      </Flex>
+                      {/* <Button
                     // onClick={onConfirmEmailOpen}
                     display={["none", , "unset"]}
                     variant="secondary"
@@ -84,9 +85,10 @@ const ViewVerification = ({
                   <Box display={["unset", , "none"]}>
                     <MdKeyboardArrowRight />
                   </Box> */}
-                  </Flex>
-                )}
-              </Flex>
+                    </Flex>
+                  )}
+                </Flex>
+              )}
               <Flex
                 py="32px"
                 justifyContent="space-between"

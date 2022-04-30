@@ -46,9 +46,9 @@ const useGetVerifications = () => {
 
 const useAdminGetAllVerifications = () => {
   const headers = configOptions();
-  return useQuery("verification", () =>
+  return useQuery("verifications", () =>
     request
-      .get(`/`, {
+      .get(`/?limit=1000`, {
         headers: headers,
       })
       .then((res) => res.data)
@@ -62,7 +62,7 @@ const useAdminGetAllVerifications = () => {
 
 const useAdminGetUserVerifications = (user_id) => {
   const headers = configOptions();
-  return useQuery(["verification", user_id], () =>
+  return useQuery(["verifications", user_id], () =>
     request
       .get(`/${user_id}`, {
         headers: headers,
@@ -92,6 +92,7 @@ const useAdminVerifyID = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("users");
+        queryClient.invalidateQueries("verifications");
       },
     }
   );

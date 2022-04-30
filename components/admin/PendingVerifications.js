@@ -10,12 +10,20 @@ import {
 } from "@chakra-ui/react";
 import { useAdminGetAllVerifications } from "api/verification";
 import { users } from "data";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PedingVerificationRow from "./PendingVerificationRow";
 
 const PendingVerifications = () => {
-  //   const { email, investmentPlan, date, mop, amount, status } = deposits;
+  const [verifications, setVerifications] = useState([]);
   const { data } = useAdminGetAllVerifications();
+
+  console.log("Data: ", data);
+
+  useEffect(() => {
+    if (!!data && data?.verifications.length > 0) {
+      setVerifications(data?.verifications);
+    }
+  }, [data]);
 
   return (
     <Box>
@@ -31,13 +39,18 @@ const PendingVerifications = () => {
               <Td>Actions</Td>
             </Tr>
           </Thead>
-          <Tbody fontSize="20px" gap="80px">
-            {users
-              .filter((verification) => verification.verification === "Pending")
-              .map((verification, i) => (
-                <PedingVerificationRow verification={verification} key={i} />
-              ))}
-          </Tbody>
+          {!!verifications && verifications?.length > 0 && (
+            <Tbody fontSize="20px" gap="80px">
+              {verifications
+                .filter((verification) => verification.status === "in-review")
+                .map((verification) => (
+                  <PedingVerificationRow
+                    verification={verification}
+                    key={verification._id}
+                  />
+                ))}
+            </Tbody>
+          )}
         </Table>
       </TableContainer>
     </Box>

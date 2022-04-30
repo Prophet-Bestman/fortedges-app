@@ -19,7 +19,8 @@ import React from "react";
 import ViewVerification from "./ViewVerification";
 
 const PedingVerificationRow = ({ verification }) => {
-  const { fullName, email, verificationDetails } = verification;
+  const { user } = verification;
+  const { firstname, lastname, email } = user;
   const {
     isOpen: isPOPOpen,
     onOpen: onPOPOpen,
@@ -28,7 +29,7 @@ const PedingVerificationRow = ({ verification }) => {
 
   return (
     <Tr fontSize={"14px"} color="text.grey">
-      <Td>{fullName}</Td>
+      <Td>{`${firstname} ${lastname}`}</Td>
       <Td>{email}</Td>
       <Td d="flex" gap="12px">
         <Button
@@ -40,7 +41,7 @@ const PedingVerificationRow = ({ verification }) => {
         >
           View
         </Button>
-        <Button
+        {/* <Button
           size="xs"
           px="8px"
           py="4px"
@@ -48,13 +49,13 @@ const PedingVerificationRow = ({ verification }) => {
           //   onClick={onPOPOpen}
         >
           Approve Verification
-        </Button>
+        </Button> */}
       </Td>
 
       <ViewVerification
         isOpen={isPOPOpen}
         onClose={onPOPClose}
-        verificationDetails={verificationDetails}
+        verificationDetails={verification}
       />
     </Tr>
   );
