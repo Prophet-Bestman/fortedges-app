@@ -74,7 +74,7 @@ const UserPlan = ({ plan }) => {
       </Box>
 
       <Box bottom="14px" position="absolute" color="white">
-        <Text mb="4px" fontSize="13px">
+        <Text mb="4px" fontSize="13px" w="80%" isTruncated>
           {name}
         </Text>
         <Text mb="4px" fontSize="15px" fontWeight={600}>

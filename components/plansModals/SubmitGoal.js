@@ -8,14 +8,13 @@ import {
   Circle,
   Text,
   Progress,
-  Box,
 } from "@chakra-ui/react";
 import { AiOutlineClose } from "react-icons/ai";
 import { goalFormActions, GoalFormContext } from "providers/GoalFormProvider";
 import GoalFormOne from "./GoalFormOne";
 import GoalFormTwo from "./GoalFormTwo";
 import GoalFormThree from "./GoalFormThree";
-import { getLocalWallet, getParentPlanID } from "api/config.js";
+import { getParentPlanID } from "api/config.js";
 
 const SubmitGoal = ({ goal, closeParent }) => {
   const planID = getParentPlanID();
@@ -37,8 +36,8 @@ const SubmitGoal = ({ goal, closeParent }) => {
       description: "",
       parent_plan_id: planID,
       parent_goal_name: goal?.action || "Fixed Income",
+      user_id: user_id || "",
     },
-    user_id: user_id || "",
   });
 
   useEffect(() => {

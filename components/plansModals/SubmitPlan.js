@@ -21,11 +21,9 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { getLocalWallet } from "api/config.js";
 import { useCreateCustomPlan } from "api/plans";
 import SuccessModal from "components/SuccessModal";
 import ErrorModal from "components/ErrorModal";
-import { PlanContext } from "providers/PlanProvider";
 
 const SubmitPlan = ({ closeParent }) => {
   const { planFormState, dispatch: setOpen } = useContext(PlanFormContext);

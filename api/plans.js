@@ -69,7 +69,10 @@ const useCreateCustomPlan = () => {
           } else return err;
         }),
     {
-      onSuccess: () => queryClient.invalidateQueries("custom-plans"),
+      onSuccess: () => {
+        queryClient.invalidateQueries("custom-plans");
+        queryClient.invalidateQueries("users");
+      },
     }
   );
 };
@@ -102,7 +105,10 @@ const useDeletPlan = () => {
           } else return err;
         }),
     {
-      onSuccess: () => queryClient.invalidateQueries("custom-plans"),
+      onSuccess: () => {
+        queryClient.invalidateQueries("custom-plans");
+        queryClient.invalidateQueries("users");
+      },
     }
   );
 };
