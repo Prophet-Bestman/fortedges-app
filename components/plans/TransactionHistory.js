@@ -67,17 +67,21 @@ const TransactionHistory = () => {
       </Flex>
 
       {/* Transaction History */}
-      {Array.isArray(transactions.transactions) && (
-        <Box borderBottomWidth="0px" borderColor="#F1F2F4">
-          {transactions.transactions
-            ?.slice(0)
-            ?.reverse()
-            ?.slice(0, 4)
-            ?.map((transaction) => (
-              <MiniTransaction key={transaction.id} transaction={transaction} />
-            ))}
-        </Box>
-      )}
+      {Array.isArray(transactions.transactions) &&
+        transactions?.transactions?.length > 0 && (
+          <Box borderBottomWidth="0px" borderColor="#F1F2F4">
+            {transactions.transactions
+              ?.slice(0)
+              ?.reverse()
+              ?.slice(0, 4)
+              ?.map((transaction) => (
+                <MiniTransaction
+                  key={transaction.id}
+                  transaction={transaction}
+                />
+              ))}
+          </Box>
+        )}
 
       {/* Graph */}
 

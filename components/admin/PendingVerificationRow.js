@@ -1,20 +1,4 @@
-import {
-  Button,
-  IconButton,
-  Image,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalOverlay,
-  Td,
-  Text,
-  Tr,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Button, Td, Tr, useDisclosure } from "@chakra-ui/react";
 import React from "react";
 import ViewVerification from "./ViewVerification";
 

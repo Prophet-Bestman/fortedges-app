@@ -15,6 +15,7 @@ import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { CgSoftwareUpload } from "react-icons/cg";
 import RequestSuccess from "./RequestSuccess";
 import { useSendPOP } from "api/transactions";
+import { useGetMops } from "api/mop";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -22,26 +23,42 @@ const formatter = new Intl.NumberFormat("en-US", {
 });
 
 const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
-  const [walletAddress, setWalletAddress] = React.useState(
-    "1232878973egueh3e8273927397al02"
-  );
+  const [walletAddress, setWalletAddress] = React.useState("");
+  const [btcAddress, setBtcAddress] = useState("");
+  const [ethAddress, setEthAddress] = useState("");
+
   const [copied, setCopied] = useState("Copy");
   const [selectedFile, setSelctedFile] = useState(null);
   const [POPImg, setPOPImg] = useState(null);
   const filePickerRef = useRef(null);
   const [POPResponse, setPOPResponse] = useState({});
 
+  const { data: mopsData } = useGetMops();
+
+  useEffect(() => {
+    if (!!mopsData && mopsData.length > 0) {
+      const btc = mopsData.filter((mop) => mop.type === "btc");
+      const btcAddress = btc[0].address;
+      setBtcAddress(btcAddress);
+
+      const eth = mopsData.filter((mop) => mop.type === "eth");
+      const ethAddress = eth[0].address;
+      setEthAddress(ethAddress);
+    }
+  }, [mopsData]);
+
+  useEffect(() => {
+    if (!!option) {
+      if (option?.name === "btc") setWalletAddress(btcAddress);
+      if (option?.name === "eth") setWalletAddress(ethAddress);
+    }
+  }, [option, btcAddress, ethAddress]);
+
   const {
     isOpen: isReqOpen,
     onOpen: onReqOpen,
     onClose: onReqClose,
   } = useDisclosure();
-
-  // const {
-  //   isOpen: isErrorOpen,
-  //   onClose: onErrorClose,
-  //   onOpen: onErrorOpen,
-  // } = useDisclosure();
 
   const closeParent = () => {
     onReqClose();
@@ -145,8 +162,8 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
             {data.option} Address
           </Text>
 
-          <Flex mb="40px" my="8px">
-            <Text w="70%" fontWeight={600}>
+          <Flex mb="40px" my="8px" gap="4px">
+            <Text w="70%" fontWeight={600} isTruncated>
               {walletAddress}
             </Text>
             <Button
