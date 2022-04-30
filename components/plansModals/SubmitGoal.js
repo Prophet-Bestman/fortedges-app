@@ -32,11 +32,11 @@ const SubmitGoal = ({ goal, closeParent }) => {
   const [formStep, setFormStep] = useState(1);
   const [formState, setFormState] = useState({
     data: {
-      type: "goal",
       description: "",
       parent_plan_id: planID,
       parent_goal_name: goal?.action || "Fixed Income",
       user_id: user_id || "",
+      type: "goal",
     },
   });
 

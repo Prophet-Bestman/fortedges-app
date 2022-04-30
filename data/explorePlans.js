@@ -25,4 +25,31 @@ export const planProps = {
   premiumStock: { img: "/img/emojis/star.png", color: "text.brown" },
 };
 
+export const goalProps = {
+  business: {
+    img: "/img/emojis/Briefcase.png",
+    color: "others.brown",
+  },
+  school: {
+    img: "/img/emojis/school.png",
+    color: "others.blue",
+  },
+  travel: {
+    img: "/img/emojis/plane.png",
+    color: "others.cyan",
+  },
+  home: {
+    img: "/img/emojis/home.png",
+    color: "text.green",
+  },
+  rent: {
+    img: "/img/emojis/home2.png",
+    color: "others.green",
+  },
+  wedding: {
+    img: "/img/emojis/ring.png",
+    color: "#C1B9F9",
+  },
+};
+
 export default explorePlans;

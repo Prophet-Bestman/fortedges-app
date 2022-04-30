@@ -1,19 +1,59 @@
 import { Box, Image, Text } from "@chakra-ui/react";
+import { goalProps, planProps } from "data/explorePlans";
 import { PlanContext } from "providers/PlanProvider";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const PlanDetailsBanner = () => {
   const { plan } = useContext(PlanContext);
+  const { investment, name, profit, parent_plan_name, parent_goal_name } = plan;
+  const [currentPlanProps, setCurrentPlanProps] = useState({});
+
+  useEffect(() => {
+    if (plan !== undefined) {
+      if (!!parent_goal_name) {
+        switch (parent_goal_name) {
+          case "Start a Business":
+            setCurrentPlanProps(goalProps.business);
+            break;
+          case "Save for School":
+            setCurrentPlanProps(goalProps.school);
+            break;
+          case "Travel":
+            setCurrentPlanProps(goalProps.travel);
+            break;
+          case "Own your own Home":
+            setCurrentPlanProps(goalProps.home);
+            break;
+          case "Save for Rent":
+            setCurrentPlanProps(goalProps.rent);
+            break;
+          case "Plan a wedding":
+            setCurrentPlanProps(goalProps.wedding);
+            break;
+          default:
+            setCurrentPlanProps(planProps.fixedIncome);
+            break;
+        }
+      } else {
+        switch (parent_plan_name) {
+          case "Fixed Income":
+            setCurrentPlanProps(planProps.fixedIncome);
+            break;
+          case "Real Estate":
+            setCurrentPlanProps(planProps.realEstate);
+            break;
+          case "Premium Stock":
+            setCurrentPlanProps(planProps.premiumStock);
+            break;
+        }
+      }
+    }
+  }, [plan]);
+
   return (
     <Box
       h="120px"
-      bg={
-        plan?.parent_plan_name === "Premium Stock"
-          ? "text.brown"
-          : plan?.parent_plan_name === "Real Estate"
-          ? "others.green"
-          : "others.blue"
-      }
+      bg={currentPlanProps.color}
       bgGradient="linear-gradient(178.73deg, rgba(196, 196, 196, 0) 1.08%, rgba(196, 196, 196, 0) 1.09%, rgba(0, 0, 0, 0.4) 98.92%)"
       position="relative"
     >
@@ -21,13 +61,7 @@ const PlanDetailsBanner = () => {
         h="full"
         ml="140px"
         filter={"blur(3px)"}
-        src={
-          plan?.parent_plan_name === "Premium Stock"
-            ? "/img/emojis/star.png"
-            : plan?.parent_plan_name === "Real Estate"
-            ? "/img/emojis/home2.png"
-            : "/img/emojis/money.png"
-        }
+        src={currentPlanProps.img}
         alt=""
       />
       <Box

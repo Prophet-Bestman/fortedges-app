@@ -9,29 +9,53 @@ import {
   ModalBody,
 } from "@chakra-ui/react";
 import { planProps } from "data";
+import { goalProps } from "data/explorePlans";
 import React, { useEffect, useState } from "react";
 import { formatter } from "utils";
 
 const UserPlan = ({ plan }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { investment, name, parent_plan_name, profit } = plan;
+  const { investment, name, parent_plan_name, profit, parent_goal_name } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState();
 
   useEffect(() => {
     if (plan !== undefined) {
-      switch (plan.parent_plan_name) {
-        case "Fixed Income":
-          setCurrentPlanProps(planProps.fixedIncome);
-          break;
-        case "Real Estate":
-          setCurrentPlanProps(planProps.realEstate);
-          break;
-        case "Premium Stock":
-          setCurrentPlanProps(planProps.premiumStock);
-          break;
-
-        default:
-          break;
+      if (!!parent_goal_name) {
+        switch (parent_goal_name) {
+          case "Start a Business":
+            setCurrentPlanProps(goalProps.business);
+            break;
+          case "Save for School":
+            setCurrentPlanProps(goalProps.school);
+            break;
+          case "Travel":
+            setCurrentPlanProps(goalProps.travel);
+            break;
+          case "Own your own Home":
+            setCurrentPlanProps(goalProps.home);
+            break;
+          case "Save for Rent":
+            setCurrentPlanProps(goalProps.rent);
+            break;
+          case "Plan a wedding":
+            setCurrentPlanProps(goalProps.wedding);
+            break;
+          default:
+            setCurrentPlanProps(planProps.fixedIncome);
+            break;
+        }
+      } else {
+        switch (parent_plan_name) {
+          case "Fixed Income":
+            setCurrentPlanProps(planProps.fixedIncome);
+            break;
+          case "Real Estate":
+            setCurrentPlanProps(planProps.realEstate);
+            break;
+          case "Premium Stock":
+            setCurrentPlanProps(planProps.premiumStock);
+            break;
+        }
       }
     }
   }, [plan]);
