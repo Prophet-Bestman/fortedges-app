@@ -20,7 +20,10 @@ const useDeposit = () => {
           } else return err;
         }),
     {
-      onSuccess: () => queryClient.invalidateQueries("my-transactions"),
+      onSuccess: () => {
+        queryClient.invalidateQueries("my-transactions");
+        queryClient.invalidateQueries("custom-plans");
+      },
     }
   );
 };
@@ -40,7 +43,10 @@ const useSendPOP = () => {
         }),
 
     {
-      onSuccess: () => queryClient.invalidateQueries("my-transactions"),
+      onSuccess: () => {
+        queryClient.invalidateQueries("my-transactions");
+        queryClient.invalidateQueries("custom-plans");
+      },
     }
   );
 };

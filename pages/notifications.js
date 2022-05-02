@@ -1,13 +1,18 @@
-import { Box, Circle, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Circle, Flex, Text } from "@chakra-ui/react";
+import { useGetNotifications, useReadNotifications } from "api/notifications";
 import { Notification } from "components";
 import { Padding } from "components/layouts";
 import { notifications } from "data";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineDownload, AiOutlineUpload } from "react-icons/ai";
+import { MdArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
 
 const Notifications = () => {
   const { dispatch: setActiveNav } = useContext(NavContext);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
+  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     setActiveNav({
@@ -16,14 +21,58 @@ const Notifications = () => {
     });
   }, []);
 
-  const notification = notifications[0];
+  const { data: notificationData } = useGetNotifications(page);
+  const { data: notificationsRead, mutate: readNotifications } =
+    useReadNotifications();
+
+  useEffect(() => {
+    readNotifications();
+  }, []);
+
+  useEffect(() => {
+    if (notificationData !== undefined) {
+      if (notificationData?.notifications?.length > 0) {
+        setNotifications(notificationData.notifications);
+        setPages(Math.ceil(notificationData?.total_documents / 10));
+      } else {
+        setPages(1);
+        setNotifications([]);
+      }
+    }
+  }, [notificationData]);
+
+  console.log("Notification: ", notificationData);
+  console.log("Notifications Read: ", notificationsRead);
+
+  // console.log("Noifications", notifications);
 
   return (
     <Box mt={["160", , , "130px"]}>
       <Padding>
-        {notifications.map((notification, i) => (
-          <Notification notification={notification} key={i} />
-        ))}
+        {notifications?.length > 0 &&
+          notifications.map((notification, i) => (
+            <Notification notification={notification} key={i} />
+          ))}
+        <Flex color="white" justifyContent="center" gap="12px" mb="48px">
+          <Button
+            size="sm"
+            px="4px"
+            py="12px"
+            disabled={page === 1}
+            onClick={() => setPage((prev) => prev - 1)}
+          >
+            <MdOutlineArrowBackIos size="24px" />
+          </Button>
+          <Button
+            size="sm"
+            px="4px"
+            py="12px"
+            disabled={page === pages}
+            onClick={() => setPage((prev) => prev + 1)}
+          >
+            <MdArrowForwardIos size="24px" color="white" />
+          </Button>
+        </Flex>
       </Padding>
     </Box>
   );

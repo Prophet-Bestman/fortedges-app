@@ -3,19 +3,26 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
+  Avatar,
   Tr,
-  Th,
   Td,
-  TableCaption,
   TableContainer,
-  Circle,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { formatter } from "utils";
+import { useGetCryptoCurrencies } from "api/cryptoPrices";
 
 const MarketTrends = () => {
+  const [cryptoCurrencies, setCryptoCurrencies] = useState([]);
+  const { data } = useGetCryptoCurrencies();
+
+  useEffect(() => {
+    if (!!data && data?.length > 0) {
+      setCryptoCurrencies(data);
+    }
+  }, [data]);
+
   return (
     <Box>
       <Text my="24px" fontSize="24px" fontWeight={600} mt="40px">
@@ -28,55 +35,33 @@ const MarketTrends = () => {
               <Td>Name</Td>
               <Td>Last Price</Td>
               <Td>24h change</Td>
-              <Td>Market</Td>
+              <Td>Market </Td>
             </Tr>
           </Thead>
-          <Tbody fontSize="20px" gap="80px">
-            <Tr my="20px" h="100px">
-              <Td d="flex" alignItems="center" gap="16px" h="100px">
-                <Circle bg={"text.grey"} size="32px"></Circle>
-                <Text fontWeight={600}>BNB</Text>
-              </Td>
+          {!!cryptoCurrencies && cryptoCurrencies.length > 0 && (
+            <Tbody fontSize="20px" gap="80px">
+              {cryptoCurrencies?.map((currency) => (
+                <Tr my="20px" h="100px">
+                  <Td d="flex" alignItems="center" gap="16px" h="100px">
+                    <Avatar src={currency.image} size="md"></Avatar>
 
-              <Td fontWeight={600}>{formatter.format(394.98)}</Td>
-              <Td color="app.primary">{"-1.58%"}</Td>
-              {/* CHART */}
-              <Td></Td>
-            </Tr>
-            <Tr my="20px" h="100px">
-              <Td d="flex" alignItems="center" gap="16px" h="100px">
-                <Circle bg={"text.grey"} size="32px"></Circle>
-                <Text fontWeight={600}>BNB</Text>
-              </Td>
+                    <Text textTransform="uppercase" fontWeight={600}>
+                      {currency.symbol}
+                    </Text>
+                  </Td>
 
-              <Td fontWeight={600}>{formatter.format(394.98)}</Td>
-              <Td color="app.primary">{"-1.58%"}</Td>
-              {/* CHART */}
-              <Td></Td>
-            </Tr>
-            <Tr my="20px" h="100px">
-              <Td d="flex" alignItems="center" gap="16px" h="100px">
-                <Circle bg={"text.grey"} size="32px"></Circle>
-                <Text fontWeight={600}>BNB</Text>
-              </Td>
-
-              <Td fontWeight={600}>{formatter.format(394.98)}</Td>
-              <Td color="app.primary">{"-1.58%"}</Td>
-              {/* CHART */}
-              <Td></Td>
-            </Tr>
-            <Tr my="20px" h="100px">
-              <Td d="flex" alignItems="center" gap="16px" h="100px">
-                <Circle bg={"text.grey"} size="32px"></Circle>
-                <Text fontWeight={600}>BNB</Text>
-              </Td>
-
-              <Td fontWeight={600}>{formatter.format(394.98)}</Td>
-              <Td color="app.primary">{"-1.58%"}</Td>
-              {/* CHART */}
-              <Td></Td>
-            </Tr>
-          </Tbody>
+                  <Td fontWeight={600}>
+                    {formatter.format(currency.current_price)}
+                  </Td>
+                  <Td color="app.primary">
+                    {currency.price_change_percentage_24h}%
+                  </Td>
+                  {/* CHART */}
+                  <Td></Td>
+                </Tr>
+              ))}
+            </Tbody>
+          )}
         </Table>
       </TableContainer>
     </Box>

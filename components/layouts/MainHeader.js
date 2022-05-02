@@ -23,7 +23,7 @@ import { useGetNotifications } from "api/notifications";
 import { AuthContext, userActions } from "providers/AuthProvider";
 
 const MainHeader = () => {
-  const [notificationCount, setNotificationCount] = useState(10);
+  const [notificationCount, setNotificationCount] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { navState } = useContext(NavContext);
   const { dispatch: logout } = useContext(AuthContext);
@@ -51,7 +51,7 @@ const MainHeader = () => {
     }
   }, [error]);
 
-  const { data: notificationData } = useGetNotifications();
+  const { data: notificationData } = useGetNotifications(1, 10000);
 
   // useEffect(() => {
   //   setNotificationsError(notiifyError);
@@ -66,14 +66,26 @@ const MainHeader = () => {
       ) {
         setNotificationsError(notificationData);
         logout({ type: userActions.LOGOUT });
-      }
-      setNotifications(notificationData);
-    } else {
-      setNotificationsError(notificationData);
+      } else setNotifications(notificationData.notifications);
     }
   }, [notificationData]);
 
-  // console.log("Notification: ", notifications);
+  useEffect(() => {
+    if (notifications !== undefined) {
+      if (notifications?.length > 0) {
+        // const notifications = notifications?.filter(
+        //   (notification) => notification?.is_read === true
+        // );
+        const readNotifications = notifications.filter(
+          (notification) => notification?.is_read === false
+        );
+        setNotificationCount(readNotifications.length);
+      }
+    }
+  }, [notifications]);
+
+  console.log("Notification: ", notifications);
+  console.log("NotificationCount: ", notificationCount);
 
   return (
     <Box position="absolute" top="0" left={0} w="full">
@@ -108,16 +120,15 @@ const MainHeader = () => {
           </Flex>
 
           <Flex alignItems="center" gap="32px">
-            {notificationCount > 0 && (
-              <Box position="relative">
-                <IoMdNotificationsOutline fontSize="28px" />
-
+            <Box position="relative">
+              <IoMdNotificationsOutline fontSize="28px" />
+              {notificationCount > 0 && (
                 <Flex
                   position="absolute"
                   top="-5px"
                   right="-5px"
-                  w="18px"
-                  h="18px"
+                  w="20px"
+                  h="20px"
                   color="white"
                   bg="red"
                   fontSize="10px"
@@ -128,8 +139,8 @@ const MainHeader = () => {
                 >
                   {notificationCount}
                 </Flex>
-              </Box>
-            )}
+              )}
+            </Box>
             <Menu gutter={10}>
               <MenuButton
                 as="button"

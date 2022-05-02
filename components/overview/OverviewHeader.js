@@ -118,20 +118,20 @@ const OverviewHeader = () => {
         >
           <SwiperSlide>
             <OverviewCard
-              amount={user?.total_balance}
+              amount={user?.total_balance || 0}
               gains={user?.total_profit || "0%"}
               title="Total Balance"
             />
           </SwiperSlide>
           <SwiperSlide>
             <OverviewCard
-              amount={user?.total_investment}
+              amount={user?.total_investment || 0}
               title="Total Invested"
             />
           </SwiperSlide>
           <SwiperSlide>
             <OverviewCard
-              amount={user?.total_profit}
+              amount={user?.total_profit || 0}
               // gains={user?.total_profit || "0%"}
               title="Total Profit"
             />

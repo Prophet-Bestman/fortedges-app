@@ -16,6 +16,7 @@ import { CgSoftwareUpload } from "react-icons/cg";
 import RequestSuccess from "./RequestSuccess";
 import { useSendPOP } from "api/transactions";
 import { useGetMops } from "api/mop";
+import { useGetCryptoCurrencies } from "api/cryptoPrices";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -32,8 +33,23 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
   const [POPImg, setPOPImg] = useState(null);
   const filePickerRef = useRef(null);
   const [POPResponse, setPOPResponse] = useState({});
+  const [btcPrice, setBtcPrice] = useState(0);
+  const [ethPrice, setEthPrice] = useState(0);
 
   const { data: mopsData } = useGetMops();
+  const { data: cryptoData } = useGetCryptoCurrencies();
+
+  console.log("Crypto: ", cryptoData);
+
+  useEffect(() => {
+    if (!!cryptoData && cryptoData?.length > 0) {
+      const btcPrice = cryptoData[0].current_price;
+      const ethPrice = cryptoData[1].current_price;
+
+      setBtcPrice(btcPrice);
+      setEthPrice(ethPrice);
+    }
+  }, [cryptoData]);
 
   useEffect(() => {
     if (!!mopsData && mopsData.length > 0) {
@@ -143,8 +159,10 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
             Pay to the {option.name} wallet Address
           </Text>
           <Text fontWeight={600} fontSize="20px" mt="8px">
-            0.03483{data.option} ={" "}
-            <small>{formatter.format(data.amount)}</small>
+            {option.name === "btc"
+              ? `${(data.amount / btcPrice).toFixed(4)} ${option?.name}`
+              : `${(data.amount / ethPrice).toFixed(4)} ${option?.name}`}{" "}
+            =<small>{formatter.format(data.amount)}</small>
           </Text>
         </Flex>
 
@@ -159,7 +177,7 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
           </Flex>
 
           <Text fontSize={"12px"} color="text.grey" mt="20px">
-            {data.option} Address
+            {option?.name} Address
           </Text>
 
           <Flex mb="40px" my="8px" gap="4px">

@@ -1,6 +1,7 @@
 import { Box, Circle, Flex, Text } from "@chakra-ui/react";
 import { AiOutlineDownload, AiOutlineUpload } from "react-icons/ai";
 import React from "react";
+import { formatDistance } from "date-fns";
 
 const Notification = ({ notification }) => {
   return (
@@ -17,7 +18,7 @@ const Notification = ({ notification }) => {
       borderRadius="xl"
     >
       <Flex gap={["12px", "16px"]} alignItems={"center"}>
-        <Flex
+        {/* <Flex
           justify="center"
           alignItems="center"
           bg={"#F1F2F4"}
@@ -29,20 +30,26 @@ const Notification = ({ notification }) => {
             <AiOutlineUpload size="20px" />
           )}
           {notification.type === "Deposit" && <AiOutlineDownload size="20px" />}
-        </Flex>
+        </Flex> */}
 
         <Text fontWeight={600} fontSize={["16px", , "20px"]} color="text.black">
           {notification.title}
         </Text>
 
         <Flex ml="auto" gap={["12px", "18px"]} alignItems="center">
-          <Circle size="6px" bgColor={"green.400"}></Circle>
-          <Text fontSize={["12px", , "14px"]}>{notification.date}</Text>
+          {!notification?.is_read && (
+            <Circle size="6px" bgColor={"green.400"}></Circle>
+          )}
+          <Text fontSize={["12px", , "14px"]}>
+            {formatDistance(new Date(notification?.createdAt), new Date(), {
+              addSuffix: true,
+            })}
+          </Text>
         </Flex>
       </Flex>
 
       <Text fontSize={["14px", , "16px"]} color="text.grey" pt="12px">
-        You just Withdrawn $2,000.00 from your plan successfully
+        {notification?.body}
       </Text>
     </Box>
   );
