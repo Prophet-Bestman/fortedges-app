@@ -22,8 +22,7 @@ const Notifications = () => {
   }, []);
 
   const { data: notificationData } = useGetNotifications(page);
-  const { data: notificationsRead, mutate: readNotifications } =
-    useReadNotifications();
+  const { mutate: readNotifications } = useReadNotifications();
 
   useEffect(() => {
     readNotifications();
@@ -40,12 +39,6 @@ const Notifications = () => {
       }
     }
   }, [notificationData]);
-
-  console.log("Notification: ", notificationData);
-  console.log("Notifications Read: ", notificationsRead);
-
-  // console.log("Noifications", notifications);
-
   return (
     <Box mt={["160", , , "130px"]}>
       <Padding>
