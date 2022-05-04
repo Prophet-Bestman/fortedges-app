@@ -6,6 +6,7 @@ import { navActions, NavContext, navStates } from "providers/NavProvider";
 import {
   News,
   OverviewHeader,
+  OverviewMarketTrends,
   QuoteSection,
   TodaysQuote,
   YourPlans,
@@ -31,7 +32,8 @@ export default function Home() {
         <OverviewHeader />
         <YourPlans title={"Your Plans"} />
         <News />
-        <QuoteSection />
+
+        <OverviewMarketTrends />
       </Box>
     </div>
   );
