@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import React from "react";
 import ActionSuccessful from "./ActionSuccessful";
+import ConfirmDeleteUser from "./ConfirmDeleteUser";
 
 const UserDetailsPage = ({ userID }) => {
   const [action, setAction] = React.useState("");
@@ -124,12 +125,18 @@ const UserDetailsPage = ({ userID }) => {
         onClose={onSelectNewClose}
         action={action}
       />
-      <ConfirmModal
+      {/* <ConfirmModal
         isOpen={isConfirmOpen}
         openModal={onActionOpen}
         onClose={onConfirmClose}
         text="Are you sure you want to Delete Account"
         title={"Delete Account"}
+      /> */}
+
+      <ConfirmDeleteUser
+        isOpen={isConfirmOpen}
+        onClose={onConfirmClose}
+        userID={userID}
       />
       <ActionSuccessful isOpen={isActionOpen} />
     </Box>

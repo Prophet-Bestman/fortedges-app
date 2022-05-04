@@ -71,7 +71,8 @@ const useCreateCustomPlan = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("custom-plans");
-        queryClient.invalidateQueries("users");
+        queryClient.invalidateQueries("admin-user");
+        queryClient.invalidateQueries("admin-custom-plans");
       },
     }
   );
@@ -79,7 +80,7 @@ const useCreateCustomPlan = () => {
 
 const useAdminGetCustomPlans = (user_id) => {
   const headers = configOptions();
-  return useQuery(["custom-plans", user_id], () =>
+  return useQuery(["admin-custom-plans", user_id], () =>
     request
       .get(`/custom-plans?owner=${user_id}&limit=1000`, { headers: headers })
       .then((res) => res.data)
@@ -107,7 +108,8 @@ const useDeletPlan = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("custom-plans");
-        queryClient.invalidateQueries("users");
+        queryClient.invalidateQueries("admin-user");
+        queryClient.invalidateQueries("admin-custom-plans");
       },
     }
   );

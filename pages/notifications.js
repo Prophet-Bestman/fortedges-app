@@ -1,11 +1,9 @@
-import { Box, Button, Circle, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex } from "@chakra-ui/react";
 import { useGetNotifications, useReadNotifications } from "api/notifications";
 import { Notification } from "components";
 import { Padding } from "components/layouts";
-import { notifications } from "data";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
 import React, { useContext, useEffect, useState } from "react";
-import { AiOutlineDownload, AiOutlineUpload } from "react-icons/ai";
 import { MdArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
 
 const Notifications = () => {

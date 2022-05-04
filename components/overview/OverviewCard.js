@@ -44,7 +44,7 @@ const OverviewCard = ({ title, amount, gains, className }) => {
             alignItems="center"
             gap="4px"
           >
-            <FiArrowUpRight /> {profit.toFixed(3)} %
+            <FiArrowUpRight /> {!!profit ? profit.toFixed(3) : 0} %
           </Text>
         </Flex>
       )}

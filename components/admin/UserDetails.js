@@ -16,6 +16,7 @@ import { FcCancel } from "react-icons/fc";
 import ViewVerification from "./ViewVerification";
 import { differenceInYears, format, parse } from "date-fns";
 import { useAdminGetUserVerifications } from "api/verification";
+import { formatter } from "utils";
 
 const calculateAge = (dob) => {
   dob = format(new Date(dob), "dd/MM/yyyy");
@@ -52,6 +53,8 @@ const UserDetails = ({ userID }) => {
       } else setVerificationDetails(verificationData);
     }
   }, [verificationData]);
+
+  console.log("User: ", user);
 
   return (
     <Box py="40px" color="text.black">
@@ -116,7 +119,7 @@ const UserDetails = ({ userID }) => {
             Total Balance
           </Text>
           <Text textAlign="center" fontSize={"28px"}>
-            $2000.93
+            {formatter.format(user?.total_balance || 0)}
           </Text>
         </Box>
         <Box h="110px" w="full" bg="white">
@@ -124,7 +127,7 @@ const UserDetails = ({ userID }) => {
             Total Investment
           </Text>
           <Text textAlign="center" fontSize={"28px"}>
-            $1800.00
+            {formatter.format(user?.total_investment || 0)}
           </Text>
         </Box>
         <Box h="110px" w="full" bg="white">
@@ -132,7 +135,7 @@ const UserDetails = ({ userID }) => {
             Total Profit
           </Text>
           <Text textAlign="center" fontSize={"28px"}>
-            $200.93
+            {formatter.format(user?.profit || 0)}
           </Text>
         </Box>
       </Flex>

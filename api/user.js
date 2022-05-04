@@ -25,7 +25,7 @@ const useGetUser = () => {
 
 const useAdminGetUser = (user_id) => {
   const headers = configOptions();
-  return useQuery(["user", user_id], () =>
+  return useQuery(["admin-user", user_id], () =>
     request
       .get(`/${user_id}`, {
         headers: headers,
@@ -84,7 +84,28 @@ const useAdminUpdateUser = () => {
         .catch((err) => err.response.status),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("user");
+        queryClient.invalidateQueries("admin-user");
+      },
+    }
+  );
+};
+
+const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (user_id) =>
+      request
+        .delete(`/${user_id}`, { headers: headers })
+        .then((res) => res)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("users");
       },
     }
   );
@@ -96,4 +117,5 @@ export {
   useGetAllUsers,
   useAdminGetUser,
   useAdminUpdateUser,
+  useDeleteUser,
 };

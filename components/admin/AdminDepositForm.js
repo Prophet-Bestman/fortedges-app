@@ -229,7 +229,7 @@ const AdminDepositForm = ({ setStep, planID, onClose }) => {
                 </Button>
               </Box>
             ) : (
-              <Button w="full" type="submit">
+              <Button w="full" type="submit" isLoading={isLoading}>
                 Continue
               </Button>
             )}

@@ -89,7 +89,10 @@ const useAdminWithdraw = () => {
         }),
 
     {
-      onSuccess: () => queryClient.invalidateQueries("users"),
+      onSuccess: () => {
+        queryClient.invalidateQueries("admin-user");
+        queryClient.invalidateQueries("admin-custom-plans");
+      },
     }
   );
 };
@@ -111,7 +114,10 @@ const useAdminDeposit = () => {
         }),
 
     {
-      onSuccess: () => queryClient.invalidateQueries("users"),
+      onSuccess: () => {
+        queryClient.invalidateQueries("admin-user");
+        queryClient.invalidateQueries("admin-custom-plans");
+      },
     }
   );
 };
@@ -147,7 +153,10 @@ const useConfirmTransaction = () => {
         )
         .then((res) => res.data),
     {
-      onSuccess: () => queryClient.invalidateQueries("users"),
+      onSuccess: () => {
+        queryClient.invalidateQueries("admin-user");
+        queryClient.invalidateQueries("admin-custom-plans");
+      },
     }
   );
 };
@@ -167,7 +176,10 @@ const useDeclineTransaction = () => {
         )
         .then((res) => res.data),
     {
-      onSuccess: () => queryClient.invalidateQueries("users"),
+      onSuccess: () => {
+        queryClient.invalidateQueries("admin-user");
+        queryClient.invalidateQueries("admin-custom-plans");
+      },
     }
   );
 };
@@ -184,7 +196,8 @@ const useDeleteTransaction = () => {
         .then((res) => res),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("users");
+        queryClient.invalidateQueries("admin-user");
+        queryClient.invalidateQueries("admin-custom-plans");
         queryClient.invalidateQueries("my-transactions");
       },
     }
@@ -201,7 +214,10 @@ const useAdminAddBonus = () => {
         })
         .then((res) => res),
     {
-      onSuccess: () => queryClient.invalidateQueries("users"),
+      onSuccess: () => {
+        queryClient.invalidateQueries("admin-user");
+        queryClient.invalidateQueries("admin-custom-plans");
+      },
     }
   );
 };
@@ -218,8 +234,8 @@ const useAdminAddBalance = () => {
         .then((res) => res),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("users");
-        queryClient.invalidateQueries("users");
+        queryClient.invalidateQueries("admin-user");
+        queryClient.invalidateQueries("admin-custom-plans");
       },
     }
   );
