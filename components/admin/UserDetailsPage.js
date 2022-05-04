@@ -125,13 +125,6 @@ const UserDetailsPage = ({ userID }) => {
         onClose={onSelectNewClose}
         action={action}
       />
-      {/* <ConfirmModal
-        isOpen={isConfirmOpen}
-        openModal={onActionOpen}
-        onClose={onConfirmClose}
-        text="Are you sure you want to Delete Account"
-        title={"Delete Account"}
-      /> */}
 
       <ConfirmDeleteUser
         isOpen={isConfirmOpen}

@@ -66,8 +66,6 @@ const ConfirmDeleteUser = ({ isOpen, onClose, userID }) => {
     }
   }, [deleteData]);
 
-  console.log(deleteData);
-
   return (
     <Modal isOpen={isOpen}>
       <ModalOverlay />
