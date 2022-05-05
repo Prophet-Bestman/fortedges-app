@@ -43,7 +43,7 @@ const OverviewMarketTrends = () => {
           {!!cryptoCurrencies && cryptoCurrencies.length > 0 && (
             <Tbody fontSize="20px" gap="80px">
               {cryptoCurrencies?.map((currency) => (
-                <Tr my="20px" h="100px">
+                <Tr my="20px" h="100px" key={currency.symbol}>
                   <Td d="flex" alignItems="center" gap="16px" h="100px">
                     <Avatar src={currency.image} size="md"></Avatar>
 
