@@ -32,6 +32,9 @@ const Deposit = ({ onClose, isOpen }) => {
     resolver: yupResolver(planSchema),
   });
 
+  
+//   ADMIN DEPOSIT LOGIC
+  
   const sendRequest = () => {
     if (requestSent) return;
     setRequestSent(true);
