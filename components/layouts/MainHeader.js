@@ -117,7 +117,7 @@ const MainHeader = () => {
           </Flex>
 
           <Flex alignItems="center" gap="32px">
-            <Box position="relative">
+            <Box position="relative" cursor="pointer">
               <IoMdNotificationsOutline fontSize="28px" />
               {notificationCount > 0 && (
                 <Flex

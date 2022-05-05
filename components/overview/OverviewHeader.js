@@ -81,15 +81,17 @@ const OverviewHeader = () => {
           </Link>
         </Flex>
 
-        <Button
-          variant="secondary"
-          bg="white"
-          borderColor="gray.200"
-          borderWidth="1px"
-          leftIcon={<AiOutlinePlus />}
-        >
-          Add Money
-        </Button>
+        <Link href="/myplans">
+          <Button
+            variant="secondary"
+            bg="white"
+            borderColor="gray.200"
+            borderWidth="1px"
+            leftIcon={<AiOutlinePlus />}
+          >
+            Add Money
+          </Button>
+        </Link>
       </Flex>
 
       <Box maxW={["90vw", , , "75vw"]}>
@@ -139,18 +141,20 @@ const OverviewHeader = () => {
         </Swiper>
       </Box>
 
-      <Button
-        variant="secondary"
-        w="full"
-        color="app.primary"
-        display={["block", , "none"]}
-        bg="white"
-        borderColor="gray.200"
-        borderWidth="1px"
-        leftIcon={<AiOutlinePlus />}
-      >
-        Add Money
-      </Button>
+      <Link href="/myplans">
+        <Button
+          variant="secondary"
+          w="full"
+          color="app.primary"
+          display={["block", , "none"]}
+          bg="white"
+          borderColor="gray.200"
+          borderWidth="1px"
+          leftIcon={<AiOutlinePlus />}
+        >
+          Add Money
+        </Button>
+      </Link>
     </Box>
   );
 };
