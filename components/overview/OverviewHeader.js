@@ -69,7 +69,7 @@ const OverviewHeader = () => {
             Hide Balance
           </Text>
 
-          <Link href="#/">
+          <Link href="/transaction_history">
             <Text
               cursor={"pointer"}
               _hover={{ opacity: 0.7 }}
