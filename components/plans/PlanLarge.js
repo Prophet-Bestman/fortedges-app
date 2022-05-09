@@ -9,8 +9,11 @@ const PlanLarge = ({ plan }) => {
   const { investment, name, parent_plan_name, profit, parent_goal_name } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState({});
 
-  console.log(plan);
+  let percentageProfit = 0;
 
+  if (investment !== 0) {
+    percentageProfit = (profit / (investment + profit)) * 100;
+  }
   useEffect(() => {
     if (plan !== undefined) {
       if (!!parent_goal_name) {
@@ -97,7 +100,7 @@ const PlanLarge = ({ plan }) => {
             <Text fontWeight="200" fontSize="12px" maxW="90px" mb="8px">
               {name}
             </Text>
-            <Text>{formatter.format(investment)}</Text>
+            <Text>{formatter.format(investment + profit)}</Text>
           </Box>
           <Box>
             <Text
@@ -110,9 +113,9 @@ const PlanLarge = ({ plan }) => {
               mb="8px"
             >
               <FiArrowUpRight fontSize="18px" />
-              {profit}%
+              {percentageProfit.toFixed(3) || 0}%
             </Text>
-            <Text>{formatter.format(investment + profit)}</Text>
+            <Text>{formatter.format(profit)}</Text>
           </Box>
         </Flex>
       </Box>

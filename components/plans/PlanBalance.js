@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Circle, Flex, Text } from "@chakra-ui/react";
 import { PlanContext } from "providers/PlanProvider";
 import React, { useContext } from "react";
 import { formatter } from "utils";
@@ -17,6 +17,12 @@ const PlanBalance = () => {
   }, [plan]);
 
   const balance = investment + profit;
+
+  let percentageProfit = 0;
+
+  if (investment !== 0) {
+    percentageProfit = (profit / balance) * 100;
+  }
 
   return (
     <Box my="24px">
@@ -60,7 +66,9 @@ const PlanBalance = () => {
             Total Deposit
           </Text>
           <Text color="text.black" fontSize={"24px"} fontWeight="600">
-            {!!profit && profit !== NaN ? formatter.format(profit) : "$0.00"}
+            {!!profit && profit !== NaN
+              ? formatter.format(investment)
+              : "$0.00"}
           </Text>
         </Box>
         <Box my="12px">
@@ -72,9 +80,15 @@ const PlanBalance = () => {
           >
             Profits
           </Text>
-          <Text color="text.green" fontSize={"13px"}>
-            +{formatter.format(plan.profit)}
-          </Text>
+          <Flex gap="8px" alignItems="center">
+            <Text color="text.green" fontSize={"14px"}>
+              +{formatter.format(plan.profit)}
+            </Text>
+            <Circle bg="text.green" size="5px"></Circle>
+            <Text color="text.green" fontSize={"14px"}>
+              +{percentageProfit.toFixed(3)}%
+            </Text>
+          </Flex>
         </Box>
       </Flex>
     </Box>
