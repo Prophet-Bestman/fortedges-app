@@ -36,11 +36,6 @@ const TransactionHisory = () => {
   const [status, setStatus] = useState("");
 
   const {
-    isOpen: isTransactionOpen,
-    onOpen: onTransactionOpen,
-    onClose: onTransactionClose,
-  } = useDisclosure();
-  const {
     isOpen: isFilterOpen,
     onOpen: onFilterOpen,
     onClose: onFilterClose,
@@ -53,10 +48,10 @@ const TransactionHisory = () => {
     });
   }, []);
 
-  const openTransactionModal = (transaction) => {
-    setTransaction(transaction);
-    onTransactionOpen();
-  };
+  // const openTransactionModal = (transaction) => {
+  //   setTransaction(transaction);
+  //   onTransactionOpen();
+  // };
 
   const { data: plansData } = useGetCustomPlans();
 
@@ -205,7 +200,7 @@ const TransactionHisory = () => {
               ?.map((transaction, i) => (
                 <Box
                   key={i}
-                  onClick={() => openTransactionModal(transaction)}
+                  // onClick={() => openTransactionModal(transaction)}
                   cursor="pointer"
                   // bg=
                   _hover={{
@@ -239,13 +234,13 @@ const TransactionHisory = () => {
           </Button>
         </Flex>
       </Padding>
-      {!!transaction && (
+      {/* {!!transaction && (
         <TransactionModal
           isOpen={isTransactionOpen}
           onClose={onTransactionClose}
           transaction={transaction}
         />
-      )}
+      )} */}
       <FilterModal
         plans={plans}
         plan={plan}

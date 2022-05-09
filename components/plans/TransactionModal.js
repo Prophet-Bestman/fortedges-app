@@ -1,11 +1,10 @@
 import {
+  Box,
   Circle,
   Flex,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
-  ModalHeader,
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
@@ -30,76 +29,105 @@ const TransactionModal = ({ isOpen, onClose, transaction }) => {
         w="full"
         minH="300px"
       >
-        <Flex justifyContent="space-between" alignItems="center">
-          <Text
-            fontSize="20px"
-            color="text.black"
-            fontWeight={600}
-            textTransform="capitalize"
-          >
-            {type} Details
-          </Text>
-          <Circle onClick={onClose} cursor="pointer" bg="#F1F2F4" size="40px">
-            <AiOutlineClose />
-          </Circle>
+        <Flex justifyContent="center">
+          <Box w="full" maxW="500px">
+            <Flex justifyContent="space-between" alignItems="center">
+              <Text
+                fontSize="20px"
+                color="text.black"
+                fontWeight={600}
+                textTransform="capitalize"
+              >
+                {type} Details
+              </Text>
+              <Circle
+                onClick={onClose}
+                cursor="pointer"
+                bg="#F1F2F4"
+                size="40px"
+              >
+                <AiOutlineClose />
+              </Circle>
+            </Flex>
+            <ModalBody my="32px">
+              <Flex
+                justifyContent={"space-between"}
+                alignItems="center"
+                mb="20px"
+              >
+                <Text color="text.grey" fontSize="13px">
+                  Status
+                </Text>
+                <Text fontWeight={600} color="text.black" fontSize="14px">
+                  {!is_complete ? (
+                    <Flex alignItems="center" gap="12px">
+                      <Circle size="6px" bg="yellow.400"></Circle>
+                      <Text textTransform={"capitalize"}>{status}</Text>
+                    </Flex>
+                  ) : (
+                    <Flex alignItems="center" gap="12px">
+                      <Circle size="6px" bg="green.300"></Circle>
+                      <Text>{status}</Text>
+                    </Flex>
+                  )}
+                </Text>
+              </Flex>
+              <Flex
+                justifyContent={"space-between"}
+                alignItems="center"
+                mb="20px"
+              >
+                <Text color="text.grey" fontSize="13px">
+                  Date
+                </Text>
+                <Text fontWeight={600} color="text.black" fontSize="14px">
+                  {format(new Date(createdAt), "dd/MM/yyyy")}
+                </Text>
+              </Flex>
+              <Flex
+                justifyContent={"space-between"}
+                alignItems="center"
+                mb="20px"
+              >
+                <Text color="text.grey" fontSize="13px">
+                  Amount
+                </Text>
+                <Text fontWeight={600} color="text.black" fontSize="14px">
+                  {formatter.format(amount)}
+                </Text>
+              </Flex>
+              <Flex
+                justifyContent={"space-between"}
+                alignItems="center"
+                mb="20px"
+              >
+                <Text color="text.grey" fontSize="13px">
+                  Transaction Ref
+                </Text>
+                <Text fontWeight={600} color="text.black" fontSize="14px">
+                  {id}
+                </Text>
+              </Flex>
+              <Flex
+                justifyContent={"space-between"}
+                alignItems="center"
+                mb="20px"
+              >
+                <Text color="text.grey" fontSize="13px">
+                  Payment Method
+                </Text>
+                <Text
+                  fontWeight={600}
+                  color="text.black"
+                  fontSize="14px"
+                  textTransform="uppercase"
+                >
+                  {mode_of_payment}
+                </Text>
+              </Flex>
+            </ModalBody>
+          </Box>
         </Flex>
-        <ModalBody my="32px">
-          <Flex justifyContent={"space-between"} alignItems="center" mb="20px">
-            <Text color="text.grey" fontSize="13px">
-              Status
-            </Text>
-            <Text fontWeight={600} color="text.black" fontSize="14px">
-              {!is_complete ? (
-                <Flex alignItems="center" gap="12px">
-                  <Circle size="6px" bg="yellow.400"></Circle>
-                  <Text textTransform={"capitalize"}>{status}</Text>
-                </Flex>
-              ) : (
-                <Flex alignItems="center" gap="12px">
-                  <Circle size="6px" bg="green.300"></Circle>
-                  <Text>{status}</Text>
-                </Flex>
-              )}
-            </Text>
-          </Flex>
-          <Flex justifyContent={"space-between"} alignItems="center" mb="20px">
-            <Text color="text.grey" fontSize="13px">
-              Date
-            </Text>
-            <Text fontWeight={600} color="text.black" fontSize="14px">
-              {format(new Date(createdAt), "dd/MM/yyyy")}
-            </Text>
-          </Flex>
-          <Flex justifyContent={"space-between"} alignItems="center" mb="20px">
-            <Text color="text.grey" fontSize="13px">
-              Amount
-            </Text>
-            <Text fontWeight={600} color="text.black" fontSize="14px">
-              {formatter.format(amount)}
-            </Text>
-          </Flex>
-          <Flex justifyContent={"space-between"} alignItems="center" mb="20px">
-            <Text color="text.grey" fontSize="13px">
-              Transaction Ref
-            </Text>
-            <Text fontWeight={600} color="text.black" fontSize="14px">
-              {id}
-            </Text>
-          </Flex>
-          <Flex justifyContent={"space-between"} alignItems="center" mb="20px">
-            <Text color="text.grey" fontSize="13px">
-              Payment Method
-            </Text>
-            <Text
-              fontWeight={600}
-              color="text.black"
-              fontSize="14px"
-              textTransform="uppercase"
-            >
-              {mode_of_payment}
-            </Text>
-          </Flex>
-        </ModalBody>
       </ModalContent>
     </Modal>
   );
