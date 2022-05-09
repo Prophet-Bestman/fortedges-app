@@ -116,8 +116,8 @@ const PendingDepositRow = ({ deposit }) => {
 
   return (
     <Tr fontSize={"14px"} color="text.grey">
-      <Td>{user.email}</Td>
-      <Td>{plan.name}</Td>
+      <Td>{user?.email}</Td>
+      <Td>{plan?.name}</Td>
       <Td color="text.black" fontWeight={"600"}>
         {mode_of_payment}
       </Td>
