@@ -39,8 +39,6 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
   const { data: mopsData } = useGetMops();
   const { data: cryptoData } = useGetCryptoCurrencies();
 
-  console.log("Crypto: ", cryptoData);
-
   useEffect(() => {
     if (!!cryptoData && cryptoData?.length > 0) {
       const btcPrice = cryptoData[0].current_price;
@@ -236,7 +234,10 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
                 <Flex justify="center">
                   <Button
                     mt="14px"
-                    onClick={() => setSelctedFile(null)}
+                    onClick={() => {
+                      setPOPImg(null);
+                      setSelctedFile(null);
+                    }}
                     size="sx"
                     py="4px"
                     px="12px"
@@ -273,6 +274,10 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
             )}
           </Box>
 
+          <Text fontSize={"14px"} color="app.primary" fontWeight={600}>
+            NOTE: Screenshot size must be less than 500KB
+          </Text>
+
           <Box mt="24px">
             <Button variant="secondary" size="sm">
               Need Help?
@@ -280,13 +285,23 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
 
             <Button
               onClick={handleSendPOP}
-              isDisabled={!selectedFile}
+              isDisabled={!selectedFile || POPImg?.size > 505000}
               w="full"
               my="16px"
               isLoading={isLoading}
             >
               Continue
             </Button>
+            {POPImg?.size > 505000 && (
+              <Text
+                color="red"
+                fontSize="13px"
+                fontWeight={600}
+                textAlign="center"
+              >
+                Uploaded Image must be less than 500KB
+              </Text>
+            )}
           </Box>
         </Box>
       </ModalBody>
