@@ -11,6 +11,7 @@ import {
   Flex,
   Image,
   Box,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import HistoricalPerformance from "./HistoricalPerformance";
@@ -20,6 +21,7 @@ import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 import { formatter } from "utils";
 import SubmitPlan from "./SubmitPlan";
 import { saveParentPlanId } from "api/config";
+import OurPortfolio from "./OurPortfolio";
 
 const PremiumPlan = ({ isOpen, onClose, plan, userID }) => {
   const { min, max, description, _id, name } = plan;
@@ -27,6 +29,12 @@ const PremiumPlan = ({ isOpen, onClose, plan, userID }) => {
   const { dispatch: setUserID } = useContext(PlanFormContext);
   const { dispatch: setParentID } = useContext(PlanFormContext);
   const { dispatch: setParentName } = useContext(PlanFormContext);
+
+  const {
+    isOpen: isPortfolioOpen,
+    onClose: onPortfolioClose,
+    onOpen: onPortfolioOpen,
+  } = useDisclosure();
 
   return (
     <Modal isOpen={isOpen} size="full">
@@ -84,7 +92,11 @@ const PremiumPlan = ({ isOpen, onClose, plan, userID }) => {
             <Text textAlign="center" fontSize="13px">
               To learn more about our assets, go to{" "}
               <Link href="#">
-                <Text textDecor={"underline"} cursor="pointer">
+                <Text
+                  textDecor={"underline"}
+                  cursor="pointer"
+                  onClick={onPortfolioOpen}
+                >
                   See our Porfolio
                 </Text>
               </Link>
@@ -112,6 +124,7 @@ const PremiumPlan = ({ isOpen, onClose, plan, userID }) => {
         </ModalFooter>
       </ModalContent>
       <SubmitPlan closeParent={onClose} />
+      <OurPortfolio isOpen={isPortfolioOpen} onClose={onPortfolioClose} />
     </Modal>
   );
 };
