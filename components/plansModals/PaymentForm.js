@@ -15,6 +15,7 @@ import {
   ModalContent,
   Stack,
   Text,
+  Tooltip,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useContext } from "react";
@@ -106,11 +107,21 @@ const PaymentForm = ({
         <Text fontSize="20px" color="text.black" fontWeight={600}>
           Fund Plan
         </Text>
-        <Circle cursor="pointer" bg="#F1F2F4" size="30px">
-          <Text fontSize="16px" fontWeight="600">
-            i
-          </Text>
-        </Circle>
+
+        <Tooltip
+          label="Please confirm wallet address before making transfers. Fortedges would not be responsible for any loss of funds due to incorrect wallet address"
+          fontSize="md"
+          bg="white"
+          color="red.400"
+          p={6}
+          rounded="md"
+        >
+          <Circle cursor="pointer" bg="#F1F2F4" size="30px">
+            <Text fontSize="16px" fontWeight="600">
+              i
+            </Text>
+          </Circle>
+        </Tooltip>
       </Flex>
 
       <ModalBody>
