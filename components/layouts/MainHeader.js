@@ -117,27 +117,29 @@ const MainHeader = () => {
           </Flex>
 
           <Flex alignItems="center" gap="32px">
-            <Box position="relative" cursor="pointer">
-              <IoMdNotificationsOutline fontSize="28px" />
-              {notificationCount > 0 && (
-                <Flex
-                  position="absolute"
-                  top="-5px"
-                  right="-5px"
-                  w="20px"
-                  h="20px"
-                  color="white"
-                  bg="red"
-                  fontSize="10px"
-                  justifyContent="center"
-                  alignItems="center"
-                  rounded="full"
-                  fontWeight={600}
-                >
-                  {notificationCount}
-                </Flex>
-              )}
-            </Box>
+            <Link href="/notifications">
+              <Box position="relative" cursor="pointer">
+                <IoMdNotificationsOutline fontSize="28px" />
+                {notificationCount > 0 && (
+                  <Flex
+                    position="absolute"
+                    top="-5px"
+                    right="-5px"
+                    w="20px"
+                    h="20px"
+                    color="white"
+                    bg="red"
+                    fontSize="10px"
+                    justifyContent="center"
+                    alignItems="center"
+                    rounded="full"
+                    fontWeight={600}
+                  >
+                    {notificationCount}
+                  </Flex>
+                )}
+              </Box>
+            </Link>
             <Menu gutter={10}>
               <MenuButton
                 as="button"

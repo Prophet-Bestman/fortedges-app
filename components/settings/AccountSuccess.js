@@ -42,7 +42,7 @@ const AccountSuccess = ({ isOpen, onClose }) => {
 
           <Button
             onClick={() => {
-              router.push("/");
+              // router.push("/");
               onClose();
             }}
             w="full"

@@ -115,6 +115,31 @@ const useDeletPlan = () => {
   );
 };
 
+const useRequestStatement = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .post(`/account-statement`, values, {
+          headers: headers,
+        })
+        .then((res) => res)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("custom-plans");
+        queryClient.invalidateQueries("admin-user");
+        queryClient.invalidateQueries("admin-custom-plans");
+      },
+    }
+  );
+};
+
 export {
   useGetAllPlans,
   useCreateCustomPlan,
@@ -122,4 +147,5 @@ export {
   useGetSingleCustomPlan,
   useAdminGetCustomPlans,
   useDeletPlan,
+  useRequestStatement,
 };

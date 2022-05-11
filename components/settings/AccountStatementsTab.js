@@ -5,35 +5,85 @@ import {
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
-  MenuItemOption,
-  MenuOptionGroup,
+  // MenuItemOption,
+  // MenuOptionGroup,
   Select,
   Stack,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { BsCalendar4Event } from "react-icons/bs";
 import { MdKeyboardArrowRight, MdError } from "react-icons/md";
 import { accountStatementSchema } from "utils";
 import AccountSuccess from "./AccountSuccess";
+import { useGetCustomPlans, useRequestStatement } from "api/plans";
 
 const AccountStatementsTab = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [plans, setPlans] = useState([]);
+  const [requestError, setRequestError] = useState("");
   const {
     control,
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(accountStatementSchema),
   });
 
-  const submitPlan = (data) => {
-    onOpen();
+  const toast = useToast();
+
+  const errorToast = () => {
+    toast({
+      title: "Request Error",
+      description: requestError,
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
   };
+
+  const {
+    mutate: sendRequest,
+    data: requestResp,
+    isLoading,
+  } = useRequestStatement();
+
+  const submitPlan = (data) => {
+    setRequestError("");
+    sendRequest(data);
+  };
+
+  useEffect(() => {
+    if (!!requestResp) {
+      if (requestResp?.status === 200) {
+        onOpen();
+        reset();
+      } else {
+        setRequestError("Request could not be sent");
+      }
+    }
+  }, [requestResp]);
+
+  useEffect(() => {
+    if (!!requestError && requestError !== "") {
+      errorToast();
+    }
+  }, [requestError]);
+
+  const { data } = useGetCustomPlans();
+  useEffect(() => {
+    if (!!data && data?.custom_plans?.length > 0) {
+      setPlans(data?.custom_plans);
+    }
+  }, [data]);
 
   return (
     <Box>
@@ -46,17 +96,20 @@ const AccountStatementsTab = () => {
             <Select
               placeholder="Select Plans"
               control={control}
-              {...register("selectPlan")}
+              {...register("plan")}
               h={["48px", , "56px"]}
               _focus={{
                 outline: "none",
-                borderColor: errors.selectPlan ? "red" : "app.primary",
+                borderColor: errors.plan ? "red" : "app.primary",
               }}
-              borderColor={errors.selectPlan ? "red" : null}
+              borderColor={errors.plan ? "red" : null}
             >
-              <option value="Premium Stock">Premium Stock</option>
+              {plans?.length > 0 &&
+                plans?.map((plan) => (
+                  <option value={plan?.id}>{plan?.name}</option>
+                ))}
             </Select>
-            {errors.selectPlan && (
+            {errors.plan && (
               <Text
                 display="flex"
                 color="red"
@@ -64,7 +117,7 @@ const AccountStatementsTab = () => {
                 alignItems="center"
                 gap="4px"
               >
-                <MdError size="16px" /> {errors.selectPlan.message}
+                <MdError size="16px" /> {errors.plan.message}
               </Text>
             )}
           </Stack>
@@ -164,7 +217,7 @@ const AccountStatementsTab = () => {
             Your statement will be forwarded to your email address
             l********@*****.com in few minutes
           </Text>
-          <Button type="submit" w="full" maxW="327px">
+          <Button type="submit" w="full" maxW="327px" isLoading={isLoading}>
             Request Statement
           </Button>
         </form>
