@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Circle,
@@ -9,6 +10,7 @@ import {
   SelectField,
   Stack,
   Text,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { useGetUser, useUpdateUser } from "api/user";
@@ -19,17 +21,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { validatePersonalInfo, validateProfile } from "utils/validation";
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { getUserFromLocalStorage } from "api/config";
+import UploadProfilePhoto from "./UploadProfilePhoto";
 
 const ProfileTab = () => {
   const [user, setUser] = useState({});
   const [credError, setCredError] = useState("");
-  const [credSuccess, setCredSuccess] = useState("");
   const toast = useToast();
 
   useEffect(() => {
     const userDetails = getUserFromLocalStorage();
     setUser(userDetails);
   }, []);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const {
     register,
@@ -143,12 +147,18 @@ const ProfileTab = () => {
   return (
     <Box>
       <Flex mb="32px" alignItems="center">
-        <Circle size="64px" bgColor="#aaa" mr="24px"></Circle>
+        {/* <Circle size="64px" bgColor="#aaa" mr="24px"></Circle> */}
+        <Avatar
+          mr="24px"
+          src={user?.display_picture?.path}
+          size="lg"
+          name={`${user?.firstname} ${user?.lastname}`}
+        />
         <Box color="text.black" mr="32px">
           <Text fontWeight={600}>Change Picture</Text>
           <Text fontSize="14px">Max file size is 20mb</Text>
         </Box>
-        <Button variant="secondary" size="xs">
+        <Button variant="secondary" size="xs" onClick={onOpen}>
           Upload
         </Button>
       </Flex>
@@ -354,6 +364,7 @@ const ProfileTab = () => {
           </Button>
         </form>
       </Box>
+      <UploadProfilePhoto isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 };

@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Flex,
   Image,
@@ -147,7 +148,13 @@ const MainHeader = () => {
                   fontWeight: 600,
                 }}
               >
-                <Box w="48px" h="48px" rounded="full" bg="gray"></Box>
+                {/* <Box w="48px" h="48px" rounded="full" bg="gray"></Box> */}
+                <Avatar
+                  mr="24px"
+                  src={user?.display_picture?.path}
+                  size="lg"
+                  name={`${user?.firstname} ${user?.lastname}`}
+                />
               </MenuButton>
 
               <MenuList
@@ -163,13 +170,13 @@ const MainHeader = () => {
                   alignItems="center"
                   mb="28px"
                 >
-                  <Box
-                    w="80px"
-                    h="80px"
-                    rounded="full"
-                    bg="gray"
+                  <Avatar
+                    mr="24px"
+                    src={user?.display_picture?.path}
+                    size="xl"
                     mb="16px"
-                  ></Box>
+                    name={`${user?.firstname} ${user?.lastname}`}
+                  />
                   {!!user && (
                     <>
                       <Text fontSize="16px" fontWeight={600}>
