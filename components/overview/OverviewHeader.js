@@ -1,7 +1,11 @@
 import { Box, Button, Flex, Grid, Text, useQuery } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { AiOutlineEyeInvisible, AiOutlinePlus } from "react-icons/ai";
+import {
+  AiOutlineEyeInvisible,
+  AiOutlinePlus,
+  AiOutlineEye,
+} from "react-icons/ai";
 import OverviewCard from "./OverviewCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
@@ -14,6 +18,7 @@ import configOptions from "api/config";
 const OverviewHeader = () => {
   const [user, setUser] = useState({});
   const [wallet, setWallet] = useState({});
+  const [show, setShow] = useState(true);
 
   const { data: userData, error } = useGetUser();
 
@@ -57,17 +62,33 @@ const OverviewHeader = () => {
         alignItems="center"
       >
         <Flex gap="32px">
-          <Text
-            cursor={"pointer"}
-            color="text.grey"
-            display="flex"
-            _hover={{ opacity: 0.7 }}
-            alignItems="center"
-            gap="10px"
-          >
-            <AiOutlineEyeInvisible />
-            Hide Balance
-          </Text>
+          <Box onClick={() => setShow(!show)}>
+            {show ? (
+              <Text
+                cursor={"pointer"}
+                color="text.grey"
+                display="flex"
+                _hover={{ opacity: 0.7 }}
+                alignItems="center"
+                gap="10px"
+              >
+                <AiOutlineEyeInvisible />
+                Hide Balance
+              </Text>
+            ) : (
+              <Text
+                cursor={"pointer"}
+                color="text.grey"
+                display="flex"
+                _hover={{ opacity: 0.7 }}
+                alignItems="center"
+                gap="10px"
+              >
+                <AiOutlineEye />
+                Show Balance
+              </Text>
+            )}
+          </Box>
 
           <Link href="/transaction_history">
             <Text
@@ -94,52 +115,54 @@ const OverviewHeader = () => {
         </Link>
       </Flex>
 
-      <Box maxW={["90vw", , , "75vw"]}>
-        <Swiper
-          slidesPerView={1}
-          spaceBetween={10}
-          pagination={{
-            clickable: true,
-          }}
-          breakpoints={{
-            767: {
-              slidesPerView: 3,
-              spaceBetween: 10,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 10,
-            },
-          }}
-          modules={[Pagination]}
-          className="mySwiper"
-          style={{
-            paddingBottom: "50px",
-            width: "full",
-          }}
-        >
-          <SwiperSlide>
-            <OverviewCard
-              amount={user?.total_balance || 0}
-              gains={user?.total_profit || "0%"}
-              title="Total Balance"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <OverviewCard
-              amount={user?.total_investment || 0}
-              title="Total Invested"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <OverviewCard
-              amount={user?.total_profit || 0}
-              // gains={user?.total_profit || "0%"}
-              title="Total Profit"
-            />
-          </SwiperSlide>
-        </Swiper>
-      </Box>
+      {show && (
+        <Box maxW={["90vw", , , "75vw"]}>
+          <Swiper
+            slidesPerView={1}
+            spaceBetween={10}
+            pagination={{
+              clickable: true,
+            }}
+            breakpoints={{
+              767: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+              },
+            }}
+            modules={[Pagination]}
+            className="mySwiper"
+            style={{
+              paddingBottom: "50px",
+              width: "full",
+            }}
+          >
+            <SwiperSlide>
+              <OverviewCard
+                amount={user?.total_balance || 0}
+                gains={user?.total_profit || "0%"}
+                title="Total Balance"
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <OverviewCard
+                amount={user?.total_investment || 0}
+                title="Total Invested"
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <OverviewCard
+                amount={user?.total_profit || 0}
+                // gains={user?.total_profit || "0%"}
+                title="Total Profit"
+              />
+            </SwiperSlide>
+          </Swiper>
+        </Box>
+      )}
 
       <Link href="/myplans">
         <Button
