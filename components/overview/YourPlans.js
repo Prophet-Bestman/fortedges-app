@@ -1,7 +1,15 @@
-import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Image,
+  Text,
+  Button,
+} from "@chakra-ui/react";
 import { Padding } from "components/layouts";
 import { OverviewPlans } from "data";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import OverviewPlan from "./OverviewPlan";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
@@ -10,10 +18,13 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import "swiper/css";
 import "swiper/css/pagination";
 import Link from "next/link";
-import { useGetAllPlans, useGetCustomPlans } from "api/plans";
+import { useGetCustomPlans } from "api/plans";
+import { AuthContext } from "providers/AuthProvider";
 
 const YourPlans = ({ title }) => {
   const [plans, setPlans] = useState([]);
+  const { user } = useContext(AuthContext);
+  console.log(user);
 
   const { data: plansData } = useGetCustomPlans();
 
@@ -28,7 +39,10 @@ const YourPlans = ({ title }) => {
           templateColumns={["repeat(1, 1fr)", , , "repeat(3, 1fr)"]}
           gap="14px"
         >
-          <GridItem colSpan={2} w="full">
+          <GridItem
+            colSpan={!user?.is_verified && !plans?.length > 0 ? 2 : 3}
+            w="full"
+          >
             <Text fontSize={["16px", "18px", "20px", "24px"]} mb="24px">
               {/* {title} */}
             </Text>
@@ -45,7 +59,8 @@ const YourPlans = ({ title }) => {
                     spaceBetween: 10,
                   },
                   1024: {
-                    slidesPerView: 4,
+                    slidesPerView:
+                      !user?.is_verified && !plans?.length > 0 ? 4 : 5,
                     spaceBetween: 10,
                   },
                 }}
@@ -64,13 +79,22 @@ const YourPlans = ({ title }) => {
                   </Flex>
                 </SwiperSlide>
                 {plans?.length > 0 &&
-                  plans.slice(0, 3).map((plan) => (
+                  plans.slice(0, 4).map((plan) => (
                     <SwiperSlide key={plan.name}>
                       <OverviewPlan plan={plan} />
                     </SwiperSlide>
                   ))}
               </Swiper>
             </Box>
+            {plans?.length > 0 && (
+              <Flex justify="end">
+                <Link href="/myplans">
+                  <Button size="sm" color={"app.primary"} variant="ghost">
+                    See All
+                  </Button>
+                </Link>
+              </Flex>
+            )}
           </GridItem>
           <GridItem
             colSpan={1}
@@ -78,57 +102,69 @@ const YourPlans = ({ title }) => {
             borderLeftColor="#E2E0E0"
             borderLeftWidth="1px"
           >
-            <Text
-              fontSize={["16px", "18px", "20px", "24px"]}
-              pb="24px"
-              borderBottomColor="#E2E0E0"
-              borderBottomWidth="1px"
-            >
-              Setup Guide
-            </Text>
+            {!user?.is_verified && !plans?.length > 0 && (
+              <>
+                <Text
+                  fontSize={["16px", "18px", "20px", "24px"]}
+                  pb="24px"
+                  borderBottomColor="#E2E0E0"
+                  borderBottomWidth="1px"
+                >
+                  Setup Guide
+                </Text>
 
-            <Box>
-              <Link href="/settings ">
-                <Box
-                  color="text.grey"
-                  display="flex"
-                  p="8px"
-                  mt="8px"
-                  cursor="pointer"
-                  _hover={{ bg: "gray.50" }}
-                  alignItems="center"
-                >
-                  <IoMdTime fontSize="32px" />
-                  <Box ml="18px" mr="auto">
-                    <Text mb="4px" color="text.black">
-                      Verify your ID
-                    </Text>
-                    <Text fontSize="14px">We need to know who you are.</Text>
-                  </Box>
-                  <MdOutlineKeyboardArrowRight fontSize="24px" />
+                <Box>
+                  {!user?.is_verified && (
+                    <Link href="/settings ">
+                      <Box
+                        color="text.grey"
+                        display="flex"
+                        p="8px"
+                        mt="8px"
+                        cursor="pointer"
+                        _hover={{ bg: "gray.50" }}
+                        alignItems="center"
+                      >
+                        <IoMdTime fontSize="32px" />
+                        <Box ml="18px" mr="auto">
+                          <Text mb="4px" color="text.black">
+                            Verify your ID
+                          </Text>
+                          <Text fontSize="14px">
+                            We need to know who you are.
+                          </Text>
+                        </Box>
+                        <MdOutlineKeyboardArrowRight fontSize="24px" />
+                      </Box>
+                    </Link>
+                  )}
+                  {!plans?.length > 0 && (
+                    <Link href="/myplans/create">
+                      <Box
+                        color="text.grey"
+                        display="flex"
+                        p="8px"
+                        mt="8px"
+                        cursor="pointer"
+                        _hover={{ bg: "gray.50" }}
+                        alignItems="center"
+                      >
+                        <IoMdTime fontSize="32px" />
+                        <Box ml="18px" mr="auto">
+                          <Text mb="4px" color="text.black">
+                            Create Investment Plan
+                          </Text>
+                          <Text fontSize="14px">
+                            Let your money work for you.
+                          </Text>
+                        </Box>
+                        <MdOutlineKeyboardArrowRight fontSize="24px" />
+                      </Box>
+                    </Link>
+                  )}
                 </Box>
-              </Link>
-              <Link href="/myplans/create">
-                <Box
-                  color="text.grey"
-                  display="flex"
-                  p="8px"
-                  mt="8px"
-                  cursor="pointer"
-                  _hover={{ bg: "gray.50" }}
-                  alignItems="center"
-                >
-                  <IoMdTime fontSize="32px" />
-                  <Box ml="18px" mr="auto">
-                    <Text mb="4px" color="text.black">
-                      Create Investment Plan
-                    </Text>
-                    <Text fontSize="14px">Let your money work for you.</Text>
-                  </Box>
-                  <MdOutlineKeyboardArrowRight fontSize="24px" />
-                </Box>
-              </Link>
-            </Box>
+              </>
+            )}
           </GridItem>
         </Grid>
       </Padding>

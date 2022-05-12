@@ -11,14 +11,14 @@ import { newsList } from "data";
 
 const News = () => {
   return (
-    <Box mb="80px" maxW={["90vw", , , "80vw"]}>
+    <Box mb="80px" maxW={["100vw", , , "80vw"]}>
       <Padding>
         <Text fontSize={["16px", "18px", "20px", "24px"]} mb="24px">
           News-get financial insight
         </Text>
 
         <Swiper
-          slidesPerView={1.3}
+          slidesPerView={1}
           spaceBetween={10}
           pagination={{
             clickable: true,
