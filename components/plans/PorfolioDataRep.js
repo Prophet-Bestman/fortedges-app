@@ -39,9 +39,9 @@ const PorfolioDataRep = ({ portfolio }) => {
   ];
 
   const progress = {
-    premiumStocks: (data[0].value / net_worth) * 100 || 0,
-    realEstate: (data[1].value / net_worth) * 100 || 0,
-    fixedIncome: (data[2].value / net_worth) * 100 || 0,
+    premiumStocks: (data[0]?.value / net_worth) * 100 || 0,
+    realEstate: (data[1]?.value / net_worth) * 100 || 0,
+    fixedIncome: (data[2]?.value / net_worth) * 100 || 0,
   };
 
   return (
@@ -100,8 +100,8 @@ const PorfolioDataRep = ({ portfolio }) => {
               name={data[0].name}
               color="text.brown"
               colorScheme="yellow"
-              amount={data[0].value.toFixed(2)}
-              progress={progress.premiumStocks}
+              amount={data[0]?.value?.toFixed(2)}
+              progress={progress?.premiumStocks}
             />
           </Flex>
           <Flex w="full" alignItems="center" mb="50px">
@@ -123,8 +123,8 @@ const PorfolioDataRep = ({ portfolio }) => {
               name={data[1].name}
               color="text.green"
               colorScheme="green"
-              amount={data[2].value.toFixed(2)}
-              progress={progress.realEstate}
+              amount={data[2]?.value?.toFixed(2)}
+              progress={progress?.realEstate}
             />
           </Flex>
           <Flex w="full" alignItems="center" mb="50px">
@@ -146,8 +146,8 @@ const PorfolioDataRep = ({ portfolio }) => {
               name={data[2].name}
               color="app.primary"
               colorScheme="purple"
-              amount={data[2].value.toFixed(2)}
-              progress={progress.fixedIncome}
+              amount={data[2]?.value?.toFixed(2)}
+              progress={progress?.fixedIncome}
             />
           </Flex>
         </Box>

@@ -54,8 +54,6 @@ const UserDetails = ({ userID }) => {
     }
   }, [verificationData]);
 
-  console.log("User: ", user);
-
   return (
     <Box py="40px" color="text.black">
       {user !== undefined && (

@@ -8,7 +8,9 @@ const TransactionCol = () => {
   return (
     <Box>
       <TransactionActions />
-      <TransactionHistory />
+      <Box display={[, , , "none"]}>
+        <TransactionHistory />
+      </Box>
       <AccountSummary />
     </Box>
   );

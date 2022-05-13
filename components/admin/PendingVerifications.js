@@ -17,8 +17,6 @@ const PendingVerifications = () => {
   const [verifications, setVerifications] = useState([]);
   const { data } = useAdminGetAllVerifications();
 
-  console.log("Data: ", data);
-
   useEffect(() => {
     if (!!data && data?.verifications.length > 0) {
       setVerifications(data?.verifications);
