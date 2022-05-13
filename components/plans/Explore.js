@@ -33,7 +33,7 @@ const Explore = () => {
   }, [error]);
 
   return (
-    <Box py="64px" w="full">
+    <Box pb="64px" w="full">
       <Box py="16px" borderBottomWidth="1px" borderBottomColor="#E7E8ED">
         <Text mb="9px" fontSize="20px" color="text.black" fontWeight="600">
           Explore Plans
@@ -97,6 +97,9 @@ const Explore = () => {
         </Box>
       )}
       <Box w="full">
+        <Text mb="9px" fontSize="20px" color="text.black" fontWeight="600">
+          Goals
+        </Text>
         <Flex
           justifyContent="space-between"
           alignItems="center"
@@ -107,9 +110,6 @@ const Explore = () => {
           mb="40px"
         >
           <Box>
-            <Text mb="9px" fontSize="20px" color="text.black" fontWeight="600">
-              Goals
-            </Text>
             <Text fontSize="14px" color="text.grey">
               Tap on any type of the plans to create a new plan.
             </Text>
@@ -121,11 +121,21 @@ const Explore = () => {
             color="text.black"
             alignItems="center"
             gap="8px"
+            w="150px"
+            flexGrow="1"
+            justifyContent="end"
           >
-            <Text cursor="pointer">
-              <Link href="/myplans/create">See All</Link>
-            </Text>
-            <MdArrowForwardIos fontSize="12px" />
+            <Link href="/myplans/create">
+              <Text
+                cursor="pointer"
+                textAlign={"end"}
+                d="flex"
+                alignItems="center"
+              >
+                See All
+                <MdArrowForwardIos fontSize="12px" />
+              </Text>
+            </Link>
           </Box>
         </Flex>
 

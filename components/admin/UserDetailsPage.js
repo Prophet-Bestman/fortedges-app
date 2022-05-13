@@ -1,4 +1,5 @@
 import { Box, Button, Flex, useDisclosure } from "@chakra-ui/react";
+import { useGetAllMyTransactions } from "api/transactions";
 import { ConfirmModal, TransactionHistoryTable } from "components";
 import {
   SelectNewPlan,
@@ -8,12 +9,16 @@ import {
 } from "components/admin";
 
 import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ActionSuccessful from "./ActionSuccessful";
 import ConfirmDeleteUser from "./ConfirmDeleteUser";
+import { MdArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
 
 const UserDetailsPage = ({ userID }) => {
   const [action, setAction] = React.useState("");
+  const [pages, setPages] = useState(1);
+  const [page, setPage] = useState(1);
+  const [transactions, setTransactions] = useState();
 
   const {
     isOpen: isSelectOpen,
@@ -39,6 +44,28 @@ const UserDetailsPage = ({ userID }) => {
     setAction(action);
     onSelectOpen();
   };
+
+  const { data: transData, refetch } = useGetAllMyTransactions(
+    "",
+    page,
+    30,
+    userID
+  );
+
+  useEffect(() => {
+    if (transData !== undefined) {
+      setTransactions(transData);
+    }
+  }, [transData]);
+
+  useEffect(() => {
+    if (transactions !== undefined) {
+      if (transactions?.total_documents >= 30) {
+        setPages(Math.ceil(transactions?.total_documents / 30));
+        refetch();
+      } else setPages(1);
+    }
+  }, [page, transactions]);
 
   return (
     <Box px="24px">
@@ -110,8 +137,30 @@ const UserDetailsPage = ({ userID }) => {
         </Button>
       </Flex>
 
-      <TransactionHistoryTable />
+      {!!transactions && (
+        <TransactionHistoryTable transactions={transactions} />
+      )}
 
+      <Flex color="white" justifyContent="center" gap="12px" mb="48px">
+        <Button
+          size="sm"
+          px="4px"
+          py="12px"
+          disabled={page === 1}
+          onClick={() => setPage((prev) => prev - 1)}
+        >
+          <MdOutlineArrowBackIos size="24px" />
+        </Button>
+        <Button
+          size="sm"
+          px="4px"
+          py="12px"
+          disabled={page === pages}
+          onClick={() => setPage((prev) => prev + 1)}
+        >
+          <MdArrowForwardIos size="24px" color="white" />
+        </Button>
+      </Flex>
       {/* MODALS */}
       <SelectPlan
         isOpen={isSelectOpen}

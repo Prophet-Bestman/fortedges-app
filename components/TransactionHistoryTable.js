@@ -79,19 +79,12 @@ const TransactionHistoryTable = ({ transactions, type }) => {
           {transactions !== undefined &&
             transactions?.transactions?.length > 0 && (
               <Tbody>
-                {transactions.transactions
-                  .filter((transaction) => {
-                    if (type === "") return transaction;
-                    return transaction.type == type;
-                  })
-                  ?.slice(0)
-                  ?.reverse()
-                  ?.map((transaction) => (
-                    <TransactionRow
-                      key={transaction.id}
-                      transaction={transaction}
-                    />
-                  ))}
+                {transactions.transactions?.map((transaction) => (
+                  <TransactionRow
+                    key={transaction.id}
+                    transaction={transaction}
+                  />
+                ))}
               </Tbody>
             )}
         </Table>

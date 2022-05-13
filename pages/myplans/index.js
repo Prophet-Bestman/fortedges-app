@@ -24,7 +24,7 @@ export default function MyPlans() {
 
   return (
     <Padding>
-      <Tabs variant="line" defaultIndex={0}>
+      <Tabs variant="unstyled" defaultIndex={0}>
         <PlansHeader />
         <TabPanels>
           <TabPanel w={["85vw", , , "70vw"]}>

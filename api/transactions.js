@@ -122,13 +122,18 @@ const useAdminDeposit = () => {
   );
 };
 
-const useGetAllMyTransactions = (plan, page, limit) => {
+const useGetAllMyTransactions = (plan, page, limit, user) => {
   const headers = configOptions();
-  return useQuery(["my-transactions", plan, page, limit], () =>
+  return useQuery(["my-transactions", plan, page, limit, user], () =>
     request
-      .get(`?plan=${plan || ""}&page=${page || 1}&limit=${limit || 10}`, {
-        headers: headers,
-      })
+      .get(
+        `?plan=${plan || ""}&page=${page || 1}&limit=${limit || 10}&user=${
+          user || ""
+        }`,
+        {
+          headers: headers,
+        }
+      )
       .then((res) => res.data)
       .catch((err) => {
         if (err.response.status === 403) {
@@ -154,6 +159,7 @@ const useConfirmTransaction = () => {
         .then((res) => res.data),
     {
       onSuccess: () => {
+        queryClient.invalidateQueries("my-transactions");
         queryClient.invalidateQueries("admin-user");
         queryClient.invalidateQueries("admin-custom-plans");
       },
@@ -177,6 +183,7 @@ const useDeclineTransaction = () => {
         .then((res) => res.data),
     {
       onSuccess: () => {
+        queryClient.invalidateQueries("my-transactions");
         queryClient.invalidateQueries("admin-user");
         queryClient.invalidateQueries("admin-custom-plans");
       },
@@ -196,9 +203,9 @@ const useDeleteTransaction = () => {
         .then((res) => res),
     {
       onSuccess: () => {
+        queryClient.invalidateQueries("my-transactions");
         queryClient.invalidateQueries("admin-user");
         queryClient.invalidateQueries("admin-custom-plans");
-        queryClient.invalidateQueries("my-transactions");
       },
     }
   );

@@ -8,7 +8,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Padding } from "components/layouts";
-import { OverviewPlans } from "data";
 import React, { useEffect, useState, useContext } from "react";
 import OverviewPlan from "./OverviewPlan";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -24,7 +23,6 @@ import { AuthContext } from "providers/AuthProvider";
 const YourPlans = ({ title }) => {
   const [plans, setPlans] = useState([]);
   const { user } = useContext(AuthContext);
-  console.log(user);
 
   const { data: plansData } = useGetCustomPlans();
 

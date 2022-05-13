@@ -18,7 +18,7 @@ const WithdrawalSuccess = ({ isOpen, onClose, data }) => {
   const { status, updatedAt, amount, id, mode_of_payment, address } = data;
 
   return (
-    <Modal isOpen={isOpen} size>
+    <Modal isOpen={isOpen} size onClose={onClose}>
       <ModalOverlay />
       <ModalContent
         py="14px"

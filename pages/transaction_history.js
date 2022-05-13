@@ -80,7 +80,7 @@ const TransactionHisory = () => {
       } else setPages(1);
       refetch();
     }
-  }, [plan, limit, transactions]);
+  }, [plan, limit, transactions, status, type]);
 
   return (
     <Box mt={["160px", , , "130px"]}>
@@ -195,8 +195,6 @@ const TransactionHisory = () => {
                 if (type === "") return transaction;
                 return transaction.type == type;
               })
-              ?.slice(0)
-              ?.reverse()
               ?.map((transaction, i) => (
                 <Box
                   key={i}

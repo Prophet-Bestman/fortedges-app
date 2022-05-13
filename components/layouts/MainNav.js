@@ -32,6 +32,7 @@ const MainNav = () => {
                 fontSize="14px"
                 textOverflow=""
                 color={active === nav.name ? "app.primary" : "text.dark"}
+                fontWeight={active === nav.name ? "600" : "400"}
                 cursor="pointer"
                 _hover={{
                   color: "app.primary",
