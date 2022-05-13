@@ -106,7 +106,9 @@ const AccountStatementsTab = () => {
             >
               {plans?.length > 0 &&
                 plans?.map((plan) => (
-                  <option value={plan?.id}>{plan?.name}</option>
+                  <option key={plan?.id} value={plan?.id}>
+                    {plan?.name}
+                  </option>
                 ))}
             </Select>
             {errors.plan && (
