@@ -2,28 +2,30 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { RiArrowRightSLine } from "react-icons/ri";
-import { config, formatter } from "utils";
+import { formatter } from "utils";
 import PorfolioDataRep from "./PorfolioDataRep";
+import { useGetPortfolio } from "api/portfolio";
 
-const PortfolioTab = ({ plans }) => {
+const PortfolioTab = () => {
   const [assetClasses, setAssetClasses] = useState([]);
-  const [netWorth, setNetWorth] = useState("");
-  const [wallet, setWallet] = useState({});
+  const [netWorth, setNetWorth] = useState(0);
+  const [portfolio, setPortfolio] = useState({});
+  const { data: portfolioData } = useGetPortfolio();
 
   useEffect(() => {
-    const localWallet = localStorage.getItem(config.key.wallet);
-    if (localWallet != undefined) {
-      const wallet = JSON.parse(localWallet);
-      setWallet(wallet);
+    if (!!portfolioData && portfolioData?.status === 200) {
+      setPortfolio(portfolioData?.data);
     }
-  }, []);
+  }, [portfolioData]);
 
   useEffect(() => {
-    if (plans !== undefined) {
-      const clasees = plans.filter((plan) => plan.type === "plan");
-      setAssetClasses(clasees);
+    if (!!portfolio && portfolio?.asset_mix?.length > 0) {
+      setAssetClasses(portfolio?.asset_mix);
     }
-  }, [plans]);
+    if (!!portfolio && portfolio?.net_worth > 0) {
+      setNetWorth(portfolio?.net_worth);
+    }
+  }, [portfolio]);
 
   return (
     <Box>
@@ -64,7 +66,7 @@ const PortfolioTab = ({ plans }) => {
             Net worth
           </Text>
           <Text fontWeight={600} color="text.black">
-            {formatter.format(wallet?.balance)}
+            {formatter.format(netWorth)}
           </Text>
         </Box>
         <Box
@@ -84,7 +86,7 @@ const PortfolioTab = ({ plans }) => {
         </Box>
       </Flex>
 
-      <PorfolioDataRep />
+      <PorfolioDataRep portfolio={portfolio} />
     </Box>
   );
 };

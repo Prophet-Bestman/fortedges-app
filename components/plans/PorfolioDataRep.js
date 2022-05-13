@@ -1,27 +1,49 @@
 import { Box, Flex, Progress, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineStar } from "react-icons/ai";
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
 import ProgressBar from "./ProgressBar";
 
-const data = [
-  { name: "Premium Stocks", value: 312.43 },
-  { name: "Real estate", value: 142.04 },
-  { name: "Fixed income", value: 200.12 },
-];
-
-const progress = {
-  premiumStocks:
-    (data[0].value / (data[0].value + data[1].value + data[2].value)) * 100,
-  realEstate:
-    (data[1].value / (data[0].value + data[1].value + data[2].value)) * 100,
-  fixedIncome:
-    (data[2].value / (data[0].value + data[1].value + data[2].value)) * 100,
-};
-
 const COLORS = ["#F0B263", "#449562", "#7950DA"];
 
-const PorfolioDataRep = () => {
+const PorfolioDataRep = ({ portfolio }) => {
+  const { asset_mix, net_worth } = portfolio;
+  const [premiumStocks, setPremiumStocks] = useState(0);
+  const [realEstate, setRealEstate] = useState(0);
+  const [fixedIncome, setFixedIncome] = useState(0);
+
+  useEffect(() => {
+    if (!!asset_mix && asset_mix?.length > 0) {
+      const premiumStocks = asset_mix?.filter(
+        (asset) => asset?.asset === "Premium Stock"
+      );
+
+      setPremiumStocks(premiumStocks);
+
+      const realEstate = asset_mix?.filter(
+        (asset) => asset?.asset === "Real Estate"
+      );
+      setRealEstate(realEstate);
+
+      const fixedIncome = asset_mix?.filter(
+        (asset) => asset?.asset === "Fixed Income"
+      );
+      setFixedIncome(fixedIncome);
+    }
+  }, [portfolio]);
+
+  const data = [
+    { name: "Premium Stocks", value: 0 || premiumStocks[0]?.total_amount },
+    { name: "Real estate", value: 0 || realEstate[0]?.total_amount },
+    { name: "Fixed income", value: 0 || fixedIncome[0]?.total_amount },
+  ];
+
+  const progress = {
+    premiumStocks: (data[0].value / net_worth) * 100 || 0,
+    realEstate: (data[1].value / net_worth) * 100 || 0,
+    fixedIncome: (data[2].value / net_worth) * 100 || 0,
+  };
+
   return (
     <Box>
       <Text fontSize="20px" fontWeight={600}>
@@ -75,10 +97,10 @@ const PorfolioDataRep = () => {
 
             {/* Progress Bar and Label */}
             <ProgressBar
-              name={data[0].value}
+              name={data[0].name}
               color="text.brown"
               colorScheme="yellow"
-              amount={data[0].value}
+              amount={data[0].value.toFixed(2)}
               progress={progress.premiumStocks}
             />
           </Flex>
@@ -101,7 +123,7 @@ const PorfolioDataRep = () => {
               name={data[1].name}
               color="text.green"
               colorScheme="green"
-              amount={data[2].value}
+              amount={data[2].value.toFixed(2)}
               progress={progress.realEstate}
             />
           </Flex>
@@ -116,7 +138,7 @@ const PorfolioDataRep = () => {
               mr="16px"
               rounded="full"
             >
-              <AiOutlineStar color="#F0B263" />
+              <AiOutlineStar color="#7950DA" />
             </Flex>
 
             {/* Progress Bar and Label */}
@@ -124,7 +146,7 @@ const PorfolioDataRep = () => {
               name={data[2].name}
               color="app.primary"
               colorScheme="purple"
-              amount={data[2].value}
+              amount={data[2].value.toFixed(2)}
               progress={progress.fixedIncome}
             />
           </Flex>
