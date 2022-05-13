@@ -69,34 +69,34 @@ const PlanComponents = ({ planID }) => {
         >
           {!!plan && <PlanDetailsBanner />}
           {!!plan && <PlanBalance />}
-          <Box display={["none", , , "block"]}>
-            <TransactionHistoryTable transactions={transactions} />
-            <Flex color="white" justifyContent="center" gap="12px" mb="48px">
-              <Button
-                size="sm"
-                px="4px"
-                py="12px"
-                disabled={page === 1}
-                onClick={() => setPage((prev) => prev - 1)}
-              >
-                <MdOutlineArrowBackIos size="24px" />
-              </Button>
-              <Button
-                size="sm"
-                px="4px"
-                py="12px"
-                disabled={page === pages}
-                onClick={() => setPage((prev) => prev + 1)}
-              >
-                <MdArrowForwardIos size="24px" color="white" />
-              </Button>
-            </Flex>
-          </Box>
         </GridItem>
         <GridItem pl={[, , , "18px"]} colSpan={5}>
           {!!plan && <TransactionCol />}
         </GridItem>
       </Grid>
+      <Box display={["none", , , "block"]} my="50px">
+        <TransactionHistoryTable transactions={transactions} />
+        <Flex color="white" justifyContent="center" gap="12px" my="48px">
+          <Button
+            size="sm"
+            px="4px"
+            py="12px"
+            disabled={page === 1}
+            onClick={() => setPage((prev) => prev - 1)}
+          >
+            <MdOutlineArrowBackIos size="24px" />
+          </Button>
+          <Button
+            size="sm"
+            px="4px"
+            py="12px"
+            disabled={page === pages}
+            onClick={() => setPage((prev) => prev + 1)}
+          >
+            <MdArrowForwardIos size="24px" color="white" />
+          </Button>
+        </Flex>
+      </Box>
     </Padding>
   );
 };
