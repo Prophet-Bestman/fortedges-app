@@ -13,9 +13,14 @@ import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { formatter } from "utils";
 
+const statusColor = (status) => {
+  if (status === "processing") return "#E9C46A";
+  else if (status === "successful") return "green.400";
+  else return "red.400";
+};
+
 const TransactionModal = ({ isOpen, onClose, transaction }) => {
-  const { is_complete, status, createdAt, type, amount, id, mode_of_payment } =
-    transaction;
+  const { status, createdAt, type, amount, id, mode_of_payment } = transaction;
   return (
     <Modal isOpen={isOpen} size>
       <ModalOverlay />
@@ -59,17 +64,10 @@ const TransactionModal = ({ isOpen, onClose, transaction }) => {
                   Status
                 </Text>
                 <Text fontWeight={600} color="text.black" fontSize="14px">
-                  {!is_complete ? (
-                    <Flex alignItems="center" gap="12px">
-                      <Circle size="6px" bg="yellow.400"></Circle>
-                      <Text textTransform={"capitalize"}>{status}</Text>
-                    </Flex>
-                  ) : (
-                    <Flex alignItems="center" gap="12px">
-                      <Circle size="6px" bg="green.300"></Circle>
-                      <Text>{status}</Text>
-                    </Flex>
-                  )}
+                  <Flex alignItems="center" gap="12px">
+                    <Circle size="8px" bg={statusColor(status)}></Circle>
+                    <Text textTransform={"capitalize"}>{status}</Text>
+                  </Flex>
                 </Text>
               </Flex>
               <Flex

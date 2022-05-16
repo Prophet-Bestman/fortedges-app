@@ -5,7 +5,11 @@ import { formatter } from "utils";
 
 const OverviewCard = ({ title, amount, gains, className }) => {
   const profit = (gains / amount) * 100;
-  amount = formatter.format(amount);
+  if (typeof amount === "string") {
+    amount = amount;
+  } else {
+    amount = formatter.format(amount);
+  }
   return (
     <Box
       borderColor="#E2E6EB66"

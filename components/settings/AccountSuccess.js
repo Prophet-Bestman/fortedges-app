@@ -36,8 +36,7 @@ const AccountSuccess = ({ isOpen, onClose }) => {
             Request Successful
           </Text>
           <Text color="text.grey" my="24px" textAlign="center">
-            We will now confirm your identity. You will be notified when the
-            Verification is complete
+            Your account statement has been sent to your email.
           </Text>
 
           <Button

@@ -45,6 +45,15 @@ const YourPlans = ({ title }) => {
               {/* {title} */}
             </Text>
             <Box>
+              {plans?.length > 0 && (
+                <Flex mb="20px" justify="end">
+                  <Link href="/myplans">
+                    <Button size="sm" color={"app.primary"} variant="ghost">
+                      See All
+                    </Button>
+                  </Link>
+                </Flex>
+              )}
               <Swiper
                 slidesPerView={2}
                 spaceBetween={10}
@@ -84,15 +93,6 @@ const YourPlans = ({ title }) => {
                   ))}
               </Swiper>
             </Box>
-            {plans?.length > 0 && (
-              <Flex justify="end">
-                <Link href="/myplans">
-                  <Button size="sm" color={"app.primary"} variant="ghost">
-                    See All
-                  </Button>
-                </Link>
-              </Flex>
-            )}
           </GridItem>
           <GridItem
             colSpan={1}

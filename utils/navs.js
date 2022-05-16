@@ -1,3 +1,9 @@
+import { AiOutlineDashboard } from "react-icons/ai";
+import { BiTrendingUp } from "react-icons/bi";
+import { RiRefund2Line } from "react-icons/ri";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { GrHistory } from "react-icons/gr";
+
 export const authNavs = [
   { name: "Home", link: "/" },
   {
@@ -25,18 +31,22 @@ export const authNavs = [
 ];
 
 export const mainNavs = [
-  { name: "Overview", link: "/", icon: "/img/nav/dashboard.svg" },
-  { name: "My Plans", link: "/myplans", icon: "/img/nav/trend.svg" },
-  { name: "Fund A Plan", link: "/myplans", icon: "/img/nav/fund.svg" },
+  { name: "Overview", link: "/", icon: <AiOutlineDashboard size="18px" /> },
+  { name: "My Plans", link: "/myplans", icon: <BiTrendingUp size="18px" /> },
+  {
+    name: "Fund A Plan",
+    link: "/myplans",
+    icon: <RiRefund2Line size="18px" />,
+  },
   {
     name: "Notifications",
     link: "/notifications",
-    icon: "/img/nav/notification.svg",
+    icon: <IoMdNotificationsOutline size="18px" />,
   },
   {
     name: "Transaction History",
     link: "/transaction_history",
-    icon: "/img/nav/history.svg",
+    icon: <GrHistory size="18px" />,
   },
 ];
 

@@ -1,17 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { Box } from "@chakra-ui/react";
-import { MainLayout } from "components/layouts";
 import Head from "next/head";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
 import {
   News,
   OverviewHeader,
   OverviewMarketTrends,
-  QuoteSection,
-  TodaysQuote,
   YourPlans,
 } from "components/overview";
-import { QueryClient } from "react-query";
 
 export default function Home() {
   const { dispatch: setActiveNav } = useContext(NavContext);

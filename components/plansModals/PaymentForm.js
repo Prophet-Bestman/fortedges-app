@@ -37,11 +37,9 @@ const PaymentForm = ({
   onClose,
   setStep,
   openError,
-  closeParent,
   option,
   setOption,
   setData,
-  data: paymentData,
 }) => {
   const { plan } = useContext(PlanContext);
   const [requestSent, setRequestSent] = useState(false);

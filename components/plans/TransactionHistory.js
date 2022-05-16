@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import Link from "next/link";
 import React, { useEffect, useState, useContext } from "react";
@@ -6,10 +6,13 @@ import { transactionHistory } from "data";
 import MiniTransaction from "./MiniTransaction";
 import { PlanContext } from "providers/PlanProvider";
 import { useGetAllMyTransactions } from "api/transactions";
+import OurPortfolio from "components/plansModals/OurPortfolio";
 
 const TransactionHistory = () => {
   const { plan } = useContext(PlanContext);
   const [transactions, setTransactions] = useState([]);
+
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   const { data: transData } = useGetAllMyTransactions(plan._id);
 
@@ -34,20 +37,20 @@ const TransactionHistory = () => {
             {"What’s this plan made of?"}
           </Text>
 
-          <Link href="#">
-            <Text
-              display="flex"
-              gap="12px"
-              alignItems="center"
-              fontSize="14px"
-              _hover={{
-                color: "app.primary",
-              }}
-            >
-              View Portfolio
-              <MdKeyboardArrowRight />
-            </Text>
-          </Link>
+          <Text
+            display="flex"
+            gap="12px"
+            alignItems="center"
+            fontSize="14px"
+            _hover={{
+              color: "app.primary",
+            }}
+            onClick={onOpen}
+            cursor="pointer"
+          >
+            View Our Portfolio
+            <MdKeyboardArrowRight />
+          </Text>
         </Flex>
       </Box>
       <Flex color="text.black" justifyContent={"space-between"} mb="32px">
@@ -83,9 +86,7 @@ const TransactionHistory = () => {
           </Box>
         )}
 
-      {/* Graph */}
-
-      {/* Account Balnce details */}
+      <OurPortfolio isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 };

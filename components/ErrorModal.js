@@ -2,23 +2,19 @@ import {
   Box,
   Circle,
   Flex,
-  Image,
   Modal,
   ModalBody,
   ModalContent,
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 
 const ErrorModal = ({ isOpen, msg, closeParent }) => {
-  const router = useRouter();
-
   return (
-    <Modal isOpen={isOpen} size="sm" isCentered>
+    <Modal isOpen={isOpen} size="sm" isCentered onClose={closeParent}>
       <ModalOverlay />
       <ModalContent py="14px" px="24px" w="full">
         <Box w="full" h="full" position="relative">

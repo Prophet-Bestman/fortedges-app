@@ -1,7 +1,9 @@
-import { Box, Flex, Progress, Text } from "@chakra-ui/react";
+import { Box, Circle, Flex, Text } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { AiOutlineStar } from "react-icons/ai";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { BsHouseDoor } from "react-icons/bs";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import { PieChart, Pie, Cell } from "recharts";
 import ProgressBar from "./ProgressBar";
 
 const COLORS = ["#F0B263", "#449562", "#7950DA"];
@@ -83,17 +85,10 @@ const PorfolioDataRep = ({ portfolio }) => {
         <Box w="full" maxW="800px">
           <Flex w="full" alignItems="center" mb="50px">
             {/* Icon Circle */}
-            <Flex
-              w="32px"
-              h="32px"
-              bg="#F0B2631A"
-              justify="center"
-              alignItems="center"
-              mr="16px"
-              rounded="full"
-            >
+
+            <Circle size="32px" bg="#F0B2632A" mr="16px">
               <AiOutlineStar color="#F0B263" />
-            </Flex>
+            </Circle>
 
             {/* Progress Bar and Label */}
             <ProgressBar
@@ -106,17 +101,9 @@ const PorfolioDataRep = ({ portfolio }) => {
           </Flex>
           <Flex w="full" alignItems="center" mb="50px">
             {/* Icon Circle */}
-            <Flex
-              w="32px"
-              h="32px"
-              bg="#F0B2631A"
-              justify="center"
-              alignItems="center"
-              mr="16px"
-              rounded="full"
-            >
-              <AiOutlineStar color="#449562" />
-            </Flex>
+            <Circle size="32px" bg="#4495622A" mr="16px">
+              <BsHouseDoor color="#449562" />
+            </Circle>
 
             {/* Progress Bar and Label */}
             <ProgressBar
@@ -129,17 +116,9 @@ const PorfolioDataRep = ({ portfolio }) => {
           </Flex>
           <Flex w="full" alignItems="center" mb="50px">
             {/* Icon Circle */}
-            <Flex
-              w="32px"
-              h="32px"
-              bg="#F0B2631A"
-              justify="center"
-              alignItems="center"
-              mr="16px"
-              rounded="full"
-            >
-              <AiOutlineStar color="#7950DA" />
-            </Flex>
+            <Circle size="32px" bg="#7950DA2A" mr="16px">
+              <RiMoneyDollarCircleLine color="#7950DA" />
+            </Circle>
 
             {/* Progress Bar and Label */}
             <ProgressBar

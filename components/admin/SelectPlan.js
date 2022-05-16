@@ -12,7 +12,6 @@ import {
 import { ConfirmModal } from "components";
 import React, { useState, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import ActionSuccessful from "./ActionSuccessful";
 import AddBalance from "./AddBalance";
 import AdminWithdraw from "./AdminWithdraw";
 import PlanBox from "./PlanBox";

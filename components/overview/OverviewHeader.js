@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Grid, Text, useQuery } from "@chakra-ui/react";
+import { Box, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import {
@@ -13,7 +13,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useGetUser } from "api/user";
 import { config } from "utils";
-import configOptions from "api/config";
+import UserSelectPlan from "./UserSelectPlan";
+import PlanProvider from "providers/PlanProvider";
 
 const OverviewHeader = () => {
   const [user, setUser] = useState({});
@@ -21,6 +22,8 @@ const OverviewHeader = () => {
   const [show, setShow] = useState(true);
 
   const { data: userData, error } = useGetUser();
+
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   useEffect(() => {
     const localWallet = localStorage.getItem(config.key.wallet);
@@ -102,82 +105,81 @@ const OverviewHeader = () => {
           </Link>
         </Flex>
 
-        <Link href="/myplans">
-          <Button
-            variant="secondary"
-            bg="white"
-            borderColor="gray.200"
-            borderWidth="1px"
-            leftIcon={<AiOutlinePlus />}
-          >
-            Add Money
-          </Button>
-        </Link>
-      </Flex>
-
-      {show && (
-        <Box maxW={["90vw", , , "75vw"]}>
-          <Swiper
-            slidesPerView={1}
-            spaceBetween={10}
-            pagination={{
-              clickable: true,
-            }}
-            breakpoints={{
-              767: {
-                slidesPerView: 3,
-                spaceBetween: 10,
-              },
-              1024: {
-                slidesPerView: 3,
-                spaceBetween: 10,
-              },
-            }}
-            modules={[Pagination]}
-            className="mySwiper"
-            style={{
-              paddingBottom: "50px",
-              width: "full",
-            }}
-          >
-            <SwiperSlide>
-              <OverviewCard
-                amount={user?.total_balance || 0}
-                gains={user?.total_profit || "0%"}
-                title="Total Balance"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <OverviewCard
-                amount={user?.total_investment || 0}
-                title="Total Invested"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <OverviewCard
-                amount={user?.total_profit || 0}
-                // gains={user?.total_profit || "0%"}
-                title="Total Profit"
-              />
-            </SwiperSlide>
-          </Swiper>
-        </Box>
-      )}
-
-      <Link href="/myplans">
         <Button
           variant="secondary"
-          w="full"
-          color="app.primary"
-          display={["block", , "none"]}
           bg="white"
           borderColor="gray.200"
           borderWidth="1px"
           leftIcon={<AiOutlinePlus />}
+          onClick={onOpen}
         >
           Add Money
         </Button>
-      </Link>
+      </Flex>
+
+      <Box maxW={["90vw", , , "75vw"]}>
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={10}
+          pagination={{
+            clickable: true,
+          }}
+          breakpoints={{
+            767: {
+              slidesPerView: 3,
+              spaceBetween: 10,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 10,
+            },
+          }}
+          modules={[Pagination]}
+          className="mySwiper"
+          style={{
+            paddingBottom: "50px",
+            width: "full",
+          }}
+        >
+          <SwiperSlide>
+            <OverviewCard
+              amount={show ? user?.total_balance || 0 : "*****"}
+              gains={show ? user?.total_profit || "0%" : "**%"}
+              title="Total Balance"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <OverviewCard
+              amount={show ? user?.total_investment || 0 : "*****"}
+              title="Total Invested"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <OverviewCard
+              amount={show ? user?.total_profit || 0 : "*****"}
+              title="Total Profit"
+            />
+          </SwiperSlide>
+        </Swiper>
+      </Box>
+
+      <Button
+        variant="secondary"
+        w="full"
+        color="app.primary"
+        display={["block", , "none"]}
+        bg="white"
+        borderColor="gray.200"
+        borderWidth="1px"
+        leftIcon={<AiOutlinePlus />}
+        onClick={onOpen}
+      >
+        Add Money
+      </Button>
+
+      <PlanProvider>
+        <UserSelectPlan isOpen={isOpen} onClose={onClose} />
+      </PlanProvider>
     </Box>
   );
 };

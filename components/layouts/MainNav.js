@@ -39,7 +39,7 @@ const MainNav = () => {
                 }}
               >
                 <Circle size="32px" bg="#1D24410D">
-                  <Image w="20px" src={nav.icon} alt="" />
+                  {nav.icon}
                 </Circle>
                 {nav.name}
               </Text>
