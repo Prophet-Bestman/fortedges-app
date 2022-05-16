@@ -10,14 +10,17 @@ import {
   ModalContent,
   ModalOverlay,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
+import UserSelectPlan from "components/overview/UserSelectPlan";
 import Link from "next/link";
 import { AuthContext, userActions } from "providers/AuthProvider";
 import { NavContext, navStates } from "providers/NavProvider";
+
 import React, { useContext, useEffect } from "react";
 import { mobileNavs } from "utils";
 
-const MainMobileNav = ({ isOpen, onClose }) => {
+const MainMobileNav = ({ isOpen, onClose, onFundOpen }) => {
   const { navState } = useContext(NavContext);
   const active = navState.name;
   const { dispatch: logout } = useContext(AuthContext);
@@ -25,6 +28,13 @@ const MainMobileNav = ({ isOpen, onClose }) => {
   useEffect(() => {
     onClose();
   }, [active]);
+
+  const handleOpenFundModal = (nav) => {
+    if (nav?.name === "Fund A Plan") {
+      onClose();
+      onFundOpen();
+    }
+  };
 
   return (
     <div>
@@ -54,7 +64,7 @@ const MainMobileNav = ({ isOpen, onClose }) => {
               {mobileNavs.map((nav, i) => (
                 <Link href={nav.link} key={i}>
                   <Text
-                    onClick={() => {}}
+                    onClick={() => handleOpenFundModal(nav)}
                     display="flex"
                     alignItems="center"
                     my="16px"

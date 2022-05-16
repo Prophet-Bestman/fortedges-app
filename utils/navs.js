@@ -35,7 +35,7 @@ export const mainNavs = [
   { name: "My Plans", link: "/myplans", icon: <BiTrendingUp size="18px" /> },
   {
     name: "Fund A Plan",
-    link: "/myplans",
+    link: "#",
     icon: <RiRefund2Line size="18px" />,
   },
   {

@@ -1,12 +1,16 @@
-import { Box, Circle, Image, Text } from "@chakra-ui/react";
+import { Box, Circle, Image, Text, useDisclosure } from "@chakra-ui/react";
+import UserSelectPlan from "components/overview/UserSelectPlan";
 import Link from "next/link";
 import { NavContext } from "providers/NavProvider";
+import PlanProvider from "providers/PlanProvider";
 import React, { useContext } from "react";
 import { mainNavs } from "utils/navs";
 
 const MainNav = () => {
   const { navState } = useContext(NavContext);
   const active = navState.name;
+
+  const { isOpen, onClose, onOpen } = useDisclosure();
   return (
     <Box py="48px" w="full">
       <Text
@@ -25,6 +29,7 @@ const MainNav = () => {
             <Link key={i} href={nav.link}>
               <Text
                 display="flex"
+                onClick={nav?.name === "Fund A Plan" && onOpen}
                 alignItems="center"
                 mb="32px"
                 w="full"
@@ -47,6 +52,10 @@ const MainNav = () => {
           ))}
         </Box>
       </Box>
+
+      <PlanProvider>
+        <UserSelectPlan isOpen={isOpen} onClose={onClose} />
+      </PlanProvider>
     </Box>
   );
 };

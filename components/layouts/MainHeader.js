@@ -22,6 +22,8 @@ import { config } from "utils";
 import { useGetUser } from "api/user";
 import { useGetNotifications } from "api/notifications";
 import { AuthContext, userActions } from "providers/AuthProvider";
+import PlanProvider from "providers/PlanProvider";
+import UserSelectPlan from "components/overview/UserSelectPlan";
 
 const MainHeader = () => {
   const [notificationCount, setNotificationCount] = useState(0);
@@ -35,6 +37,12 @@ const MainHeader = () => {
 
   const router = useRouter();
   const { data: userData, error } = useGetUser();
+
+  const {
+    isOpen: isFundOpen,
+    onClose: onFundClose,
+    onOpen: onFundOpen,
+  } = useDisclosure();
 
   useEffect(() => {
     let user;
@@ -53,10 +61,6 @@ const MainHeader = () => {
   }, [error]);
 
   const { data: notificationData } = useGetNotifications(1, 10000);
-
-  // useEffect(() => {
-  //   setNotificationsError(notiifyError);
-  // }, [notiifyError]);
 
   useEffect(() => {
     if (notificationData !== undefined) {
@@ -226,12 +230,20 @@ const MainHeader = () => {
           onClick={onOpen}
         >
           <AiOutlineMenu color="black" size="24px" />
-          <MainMobileNav isOpen={isOpen} onClose={onClose} />
+          <MainMobileNav
+            isOpen={isOpen}
+            onClose={onClose}
+            onFundOpen={onFundOpen}
+          />
         </Box>
       </Box>
       {navState.pageTitle !== "Overview" && (
         <MobilePageTitle>{pageTitle}</MobilePageTitle>
       )}
+
+      <PlanProvider>
+        <UserSelectPlan isOpen={isFundOpen} onClose={onFundClose} />
+      </PlanProvider>
     </Box>
   );
 };

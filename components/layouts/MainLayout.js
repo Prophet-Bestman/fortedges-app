@@ -1,5 +1,4 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
-import MobilePageTitle from "components/MobilePageTitle";
 import React from "react";
 import MainHeader from "./MainHeader";
 import MainNav from "./MainNav";
