@@ -18,6 +18,7 @@ import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import EditPlan from "./EditPlan";
 import { SuccessModal } from "components";
+import DeletePlan from "./DeletePlan";
 
 const TransactionActions = () => {
   const [option, setOption] = React.useState(options.btc);
@@ -43,6 +44,12 @@ const TransactionActions = () => {
     isOpen: isSuccessOpen,
     onOpen: onSuccessOpen,
     onClose: onSuccessClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isDeleteOpen,
+    onOpen: onDeleteOpen,
+    onClose: onDeleteClose,
   } = useDisclosure();
 
   return (
@@ -83,7 +90,7 @@ const TransactionActions = () => {
           </MenuButton>
           <MenuList>
             <MenuItem onClick={onEditOpen}>Edit Plan</MenuItem>
-            <MenuItem>Delete Plan</MenuItem>
+            <MenuItem onClick={onDeleteOpen}>Delete Plan</MenuItem>
           </MenuList>
         </Menu>
       </Flex>
@@ -132,6 +139,7 @@ const TransactionActions = () => {
         msg="Successfully Updated Plan"
         closeParent={onSuccessClose}
       />
+      <DeletePlan onClose={onDeleteClose} isOpen={isDeleteOpen} />
     </Box>
   );
 };
