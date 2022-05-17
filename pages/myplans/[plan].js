@@ -1,16 +1,7 @@
-import { Box, Grid, GridItem } from "@chakra-ui/react";
-import { Padding } from "components/layouts";
-import {
-  PlanBalance,
-  PlanDetailsBanner,
-  PlanGraph,
-  TransactionCol,
-} from "components/plans";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
 import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useGetSingleCustomPlan } from "api/plans";
-import PlanProvider, { planActions, PlanContext } from "providers/PlanProvider";
+import PlanProvider from "providers/PlanProvider";
 import PlanComponents from "components/plans/PlanComponents";
 
 function PlanDetails() {

@@ -35,7 +35,7 @@ const useGetCustomPlans = () => {
 
 const useGetSingleCustomPlan = (plan_id) => {
   const headers = configOptions();
-  return useQuery(["custom-plans", plan_id], () =>
+  return useQuery(["custom-plan", plan_id], () =>
     request
       .get(`/custom-plans/${plan_id}`, { headers: headers })
       .then((res) => res.data)
@@ -44,6 +44,32 @@ const useGetSingleCustomPlan = (plan_id) => {
           localStorage.clear();
         } else return err;
       })
+  );
+};
+
+export const useEditCustomPlan = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .put(`/custom-plans/${values?.plan_id}`, values.data, {
+          headers: headers,
+        })
+        .then((res) => res)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("custom-plans");
+        queryClient.invalidateQueries("custom-plan");
+        queryClient.invalidateQueries("admin-user");
+        queryClient.invalidateQueries("admin-custom-plans");
+      },
+    }
   );
 };
 

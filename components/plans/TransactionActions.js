@@ -1,4 +1,14 @@
-import { Box, Button, Circle, Flex, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Circle,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { FundPlan } from "components/plansModals";
 import Withdraw from "components/plansModals/Withdraw";
 import { options } from "data";
@@ -6,6 +16,8 @@ import React from "react";
 
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import EditPlan from "./EditPlan";
+import { SuccessModal } from "components";
 
 const TransactionActions = () => {
   const [option, setOption] = React.useState(options.btc);
@@ -14,10 +26,23 @@ const TransactionActions = () => {
     onOpen: onFundOpen,
     onClose: onFundClose,
   } = useDisclosure();
+
+  const {
+    isOpen: isEditOpen,
+    onOpen: onEditOpen,
+    onClose: onEditClose,
+  } = useDisclosure();
+
   const {
     isOpen: isWithdrawOpen,
     onOpen: onWithdrawOpen,
     onClose: onWithdrawClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isSuccessOpen,
+    onOpen: onSuccessOpen,
+    onClose: onSuccessClose,
   } = useDisclosure();
 
   return (
@@ -50,9 +75,17 @@ const TransactionActions = () => {
           </Button>
         </Box>
 
-        <Circle size="48px" bg="#F2F3F5">
-          <BiDotsVerticalRounded fontSize="24px" />
-        </Circle>
+        <Menu>
+          <MenuButton>
+            <Circle size="48px" bg="#F2F3F5">
+              <BiDotsVerticalRounded fontSize="24px" />
+            </Circle>
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={onEditOpen}>Edit Plan</MenuItem>
+            <MenuItem>Delete Plan</MenuItem>
+          </MenuList>
+        </Menu>
       </Flex>
 
       {/* Display on Mobile */}
@@ -86,6 +119,18 @@ const TransactionActions = () => {
         onClose={onWithdrawClose}
         option={option}
         setOption={setOption}
+      />
+
+      <EditPlan
+        isOpen={isEditOpen}
+        onClose={onEditClose}
+        openSuccess={onSuccessOpen}
+      />
+
+      <SuccessModal
+        isOpen={isSuccessOpen}
+        msg="Successfully Updated Plan"
+        closeParent={onSuccessClose}
       />
     </Box>
   );
