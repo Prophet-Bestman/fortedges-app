@@ -195,7 +195,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
                   type="number"
                   h="48px"
                   placeholder="10,000"
-                  isDisabled={days > 0}
+                  isDisabled={days < 30}
                   mb="32px"
                   // defaultValue={formState.amount}
                   variant={errors.amount ? "error" : "outline"}
@@ -211,7 +211,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
               <Menu w="full">
                 <MenuButton
                   variant="outline"
-                  isDisabled={days > 0}
+                  isDisabled={days < 30}
                   w="full"
                   borderColor="#0000001A"
                   borderWidth="1px"
@@ -263,7 +263,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
                   type="text"
                   h="48px"
                   placeholder=""
-                  isDisabled={days > 0}
+                  isDisabled={days < 30}
                   mb="32px"
                   // defaultValue={formState.amount}
                   variant={errors.walletAddress ? "error" : "outline"}
@@ -273,7 +273,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
             </Stack>
 
             <Button
-              isDisabled={days > 0}
+              isDisabled={days < 30}
               w="full"
               type="submit"
               isLoading={isLoading}
