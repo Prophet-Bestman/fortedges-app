@@ -32,11 +32,12 @@ import EnterVerificationCodeModal from "./EnterVerificationCodeModal";
 import { PlanContext } from "providers/PlanProvider";
 import { useWithdraw } from "api/transactions";
 import ErrorModal from "components/ErrorModal";
+import { formatDistance } from "date-fns";
 
 const optionsArr = Object.entries(options);
 
 const Withdraw = ({ onClose, isOpen, option, setOption }) => {
-  const [daysLeft, setDaysLeft] = React.useState(0);
+  const [days, setDays] = React.useState(0);
   const { plan } = useContext(PlanContext);
   const [withdrawData, setWithdrawData] = useState({});
   const [withdrawForm, setWithdrawForm] = useState({});
@@ -45,6 +46,18 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
     amount: yup.number().required(),
     walletAddress: yup.string().required(),
   });
+
+  let today;
+  let created_at;
+
+  useEffect(() => {
+    if (!!plan?.createdAt) {
+      today = new Date(Date.now());
+      created_at = new Date(plan.createdAt);
+      const days = formatDistance(today, created_at);
+      setDays(days.split(" ")[0]);
+    }
+  }, [plan]);
 
   const {
     register,
@@ -105,7 +118,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
   }, [data]);
 
   useEffect(() => {
-    if (error !== undefined) {
+    if (!!error) {
       onErrorOpen();
     }
     reset();
@@ -130,7 +143,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
         </Flex>
 
         <ModalBody px="0">
-          {daysLeft > 0 && (
+          {days < 30 && (
             <Text
               fontSize="13px"
               py="12px"
@@ -152,7 +165,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
               >
                 i
               </Circle>
-              {daysLeft} days left to Withdraw funds. See{" "}
+              {30 - days} {"day(s) left to Withdraw funds."} See{" "}
               <Link href="#" size="xs" variant="link">
                 more info
               </Link>
@@ -182,7 +195,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
                   type="number"
                   h="48px"
                   placeholder="10,000"
-                  isDisabled={daysLeft > 0}
+                  isDisabled={days > 0}
                   mb="32px"
                   // defaultValue={formState.amount}
                   variant={errors.amount ? "error" : "outline"}
@@ -198,7 +211,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
               <Menu w="full">
                 <MenuButton
                   variant="outline"
-                  isDisabled={daysLeft > 0}
+                  isDisabled={days > 0}
                   w="full"
                   borderColor="#0000001A"
                   borderWidth="1px"
@@ -250,7 +263,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
                   type="text"
                   h="48px"
                   placeholder=""
-                  isDisabled={daysLeft > 0}
+                  isDisabled={days > 0}
                   mb="32px"
                   // defaultValue={formState.amount}
                   variant={errors.walletAddress ? "error" : "outline"}
@@ -260,7 +273,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
             </Stack>
 
             <Button
-              isDisabled={daysLeft > 0}
+              isDisabled={days > 0}
               w="full"
               type="submit"
               isLoading={isLoading}

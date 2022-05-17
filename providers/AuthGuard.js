@@ -13,10 +13,10 @@ const AuthGuard = ({ children }) => {
       //auth is initialized and there is no user
       if (!user || Object.keys(user).length === 0) {
         // remember the page that user tried to access
-        setRedirect(router.route);
-        setUserState("UnAuthenticated");
-        // redirect
-        router.push("/auth/signin");
+        // setRedirect(router.route);
+        // setUserState("UnAuthenticated");
+        // // redirect
+        // router.push("/auth/signin");
       }
     }
   }, [loading, router, user, setRedirect]);
@@ -27,12 +27,12 @@ const AuthGuard = ({ children }) => {
   }
 
   // if auth initialized with a valid user show protected page
-  // if (!loading) {
-  //   return <>{children}</>;
-  // }
-  if (!loading && Object.keys(user).length !== 0) {
+  if (!loading) {
     return <>{children}</>;
   }
+  // if (!loading && Object.keys(user).length !== 0) {
+  //   return <>{children}</>;
+  // }
 
   /* otherwise don't return anything, will do a redirect from useEffect */
   return null;
