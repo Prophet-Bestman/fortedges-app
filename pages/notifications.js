@@ -44,7 +44,13 @@ const Notifications = () => {
           notifications.map((notification, i) => (
             <Notification notification={notification} key={i} />
           ))}
-        <Flex color="white" justifyContent="center" gap="12px" mb="48px">
+        <Flex
+          mt="30px"
+          color="white"
+          justifyContent="center"
+          gap="12px"
+          mb="48px"
+        >
           <Button
             size="sm"
             px="4px"

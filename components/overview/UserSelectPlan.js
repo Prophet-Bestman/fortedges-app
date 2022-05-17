@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   Flex,
   Modal,
   ModalBody,
@@ -14,6 +16,7 @@ import PlanBox from "components/admin/PlanBox";
 import { useGetCustomPlans } from "api/plans";
 import { planActions, PlanContext } from "providers/PlanProvider";
 import { FundPlan } from "components/plansModals";
+import Link from "next/link";
 
 const UserSelectPlan = ({ isOpen, onClose }) => {
   const { dispatch: setPlan } = useContext(PlanContext);
@@ -44,7 +47,7 @@ const UserSelectPlan = ({ isOpen, onClose }) => {
     <Modal isOpen={isOpen} size="full" onClose={onClose}>
       <ModalOverlay />
 
-      <ModalContent maxW={"400px"}>
+      <ModalContent h="full" maxW={"400px"}>
         <ModalHeader d="flex" alignItems="center">
           <Text textAlign="center" mx="auto">
             Select Plan
@@ -52,21 +55,35 @@ const UserSelectPlan = ({ isOpen, onClose }) => {
 
           <AiOutlineClose cursor="pointer" onClick={onClose} />
         </ModalHeader>
-        <ModalBody>
+        <ModalBody h="full">
           <Flex
             justifyContent="center"
             alignItems="center"
             gap="20px"
             flexDir="column"
+            h="full"
           >
-            {userPlans?.length > 0 &&
+            {userPlans?.length > 0 ? (
               userPlans?.map((plan) => (
                 <PlanBox
                   onClick={() => handleFundPlan(plan)}
                   plan={plan}
                   key={plan?._id}
                 />
-              ))}
+              ))
+            ) : (
+              <Box>
+                <Text textAlign="center" fontWeight={500} fontSize="28px">
+                  You have not created a plan yet
+                </Text>
+
+                <Link href="/myplans/create">
+                  <Button w="full" mt="28px">
+                    Create A New Plan
+                  </Button>
+                </Link>
+              </Box>
+            )}
           </Flex>
         </ModalBody>
       </ModalContent>

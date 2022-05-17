@@ -6,21 +6,21 @@ import { formatter } from "utils";
 const PlanBalance = () => {
   const { plan } = useContext(PlanContext);
 
-  const [investment, setInvestment] = React.useState();
+  const [total_investment, settotal_investment] = React.useState();
   const [profit, setProfit] = React.useState();
 
   React.useEffect(() => {
     if (plan !== undefined) {
       setProfit(plan.profit);
-      setInvestment(plan.investment);
+      settotal_investment(plan.total_investment);
     }
   }, [plan]);
 
-  const balance = investment + profit;
+  const balance = total_investment + profit;
 
   let percentageProfit = 0;
 
-  if (investment !== 0) {
+  if (total_investment !== 0) {
     percentageProfit = (profit / balance) * 100;
   }
 
@@ -67,7 +67,7 @@ const PlanBalance = () => {
           </Text>
           <Text color="text.black" fontSize={"24px"} fontWeight="600">
             {!!profit && profit !== NaN
-              ? formatter.format(investment)
+              ? formatter.format(total_investment)
               : "$0.00"}
           </Text>
         </Box>

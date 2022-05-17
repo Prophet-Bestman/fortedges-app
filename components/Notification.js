@@ -5,9 +5,8 @@ import { formatDistance } from "date-fns";
 import Link from "next/link";
 
 const Notification = ({ notification }) => {
-  console.log("Notification:", notification);
   return (
-    <Link href={`myplans/${notification?.ref}`}>
+    <Link href={`myplans/${notification?.plan_id}`}>
       <Box
         alignItems={"center"}
         cursor="pointer"
