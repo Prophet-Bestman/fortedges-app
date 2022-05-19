@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext, userActions } from "providers/AuthProvider";
 
 const AuthGuard = ({ children }) => {
-  const { user, loading, setRedirect } = useContext(AuthContext);
+  const { user, loading, setRedirect, redirect } = useContext(AuthContext);
   const router = useRouter();
 
   const [userState, setUserState] = useState("");
@@ -15,6 +15,7 @@ const AuthGuard = ({ children }) => {
         // remember the page that user tried to access
         setRedirect(router.route);
         setUserState("UnAuthenticated");
+
         // redirect
         router.push("/auth/signin");
       }

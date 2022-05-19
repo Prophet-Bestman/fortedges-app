@@ -6,7 +6,9 @@ import Link from "next/link";
 
 const Notification = ({ notification }) => {
   return (
-    <Link href={`myplans/${notification?.plan_id}`}>
+    <Link
+      href={!!notification?.plan_id ? `myplans/${notification?.plan_id}` : "#"}
+    >
       <Box
         alignItems={"center"}
         cursor="pointer"

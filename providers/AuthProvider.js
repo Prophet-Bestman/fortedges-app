@@ -50,21 +50,24 @@ const reducer = (user, action) => {
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, dispatch] = useReducer(reducer, initialUserState);
-  const [localUser, setLocalUser] = useState({});
+  const [localUser, setLocalUser] = useState();
 
   useEffect(() => {
-    window.addEventListener("storage", () => {
-      setLocalUser(JSON.parse(localStorage.getItem(config.key.user)) || {});
-    });
+    setTimeout(() => {
+      const localUser = getUserFromLocalStorage();
+      setLocalUser(localUser);
+    }, 500);
   }, []);
 
   useEffect(() => {
-    if (!localUser || Object.keys(localUser).length === 0) {
-      dispatch({ type: userActions.RESET_USER });
-      setLoading(false);
-    } else if (!!localUser) {
-      dispatch({ type: userActions.LOGIN, payload: localUser });
-      setLoading(false);
+    if (localUser !== undefined) {
+      if (!localUser || Object.keys(localUser).length === 0) {
+        // dispatch({ type: userActions.RESET_USER });
+        setLoading(false);
+      } else if (!!localUser) {
+        dispatch({ type: userActions.LOGIN, payload: localUser });
+        setLoading(false);
+      }
     }
   }, [localUser]);
 
@@ -78,7 +81,14 @@ const AuthProvider = ({ children }) => {
     clearRedirect,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    typeof window !== "undefined" && (
+      <AuthContext.Provider value={value}>
+        {/*  */}
+        {children}
+      </AuthContext.Provider>
+    )
+  );
 };
 
 export default AuthProvider;

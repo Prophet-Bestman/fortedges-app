@@ -37,7 +37,6 @@ User.isAdmin = true;
 
 // export async function getServerSideProps(context) {
 //   const id = context.params.user;
-//   console.log(context.params);
 //   return {
 //     props: {
 //       userID: id,

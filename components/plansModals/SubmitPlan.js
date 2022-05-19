@@ -108,8 +108,6 @@ const SubmitPlan = ({ closeParent }) => {
     }
   }, [error]);
 
-  console.log("Plan Created: ", createdPlan);
-
   return (
     <Modal isOpen={isOpen} isCentered size="sm">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
