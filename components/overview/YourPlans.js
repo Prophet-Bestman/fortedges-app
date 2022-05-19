@@ -30,6 +30,8 @@ const YourPlans = ({ title }) => {
     if (plansData != undefined) setPlans(plansData.custom_plans);
   }, [plansData]);
 
+  console.log("USER: ", user);
+
   return (
     <Box my="64px">
       <Padding>
@@ -38,7 +40,7 @@ const YourPlans = ({ title }) => {
           gap="14px"
         >
           <GridItem
-            colSpan={!user?.is_verified && !plans?.length > 0 ? 2 : 3}
+            colSpan={(!user?.is_verified || !plans?.length) > 0 ? 2 : 3}
             w="full"
           >
             <Text fontSize={["16px", "18px", "20px", "24px"]} mb="24px">
@@ -100,7 +102,7 @@ const YourPlans = ({ title }) => {
             borderLeftColor="#E2E0E0"
             borderLeftWidth="1px"
           >
-            {!user?.is_verified && !plans?.length > 0 && (
+            {(!user?.is_verified || !plans?.length > 0) && (
               <>
                 <Text
                   fontSize={["16px", "18px", "20px", "24px"]}
@@ -110,7 +112,6 @@ const YourPlans = ({ title }) => {
                 >
                   Setup Guide
                 </Text>
-
                 <Box>
                   {!user?.is_verified && (
                     <Link href="/settings ">
