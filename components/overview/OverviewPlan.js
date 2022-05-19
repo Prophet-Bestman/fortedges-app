@@ -9,8 +9,6 @@ const OverviewPlan = ({ plan }) => {
   const { investment, name, profit, parent_plan_name, parent_goal_name } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState({});
 
-  // console.log("Plan: ", plan);
-
   useEffect(() => {
     if (plan !== undefined) {
       if (!!parent_goal_name) {

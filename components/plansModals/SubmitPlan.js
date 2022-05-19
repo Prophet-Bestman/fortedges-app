@@ -24,6 +24,7 @@ import * as yup from "yup";
 import { useCreateCustomPlan } from "api/plans";
 import SuccessModal from "components/SuccessModal";
 import ErrorModal from "components/ErrorModal";
+import PlanCreated from "./PlanCreated";
 
 const SubmitPlan = ({ closeParent }) => {
   const { planFormState, dispatch: setOpen } = useContext(PlanFormContext);
@@ -166,11 +167,16 @@ const SubmitPlan = ({ closeParent }) => {
           </Box>
         </ModalBody>
       </ModalContent>
-      <SuccessModal
-        isOpen={isSuccessOpen}
-        msg="Plan Creation Successful"
-        closeParent={onParentClose}
-      />
+
+      {!!createdPlan && createdPlan?.data && (
+        <PlanCreated
+          isOpen={isSuccessOpen}
+          msg="Plan Creation Successful"
+          closeParent={onParentClose}
+          plan={createdPlan?.data}
+        />
+      )}
+
       <ErrorModal
         isOpen={isErrorOpen}
         msg="Error Occurred. Try again later"

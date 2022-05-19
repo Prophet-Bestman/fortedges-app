@@ -140,6 +140,9 @@ const CreatePlan = () => {
               <MdArrowForwardIos fontSize="12px" />
             </Box>
           </Flex>
+
+          {/* ================================== */}
+          {/* ================================== */}
           {/* LARGE SCREENS VIEW */}
           <Flex
             display={["none", , "flex"]}
@@ -151,7 +154,10 @@ const CreatePlan = () => {
               <Goal userID={userID} key={goal.action} goal={goal} />
             ))}
           </Flex>
-          {/* MOBILE VIEW */}
+
+          {/* ================================== */}
+          {/* ================================== */}
+          {/* ============== MOBILE VIEW =========== */}
           <Box display={["block", , "none"]}>
             <Swiper
               slidesPerView={2}

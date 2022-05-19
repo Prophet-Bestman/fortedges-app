@@ -18,6 +18,7 @@ import { goalFormActions, GoalFormContext } from "providers/GoalFormProvider";
 import { useCreateCustomPlan } from "api/plans";
 import SuccessModal from "components/SuccessModal";
 import ErrorModal from "components/ErrorModal";
+import PlanCreated from "./PlanCreated";
 
 const GoalFormThree = ({ setFormStep, formState, onParentClose }) => {
   const { goalFormState } = useContext(GoalFormContext);
@@ -127,11 +128,14 @@ const GoalFormThree = ({ setFormStep, formState, onParentClose }) => {
           </Button>
         </Flex>
       </form>
-      <SuccessModal
-        isOpen={isSuccessOpen}
-        msg="Goal Creation Successful"
-        closeParent={closeParent}
-      />
+      {!!createdGoal && createdGoal?.data && (
+        <PlanCreated
+          isOpen={isSuccessOpen}
+          msg="Plan Creation Successful"
+          closeParent={onParentClose}
+          plan={createdGoal?.data}
+        />
+      )}
       <ErrorModal
         isOpen={isErrorOpen}
         msg="Error Occurred. Try again later"
