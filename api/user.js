@@ -23,6 +23,23 @@ const useGetUser = () => {
   );
 };
 
+export const useGetVerifiedUser = () => {
+  const headers = configOptions();
+  const user_id = getUserID();
+  return useQuery(["user", user_id], () =>
+    request
+      .get(`/${user_id}`, {
+        headers: headers,
+      })
+      .then((res) => res)
+      .catch((err) => {
+        if (err.response.status === 403) {
+          localStorage.clear();
+        } else return err;
+      })
+  );
+};
+
 const useAdminGetUser = (user_id) => {
   const headers = configOptions();
   return useQuery(["admin-user", user_id], () =>

@@ -1,9 +1,13 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MainHeader from "./MainHeader";
 import MainNav from "./MainNav";
+import { useGetUser, useGetVerifiedUser } from "api/user";
+import { getUserFromLocalStorage } from "api/config";
 
 const MainLayout = ({ children }) => {
+  const { data } = useGetVerifiedUser();
+
   return (
     <Box>
       <Grid

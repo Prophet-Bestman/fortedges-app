@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import AuthNav from "./AuthNav";
+
 const AuthLayout = ({ children }) => {
   return (
     <Box>

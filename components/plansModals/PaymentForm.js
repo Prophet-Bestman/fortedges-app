@@ -47,7 +47,6 @@ const PaymentForm = ({
       .required()
       .min(plan?.investment > 0 ? 0 : 4000),
   });
-
   const {
     register,
     handleSubmit,

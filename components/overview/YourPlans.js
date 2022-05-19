@@ -87,7 +87,7 @@ const YourPlans = ({ title }) => {
                 </SwiperSlide>
                 {plans?.length > 0 &&
                   plans.slice(0, 4).map((plan) => (
-                    <SwiperSlide key={plan.name}>
+                    <SwiperSlide key={plan._id}>
                       <OverviewPlan plan={plan} />
                     </SwiperSlide>
                   ))}
