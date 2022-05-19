@@ -29,8 +29,6 @@ import * as yup from "yup";
 import { options } from "data";
 import { PlanContext } from "providers/PlanProvider";
 import { useDeposit } from "api/transactions";
-import ErrorModal from "components/ErrorModal";
-import { useGetMops } from "api/mop";
 
 const optionsArr = Object.entries(options);
 const PaymentForm = ({
@@ -44,7 +42,10 @@ const PaymentForm = ({
   const { plan } = useContext(PlanContext);
   const [requestSent, setRequestSent] = useState(false);
   const planSchema = yup.object({
-    amount: yup.number().required(),
+    amount: yup
+      .number()
+      .required()
+      .min(plan?.investment > 0 ? 0 : 4000),
   });
 
   const {
@@ -124,7 +125,7 @@ const PaymentForm = ({
 
       <ModalBody>
         <form onSubmit={handleSubmit(submit)}>
-          <Stack>
+          <Stack mb="32px">
             <Text fontSize={"12px"} color="text.grey">
               Amount
             </Text>
@@ -146,12 +147,23 @@ const PaymentForm = ({
                 type="number"
                 h="48px"
                 placeholder="10,000"
-                mb="32px"
                 // defaultValue={formState.amount}
                 variant={errors.amount ? "error" : "outline"}
                 {...register("amount")}
               />
             </InputGroup>
+
+            {plan?.investment > 0 ? null : (
+              <Text color="app.primary" fontSize="12px" fontWeight={600}>
+                Min- $4,000
+              </Text>
+            )}
+
+            {!!errors && errors?.amount && (
+              <Text color="red.500" fontSize="12px" fontWeight={500}>
+                A minimum of $4,000 is required on first funding of a new plan
+              </Text>
+            )}
           </Stack>
 
           <Stack mb="32px">
