@@ -30,8 +30,6 @@ const YourPlans = ({ title }) => {
     if (plansData != undefined) setPlans(plansData.custom_plans);
   }, [plansData]);
 
-  console.log("USER: ", user);
-
   return (
     <Box my="64px">
       <Padding>
