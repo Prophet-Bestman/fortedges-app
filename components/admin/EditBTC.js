@@ -14,11 +14,11 @@ import { useEditMop } from "api/mop";
 import React, { useState, useEffect } from "react";
 
 export const EditBTC = ({ isOpen, onClose, mop }) => {
-  const [address, setAddress] = useState(mop.address);
+  const [address, setAddress] = useState(mop?.address);
   const [mopDetails, setMopDetails] = useState({});
 
   useEffect(() => {
-    if (mop !== undefined) setAddress(mop.address);
+    if (mop !== undefined) setAddress(mop?.address);
   }, [mop]);
 
   const toast = useToast();
@@ -40,7 +40,7 @@ export const EditBTC = ({ isOpen, onClose, mop }) => {
     e.preventDefault();
     // onClose();
     const payload = {
-      mop_id: mop._id,
+      mop_id: mop?._id,
       data: {
         type: "btc",
         address: address,
@@ -51,7 +51,10 @@ export const EditBTC = ({ isOpen, onClose, mop }) => {
   };
 
   useEffect(() => {
-    if (mopEditResp !== undefined && mopEditResp.status === 200) {
+    if (
+      mopEditResp !== undefined &&
+      (mopEditResp.status === 200 || mopEditResp.status === 201)
+    ) {
       setMopDetails(mopEditResp);
       if (mopEditResp !== mopDetails) {
         successToast();
@@ -99,11 +102,11 @@ export const EditBTC = ({ isOpen, onClose, mop }) => {
 };
 
 export const EditETH = ({ isOpen, onClose, mop }) => {
-  const [address, setAddress] = useState(mop.address);
+  const [address, setAddress] = useState(mop?.address);
   const [mopDetails, setMopDetails] = useState({});
 
   useEffect(() => {
-    if (mop !== undefined) setAddress(mop.address);
+    if (mop !== undefined) setAddress(mop?.address);
   }, [mop]);
 
   const toast = useToast();
@@ -124,7 +127,7 @@ export const EditETH = ({ isOpen, onClose, mop }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const payload = {
-      mop_id: mop._id,
+      mop_id: mop?._id,
       data: {
         type: "eth",
         address: address,
@@ -135,7 +138,10 @@ export const EditETH = ({ isOpen, onClose, mop }) => {
   };
 
   useEffect(() => {
-    if (mopEditResp !== undefined && mopEditResp.status === 200) {
+    if (
+      mopEditResp !== undefined &&
+      (mopEditResp.status === 200 || mopEditResp.status === 201)
+    ) {
       setMopDetails(mopEditResp);
       if (mopEditResp !== mopDetails) {
         successToast();
