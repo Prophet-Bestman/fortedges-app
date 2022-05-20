@@ -133,7 +133,7 @@ const UserDetails = ({ userID }) => {
             Total Profit
           </Text>
           <Text textAlign="center" fontSize={"28px"}>
-            {formatter.format(user?.profit || 0)}
+            {formatter.format(user?.total_profit || 0)}
           </Text>
         </Box>
       </Flex>
