@@ -1,13 +1,11 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
-import MobilePageTitle from "components/MobilePageTitle";
+import { useGetVerifiedUser } from "api/user";
 import React from "react";
 import AdminNav from "./AdminNav";
 import AdminTopBar from "./AdminTopBar";
-import AuthNav from "./AuthNav";
-import MainHeader from "./MainHeader";
-import MainNav from "./MainNav";
 
 const AdminLayout = ({ children }) => {
+  const { data } = useGetVerifiedUser();
   return (
     <Box>
       <Grid
