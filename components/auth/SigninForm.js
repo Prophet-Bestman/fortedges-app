@@ -5,25 +5,25 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import React, { useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { MdOutlineErrorOutline } from "react-icons/md";
 
-import { config, signinSchema } from "utils";
+import { signinSchema } from "utils";
 import Link from "next/link";
 import { useLogIn } from "api/auth";
 import AuthCard from "./AuthCard";
-import { AuthContext, userActions } from "providers/AuthProvider";
+import VerifyLogin from "./VerifyLogin";
 
 const SigninForm = () => {
-  const { dispatch, getRedirect, clearRedirect } = useContext(AuthContext);
   const [show, setShow] = useState(false);
+  const [loginObj, setLoginObj] = useState(null);
 
   const handleShow = () => {
     setShow(!show);
@@ -37,8 +37,9 @@ const SigninForm = () => {
     resolver: yupResolver(signinSchema),
   });
 
-  const router = useRouter();
   const toast = useToast();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const inValidCredentialsToast = () => {
     toast({
@@ -83,20 +84,19 @@ const SigninForm = () => {
       password: data.password,
       device: {},
     };
+    setLoginObj(data);
     login(data);
   };
 
   useEffect(() => {
     if (!!error) {
       if (error.message === "Request failed with status code 400") {
-        // inValidCredentialsToast();
         loginErrorToast();
       } else if (
         error.message === "Request failed with status code 404" ||
         error.message === "Request failed with status code 500"
       ) {
         inValidCredentialsToast();
-        // loginErrorToast();
       }
     }
   }, [error]);
@@ -104,24 +104,8 @@ const SigninForm = () => {
   useEffect(() => {
     if (!loginData) {
     }
-    if (loginData?.user) {
-      const user = config.key.user;
-      const token = config.key.token;
-      const wallet = config.key.wallet;
-      const userID = config.key.userID;
-      const result = JSON.stringify(loginData.user);
-      const walletData = JSON.stringify(loginData.wallet);
-      localStorage.clear();
-      dispatch({ type: userActions.LOGIN, payload: loginData.user });
-      // localStorage.setItem(user, result);
-      localStorage.setItem(token, loginData.user.access_token);
-      localStorage.setItem(wallet, walletData);
-      localStorage.setItem(userID, loginData.user._id);
-      successToast();
-
-      const redirect = getRedirect();
-      clearRedirect();
-      !!redirect ? router.push(redirect) : router.push("/");
+    if (loginData === "Two-factor authentication code sent") {
+      onOpen();
     }
   }, [loginData]);
 
@@ -208,6 +192,10 @@ const SigninForm = () => {
           </Text>
         </Link>
       </Box>
+
+      {isOpen && (
+        <VerifyLogin isOpen={isOpen} onClose={onClose} payload={loginObj} />
+      )}
     </Box>
   );
 };

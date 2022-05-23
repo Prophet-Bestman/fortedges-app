@@ -26,6 +26,19 @@ const useLogIn = () => {
   );
 };
 
+const useVerifyLogIn = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (values) =>
+      request
+        .post(`/auth/login?code=${values.code}`, values.data)
+        .then((res) => res),
+    {
+      onSuccess: () => queryClient.invalidateQueries("user"),
+    }
+  );
+};
+
 const useSendEmailVerification = () => {
   const queryClient = useQueryClient();
   const headers = configOptions();
@@ -156,4 +169,5 @@ export {
   useSendChangeEmailCode,
   useSendChangePasswordCode,
   useChangePassword,
+  useVerifyLogIn,
 };
