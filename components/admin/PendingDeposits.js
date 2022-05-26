@@ -33,7 +33,7 @@ const PendingDeposits = ({ deposits }) => {
           </Thead>
           {!!deposits && deposits?.length > 0 && (
             <Tbody fontSize="20px" gap="80px">
-              {deposits.map((deposit) => (
+              {deposits?.map((deposit) => (
                 <PendingDepositRow deposit={deposit} key={deposit.id} />
               ))}
             </Tbody>

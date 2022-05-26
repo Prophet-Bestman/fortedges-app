@@ -72,11 +72,12 @@ const FilterModal = ({
                   onChange={(e) => setPlan(e.target.value)}
                 >
                   <>
-                    {plans.map((plan) => (
-                      <option value={plan._id} key={plan._id}>
-                        {plan.name}
-                      </option>
-                    ))}
+                    {plans?.length > 0 &&
+                      plans.map((plan) => (
+                        <option value={plan._id} key={plan._id}>
+                          {plan.name}
+                        </option>
+                      ))}
                   </>
                 </Select>
               )}

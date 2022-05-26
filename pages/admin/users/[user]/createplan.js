@@ -89,17 +89,18 @@ const CreatePlan = () => {
                 width: "full",
               }}
             >
-              {explorePlans.map((plan) => (
-                <SwiperSlide
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {}}
-                  key={plan._id}
-                >
-                  <PlanResponsive plan={plan} userID={userID} />
-                </SwiperSlide>
-              ))}
+              {explorePlans?.length > 0 &&
+                explorePlans.map((plan) => (
+                  <SwiperSlide
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {}}
+                    key={plan._id}
+                  >
+                    <PlanResponsive plan={plan} userID={userID} />
+                  </SwiperSlide>
+                ))}
             </Swiper>
           </Box>
         )}

@@ -37,9 +37,9 @@ const SigninForm = () => {
     resolver: yupResolver(signinSchema),
   });
 
-  const toast = useToast();
-
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const toast = useToast();
 
   const inValidCredentialsToast = () => {
     toast({
@@ -52,23 +52,13 @@ const SigninForm = () => {
       position: "top",
     });
   };
+
   const loginErrorToast = () => {
     toast({
       title: "Login Error",
       description: "An error occured, try again later",
       status: "error",
       duration: 4000,
-      isClosable: true,
-      variant: "left-accent",
-      position: "top",
-    });
-  };
-  const successToast = () => {
-    toast({
-      title: "Logged In",
-      description: "Redirecting to dashboard...",
-      status: "success",
-      duration: 1000,
       isClosable: true,
       variant: "left-accent",
       position: "top",

@@ -44,11 +44,13 @@ const News = () => {
             width: "full",
           }}
         >
-          {newsList.map((news, i) => (
-            <SwiperSlide key={i}>
-              <NewsCard news={news} />
-            </SwiperSlide>
-          ))}
+          {!!newsList &&
+            newsList?.length > 0 &&
+            newsList.map((news, i) => (
+              <SwiperSlide key={i}>
+                <NewsCard news={news} />
+              </SwiperSlide>
+            ))}
         </Swiper>
       </Padding>
     </Box>

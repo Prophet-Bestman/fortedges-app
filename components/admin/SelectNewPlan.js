@@ -150,17 +150,19 @@ const SelectNewPlan = ({ isOpen, onClose, action }) => {
                   width: "full",
                 }}
               >
-                {explorePlans.map((plan) => (
-                  <SwiperSlide
-                    key={plan.name}
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    onClick={() => handlePlan(plan.name)}
-                  >
-                    <PlanResponsive plan={plan} />
-                  </SwiperSlide>
-                ))}
+                {!!explorePlans &&
+                  explorePlans?.length > 0 &&
+                  explorePlans.map((plan) => (
+                    <SwiperSlide
+                      key={plan.name}
+                      style={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => handlePlan(plan.name)}
+                    >
+                      <PlanResponsive plan={plan} />
+                    </SwiperSlide>
+                  ))}
               </Swiper>
             </Box>
             <Box>
@@ -204,73 +206,20 @@ const SelectNewPlan = ({ isOpen, onClose, action }) => {
                 gap="12px"
                 justify="center"
               >
-                {goals.map((goal) => (
-                  <Goal
-                    handleGoal={() => handleGoal(goal.action)}
-                    key={goal.action}
-                    goal={goal}
-                  />
-                ))}
-              </Flex>
-              {/* <Box display={["block", , "none"]}>
-                <Swiper
-                  slidesPerView={2}
-                  spaceBetween={10}
-                  pagination={{
-                    clickable: true,
-                  }}
-                  breakpoints={{
-                    767: {
-                      slidesPerView: 3,
-                      spaceBetween: 30,
-                    },
-                    1024: {
-                      slidesPerView: 3,
-                      spaceBetween: 30,
-                    },
-                  }}
-                  modules={[Pagination]}
-                  className="mySwiper"
-                  style={{
-                    paddingBottom: "50px",
-                    width: "full",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  {goals.map((goal) => (
-                    <SwiperSlide
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      key={goal.name}
-                    >
-                      <Goal
-                        handleGoal={() => handleGoal(goal.action)}
-                        key={goal.action}
-                        goal={goal}
-                      />
-                    </SwiperSlide>
+                {goals?.length > 0 &&
+                  goals.map((goal) => (
+                    <Goal
+                      handleGoal={() => handleGoal(goal.action)}
+                      key={goal.action}
+                      goal={goal}
+                    />
                   ))}
-                </Swiper>
-              </Box> */}
+              </Flex>
             </Box>
           </ModalBody>
         </ModalContent>
       )}
 
-      {/* {step === 2 && action === "DEPOSIT" && (
-        <AdminPaymentForm setStep={setStep} />
-      )}
-      {step === 2 && action === "WITHDRAW" && (
-        <AdminWithdraw setStep={setStep} />
-      )}
-      {step === 2 && action === "ADD_BALANCE" && (
-        <AddBalance onActionOpen={onActionOpen} setStep={setStep} />
-      )}
-      {step === 2 && action === "ADD_BONUS" && (
-        <AddBonus onActionOpen={onActionOpen} setStep={setStep} />
-      )} */}
       <ConfirmModal
         isOpen={isConfirmOpen}
         onClose={onConfirmClose}

@@ -101,9 +101,11 @@ const SelectPlan = ({ isOpen, onClose, action, userID }) => {
               gap="20px"
               flexDir="column"
             >
-              {userPlans.map((plan, i) => (
-                <PlanBox onClick={() => next(plan)} plan={plan} key={i} />
-              ))}
+              {!!userPlans &&
+                userPlans?.length > 0 &&
+                userPlans?.map((plan, i) => (
+                  <PlanBox onClick={() => next(plan)} plan={plan} key={i} />
+                ))}
             </Flex>
           </ModalBody>
         </ModalContent>

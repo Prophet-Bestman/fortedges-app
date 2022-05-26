@@ -12,6 +12,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { landingUrl } from "api/baseUrls";
 import UserSelectPlan from "components/overview/UserSelectPlan";
 import Link from "next/link";
 import { AuthContext, userActions } from "providers/AuthProvider";
@@ -88,7 +89,7 @@ const MainMobileNav = ({ isOpen, onClose, onFundOpen }) => {
                 <Link href="/settings">Settings</Link>
               </Text>
               <Text _hover={{ color: "app.primary" }} mb="16px">
-                <Link href="#">Help</Link>
+                <Link href={`${landingUrl}/support`}>Support</Link>
               </Text>
               <Text
                 _hover={{ color: "red.600" }}

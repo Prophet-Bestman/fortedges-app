@@ -58,18 +58,13 @@ const UserPlans = ({ userID }) => {
                   width: "full",
                 }}
               >
-                {/* <SwiperSlide>
-                  <Flex justifyContent="center" h="full" w="full">
-                    <Link href="/myplans/create">
-                      <Image src="/img/create_plan.png" h="196px" />
-                    </Link>
-                  </Flex>
-                </SwiperSlide> */}
-                {userPlans?.map((plan, i) => (
-                  <SwiperSlide key={i}>
-                    <UserPlan plan={plan} />
-                  </SwiperSlide>
-                ))}
+                {!!userPlans &&
+                  userPlans?.length > 0 &&
+                  userPlans?.map((plan, i) => (
+                    <SwiperSlide key={i}>
+                      <UserPlan plan={plan} />
+                    </SwiperSlide>
+                  ))}
               </Swiper>
             </Box>
           </GridItem>

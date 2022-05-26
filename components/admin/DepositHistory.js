@@ -32,7 +32,7 @@ const DepositHistory = ({ deposits }) => {
           </Thead>
           {!!deposits && deposits?.length > 0 && (
             <Tbody fontSize="20px" gap="80px">
-              {deposits.map((deposit) => (
+              {deposits?.map((deposit) => (
                 <DepositRow deposit={deposit} key={deposit.id} />
               ))}
             </Tbody>

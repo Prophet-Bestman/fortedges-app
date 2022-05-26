@@ -1,20 +1,24 @@
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext, userActions } from "providers/AuthProvider";
+import React, { useContext, useEffect } from "react";
+import { AuthContext } from "providers/AuthProvider";
 
 const AuthGuard = ({ children }) => {
-  const { user, loading, setRedirect, redirect } = useContext(AuthContext);
+  const { user, loading, setRedirect } = useContext(AuthContext);
   const router = useRouter();
-
-  const [userState, setUserState] = useState("");
 
   useEffect(() => {
     if (!loading) {
       //auth is initialized and there is no user
       if (!user || Object.keys(user).length === 0) {
         // remember the page that user tried to access
-        setRedirect(router.route);
-        setUserState("UnAuthenticated");
+        let redirect = router.route;
+
+        if (redirect.includes("[plan]")) {
+          if (!!router?.query?.plan) {
+            redirect = redirect.replace("[plan]", router?.query?.plan);
+          }
+        }
+        setRedirect(redirect);
 
         // redirect
         router.push("/auth/signin");

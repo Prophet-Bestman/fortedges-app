@@ -35,7 +35,7 @@ const PendingWithdrawals = ({ withdrawals }) => {
             </Thead>
             {!!withdrawals && withdrawals?.length > 0 && (
               <Tbody fontSize="20px" gap="80px">
-                {withdrawals.map((withdrawal) => (
+                {withdrawals?.map((withdrawal) => (
                   <PendingWithdrawalRow
                     withdrawal={withdrawal}
                     key={withdrawal._id}

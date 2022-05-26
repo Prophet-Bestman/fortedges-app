@@ -5,6 +5,7 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import React, { useState, useEffect, useContext } from "react";
@@ -19,10 +20,11 @@ import { config, signinSchema } from "utils";
 import { useLogIn } from "api/auth";
 import AuthCard from "components/auth/AuthCard";
 import { AuthContext, userActions } from "providers/AuthProvider";
+import VerifyAdminLogin from "./VerifyAdminLogin";
 
 const AdminSigninForm = () => {
-  const { dispatch, getRedirect, clearRedirect } = useContext(AuthContext);
   const [show, setShow] = useState(false);
+  const [loginObj, setLoginObj] = useState({});
 
   const handleShow = () => {
     setShow(!show);
@@ -36,25 +38,14 @@ const AdminSigninForm = () => {
     resolver: yupResolver(signinSchema),
   });
 
-  const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const toast = useToast();
 
   const inValidCredentialsToast = () => {
     toast({
       title: "Invalid Email or Password",
       description: "Check your login details and try again",
-      status: "error",
-      duration: 4000,
-      isClosable: true,
-      variant: "left-accent",
-      position: "top",
-    });
-  };
-
-  const nonAdminToast = () => {
-    toast({
-      title: "Invalid Admin",
-      description: "You are not an admin. Login with an admin account",
       status: "error",
       duration: 4000,
       isClosable: true,
@@ -74,17 +65,6 @@ const AdminSigninForm = () => {
       position: "top",
     });
   };
-  const successToast = () => {
-    toast({
-      title: "Logged In",
-      description: "Redirecting to dashboard...",
-      status: "success",
-      duration: 1000,
-      isClosable: true,
-      variant: "left-accent",
-      position: "top",
-    });
-  };
 
   // ======= SIGN UP LOGIC ==========
   const { mutate: login, isLoading, data: loginData, error } = useLogIn();
@@ -95,6 +75,7 @@ const AdminSigninForm = () => {
       password: data.password,
       device: {},
     };
+    setLoginObj(data);
     login(data);
   };
 
@@ -116,25 +97,8 @@ const AdminSigninForm = () => {
   useEffect(() => {
     if (!loginData) {
     }
-    if (loginData?.user) {
-      if (loginData?.user?.access_level < 2) {
-        nonAdminToast();
-      } else {
-        const token = config.key.token;
-        const wallet = config.key.wallet;
-        const userID = config.key.userID;
-        const walletData = JSON.stringify(loginData.wallet);
-        localStorage.clear();
-        dispatch({ type: userActions.LOGIN, payload: loginData.user });
-        localStorage.setItem(token, loginData.user.access_token);
-        localStorage.setItem(wallet, walletData);
-        localStorage.setItem(userID, loginData.user._id);
-        successToast();
-
-        const redirect = getRedirect();
-        clearRedirect();
-        !!redirect ? router.push(redirect) : router.push("/admin");
-      }
+    if (loginData === "Two-factor authentication code sent") {
+      onOpen();
     }
   }, [loginData]);
 
@@ -209,6 +173,14 @@ const AdminSigninForm = () => {
           </Button>
         </form>
       </AuthCard>
+
+      {isOpen && (
+        <VerifyAdminLogin
+          isOpen={isOpen}
+          onClose={onClose}
+          payload={loginObj}
+        />
+      )}
     </Box>
   );
 };

@@ -46,6 +46,7 @@ const PlansTab = ({ plans }) => {
             </Flex>
           </SwiperSlide>
           {!!plans &&
+            plans?.length > 0 &&
             plans.map((plan) => (
               <SwiperSlide key={plan._id}>
                 <OverviewPlan plan={plan} />
@@ -80,6 +81,7 @@ const PlansTab = ({ plans }) => {
           }}
         >
           {!!plans &&
+            plans?.length > 0 &&
             plans.map((plan) => (
               <SwiperSlide key={plan._id}>
                 <PlanLarge plan={plan} />

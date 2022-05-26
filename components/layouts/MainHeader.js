@@ -24,6 +24,7 @@ import { useGetNotifications } from "api/notifications";
 import { AuthContext, userActions } from "providers/AuthProvider";
 import PlanProvider from "providers/PlanProvider";
 import UserSelectPlan from "components/overview/UserSelectPlan";
+import { landingUrl } from "api/baseUrls";
 
 const MainHeader = () => {
   const [notificationCount, setNotificationCount] = useState(0);
@@ -197,7 +198,7 @@ const MainHeader = () => {
                     <Link href="/settings">Settings</Link>
                   </Text>
                   <Text _hover={{ color: "app.primary" }} mb="16px">
-                    <Link href="#">Help</Link>
+                    <Link href={`${landingUrl}/support`}>Support</Link>
                   </Text>
                   <Text
                     _hover={{ color: "red.700" }}

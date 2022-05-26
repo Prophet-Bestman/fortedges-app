@@ -1,20 +1,26 @@
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext, userActions } from "providers/AuthProvider";
+import React, { useContext, useEffect } from "react";
+import { AuthContext } from "providers/AuthProvider";
 
 const AdminGuard = ({ children }) => {
   const { user, loading, setRedirect } = useContext(AuthContext);
   const router = useRouter();
-
-  const [userState, setUserState] = useState("");
 
   useEffect(() => {
     if (!loading) {
       //auth is initialized and there is no user
       if (!user || Object.keys(user).length === 0) {
         // remember the page that user tried to access
-        setRedirect(router.route);
-        setUserState("UnAuthenticated");
+
+        let redirect = router.route;
+
+        if (redirect.includes("[user]")) {
+          if (!!router?.query?.user) {
+            redirect = redirect.replace("[user]", router?.query?.user);
+          }
+        }
+        setRedirect(redirect);
+
         // redirect
         router.push("/admin/auth/signin");
       }

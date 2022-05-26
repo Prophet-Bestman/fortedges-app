@@ -82,17 +82,19 @@ const Explore = () => {
               width: "full",
             }}
           >
-            {explorePlans.map((plan) => (
-              <SwiperSlide
-                style={{
-                  cursor: "pointer",
-                }}
-                onClick={() => {}}
-                key={plan._id}
-              >
-                <PlanResponsive plan={plan} />
-              </SwiperSlide>
-            ))}
+            {!!explorePlans &&
+              explorePlans?.length > 0 &&
+              explorePlans.map((plan) => (
+                <SwiperSlide
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {}}
+                  key={plan._id}
+                >
+                  <PlanResponsive plan={plan} />
+                </SwiperSlide>
+              ))}
           </Swiper>
         </Box>
       )}
@@ -146,9 +148,8 @@ const Explore = () => {
           gap="10px"
           justify="center"
         >
-          {goals.map((goal) => (
-            <Goal key={goal.action} goal={goal} />
-          ))}
+          {goals?.length > 0 &&
+            goals.map((goal) => <Goal key={goal.action} goal={goal} />)}
         </Flex>
 
         {/* MOBILE VIEW */}
