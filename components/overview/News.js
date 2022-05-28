@@ -1,6 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import { Padding } from "components/layouts";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import NewsCard from "./NewsCard";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -8,8 +8,17 @@ import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import { newsList } from "data";
+import { useGetRecentBlogs } from "api/blogs";
 
 const News = () => {
+  const [blogs, setBlogs] = useState([]);
+
+  const { data: blogsData } = useGetRecentBlogs();
+
+  useEffect(() => {
+    if (!!blogsData && blogsData?.items.length > 0) setBlogs(blogsData?.items);
+  }, blogsData);
+
   return (
     <Box mb="80px" maxW={["100vw", , , "80vw"]}>
       <Padding>
@@ -19,7 +28,7 @@ const News = () => {
 
         <Swiper
           slidesPerView={1}
-          spaceBetween={10}
+          spaceBetween={20}
           pagination={{
             clickable: true,
           }}
@@ -44,10 +53,10 @@ const News = () => {
             width: "full",
           }}
         >
-          {!!newsList &&
-            newsList?.length > 0 &&
-            newsList.map((news, i) => (
-              <SwiperSlide key={i}>
+          {!!blogs &&
+            blogs?.length > 0 &&
+            blogs?.slice(0, 4).map((news) => (
+              <SwiperSlide key={news?.sys?.id}>
                 <NewsCard news={news} />
               </SwiperSlide>
             ))}

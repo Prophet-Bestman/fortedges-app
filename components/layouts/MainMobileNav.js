@@ -1,8 +1,6 @@
 import {
   Box,
-  Button,
   Circle,
-  Flex,
   Image,
   Modal,
   ModalBody,
@@ -10,13 +8,11 @@ import {
   ModalContent,
   ModalOverlay,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { landingUrl } from "api/baseUrls";
-import UserSelectPlan from "components/overview/UserSelectPlan";
 import Link from "next/link";
 import { AuthContext, userActions } from "providers/AuthProvider";
-import { NavContext, navStates } from "providers/NavProvider";
+import { NavContext } from "providers/NavProvider";
 
 import React, { useContext, useEffect } from "react";
 import { mobileNavs } from "utils";

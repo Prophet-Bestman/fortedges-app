@@ -1,8 +1,8 @@
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import React from "react";
-import theme from "../theme";
 import "@fontsource/dm-sans";
 import "@fontsource/coustard";
+import theme from "../theme";
 import NavProvider from "providers/NavProvider";
 import { AuthLayout, MainLayout } from "components/layouts";
 import PlanFormProvider from "providers/PlanFormProvider";
