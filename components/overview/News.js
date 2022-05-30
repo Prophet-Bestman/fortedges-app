@@ -1,14 +1,13 @@
 import { Box, Text } from "@chakra-ui/react";
 import { Padding } from "components/layouts";
 import React, { useState, useEffect } from "react";
-import NewsCard from "./NewsCard";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
-import { newsList } from "data";
 import { useGetRecentBlogs } from "api/blogs";
+import NewsCard from "./NewsCard";
 
 const News = () => {
   const [blogs, setBlogs] = useState([]);

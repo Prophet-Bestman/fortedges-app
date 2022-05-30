@@ -183,9 +183,9 @@ const SigninForm = () => {
         </Link>
       </Box>
 
-      {isOpen && (
-        <VerifyLogin isOpen={isOpen} onClose={onClose} payload={loginObj} />
-      )}
+      {/* {isOpen && ( */}
+      <VerifyLogin isOpen={isOpen} onClose={onClose} payload={loginObj} />
+      {/* )} */}
     </Box>
   );
 };
