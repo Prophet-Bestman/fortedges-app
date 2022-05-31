@@ -275,7 +275,7 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
           </Box>
 
           <Text fontSize={"14px"} color="app.primary" fontWeight={600}>
-            NOTE: Screenshot size must be less than 500KB
+            NOTE: Screenshot size must be less than 1.5 MB
           </Text>
 
           <Box mt="24px">
@@ -285,21 +285,21 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
 
             <Button
               onClick={handleSendPOP}
-              isDisabled={!selectedFile || POPImg?.size > 505000}
+              isDisabled={!selectedFile || POPImg?.size > 1705000}
               w="full"
               my="16px"
               isLoading={isLoading}
             >
               Continue
             </Button>
-            {POPImg?.size > 505000 && (
+            {POPImg?.size > 1705000 && (
               <Text
                 color="red"
                 fontSize="13px"
                 fontWeight={600}
                 textAlign="center"
               >
-                Uploaded Image must be less than 500KB
+                Uploaded Image must be less than 1.5 MB
               </Text>
             )}
           </Box>

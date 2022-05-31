@@ -1,10 +1,11 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { formatter } from "utils";
 import PorfolioDataRep from "./PorfolioDataRep";
 import { useGetPortfolio } from "api/portfolio";
+import OurPortfolio from "components/plansModals/OurPortfolio";
 
 const PortfolioTab = () => {
   const [assetClasses, setAssetClasses] = useState([]);
@@ -27,6 +28,8 @@ const PortfolioTab = () => {
     }
   }, [portfolio]);
 
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
   return (
     <Box>
       <Flex
@@ -40,7 +43,9 @@ const PortfolioTab = () => {
 
         <Link href="#">
           <Flex alignItems="center" gap="4px">
-            <Text color="app.primary">See our portfolio</Text>
+            <Text color="app.primary" onClick={onOpen} cursor="pointer">
+              See our portfolio
+            </Text>
             <RiArrowRightSLine color="#7950DA" />
           </Flex>
         </Link>
@@ -87,6 +92,7 @@ const PortfolioTab = () => {
       </Flex>
 
       <PorfolioDataRep portfolio={portfolio} />
+      <OurPortfolio isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 };

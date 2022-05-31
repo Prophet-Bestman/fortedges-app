@@ -65,11 +65,11 @@ const PlanBalance = () => {
             mb="4px"
             textAlign={["center", , "start"]}
           >
-            Total Deposit
+            Deposit Value
           </Text>
           <Text color="text.black" fontSize={"24px"} fontWeight="600">
-            {!!profit && profit !== NaN
-              ? formatter.format(total_investment)
+            {!!investment && investment !== NaN
+              ? formatter.format(investment)
               : "$0.00"}
           </Text>
         </Box>

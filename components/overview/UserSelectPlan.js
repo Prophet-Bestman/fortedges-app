@@ -55,8 +55,9 @@ const UserSelectPlan = ({ isOpen, onClose }) => {
 
           <AiOutlineClose cursor="pointer" onClick={onClose} />
         </ModalHeader>
-        <ModalBody h="full">
+        <ModalBody h="full" overflowY="scroll" my="50px">
           <Flex
+            my="30px"
             justifyContent="center"
             alignItems="center"
             gap="20px"

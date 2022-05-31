@@ -110,7 +110,7 @@ const PorfolioDataRep = ({ portfolio }) => {
               name={data[1].name}
               color="text.green"
               colorScheme="green"
-              amount={data[2]?.value?.toFixed(2)}
+              amount={data[1]?.value?.toFixed(2)}
               progress={progress?.realEstate}
             />
           </Flex>

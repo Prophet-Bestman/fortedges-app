@@ -1,5 +1,6 @@
 import { Box, Flex, Progress, Text } from "@chakra-ui/react";
 import React from "react";
+import { formatter } from "utils";
 
 const ProgressBar = ({ amount, progress, name, color, colorScheme }) => {
   return (
@@ -8,7 +9,7 @@ const ProgressBar = ({ amount, progress, name, color, colorScheme }) => {
       <Flex mb="10px" justify="space-between" w="full">
         <Text color="text.black">{name}</Text>
         <Text fontWeight="700" color={color}>
-          {amount}
+          {!!amount ? formatter.format(amount) : formatter.format(0)}
         </Text>
       </Flex>
       <Flex w="full" alignItems="center">

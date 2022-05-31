@@ -191,6 +191,16 @@ const IdPageTwo = ({ setIDPage, title, type }) => {
                 </Text>
               </Flex>
             )}
+
+            {uploadedImg?.size > 5705000 && (
+              <Text
+                fontSize="14px"
+                textAlign="center"
+                color="red.500"
+                fontWeight={600}
+                my="20px"
+              >{`Image must be between 10KB to 5120KB (5MB)`}</Text>
+            )}
           </Box>
 
           {/* UPLOAD BACK COVER */}
@@ -243,17 +253,36 @@ const IdPageTwo = ({ setIDPage, title, type }) => {
                 </Text>
               </Flex>
             )}
+
+            {uploadedImgTwo?.size > 5705000 && (
+              <Text
+                fontSize="14px"
+                textAlign="center"
+                color="red.500"
+                fontWeight={600}
+                mt="20px"
+              >{`Image must be between 10KB to 5120KB (5MB)`}</Text>
+            )}
           </Box>
 
           <Button
-            // disabled={!selectedFile || !selectedFileTwo}
             isLoading={isLoading}
             my="24px"
             w="full"
             onClick={submitID}
+            disabled={
+              !selectedFile ||
+              !selectedFileTwo ||
+              uploadedImg?.size > 5705000 ||
+              uploadedImgTwo?.size > 5705000
+            }
           >
             Continue
           </Button>
+
+          {(uploadedImg?.size > 5705000 || uploadedImgTwo?.size > 5705000) && (
+            <Text>{`Image must be between 10KB to 5120KB (5MB)`}</Text>
+          )}
         </Box>
       </Box>
       <IDSuccess onClose={onClose} isOpen={isOpen} />

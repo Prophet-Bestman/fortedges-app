@@ -15,7 +15,7 @@ const AccountSummary = () => {
     if (plan !== undefined) {
       setLastProfit(plan?.last_roi?.amount);
       setProfit(plan?.profit);
-      setDeposit(plan?.investment);
+      setDeposit(plan?.total_investment);
       setTotal_withdrawal(plan?.total_withdrawal);
     }
   }, [plan]);
@@ -51,7 +51,7 @@ const AccountSummary = () => {
         borderBottomWidth="1px"
         borderColor="#F1F2F4"
       >
-        <Text color="text.grey">Deposit Value</Text>
+        <Text color="text.grey">Total Deposit </Text>
         <Text color="text.black">
           {!!deposit && deposit !== NaN ? formatter.format(deposit) : "$0.00"}
         </Text>
