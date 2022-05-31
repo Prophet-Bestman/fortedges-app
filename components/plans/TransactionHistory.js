@@ -73,16 +73,9 @@ const TransactionHistory = () => {
       {Array.isArray(transactions.transactions) &&
         transactions?.transactions?.length > 0 && (
           <Box borderBottomWidth="0px" borderColor="#F1F2F4">
-            {transactions.transactions
-              ?.slice(0)
-              ?.reverse()
-              ?.slice(0, 4)
-              ?.map((transaction) => (
-                <MiniTransaction
-                  key={transaction.id}
-                  transaction={transaction}
-                />
-              ))}
+            {transactions.transactions?.slice(0, 4)?.map((transaction) => (
+              <MiniTransaction key={transaction.id} transaction={transaction} />
+            ))}
           </Box>
         )}
 

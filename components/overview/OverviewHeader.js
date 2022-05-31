@@ -18,20 +18,11 @@ import PlanProvider from "providers/PlanProvider";
 
 const OverviewHeader = () => {
   const [user, setUser] = useState({});
-  const [wallet, setWallet] = useState({});
   const [show, setShow] = useState(true);
 
   const { data: userData, error } = useGetUser();
 
   const { isOpen, onClose, onOpen } = useDisclosure();
-
-  useEffect(() => {
-    const localWallet = localStorage.getItem(config.key.wallet);
-    if (localWallet != undefined) {
-      const wallet = JSON.parse(localWallet);
-      setWallet(wallet);
-    }
-  }, []);
 
   useEffect(() => {
     let user;

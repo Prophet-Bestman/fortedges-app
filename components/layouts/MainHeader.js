@@ -79,9 +79,6 @@ const MainHeader = () => {
   useEffect(() => {
     if (notifications !== undefined) {
       if (notifications?.length > 0) {
-        // const notifications = notifications?.filter(
-        //   (notification) => notification?.is_read === true
-        // );
         const readNotifications = notifications.filter(
           (notification) => notification?.is_read === false
         );
@@ -219,7 +216,7 @@ const MainHeader = () => {
 
       <Box
         display={["flex", , , "none"]}
-        py="30px"
+        pt="30px"
         justifyContent="space-between"
         pl="24px"
         pr="30px"

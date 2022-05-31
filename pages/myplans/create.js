@@ -34,12 +34,12 @@ const Create = () => {
 
   return (
     <Padding>
-      <Box py="164px">
+      <Box pb="164px" pt="130px">
         <Box
           py="16px"
           borderBottomWidth="1px"
           borderBottomColor="#E7E8ED"
-          mt="36px"
+          mt="16px"
           mb="40px"
         >
           <Text mb="9px" fontSize="20px" color="text.black" fontWeight="600">

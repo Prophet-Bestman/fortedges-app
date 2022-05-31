@@ -1,22 +1,24 @@
 import { Box, Circle, Flex, Text } from "@chakra-ui/react";
 import { PlanContext } from "providers/PlanProvider";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { formatter } from "utils";
 
 const PlanBalance = () => {
   const { plan } = useContext(PlanContext);
 
-  const [total_investment, settotal_investment] = React.useState();
-  const [profit, setProfit] = React.useState();
+  const [total_investment, settotal_investment] = useState(0);
+  const [profit, setProfit] = useState(0);
+  const [investment, setInvestment] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (plan !== undefined) {
       setProfit(plan.profit);
       settotal_investment(plan.total_investment);
+      setInvestment(plan.investment);
     }
   }, [plan]);
 
-  const balance = total_investment + profit;
+  const balance = investment + profit;
 
   let percentageProfit = 0;
 
