@@ -221,7 +221,9 @@ const MainHeader = () => {
         pl="24px"
         pr="30px"
       >
-        <Image src="/img/fortedges_logo.svg" />
+        <Link href="/">
+          <Image src="/img/fortedges_logo.svg" />
+        </Link>
         <Box
           display={["block", null, null, "none"]}
           cursor="pointer"

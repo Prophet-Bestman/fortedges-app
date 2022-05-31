@@ -13,16 +13,18 @@ const MainNav = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   return (
     <Box py="48px" w="full">
-      <Text
-        fontFamily="Coustard"
-        fontSize={["20px", null, null, "24px"]}
-        color="app.primary"
-        cursor="pointer"
-        mb="52px"
-        ml="40px"
-      >
-        fortedges
-      </Text>
+      <Link href="/">
+        <Text
+          fontFamily="Coustard"
+          fontSize={["20px", null, null, "24px"]}
+          color="app.primary"
+          cursor="pointer"
+          mb="52px"
+          ml="40px"
+        >
+          fortedges
+        </Text>
+      </Link>
       <Box display="flex" w="full">
         <Box ml="24px" w="full">
           {mainNavs.map((nav, i) => (
