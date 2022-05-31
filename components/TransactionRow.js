@@ -1,7 +1,8 @@
-import { Td, Text, Tr } from "@chakra-ui/react";
+import { Td, Text, Tr, useDisclosure } from "@chakra-ui/react";
 import { format } from "date-fns";
 import React from "react";
 import { formatter } from "utils";
+import { TransactionModal } from "components/plans";
 
 const statusBg = (status) => {
   if (status === "processing") return "#E9C46A33";
@@ -15,16 +16,10 @@ const statusColor = (status) => {
 };
 
 const TransactionRow = ({ transaction }) => {
-  const {
-    is_complete,
-    status,
-    createdAt,
-    type,
-    amount,
-    id,
-    mode_of_payment,
-    plan,
-  } = transaction;
+  const { status, createdAt, type, amount, id, mode_of_payment, plan } =
+    transaction;
+
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
     <Tr h="60px">
@@ -40,7 +35,7 @@ const TransactionRow = ({ transaction }) => {
       <Td textTransform="uppercase" fontSize={["12px", , "14px"]}>
         {mode_of_payment}
       </Td>
-      <Td>
+      <Td onClick={onOpen} cursor="pointer">
         <Text
           textTransform={"capitalize"}
           bg={() => statusBg(status)}
@@ -54,6 +49,11 @@ const TransactionRow = ({ transaction }) => {
           {status}
         </Text>
       </Td>
+      <TransactionModal
+        isOpen={isOpen}
+        onClose={onClose}
+        transaction={transaction}
+      />
     </Tr>
   );
 };
