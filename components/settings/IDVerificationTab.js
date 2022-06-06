@@ -48,6 +48,8 @@ const IDVerificationTab = () => {
     onClose: onVerifyClose,
   } = useDisclosure();
 
+  console.log("Status: ", idStatus);
+
   return (
     <Box>
       <Text
@@ -93,6 +95,8 @@ const IDVerificationTab = () => {
                 py="2px"
                 fontSize="12px"
                 rounded="full"
+                cursor={!isEmailVerified && "pointer"}
+                onClick={!isEmailVerified && onVerifyOpen}
               >
                 Not Verified
               </Flex>
@@ -160,6 +164,8 @@ const IDVerificationTab = () => {
                 py="2px"
                 fontSize="12px"
                 rounded="full"
+                cursor={idStatus === undefined && "pointer"}
+                onClick={idStatus === undefined && onVerifyOpen}
               >
                 Not Verified
               </Flex>
