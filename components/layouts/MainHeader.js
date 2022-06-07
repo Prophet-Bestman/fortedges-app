@@ -31,8 +31,9 @@ const MainHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { navState } = useContext(NavContext);
   const { dispatch: logout } = useContext(AuthContext);
+  const { dispatch, user } = useContext(AuthContext);
   const pageTitle = navState.pageTitle;
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
   const [notifications, setNotifications] = useState([]);
   const [notificationsError, setNotificationsError] = useState("");
 
@@ -46,11 +47,11 @@ const MainHeader = () => {
   } = useDisclosure();
 
   useEffect(() => {
-    let user;
-    if (userData != undefined) {
-      setUser(userData);
-      user = JSON.stringify(userData);
-      localStorage.setItem(config.key.user, user);
+    // let user;
+    if (userData !== undefined) {
+      dispatch({ type: userActions.LOGIN, payload: userData });
+      // user = JSON.stringify(userData);
+      // localStorage.setItem(config.key.user, user);
     } else {
     }
   }, [userData]);
@@ -71,7 +72,7 @@ const MainHeader = () => {
           .includes("Request failed with status code 403")
       ) {
         setNotificationsError(notificationData);
-        logout({ type: userActions.LOGOUT });
+        dispatch({ type: userActions.LOGOUT });
       } else setNotifications(notificationData.notifications);
     }
   }, [notificationData]);
@@ -106,6 +107,7 @@ const MainHeader = () => {
               }}
               justifyContent="center"
               alignItems="center"
+              cursor="pointer"
             >
               <BsArrowLeftShort onClick={() => router.back()} fontSize="24px" />
             </Flex>
@@ -202,7 +204,7 @@ const MainHeader = () => {
                     color="red.500"
                     cursor="pointer"
                     onClick={() => {
-                      logout({ type: userActions.LOGOUT });
+                      dispatch({ type: userActions.LOGOUT });
                     }}
                   >
                     Sign out

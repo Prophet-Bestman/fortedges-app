@@ -5,6 +5,8 @@ import {
   Circle,
   Flex,
   FormLabel,
+  Grid,
+  GridItem,
   Input,
   Select,
   SelectField,
@@ -14,7 +16,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useGetUser, useUpdateUser } from "api/user";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import { personalInfoSchema, profileSchema } from "utils/schemas";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -22,15 +24,20 @@ import { validatePersonalInfo, validateProfile } from "utils/validation";
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { getUserFromLocalStorage } from "api/config";
 import UploadProfilePhoto from "./UploadProfilePhoto";
+import ControlledInput from "components/ControlledInput";
+import { Country, State, City } from "country-state-city";
+import { AuthContext } from "providers/AuthProvider";
 
 const ProfileTab = () => {
-  const [user, setUser] = useState({});
+  const { user } = useContext(AuthContext);
   const [credError, setCredError] = useState("");
+  const [countries, setCountries] = useState([]);
+  // const []
   const toast = useToast();
 
   useEffect(() => {
-    const userDetails = getUserFromLocalStorage();
-    setUser(userDetails);
+    setCountries(Country.getAllCountries());
+    setValue("country", user?.address?.country);
   }, []);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -40,10 +47,12 @@ const ProfileTab = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm({
     resolver: yupResolver(profileSchema),
     defaultValues: {
-      display_name: user.display_name,
+      firstname: user.firstname,
+      lastname: user.lastname,
       email: user.email,
     },
   });
@@ -51,9 +60,14 @@ const ProfileTab = () => {
     register: register2,
     handleSubmit: handleSubmit2,
     formState: { errors: errors2 },
+    control: control2,
     reset: reset2,
+    setValue,
   } = useForm({
     resolver: yupResolver(personalInfoSchema),
+    defaultValues: {
+      country: user?.address?.country,
+    },
   });
 
   // const { data: userData } = useGetUser();
@@ -125,21 +139,21 @@ const ProfileTab = () => {
 
   useEffect(() => {
     if (userData != undefined) {
-      setUser(userData);
+      // setUser(userData);
       handleSuccessToast("Profile Updated");
     }
   }, [userData]);
 
   useEffect(() => {
     if (userData2 != undefined) {
-      setUser(userData2);
+      // setUser(userData2);
       handleSuccessToast("Profile Updated");
     }
   }, [userData2]);
 
   useEffect(() => {
     if (!!credError) {
-      setUser(credError);
+      // setUser(credError);
       handleErrorsToast(credError);
     }
   }, [credError]);
@@ -171,49 +185,92 @@ const ProfileTab = () => {
 
       <Box my="48px">
         <form onSubmit={handleSubmit(submitProfile)}>
-          <Stack mb="32px">
-            <FormLabel m="0" color="text.grey" fontSize="14px">
-              Display name
-            </FormLabel>
-            <Input
-              inputType={"input"}
-              h={["48px", , "56px"]}
-              placeholder="Enter Name"
-              type="text"
-              w="full"
-              maxW={"527px"}
-              name="display_name"
-              {...register("display_name")}
-              defaultValue={user.display_name}
-              variant={errors.display_name ? "error" : "outline"}
-            />
-            {errors.display_name && (
-              <Text
-                py="8px"
-                textTransform="capitalize"
-                fontSize="12px"
-                color="red"
-                display="flex"
-                alignItems="center"
-                gap="4px"
-              >
-                <MdOutlineErrorOutline color="red" />{" "}
-                {errors.display_name.message}
-              </Text>
-            )}
-          </Stack>
+          <Grid
+            templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
+            maxW={"527px"}
+            gap="3"
+          >
+            <GridItem>
+              <Stack mb="32px">
+                <FormLabel m="0" color="text.grey" fontSize="14px">
+                  First name
+                </FormLabel>
+                <Input
+                  // inputType={"input"}
+                  h={["48px", , "56px"]}
+                  // placeholder="First Name"
+                  type="text"
+                  w="full"
+                  // name="firstname"
+                  // control={control}
+                  {...register("firstname")}
+                  defaultValue={user.firstname}
+                  variant={errors.firstname ? "error" : "outline"}
+                />
+                {errors.firstname && (
+                  <Text
+                    py="8px"
+                    textTransform="capitalize"
+                    fontSize="12px"
+                    color="red"
+                    display="flex"
+                    alignItems="center"
+                    gap="4px"
+                  >
+                    <MdOutlineErrorOutline color="red" />{" "}
+                    {errors.firstname.message}
+                  </Text>
+                )}
+              </Stack>
+            </GridItem>
+            <GridItem>
+              <Stack mb="32px">
+                <FormLabel m="0" color="text.grey" fontSize="14px">
+                  Last name
+                </FormLabel>
+                <Input
+                  // inputType={"input"}
+                  h={["48px", , "56px"]}
+                  // placeholder="Last Name"
+                  type="text"
+                  w="full"
+                  maxW={"527px"}
+                  // name="lastname"
+                  // control={control}
+                  {...register("lastname")}
+                  defaultValue={user.lastname}
+                  variant={errors.lastname ? "error" : "outline"}
+                />
+                {errors.lastname && (
+                  <Text
+                    py="8px"
+                    textTransform="capitalize"
+                    fontSize="12px"
+                    color="red"
+                    display="flex"
+                    alignItems="center"
+                    gap="4px"
+                  >
+                    <MdOutlineErrorOutline color="red" />{" "}
+                    {errors.lastname.message}
+                  </Text>
+                )}
+              </Stack>
+            </GridItem>
+          </Grid>
           <Stack mb="32px">
             <FormLabel m="0" color="text.grey" fontSize="14px">
               Email Address
             </FormLabel>
             <Input
-              inputType={"input"}
+              // inputType={"input"}
               h={["48px", , "56px"]}
               placeholder="email@address.com"
               type="email"
               w="full"
               maxW={"527px"}
-              name="email"
+              // name="email"
+              // control={control}
               {...register("email")}
               defaultValue={user.email}
               variant={errors.email ? "error" : "outline"}
@@ -274,14 +331,21 @@ const ProfileTab = () => {
               <FormLabel m="0" color="text.grey" fontSize="14px">
                 Country
               </FormLabel>
-              <Input
+
+              <ControlledInput
                 h={["48px", , "56px"]}
                 placeholder="United States of America"
-                defaultValue={user?.address?.country}
-                {...register2("country")}
-                type="text"
+                // defaultValue={user?.address?.country}
+                name="country"
+                control={control2}
+                inputType="select"
                 variant={errors2.country ? "error" : "outline"}
-              />
+              >
+                {countries?.length > 0 &&
+                  countries.map((country) => (
+                    <option key={country.isoCode}>{country.name}</option>
+                  ))}
+              </ControlledInput>
               {errors2.country && (
                 <Text
                   py="8px"

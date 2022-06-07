@@ -84,7 +84,7 @@ const SecurityTab = () => {
               Two-factor Authentication
             </Text>
           </Flex>
-          <Flex gap="9px" alignItems="center">
+          {/* <Flex gap="9px" alignItems="center">
             {idVerified ? (
               <AiFillCheckCircle color="green" />
             ) : (
@@ -94,7 +94,7 @@ const SecurityTab = () => {
             <Text fontSize="12px" textDecor={!idVerified && "underline"}>
               Identity Verification
             </Text>
-          </Flex>
+          </Flex> */}
         </Box>
       </Box>
 

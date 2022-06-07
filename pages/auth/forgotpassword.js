@@ -7,7 +7,7 @@ const ForgotPassword = () => {
   return (
     <Box>
       <Head>
-        <title>Forgot Password | Fortedges</title>
+        <title>Forgot Password | Ubassets</title>
       </Head>
       <Box
         minH="100vh"

@@ -22,7 +22,7 @@ const MainNav = () => {
           mb="52px"
           ml="40px"
         >
-          fortedges
+          Ubassets
         </Text>
       </Link>
       <Box display="flex" w="full">

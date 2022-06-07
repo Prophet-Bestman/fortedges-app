@@ -48,8 +48,6 @@ const IDVerificationTab = () => {
     onClose: onVerifyClose,
   } = useDisclosure();
 
-  console.log("Status: ", idStatus);
-
   return (
     <Box>
       <Text

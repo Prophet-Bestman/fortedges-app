@@ -79,7 +79,7 @@ const UserSelectPlan = ({ isOpen, onClose }) => {
                 </Text>
 
                 <Link href="/myplans/create">
-                  <Button w="full" mt="28px">
+                  <Button w="full" mt="28px" onClick={onClose}>
                     Create A New Plan
                   </Button>
                 </Link>

@@ -6,7 +6,7 @@ import styles from "./styles";
 const config = {
   initialColorMode: "light",
   useSystemColorMode: false,
-  cssVarPrefix: "fortedges",
+  cssVarPrefix: "Ubassets",
 };
 
 const overrides = {

@@ -249,7 +249,7 @@ const SignupForm = () => {
       </AuthCard>
 
       <Text textAlign="center" color="white" display="flex" gap="4px">
-        Already have a Fortedges account?{" "}
+        Already have a Ubassets account?{" "}
         <Link href="/auth/signin">
           <Text cursor="pointer" fontWeight="600">
             Log in

@@ -1,11 +1,11 @@
 const config = {
   key: {
-    user: "___@fortedges_user",
-    token: "___@fortedges_token",
-    wallet: "___@fortedges_wallet",
-    userID: "___@fortedges_user_id",
-    parentID: "___@fortedges_parent_plan_id",
-    redirect: "___@fortedges_redirect",
+    user: "___@Ubassets_user",
+    token: "___@Ubassets_token",
+    wallet: "___@Ubassets_wallet",
+    userID: "___@Ubassets_user_id",
+    parentID: "___@Ubassets_parent_plan_id",
+    redirect: "___@Ubassets_redirect",
   },
 };
 

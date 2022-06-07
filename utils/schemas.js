@@ -59,9 +59,14 @@ export const accountStatementSchema = yup.object().shape({
 });
 
 export const profileSchema = yup.object().shape({
-  display_name: yup
+  firstname: yup
     .string()
-    .min(4, "Minimum of 4 characters")
+    .min(3, "Minimum of 4 characters")
+    .max(250, "maximum of 250 characters")
+    .required(),
+  lastname: yup
+    .string()
+    .min(3, "Minimum of 4 characters")
     .max(250, "maximum of 250 characters")
     .required(),
   email: yup.string().email("Enter A valid Email").required(),

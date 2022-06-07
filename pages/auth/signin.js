@@ -7,7 +7,7 @@ const Signin = () => {
   return (
     <Box>
       <Head>
-        <title>Sign In | Fortedges</title>
+        <title>Sign In | Ubassets</title>
       </Head>
       <Box
         h="full"

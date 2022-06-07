@@ -1,9 +1,10 @@
 import axios from "axios";
+import { baseUrl } from "api/baseUrls";
 import { useMutation, useQueryClient, useQuery } from "react-query";
 import configOptions, { getUserID } from "./config";
 
 const request = axios.create({
-  baseURL: "https://fortedges-api.herokuapp.com/notifications",
+  baseURL: baseUrl + "/notifications",
 });
 
 const useGetNotifications = (page, limit) => {
@@ -22,27 +23,6 @@ const useGetNotifications = (page, limit) => {
       })
   );
 };
-
-// const useReadNotifications = (page, limit) => {
-//   const headers = configOptions();
-//   return useQuery(["notifications", page, limit], () =>
-//     request
-//       .put(
-//         `/`,
-//         {},
-//         {
-//           headers: headers,
-//         }
-//       )
-//       .then((res) => res)
-//       .catch((err) => {
-//         if (err.response.status === 403) {
-//           localStorage.clear();
-//           return err;
-//         } else return err;
-//       })
-//   );
-// };
 
 const useReadNotifications = () => {
   const queryClient = useQueryClient();

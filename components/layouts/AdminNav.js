@@ -18,7 +18,7 @@ const AdminNav = () => {
         mb="52px"
         ml="40px"
       >
-        fortedges
+        Ubassets
       </Text>
       <Box display="flex" w="full">
         <Box ml="40px" w="full">

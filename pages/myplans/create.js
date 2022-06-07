@@ -10,10 +10,16 @@ import Link from "next/link";
 import { useGetAllPlans } from "api/plans";
 import { config } from "utils";
 import { Padding } from "components/layouts";
+import { navActions, NavContext, navStates } from "providers/NavProvider";
 
 const Create = () => {
   const [explorePlans, setExplorePlans] = useState([]);
   const [fetchErr, setFetchErr] = useState("");
+  const { dispatch: setActiveNav } = useContext(NavContext);
+
+  useEffect(() => {
+    setActiveNav({ type: navActions.SET_ACTIVE, payload: navStates.myPlans });
+  }, []);
 
   const { data: plansData, error } = useGetAllPlans();
   useEffect(() => {

@@ -1,9 +1,10 @@
 import axios from "axios";
+import { baseUrl } from "api/baseUrls";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import configOptions from "./config";
 
 const request = axios.create({
-  baseURL: "https://fortedges-api.herokuapp.com/transactions",
+  baseURL: baseUrl + "/transactions",
 });
 
 const useDeposit = () => {

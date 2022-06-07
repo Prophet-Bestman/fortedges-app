@@ -1,9 +1,10 @@
 import axios from "axios";
+import { baseUrl } from "api/baseUrls";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import configOptions, { getUserID } from "./config";
 
 const request = axios.create({
-  baseURL: "https://fortedges-api.herokuapp.com/users",
+  baseURL: baseUrl + "/users",
 });
 
 const useGetUser = () => {

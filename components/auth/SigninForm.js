@@ -109,7 +109,7 @@ const SigninForm = () => {
       my="80px"
     >
       <Text fontSize={[24, , 28, 32]} color="white" fontWeight="600">
-        Sign in to Fortedges
+        Sign in to Ubassets
       </Text>
       <AuthCard>
         <form onSubmit={handleSubmit(onSubmit)}>

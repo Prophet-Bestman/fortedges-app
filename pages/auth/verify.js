@@ -11,7 +11,7 @@ const Verify = () => {
   return (
     <Box>
       <Head>
-        <title>Verify Email | Fortedges</title>
+        <title>Verify Email | Ubassets</title>
       </Head>
       <Box
         minH="100vh"

@@ -53,7 +53,7 @@ const OurPortfolio = ({ isOpen, onClose }) => {
               fontWeight="600"
             >{`Assets (26)`}</Text>
             <Text color="text.grey" fontSize="13px">
-              {`The FEI (Fortedges Equity Index) is managed by FortEdges
+              {`The FEI (Ubassets Equity Index) is managed by Ubassets
               Technologies`}
             </Text>
           </Box>

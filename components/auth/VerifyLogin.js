@@ -173,7 +173,7 @@ const VerifyLogin = ({ isOpen, onClose, payload }) => {
             >
               <Text textAlign="center" fontSize="14px">
                 {
-                  " Security is critical at FortEdges. To help keep your account safe, we'll text you a verification code when you sign in"
+                  " Security is critical at Ubassets. To help keep your account safe, we'll text you a verification code when you sign in"
                 }
               </Text>
             </Box>

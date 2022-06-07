@@ -35,6 +35,8 @@ export const getUserFromLocalStorage = () => {
 
   if (!!user) {
     return JSON.parse(user);
+  } else {
+    window.localStorage.removeItem(config.key.user);
   }
 };
 export const getLocalWallet = () => {

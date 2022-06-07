@@ -7,7 +7,7 @@ const AdminSignin = () => {
   return (
     <Box>
       <Head>
-        <title>Sign In | Fortedges</title>
+        <title>Sign In | Ubassets</title>
       </Head>
       <Box
         minH="100vh"

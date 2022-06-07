@@ -107,7 +107,7 @@ const PaymentForm = ({
         </Text>
 
         <Tooltip
-          label="Please confirm wallet address before making transfers. Fortedges would not be responsible for any loss of funds due to incorrect wallet address"
+          label="Please confirm wallet address before making transfers. Ubassets would not be responsible for any loss of funds due to incorrect wallet address"
           fontSize="md"
           bg="white"
           color="red.400"

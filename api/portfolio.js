@@ -1,9 +1,10 @@
 import axios from "axios";
+import { baseUrl } from "api/baseUrls";
 import { useQuery } from "react-query";
 import configOptions from "./config";
 
 const request = axios.create({
-  baseURL: "https://fortedges-api.herokuapp.com/portfolio",
+  baseURL: baseUrl + "/portfolio",
 });
 
 export const useGetPortfolio = () => {

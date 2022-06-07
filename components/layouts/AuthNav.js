@@ -39,7 +39,7 @@ const AuthNav = () => {
               color="white"
               cursor="pointer"
             >
-              fortedges
+              Ubassets
             </Text>
           </Link>
         </Box>

@@ -8,7 +8,7 @@ const Signup = () => {
   return (
     <Box>
       <Head>
-        <title>Sign Up | Fortedges</title>
+        <title>Sign Up | Ubassets</title>
       </Head>
       <AuthNav />
       <Box

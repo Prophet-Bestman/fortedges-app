@@ -25,7 +25,7 @@ export const authNavs = [
       { name: "About Us", link: "/about_us" },
       { name: "FAQs", link: "/faq" },
       { name: "Wealth Calculator", link: "/wealth_calculator" },
-      { name: "Why Fortedges", link: "/why_fortedges" },
+      { name: "Why Ubassets", link: "/why_Ubassets" },
     ],
   },
 ];

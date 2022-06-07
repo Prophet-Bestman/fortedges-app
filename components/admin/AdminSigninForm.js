@@ -113,7 +113,7 @@ const AdminSigninForm = () => {
       backdropBlur="2xl"
     >
       <Text fontSize={[24, , 28, 32]} color="white" fontWeight="600">
-        Sign in to Fortedges Admin
+        Sign in to Ubassets Admin
       </Text>
       <AuthCard>
         <form onSubmit={handleSubmit(onSubmit)}>

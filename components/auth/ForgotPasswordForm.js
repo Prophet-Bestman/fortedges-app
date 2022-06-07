@@ -49,7 +49,7 @@ const ForgotPasswordForm = () => {
       </Text>
       <AuthCard>
         <Text mb="24px" color="text.grey" textAlign="center">
-          Enter email address associated with your fortedges
+          Enter email address associated with your Ubassets
         </Text>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box mb="24px">
