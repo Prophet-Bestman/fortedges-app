@@ -8,6 +8,7 @@ import {
   ModalBody,
   ModalContent,
   ModalOverlay,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -17,6 +18,13 @@ import { BsArrowRight } from "react-icons/bs";
 
 const PlanCreated = ({ isOpen, msg, closeParent, plan }) => {
   const router = useRouter();
+
+  if (isOpen) {
+    setTimeout(() => {
+      router.push(`/myplans/${plan?._id}`);
+      closeParent();
+    }, 1500);
+  }
 
   return (
     <Modal isOpen={isOpen} size="sm" isCentered>
@@ -55,16 +63,25 @@ const PlanCreated = ({ isOpen, msg, closeParent, plan }) => {
               </Text>
             </Box>
 
-            <Button
+            <Spinner
+              borderColor="app.primary"
+              w="40px"
+              h="40px"
+              borderWidth="3px"
+              mb="12px"
+            />
+            <Text fontSize="18px">Redirecting to new plan...</Text>
+
+            {/* <Button
               rightIcon={<BsArrowRight fontSize="20px" />}
               variant="ghost"
               fontWeight={600}
               color="app.primary"
               size="lg"
-              onClick={() => router.push(`/myplans/${plan?._id}`)}
+              // onClick={() =>}
             >
               Go to plan
-            </Button>
+            </Button> */}
           </Flex>
         </ModalBody>
       </ModalContent>

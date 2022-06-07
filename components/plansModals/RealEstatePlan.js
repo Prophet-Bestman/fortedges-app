@@ -35,6 +35,11 @@ const RealEstatePlan = ({ isOpen, onClose, plan, userID }) => {
     onOpen: onPortfolioOpen,
   } = useDisclosure();
 
+  const closeParent = () => {
+    onPortfolioClose();
+    onClose();
+  };
+
   return (
     <Modal isOpen={isOpen} size="full">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
@@ -69,11 +74,12 @@ const RealEstatePlan = ({ isOpen, onClose, plan, userID }) => {
 
           <Flex justify="center" fontSize="14px">
             <Text mb="40px" color="text.grey">
-              Range -{" "}
+              Min Investment -{" "}
             </Text>
             <Text>
               {" "}
-              {formatter.format(min)} - {formatter.format(max)}
+              {formatter.format(min)}
+              {/* - {formatter.format(max)} */}
             </Text>
           </Flex>
 

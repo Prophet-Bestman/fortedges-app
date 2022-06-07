@@ -16,7 +16,6 @@ import {
   Stack,
   Text,
   Tooltip,
-  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useContext } from "react";
 import {
@@ -29,6 +28,7 @@ import * as yup from "yup";
 import { options } from "data";
 import { PlanContext } from "providers/PlanProvider";
 import { useDeposit } from "api/transactions";
+import { formatter } from "utils";
 
 const optionsArr = Object.entries(options);
 const PaymentForm = ({
@@ -41,12 +41,27 @@ const PaymentForm = ({
 }) => {
   const { plan } = useContext(PlanContext);
   const [requestSent, setRequestSent] = useState(false);
+  const [minAmount, setMinAmount] = useState(0);
+
+  useEffect(() => {
+    if (plan.parent_plan_name === "Premium Stock") {
+      setMinAmount(100000);
+    }
+    if (plan.parent_plan_name === "Real Estate") {
+      setMinAmount(50000);
+    }
+    if (plan.parent_plan_name === "Fixed Income") {
+      setMinAmount(2000);
+    }
+  }, [plan]);
+
   const planSchema = yup.object({
     amount: yup
       .number()
       .required()
-      .min(plan?.investment > 0 ? 0 : 4000),
+      .min(plan?.investment > 0 ? 0 : minAmount),
   });
+
   const {
     register,
     handleSubmit,
@@ -154,13 +169,14 @@ const PaymentForm = ({
 
             {plan?.investment > 0 ? null : (
               <Text color="app.primary" fontSize="12px" fontWeight={600}>
-                Min- $4,000
+                Min- {formatter.format(minAmount)}
               </Text>
             )}
 
             {!!errors && errors?.amount && (
               <Text color="red.500" fontSize="12px" fontWeight={500}>
-                A minimum of $4,000 is required on first funding of a new plan
+                A minimum of {formatter.format(minAmount)} is required on first
+                funding of a {plan.parent_plan_name} plan
               </Text>
             )}
           </Stack>

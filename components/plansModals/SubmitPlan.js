@@ -42,10 +42,10 @@ const SubmitPlan = ({ closeParent }) => {
   } = useDisclosure();
 
   const onParentClose = () => {
-    closeParent();
-    setOpen({ type: planFormActions.CLOSE_FORM });
-    onErrorClose();
     onSuccessClose();
+    onErrorClose();
+    setOpen({ type: planFormActions.CLOSE_FORM });
+    closeParent();
   };
 
   const isOpen = planFormState.isOpen;

@@ -58,9 +58,9 @@ const GoalsPlan = ({ isOpen, onClose, goalProps, goal, userID }) => {
 
           <Flex justify="center" fontSize="14px">
             <Text mb="40px" color="text.grey">
-              Range -{" "}
+              Min Investment -{" "}
             </Text>
-            <Text> $2,000 - $4,000</Text>
+            <Text> $2,000 </Text>
           </Flex>
 
           <Flex justify="center">

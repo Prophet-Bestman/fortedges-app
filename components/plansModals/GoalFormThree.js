@@ -16,7 +16,6 @@ import * as yup from "yup";
 import { IoIosArrowBack } from "react-icons/io";
 import { goalFormActions, GoalFormContext } from "providers/GoalFormProvider";
 import { useCreateCustomPlan } from "api/plans";
-import SuccessModal from "components/SuccessModal";
 import ErrorModal from "components/ErrorModal";
 import PlanCreated from "./PlanCreated";
 
@@ -37,13 +36,13 @@ const GoalFormThree = ({ setFormStep, formState, onParentClose }) => {
   } = useDisclosure();
 
   const closeParent = () => {
-    onParentClose();
     onSuccessClose();
     onErrorClose();
+    onParentClose();
   };
 
   const planSchema = yup.object({
-    targetAmount: yup.number().required().min(3),
+    targetAmount: yup.number().required().min(0),
   });
 
   const {
@@ -132,14 +131,14 @@ const GoalFormThree = ({ setFormStep, formState, onParentClose }) => {
         <PlanCreated
           isOpen={isSuccessOpen}
           msg="Plan Creation Successful"
-          closeParent={onParentClose}
+          closeParent={closeParent}
           plan={createdGoal?.data}
         />
       )}
       <ErrorModal
         isOpen={isErrorOpen}
         msg="Error Occurred. Try again later"
-        closeParent={onParentClose}
+        closeParent={closeParent}
       />
     </Box>
   );

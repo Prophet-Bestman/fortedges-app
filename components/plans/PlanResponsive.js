@@ -27,7 +27,7 @@ const PlanResponsive = ({ plan, userID }) => {
 
   useEffect(() => {
     if (plan !== undefined) {
-      switch (plan.name) {
+      switch (name) {
         case "Fixed Income":
           setCurrentPlanProps(planProps.fixedIncome);
           setGoalProps(goalModalProps.fixedIncome);

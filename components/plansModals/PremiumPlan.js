@@ -36,6 +36,10 @@ const PremiumPlan = ({ isOpen, onClose, plan, userID }) => {
     onOpen: onPortfolioOpen,
   } = useDisclosure();
 
+  const closeParent = () => {
+    onClose();
+  };
+
   return (
     <Modal isOpen={isOpen} size="full">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
@@ -70,11 +74,11 @@ const PremiumPlan = ({ isOpen, onClose, plan, userID }) => {
 
           <Flex justify="center" fontSize="14px">
             <Text mb="40px" color="text.grey">
-              Range -{" "}
+              Min Investment - $100,000.000{" "}
             </Text>
             <Text>
               {" "}
-              {formatter.format(min)} - {formatter.format(max)}
+              {/* {formatter.format(min)} - {formatter.format(max)} */}
             </Text>
           </Flex>
 
@@ -123,7 +127,7 @@ const PremiumPlan = ({ isOpen, onClose, plan, userID }) => {
           </Button>
         </ModalFooter>
       </ModalContent>
-      <SubmitPlan closeParent={onClose} />
+      <SubmitPlan closeParent={closeParent} />
       <OurPortfolio isOpen={isPortfolioOpen} onClose={onPortfolioClose} />
     </Modal>
   );
