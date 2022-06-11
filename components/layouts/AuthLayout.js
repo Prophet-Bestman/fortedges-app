@@ -6,8 +6,8 @@ const AuthLayout = ({ children }) => {
   return (
     <Box bg="app.primary" pos="relative">
       <AuthNav />
-      <Box display="flex" justifyContent="center" h="100vh">
-        <Box w="full" maxW="2000px" overflowX="hidden" h="full">
+      <Box display="flex" justifyContent="center">
+        <Box w="full" maxW="2000px" overflowX="hidden" h="100vh">
           {children}
         </Box>
       </Box>

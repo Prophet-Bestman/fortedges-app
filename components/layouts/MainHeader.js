@@ -197,7 +197,9 @@ const MainHeader = () => {
                     <Link href="/settings">Settings</Link>
                   </Text>
                   <Text _hover={{ color: "app.primary" }} mb="16px">
-                    <Link href={`${landingUrl}/support`}>Support</Link>
+                    <a target="_blank" href={`${landingUrl}/support`}>
+                      Support
+                    </a>
                   </Text>
                   <Text
                     _hover={{ color: "red.700" }}

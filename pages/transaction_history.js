@@ -22,6 +22,7 @@ import {
 import { useGetAllMyTransactions } from "api/transactions";
 import { useGetCustomPlans } from "api/plans";
 import { MdOutlineArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import { landingUrl } from "api/baseUrls";
 
 const TransactionHisory = () => {
   const { dispatch: setActiveNav } = useContext(NavContext);
@@ -170,7 +171,7 @@ const TransactionHisory = () => {
         </Flex>
 
         {/* Link */}
-        <Link href="#">
+        <a target="_blank" href={landingUrl + "/support"}>
           <Text
             fontSize={["14px", , "16px"]}
             color="app.primary"
@@ -179,7 +180,7 @@ const TransactionHisory = () => {
           >
             {"Deposit Hasn’t arrived? Click here"}
           </Text>
-        </Link>
+        </a>
 
         {/* TRANSACTION HISTORY ON DESKTOP */}
         <Box display={["none", , "block"]} my="48px">

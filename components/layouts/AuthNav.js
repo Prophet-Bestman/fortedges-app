@@ -18,7 +18,7 @@ import AuthMobileNav from "./AuthMobileNav";
 const AuthNav = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box display="flex" justifyContent="center" pos="absolute" w="full">
+    <Box display="flex" justifyContent="center">
       <Box
         maxW="2000px"
         w="full"
@@ -30,8 +30,9 @@ const AuthNav = () => {
         alignItems="center"
         px={["24px", null, "64px", null, "180px", "208px"]}
         h={["80px", null, "101px"]}
+        bg="app.primary"
       >
-        <Box>
+        <Box bg="app.primary">
           <Link href="/">
             <Text
               fontFamily="Coustard"
