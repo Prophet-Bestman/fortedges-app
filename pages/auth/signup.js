@@ -6,14 +6,12 @@ import React from "react";
 
 const Signup = () => {
   return (
-    <Box>
+    <>
       <Head>
         <title>Sign Up | Ubassets</title>
       </Head>
-      <AuthNav />
       <Box
-        minH="100vh"
-        py="90px"
+        py="50px"
         bg="app.primary"
         display="flex"
         justifyContent="center"
@@ -23,7 +21,7 @@ const Signup = () => {
       >
         <SignupForm />
       </Box>
-    </Box>
+    </>
   );
 };
 

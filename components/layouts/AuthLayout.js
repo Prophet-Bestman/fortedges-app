@@ -4,10 +4,10 @@ import AuthNav from "./AuthNav";
 
 const AuthLayout = ({ children }) => {
   return (
-    <Box h="100vh" overflowY="hidden">
+    <Box bg="app.primary" pos="relative">
       <AuthNav />
-      <Box display="flex" justifyContent="center">
-        <Box w="full" maxW="2000px" overflowX="hidden">
+      <Box display="flex" justifyContent="center" h="100vh">
+        <Box w="full" maxW="2000px" overflowX="hidden" h="full">
           {children}
         </Box>
       </Box>

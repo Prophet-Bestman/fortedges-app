@@ -18,7 +18,7 @@ import AuthMobileNav from "./AuthMobileNav";
 const AuthNav = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box display="flex" justifyContent="center">
+    <Box display="flex" justifyContent="center" pos="absolute" w="full">
       <Box
         maxW="2000px"
         w="full"

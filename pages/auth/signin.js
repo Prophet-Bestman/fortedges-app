@@ -5,14 +5,12 @@ import React from "react";
 
 const Signin = () => {
   return (
-    <Box>
+    <Box h="full">
       <Head>
         <title>Sign In | Ubassets</title>
       </Head>
       <Box
         h="full"
-        bg="app.primary"
-        py="90px"
         display="flex"
         justifyContent="center"
         alignItems="center"
