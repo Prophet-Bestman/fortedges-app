@@ -85,7 +85,11 @@ const MainMobileNav = ({ isOpen, onClose, onFundOpen }) => {
                 <Link href="/settings">Settings</Link>
               </Text>
               <Text _hover={{ color: "app.primary" }} mb="16px">
-                <a target="_blank" href={`${landingUrl}/support`}>
+                <a
+                  target="_blank"
+                  href={`${landingUrl}/support`}
+                  rel="noreferrer"
+                >
                   Support
                 </a>
               </Text>

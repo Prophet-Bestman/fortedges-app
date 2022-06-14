@@ -171,7 +171,7 @@ const TransactionHisory = () => {
         </Flex>
 
         {/* Link */}
-        <a target="_blank" href={landingUrl + "/support"}>
+        <a target="_blank" href={landingUrl + "/support"} rel="noreferrer">
           <Text
             fontSize={["14px", , "16px"]}
             color="app.primary"
