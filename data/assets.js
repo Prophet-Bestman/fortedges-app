@@ -127,6 +127,79 @@ const assets = [
     name: "SPDR S&P 500 ETF",
     img: "/img/assets/Ellipse 28.png",
   },
+
+  {
+    name: "Walmart",
+    img: "/img/assets/Ellipse 28-0.png",
+  },
+  {
+    name: "CVS Health",
+    img: "/img/assets/Ellipse 28-1.png",
+  },
+  {
+    name: "Citigroup",
+    img: "/img/assets/Ellipse 28-2.png",
+  },
+  {
+    name: "Intel",
+    img: "/img/assets/Ellipse 28-3.png",
+  },
+  {
+    name: "Johnson & Johnson",
+    img: "/img/assets/Ellipse 28-4.png",
+  },
+  {
+    name: "Wells Fargo",
+    img: "/img/assets/Ellipse 28-5.png",
+  },
+  {
+    name: "Procter & Gamble",
+    img: "/img/assets/Ellipse 28-6.png",
+  },
+  {
+    name: "TD Synnex",
+    img: "/img/assets/Ellipse 28-7.png",
+  },
+  {
+    name: "Dollar General",
+    img: "/img/assets/Ellipse 28-8.png",
+  },
+  {
+    name: "Qual comm",
+    img: "/img/assets/Ellipse 28-9.png",
+  },
+  {
+    name: "3M",
+    img: "/img/assets/Ellipse 28-10.png",
+  },
+  {
+    name: "Northrop Grumman",
+    img: "/img/assets/Ellipse 28-11.png",
+  },
+  {
+    name: "Honeywell",
+    img: "/img/assets/Ellipse 28-12.png",
+  },
+  {
+    name: "Jabil",
+    img: "/img/assets/Ellipse 28-13.png",
+  },
+  {
+    name: "Starbucks",
+    img: "/img/assets/Ellipse 28-14.png",
+  },
+  {
+    name: "Eli lilly",
+    img: "/img/assets/Ellipse 28-15.png",
+  },
+  {
+    name: "D.R Horton",
+    img: "/img/assets/Ellipse 28-16.png",
+  },
+  {
+    name: "CBRE Group",
+    img: "/img/assets/Ellipse 28-17.png",
+  },
 ];
 
 export default assets;
