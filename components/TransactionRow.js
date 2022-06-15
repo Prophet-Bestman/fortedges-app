@@ -22,7 +22,7 @@ const TransactionRow = ({ transaction }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
-    <Tr h="60px">
+    <Tr h="60px" onClick={onOpen} cursor="pointer">
       <Td fontSize={["12px", , "14px"]}>
         {format(new Date(createdAt), "dd/MM/yyyy")}
       </Td>
@@ -35,7 +35,7 @@ const TransactionRow = ({ transaction }) => {
       <Td textTransform="uppercase" fontSize={["12px", , "14px"]}>
         {mode_of_payment}
       </Td>
-      <Td onClick={onOpen} cursor="pointer">
+      <Td>
         <Text
           textTransform={"capitalize"}
           bg={() => statusBg(status)}
