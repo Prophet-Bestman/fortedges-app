@@ -16,6 +16,7 @@ import {
   Stack,
   Text,
   Tooltip,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useContext } from "react";
 import {
@@ -27,7 +28,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { options } from "data";
 import { PlanContext } from "providers/PlanProvider";
-import { useDeposit } from "api/transactions";
+import { useBankRequest, useDeposit } from "api/transactions";
 import { formatter } from "utils";
 
 const optionsArr = Object.entries(options);
@@ -40,8 +41,8 @@ const PaymentForm = ({
   setData,
 }) => {
   const { plan } = useContext(PlanContext);
-  const [requestSent, setRequestSent] = useState(false);
   const [minAmount, setMinAmount] = useState(0);
+  const [requestError, setRequestError] = useState("");
 
   useEffect(() => {
     if (plan.parent_plan_name === "Premium Stock") {
@@ -54,6 +55,30 @@ const PaymentForm = ({
       setMinAmount(2000);
     }
   }, [plan]);
+
+  const toast = useToast();
+  const errorToast = () => {
+    toast({
+      title: "Request Error",
+      description: setRequestError,
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
+  const successToast = () => {
+    toast({
+      title: "Request successful",
+      description: "Request has been sent successfully",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top",
+    });
+  };
 
   const planSchema = yup.object({
     amount: yup
@@ -70,10 +95,38 @@ const PaymentForm = ({
     resolver: yupResolver(planSchema),
   });
 
-  const sendRequest = () => {
-    if (requestSent) return;
-    setRequestSent(true);
+  // ========== SEND BANK REQUEST LOGIC =========
+
+  const {
+    mutate: sendBankRequest,
+    data: requestData,
+    error: requestErr,
+    isLoading: requesting,
+  } = useBankRequest();
+
+  const sendRequest = (data) => {
+    const payload = {
+      plan_id: plan?.id,
+      amount: data.amount,
+    };
+    sendBankRequest(payload);
   };
+
+  useEffect(() => {
+    if (!!requestData && requestData === "Request sent") {
+      successToast();
+      onClose();
+    } else {
+      setRequestError("Bank request could not be sent");
+    }
+  }, [requestData]);
+
+  useEffect(() => {
+    if (requestError !== "") {
+      errorToast;
+    }
+    setRequestError("");
+  }, [requestError]);
 
   const {
     data: depositData,
@@ -161,7 +214,6 @@ const PaymentForm = ({
                 type="number"
                 h="48px"
                 placeholder="10,000"
-                // defaultValue={formState.amount}
                 variant={errors.amount ? "error" : "outline"}
                 {...register("amount")}
               />
@@ -238,11 +290,10 @@ const PaymentForm = ({
                 <Button
                   mt="30px"
                   w="full"
-                  onClick={sendRequest}
-                  bg={requestSent ? "#71879C" : "app.primary"}
-                  isDisabled={requestSent}
+                  onClick={handleSubmit(sendRequest)}
+                  isLoading={requesting}
                 >
-                  {requestSent ? "Request Sent" : "Request Details"}
+                  Request Details
                 </Button>
               </Box>
             ) : (

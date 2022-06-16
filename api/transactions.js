@@ -29,6 +29,28 @@ const useDeposit = () => {
   );
 };
 
+const useBankRequest = () => {
+  const queryClient = useQueryClient();
+  const headers = configOptions();
+  return useMutation(
+    (values) =>
+      request
+        .post("/bank", values, { headers: headers })
+        .then((res) => res.data)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("my-transactions");
+        queryClient.invalidateQueries("custom-plans");
+      },
+    }
+  );
+};
+
 const useSendPOP = () => {
   const queryClient = useQueryClient();
   const headers = configOptions();
@@ -251,6 +273,7 @@ const useAdminAddBalance = () => {
 
 export {
   useDeposit,
+  useBankRequest,
   useSendPOP,
   useGetAllMyTransactions,
   useWithdraw,
