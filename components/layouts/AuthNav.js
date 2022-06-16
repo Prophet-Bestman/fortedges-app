@@ -92,15 +92,15 @@ const AuthNav = () => {
                           color: "app.primary",
                         }}
                       >
-                        <Link href={item.link}>
+                        <a href={item.link}>
                           <Text>{item.name}</Text>
-                        </Link>
+                        </a>
                       </MenuItem>
                     ))}
                   </MenuList>
                 </Menu>
               ) : (
-                <Link key={nav.name} href={nav.link}>
+                <a key={nav.name} href={nav.link}>
                   <Box>
                     <Text
                       color="white"
@@ -115,7 +115,7 @@ const AuthNav = () => {
                       {nav.name}
                     </Text>
                   </Box>
-                </Link>
+                </a>
               )}
             </Box>
           ))}
@@ -128,14 +128,16 @@ const AuthNav = () => {
           color="white"
           fontSize="14px"
         >
-          <Link href="#">
+          <Link href="/auth/signin">
             <Text color="white">Sign In</Text>
           </Link>
 
           <Box maxW="110">
-            <Button bg="white" variant="secondary" size="sm">
-              Get Started
-            </Button>
+            <Link href="/auth/signup">
+              <Button bg="white" variant="secondary" size="sm">
+                Get Started
+              </Button>
+            </Link>
           </Box>
         </Flex>
 

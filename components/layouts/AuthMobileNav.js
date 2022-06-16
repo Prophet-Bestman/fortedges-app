@@ -77,15 +77,15 @@ const AuthMobileNav = ({ isOpen, onClose }) => {
                               color: "app.primary",
                             }}
                           >
-                            <Link href={item.link}>
+                            <a href={item.link}>
                               <Text>{item.name}</Text>
-                            </Link>
+                            </a>
                           </MenuItem>
                         ))}
                       </MenuList>
                     </Menu>
                   ) : (
-                    <Link key={nav.name} href={nav.link}>
+                    <a key={nav.name} href={nav.link}>
                       <Box mb="42px">
                         <Text
                           _hover={{
@@ -97,7 +97,7 @@ const AuthMobileNav = ({ isOpen, onClose }) => {
                           {nav.name}
                         </Text>
                       </Box>
-                    </Link>
+                    </a>
                   )}
                 </Box>
               ))}
@@ -112,10 +112,12 @@ const AuthMobileNav = ({ isOpen, onClose }) => {
               color="text.black"
               fontSize="14px"
             >
-              <Link href="#">Sign In</Link>
+              <Link href="/auth/signin">Sign In</Link>
 
               <Box maxW="110">
-                <Button size="sm">Get Started</Button>
+                <Link href="/auth/signup">
+                  <Button size="sm">Get Started</Button>
+                </Link>
               </Box>
             </Flex>
           </ModalBody>

@@ -3,29 +3,30 @@ import { BiTrendingUp } from "react-icons/bi";
 import { RiRefund2Line } from "react-icons/ri";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { GrHistory } from "react-icons/gr";
+import { landingUrl } from "api/baseUrls";
 
 export const authNavs = [
-  { name: "Home", link: "/" },
+  { name: "Home", link: landingUrl + "/" },
   {
     name: "Plans",
     link: "#",
     dropDown: [
-      { name: "Premium Stock", link: "/plans/premium_stock" },
-      { name: "Real Estate", link: "/plans/real_estate" },
-      { name: "Fixed Income", link: "/plans/fixed_income" },
+      { name: "Premium Stock", link: landingUrl + "/plans/premium_stock" },
+      { name: "Real Estate", link: landingUrl + "/plans/real_estate" },
+      { name: "Fixed Income", link: landingUrl + "/plans/fixed_income" },
     ],
   },
 
-  { name: "Security", link: "/security" },
-  { name: "Blog", link: "/blogs" },
+  { name: "Security", link: landingUrl + "/security" },
+  { name: "Blog", link: landingUrl + "/blogs" },
   {
     name: "Company",
     link: "#",
     dropDown: [
-      { name: "About Us", link: "/about_us" },
-      { name: "FAQs", link: "/faq" },
-      { name: "Wealth Calculator", link: "/wealth_calculator" },
-      { name: "Why Ubassets", link: "/why_Ubassets" },
+      { name: "About Us", link: landingUrl + "/about_us" },
+      { name: "Support", link: landingUrl + "/support" },
+      { name: "Wealth Calculator", link: landingUrl + "/wealth_calculator" },
+      { name: "Why Ubassets", link: landingUrl + "/why_ubassets" },
     ],
   },
 ];
