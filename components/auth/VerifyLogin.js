@@ -144,7 +144,7 @@ const VerifyLogin = ({ isOpen, onClose, payload }) => {
                   size="sm"
                   my="20px"
                 >
-                  Send
+                  Next
                 </Button>
               </form>
               <Box display="flex" justifyContent="center">
