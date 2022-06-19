@@ -21,6 +21,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSignUp } from "api/auth";
 import config from "utils/config";
+import { landingUrl } from "api/baseUrls";
 
 const SignupForm = () => {
   const [canSubmit, setCanSubmit] = useState(false);
@@ -228,11 +229,23 @@ const SignupForm = () => {
             <Text>
               I certify that I am 18years of age or older, and agree to the{" "}
               <Box display="inline" color="app.primary">
-                <Link href="#">User Agreement</Link>{" "}
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={landingUrl + "/terms"}
+                >
+                  User Agreement
+                </a>{" "}
               </Box>
               and{" "}
               <Box display="inline" color="app.primary">
-                <Link href="#">Privacy Policy</Link>
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={landingUrl + "/terms"}
+                >
+                  Privacy Policy
+                </a>
               </Box>
             </Text>
           </Box>
