@@ -33,6 +33,7 @@ import { PlanContext } from "providers/PlanProvider";
 import { useWithdraw } from "api/transactions";
 import ErrorModal from "components/ErrorModal";
 import { formatDistance } from "date-fns";
+import { landingUrl } from "api/baseUrls";
 
 const optionsArr = Object.entries(options);
 
@@ -127,7 +128,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
   return (
     <Modal isOpen={isOpen}>
       <ModalOverlay />
-      <ModalContent py="24px" px="24px" maxW="380px">
+      <ModalContent py="24px" px="24px" maxW="400px">
         <Flex mb="40px" justifyContent="space-between" alignItems="center">
           <Circle onClick={onClose} cursor="pointer" bg="#F1F2F400" size="40px">
             <MdOutlineKeyboardBackspace />
@@ -165,10 +166,14 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
               >
                 i
               </Circle>
-              {30 - days} {"day(s) left to Withdraw funds."} See{" "}
-              <Link href="#" size="xs" variant="link">
-                more info
-              </Link>
+              {30 - days} {"day(s) left to Withdraw funds."}{" "}
+              <a
+                href={landingUrl + "/support"}
+                rel="noreferrer"
+                target="_blank"
+              >
+                See more info
+              </a>
             </Text>
           )}
 
