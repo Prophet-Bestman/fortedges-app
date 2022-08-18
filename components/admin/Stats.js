@@ -18,7 +18,11 @@ const Stats = () => {
   return (
     <Box>
       {!!dashboardData && (
-        <Grid mb="40px" templateColumns="repeat(2, 1fr)" gap="24px">
+        <Grid
+          mb="40px"
+          templateColumns={["repeat(1, 1fr)", , "repeat(2, 1fr)"]}
+          gap="24px"
+        >
           <GridItem
             bg="white"
             d="flex"
@@ -66,42 +70,80 @@ const Stats = () => {
 
       {!!dashboardData && (
         <Flex
-          h="130px"
+          h={["fit-content", , , "130px"]}
           px="24px"
-          justifyContent="space-between"
+          justifyContent={["center", , , "space-between"]}
           bg="white"
           alignItems="center"
+          flexDir={["column", , , "row"]}
+          gap="6"
         >
           <Box>
-            <Text fontSize="14px" color="text.grey">
+            <Text
+              fontSize="14px"
+              color="text.grey"
+              textAlign={["center", , , "start"]}
+            >
               Total Deposits
             </Text>
-            <Text fontSize="28px" fontWeight="600" color="text.black">
+            <Text
+              fontSize="28px"
+              fontWeight="600"
+              color="text.black"
+              textAlign={["center", , , "start"]}
+            >
               {formatter.format(dashboardData?.total_deposit_amount || "")}
             </Text>
           </Box>
           <Box>
-            <Text fontSize="14px" color="text.grey">
+            <Text
+              fontSize="14px"
+              color="text.grey"
+              textAlign={["center", , , "start"]}
+            >
               Total Withdrawal
             </Text>
-            <Text fontSize="28px" fontWeight="600" color="text.black">
+            <Text
+              fontSize="28px"
+              fontWeight="600"
+              color="text.black"
+              textAlign={["center", , , "start"]}
+            >
               {formatter.format(dashboardData?.total_withdrawal_amount || "")}
             </Text>
           </Box>
 
           <Box>
-            <Text fontSize="14px" color="text.grey">
+            <Text
+              fontSize="14px"
+              color="text.grey"
+              textAlign={["center", , , "start"]}
+            >
               Pending Deposits
             </Text>
-            <Text fontSize="28px" fontWeight="600" color="text.black">
+            <Text
+              fontSize="28px"
+              fontWeight="600"
+              color="text.black"
+              textAlign={["center", , , "start"]}
+            >
               {formatter.format(dashboardData?.pending_deposit_amount || "")}
             </Text>
           </Box>
           <Box>
-            <Text fontSize="14px" color="text.grey">
+            <Text
+              fontSize="14px"
+              color="text.grey"
+              textAlign={["center", , , "start"]}
+            >
               Total No. of Users
             </Text>
-            <Text fontSize="28px" fontWeight="600" color="text.black">
+            <Text
+              fontSize="28px"
+              fontWeight="600"
+              color="text.black"
+              textAlign={["center", , , "start"]}
+            >
               {dashboardData?.total_user_count || ""}
             </Text>
           </Box>

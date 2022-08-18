@@ -1,17 +1,32 @@
-import { Box, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { NavContext } from "providers/NavProvider";
 import React, { useContext } from "react";
 import { AiOutlineBell, AiOutlineUser } from "react-icons/ai";
+import { HiMenuAlt2 } from "react-icons/hi";
+import AdminNav from "./AdminNav";
 
 const AdminTopBar = () => {
   const { navState } = useContext(NavContext);
   const pageTitle = navState.pageTitle;
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box>
       <Box
         h="64px"
         d="flex"
-        justifyContent="end"
+        // justifyContent="space-between"
         w="full"
         alignItems="center"
         px="28px"
@@ -19,7 +34,12 @@ const AdminTopBar = () => {
         gap="32px"
         bg="white"
       >
+        <Box display={["block", , , "none"]}>
+          <HiMenuAlt2 cursor="pointer" onClick={onOpen} />
+        </Box>
+
         <Box
+          ml="auto"
           _hover={{
             transform: "scale(115%)",
             fontWeight: "bold",
@@ -43,6 +63,21 @@ const AdminTopBar = () => {
           </Text>
         </Box>
       )}
+      <Drawer
+        isOpen={isOpen}
+        placement="left"
+        onClose={onClose}
+        // finalFocusRef={btnRef}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+
+          <DrawerBody>
+            <AdminNav />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </Box>
   );
 };

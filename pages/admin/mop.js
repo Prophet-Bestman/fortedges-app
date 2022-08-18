@@ -63,7 +63,7 @@ const Mop = () => {
         M.O.P
       </Text>
 
-      <Box bg="white" w="370px" p="24px" mb="40px">
+      <Box bg="white" w={["320px", , "370px"]} p="24px" mb="40px">
         <Flex justify="space-between" w="full" pb="24px">
           <Text>BTC Address</Text>
           <Button
@@ -94,7 +94,7 @@ const Mop = () => {
           </Flex>
         )}
       </Box>
-      <Box bg="white" w="370px" p="24px">
+      <Box bg="white" w={["320px", , "370px"]} p="24px">
         <Flex justify="space-between" w="full" pb="24px">
           <Text>ETH Address</Text>
           <Button

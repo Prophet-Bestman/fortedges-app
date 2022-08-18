@@ -18,7 +18,7 @@ const DepositHistory = ({ deposits }) => {
         Deposit History
       </Text>
       <TableContainer bg="white" p="24px">
-        <Table variant="unstyled">
+        <Table variant="unstyled" size={"sm"}>
           <Thead bg="#FAFAFA">
             <Tr fontSize="14px" color="text.grey">
               <Td>Email</Td>

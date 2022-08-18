@@ -58,7 +58,7 @@ const Users = () => {
   return (
     <Box px="24px">
       <TableContainer bg="white" p="24px">
-        <Table variant="unstyled">
+        <Table variant="unstyled" size="sm">
           <Thead>
             <Tr fontSize="14px" color="text.grey" bg="#FAFAFA">
               <Td>Fullname</Td>

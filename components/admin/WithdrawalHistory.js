@@ -22,7 +22,7 @@ const WithdrwalHistory = ({ withdrawals }) => {
         Withdrawal History
       </Text>
       <TableContainer bg="white" p="24px">
-        <Table variant="unstyled" overflowX="scroll">
+        <Table variant="unstyled" overflowX="scroll" size="sm">
           <Thead bg="#FAFAFA">
             <Tr fontSize="14px" color="text.grey">
               <Td>Email</Td>

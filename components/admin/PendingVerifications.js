@@ -29,7 +29,7 @@ const PendingVerifications = () => {
         All Pending Verifications
       </Text>
       <TableContainer bg="white" p="24px">
-        <Table variant="unstyled">
+        <Table variant="unstyled" size="sm">
           <Thead bg="#fafafa">
             <Tr fontSize="14px" color="text.grey">
               <Td>Full Name</Td>

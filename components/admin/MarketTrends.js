@@ -29,7 +29,7 @@ const MarketTrends = () => {
         Market Trend
       </Text>
       <TableContainer>
-        <Table variant="unstyled">
+        <Table variant="unstyled" size={["sm", , "md"]}>
           <Thead>
             <Tr fontSize="14px" color="text.grey">
               <Td>Name</Td>
@@ -43,17 +43,21 @@ const MarketTrends = () => {
               {cryptoCurrencies?.map((currency) => (
                 <Tr my="20px" h="100px" key={currency?.symbol}>
                   <Td d="flex" alignItems="center" gap="16px" h="100px">
-                    <Avatar src={currency.image} size="md"></Avatar>
+                    <Avatar src={currency.image} size={"sm"}></Avatar>
 
-                    <Text textTransform="uppercase" fontWeight={600}>
+                    <Text
+                      textTransform="uppercase"
+                      fontWeight={600}
+                      fontSize={["12px", "14px", "16px"]}
+                    >
                       {currency.symbol}
                     </Text>
                   </Td>
 
-                  <Td fontWeight={600}>
+                  <Td fontWeight={600} fontSize={["12px", "14px", "16px"]}>
                     {formatter.format(currency.current_price)}
                   </Td>
-                  <Td color="app.primary">
+                  <Td color="app.primary" fontSize={["12px", "14px", "16px"]}>
                     {currency.price_change_percentage_24h}%
                   </Td>
                   {/* CHART */}
