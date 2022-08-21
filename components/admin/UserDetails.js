@@ -57,7 +57,7 @@ const UserDetails = ({ userID }) => {
   return (
     <Box py="40px" color="text.black">
       {user !== undefined && (
-        <Grid templateColumns="repeat(3, 1fr)" gap="6">
+        <Grid templateColumns={["repeat(1, 1fr)", , "repeat(3, 1fr)"]} gap="6">
           <GridItem>
             <Flex gap="40px">
               <Circle size="80px" bg="gray.300"></Circle>
@@ -78,7 +78,7 @@ const UserDetails = ({ userID }) => {
           <GridItem>
             <Flex flexDir="column">
               <Link href={`/admin/users/${userID}/edit`}>
-                <Button ml="auto" size="sm" mb="16px">
+                <Button ml={[, , "auto"]} size="sm" mb="16px">
                   Edit
                 </Button>
               </Link>
@@ -96,7 +96,7 @@ const UserDetails = ({ userID }) => {
             </Flex>
           </GridItem>
           <GridItem>
-            <Flex alignItems="end" flexDir="column" gap="16px">
+            <Flex alignItems={[, , "end"]} flexDir="column" gap="16px">
               <Flex color="app.primary" alignItems="center" gap="8px">
                 <Text fontWeight={600} color="text.black">
                   Full Verification
@@ -111,7 +111,13 @@ const UserDetails = ({ userID }) => {
         </Grid>
       )}
 
-      <Flex justifyContent="space-around" gap="40px" px="30px" my="30px">
+      <Box
+        display={[, , "flex"]}
+        justifyContent="space-around"
+        gap="40px"
+        px="30px"
+        my="30px"
+      >
         <Box h="110px" w="full" bg="white">
           <Text fontSize="14px" color="text.grey" mt="16px" textAlign="center">
             Total Balance
@@ -136,7 +142,7 @@ const UserDetails = ({ userID }) => {
             {formatter.format(user?.total_profit || 0)}
           </Text>
         </Box>
-      </Flex>
+      </Box>
       <ViewVerification
         isOpen={isOpen}
         onClose={onClose}

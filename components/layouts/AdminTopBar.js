@@ -2,16 +2,14 @@ import {
   Box,
   Drawer,
   DrawerBody,
-  DrawerCloseButton,
   DrawerContent,
-  DrawerHeader,
   DrawerOverlay,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { NavContext } from "providers/NavProvider";
 import React, { useContext } from "react";
-import { AiOutlineBell, AiOutlineUser } from "react-icons/ai";
+import { AiOutlineBell, AiOutlineClose, AiOutlineUser } from "react-icons/ai";
 import { HiMenuAlt2 } from "react-icons/hi";
 import AdminNav from "./AdminNav";
 
@@ -63,15 +61,12 @@ const AdminTopBar = () => {
           </Text>
         </Box>
       )}
-      <Drawer
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        // finalFocusRef={btnRef}
-      >
+      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton />
+          <Box ml="auto" p="4" onClick={onClose} cursor="pointer">
+            <AiOutlineClose size="22px" />
+          </Box>
 
           <DrawerBody>
             <AdminNav />

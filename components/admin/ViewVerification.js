@@ -117,7 +117,7 @@ const ViewVerification = ({
                         </Box>
                       </Flex>
                     ) : (
-                      <Flex alignItems="center" gap={[0, , "16px"]}>
+                      <Flex alignItems="center" gap={[3, , 4]}>
                         <Flex
                           color={"white"}
                           bg="red.00"
@@ -136,9 +136,17 @@ const ViewVerification = ({
                         >
                           View
                         </Button>
-                        <Box display={["unset", , "none"]}>
-                          <MdKeyboardArrowRight />
-                        </Box>
+
+                        <Text
+                          display={["unset", , "none"]}
+                          onClick={onVerifyOpen}
+                          fontWeight="500"
+                          textDecoration="underline"
+                          cursor={"pointer"}
+                        >
+                          View
+                        </Text>
+                        {/* <Box></Box> */}
                       </Flex>
                     )}
                   </>
