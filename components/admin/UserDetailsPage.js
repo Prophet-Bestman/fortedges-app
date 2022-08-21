@@ -1,6 +1,13 @@
-import { Box, Button, Flex, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  GridItem,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useGetAllMyTransactions } from "api/transactions";
-import { ConfirmModal, TransactionHistoryTable } from "components";
+import { TransactionHistoryTable } from "components";
 import {
   SelectNewPlan,
   SelectPlan,
@@ -71,71 +78,104 @@ const UserDetailsPage = ({ userID }) => {
     <Box px="24px">
       <UserDetails userID={userID} />
       <UserPlans userID={userID} />
-      <Flex justify="space-evenly" mb="30px">
-        <Button
-          onClick={() => openSelectModal("DEPOSIT")}
-          size="sm"
-          variant="outline"
-          w="auto"
-        >
-          Add Deposit
-        </Button>
-        <Button
-          onClick={() => openSelectModal("WITHDRAW")}
-          size="sm"
-          variant="outline"
-          w="auto"
-        >
-          Withdraw
-        </Button>
-        <Button
-          onClick={() => openSelectModal("ADD_BALANCE")}
-          size="sm"
-          variant="outline"
-          w="auto"
-        >
-          Add Balance
-        </Button>
-        <Button
-          onClick={() => openSelectModal("CLEAR_BALANCE")}
-          size="sm"
-          variant="outline"
-          w="auto"
-        >
-          Clear Balance
-        </Button>
-        <Button
-          onClick={() => openSelectModal("ADD_BONUS")}
-          size="sm"
-          variant="outline"
-          w="auto"
-        >
-          Add bonus
-        </Button>
-        <Link href={`/admin/users/${userID}/createplan`}>
-          <Button size="sm" variant="outline" w="auto">
-            Create new plan
+      <Grid
+        templateColumns={[
+          "repeat(1, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(3, 1fr)",
+          "repeat(6, 1fr)",
+          "repeat(12, 1fr)",
+        ]}
+        rowGap="3"
+        columnGap="2"
+        mb="30px"
+      >
+        <GridItem colSpan={1}>
+          <Button
+            onClick={() => openSelectModal("DEPOSIT")}
+            size="sm"
+            variant="outline"
+            w="full"
+          >
+            Add Deposit
           </Button>
-        </Link>
-        <Button
-          onClick={() => openSelectModal("DELETE_PLAN")}
-          size="sm"
-          variant="outline"
-          w="auto"
-        >
-          Delete Plan
-        </Button>
-        <Button
-          size="sm"
-          variant="outline"
-          w="auto"
-          color="red"
-          borderColor="red"
-          onClick={onConfirmOpen}
-        >
-          Delete Account
-        </Button>
-      </Flex>
+        </GridItem>
+
+        <GridItem colSpan={1}>
+          <Button
+            onClick={() => openSelectModal("WITHDRAW")}
+            size="sm"
+            variant="outline"
+            w="full"
+          >
+            Withdraw
+          </Button>
+        </GridItem>
+
+        <GridItem colSpan={1}>
+          <Button
+            onClick={() => openSelectModal("ADD_BALANCE")}
+            size="sm"
+            variant="outline"
+            w="full"
+          >
+            Add Balance
+          </Button>
+        </GridItem>
+
+        <GridItem colSpan={1}>
+          <Button
+            onClick={() => openSelectModal("CLEAR_BALANCE")}
+            size="sm"
+            variant="outline"
+            w="full"
+          >
+            Clear Balance
+          </Button>
+        </GridItem>
+
+        <GridItem colSpan={1}>
+          <Button
+            onClick={() => openSelectModal("ADD_BONUS")}
+            size="sm"
+            variant="outline"
+            w="full"
+          >
+            Add bonus
+          </Button>
+        </GridItem>
+
+        <GridItem colSpan={1}>
+          <Link href={`/admin/users/${userID}/createplan`}>
+            <Button size="sm" variant="outline" w="full">
+              Create new plan
+            </Button>
+          </Link>
+        </GridItem>
+
+        <GridItem colSpan={1}>
+          <Button
+            onClick={() => openSelectModal("DELETE_PLAN")}
+            size="sm"
+            variant="outline"
+            w="full"
+          >
+            Delete Plan
+          </Button>
+        </GridItem>
+        <GridItem colSpan={1}>
+          <Button
+            size="sm"
+            variant="outline"
+            w="full"
+            color="red"
+            borderColor="red"
+            onClick={onConfirmOpen}
+          >
+            Delete Account
+          </Button>
+        </GridItem>
+      </Grid>
 
       {!!transactions && (
         <TransactionHistoryTable transactions={transactions} />
