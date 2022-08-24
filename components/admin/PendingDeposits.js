@@ -8,7 +8,6 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
-import { deposits } from "data";
 import React from "react";
 import PendingDepositRow from "./PendingDepositRow";
 
