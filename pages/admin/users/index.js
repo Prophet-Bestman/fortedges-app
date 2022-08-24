@@ -57,7 +57,7 @@ const Users = () => {
 
   return (
     <Box px="24px">
-      <TableContainer bg="white" p="24px">
+      <TableContainer bg="white" p="24px" pt="12" pb="32">
         <Table variant="unstyled" size="sm">
           <Thead>
             <Tr fontSize="14px" color="text.grey" bg="#FAFAFA">

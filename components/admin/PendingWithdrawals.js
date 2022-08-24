@@ -20,7 +20,7 @@ const PendingWithdrawals = ({ withdrawals }) => {
         All Pending Wihdrawals
       </Text>
       <Box>
-        <TableContainer bg="white" p="24px">
+        <TableContainer bg="white" p="24px" pt="12" pb="32">
           <Table variant="unstyled" w="full" size="sm">
             <Thead bg="#fafafa">
               <Tr fontSize="14px" color="text.grey">
