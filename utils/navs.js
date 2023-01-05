@@ -3,7 +3,6 @@ import { BiTrendingUp } from "react-icons/bi";
 import { RiRefund2Line } from "react-icons/ri";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { GrHistory } from "react-icons/gr";
-import { process.env.NEXT_PUBLIC_LANDING_URL } from "api/process.env.NEXT_PUBLIC_BASE_URLs";
 
 export const authNavs = [
   { name: "Home", link: process.env.NEXT_PUBLIC_LANDING_URL + "/" },
@@ -11,9 +10,18 @@ export const authNavs = [
     name: "Plans",
     link: "#",
     dropDown: [
-      { name: "Premium Stock", link: process.env.NEXT_PUBLIC_LANDING_URL + "/plans/premium_stock" },
-      { name: "Real Estate", link: process.env.NEXT_PUBLIC_LANDING_URL + "/plans/real_estate" },
-      { name: "Fixed Income", link: process.env.NEXT_PUBLIC_LANDING_URL + "/plans/fixed_income" },
+      {
+        name: "Premium Stock",
+        link: process.env.NEXT_PUBLIC_LANDING_URL + "/plans/premium_stock",
+      },
+      {
+        name: "Real Estate",
+        link: process.env.NEXT_PUBLIC_LANDING_URL + "/plans/real_estate",
+      },
+      {
+        name: "Fixed Income",
+        link: process.env.NEXT_PUBLIC_LANDING_URL + "/plans/fixed_income",
+      },
     ],
   },
 
@@ -23,10 +31,22 @@ export const authNavs = [
     name: "Company",
     link: "#",
     dropDown: [
-      { name: "About Us", link: process.env.NEXT_PUBLIC_LANDING_URL + "/about_us" },
-      { name: "Support", link: process.env.NEXT_PUBLIC_LANDING_URL + "/support" },
-      { name: "Wealth Calculator", link: process.env.NEXT_PUBLIC_LANDING_URL + "/wealth_calculator" },
-      { name: "Why Ubassets", link: process.env.NEXT_PUBLIC_LANDING_URL + "/why_ubassets" },
+      {
+        name: "About Us",
+        link: process.env.NEXT_PUBLIC_LANDING_URL + "/about_us",
+      },
+      {
+        name: "Support",
+        link: process.env.NEXT_PUBLIC_LANDING_URL + "/support",
+      },
+      {
+        name: "Wealth Calculator",
+        link: process.env.NEXT_PUBLIC_LANDING_URL + "/wealth_calculator",
+      },
+      {
+        name: "Why Ubassets",
+        link: process.env.NEXT_PUBLIC_LANDING_URL + "/why_ubassets",
+      },
     ],
   },
 ];

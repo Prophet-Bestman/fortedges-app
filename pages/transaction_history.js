@@ -22,7 +22,6 @@ import {
 import { useGetAllMyTransactions } from "api/transactions";
 import { useGetCustomPlans } from "api/plans";
 import { MdOutlineArrowBackIos, MdArrowForwardIos } from "react-icons/md";
-import { process.env.NEXT_PUBLIC_LANDING_URL } from "api/process.env.NEXT_PUBLIC_BASE_URLs";
 
 const TransactionHisory = () => {
   const { dispatch: setActiveNav } = useContext(NavContext);
@@ -171,7 +170,11 @@ const TransactionHisory = () => {
         </Flex>
 
         {/* Link */}
-        <a target="_blank" href={process.env.NEXT_PUBLIC_LANDING_URL + "/support"} rel="noreferrer">
+        <a
+          target="_blank"
+          href={process.env.NEXT_PUBLIC_LANDING_URL + "/support"}
+          rel="noreferrer"
+        >
           <Text
             fontSize={["14px", , "16px"]}
             color="app.primary"
@@ -190,28 +193,29 @@ const TransactionHisory = () => {
         </Box>
 
         {/* TRANSACTION HISTORY ON MOBILE */}
-        {transactions !== undefined && transactions?.transactions?.length > 0 && (
-          <Box display={["block", , "none"]} my="48px">
-            {transactions?.transactions
-              .filter((transaction) => {
-                if (type === "") return transaction;
-                return transaction.type == type;
-              })
-              ?.map((transaction, i) => (
-                <Box
-                  key={i}
-                  // onClick={() => openTransactionModal(transaction)}
-                  cursor="pointer"
-                  // bg=
-                  _hover={{
-                    bg: "gray.100",
-                  }}
-                >
-                  <MiniTransaction transaction={transaction} />
-                </Box>
-              ))}
-          </Box>
-        )}
+        {transactions !== undefined &&
+          transactions?.transactions?.length > 0 && (
+            <Box display={["block", , "none"]} my="48px">
+              {transactions?.transactions
+                .filter((transaction) => {
+                  if (type === "") return transaction;
+                  return transaction.type == type;
+                })
+                ?.map((transaction, i) => (
+                  <Box
+                    key={i}
+                    // onClick={() => openTransactionModal(transaction)}
+                    cursor="pointer"
+                    // bg=
+                    _hover={{
+                      bg: "gray.100",
+                    }}
+                  >
+                    <MiniTransaction transaction={transaction} />
+                  </Box>
+                ))}
+            </Box>
+          )}
 
         <Flex color="white" justifyContent="center" gap="12px" mb="48px">
           <Button

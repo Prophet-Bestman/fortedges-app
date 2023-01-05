@@ -33,7 +33,6 @@ import { PlanContext } from "providers/PlanProvider";
 import { useWithdraw } from "api/transactions";
 import ErrorModal from "components/ErrorModal";
 import { formatDistance } from "date-fns";
-import { process.env.NEXT_PUBLIC_LANDING_URL } from "api/process.env.NEXT_PUBLIC_BASE_URLs";
 
 const optionsArr = Object.entries(options);
 

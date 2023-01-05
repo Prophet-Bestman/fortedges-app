@@ -21,7 +21,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSignUp } from "api/auth";
 import config from "utils/config";
-import { process.env.NEXT_PUBLIC_LANDING_URL } from "api/process.env.NEXT_PUBLIC_BASE_URLs";
 
 const SignupForm = () => {
   const [canSubmit, setCanSubmit] = useState(false);

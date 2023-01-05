@@ -24,7 +24,6 @@ import { useGetNotifications } from "api/notifications";
 import { AuthContext, userActions } from "providers/AuthProvider";
 import PlanProvider from "providers/PlanProvider";
 import UserSelectPlan from "components/overview/UserSelectPlan";
-import { process.env.NEXT_PUBLIC_LANDING_URL } from "api/process.env.NEXT_PUBLIC_BASE_URLs";
 
 const MainHeader = () => {
   const [notificationCount, setNotificationCount] = useState(0);

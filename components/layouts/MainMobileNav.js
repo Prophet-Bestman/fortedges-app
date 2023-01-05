@@ -9,7 +9,7 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import { process.env.NEXT_PUBLIC_LANDING_URL } from "api/process.env.NEXT_PUBLIC_BASE_URLs";
+
 import Link from "next/link";
 import { AuthContext, userActions } from "providers/AuthProvider";
 import { NavContext } from "providers/NavProvider";
