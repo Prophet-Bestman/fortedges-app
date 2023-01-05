@@ -1,10 +1,9 @@
 import axios from "axios";
-import { baseUrl } from "api/baseUrls";
 import { useQuery } from "react-query";
 import configOptions from "./config";
 
 const request = axios.create({
-  baseURL: baseUrl + "/portfolio",
+  baseUrl: process.env.NEXT_PUBLIC_BASE_URL + "/portfolio",
 });
 
 export const useGetPortfolio = () => {

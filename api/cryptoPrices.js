@@ -1,10 +1,9 @@
 import axios from "axios";
-import { baseUrl } from "api/baseUrls";
 import { useMutation, useQueryClient, useQuery } from "react-query";
 import configOptions, { getUserID } from "./config";
 
 const request = axios.create({
-  baseURL:
+  baseUrl:
     "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false",
 });
 

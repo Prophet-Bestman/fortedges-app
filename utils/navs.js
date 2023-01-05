@@ -3,30 +3,30 @@ import { BiTrendingUp } from "react-icons/bi";
 import { RiRefund2Line } from "react-icons/ri";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { GrHistory } from "react-icons/gr";
-import { landingUrl } from "api/baseUrls";
+import { process.env.NEXT_PUBLIC_LANDING_URL } from "api/process.env.NEXT_PUBLIC_BASE_URLs";
 
 export const authNavs = [
-  { name: "Home", link: landingUrl + "/" },
+  { name: "Home", link: process.env.NEXT_PUBLIC_LANDING_URL + "/" },
   {
     name: "Plans",
     link: "#",
     dropDown: [
-      { name: "Premium Stock", link: landingUrl + "/plans/premium_stock" },
-      { name: "Real Estate", link: landingUrl + "/plans/real_estate" },
-      { name: "Fixed Income", link: landingUrl + "/plans/fixed_income" },
+      { name: "Premium Stock", link: process.env.NEXT_PUBLIC_LANDING_URL + "/plans/premium_stock" },
+      { name: "Real Estate", link: process.env.NEXT_PUBLIC_LANDING_URL + "/plans/real_estate" },
+      { name: "Fixed Income", link: process.env.NEXT_PUBLIC_LANDING_URL + "/plans/fixed_income" },
     ],
   },
 
-  { name: "Security", link: landingUrl + "/security" },
-  { name: "Blog", link: landingUrl + "/blogs" },
+  { name: "Security", link: process.env.NEXT_PUBLIC_LANDING_URL + "/security" },
+  { name: "Blog", link: process.env.NEXT_PUBLIC_LANDING_URL + "/blogs" },
   {
     name: "Company",
     link: "#",
     dropDown: [
-      { name: "About Us", link: landingUrl + "/about_us" },
-      { name: "Support", link: landingUrl + "/support" },
-      { name: "Wealth Calculator", link: landingUrl + "/wealth_calculator" },
-      { name: "Why Ubassets", link: landingUrl + "/why_ubassets" },
+      { name: "About Us", link: process.env.NEXT_PUBLIC_LANDING_URL + "/about_us" },
+      { name: "Support", link: process.env.NEXT_PUBLIC_LANDING_URL + "/support" },
+      { name: "Wealth Calculator", link: process.env.NEXT_PUBLIC_LANDING_URL + "/wealth_calculator" },
+      { name: "Why Ubassets", link: process.env.NEXT_PUBLIC_LANDING_URL + "/why_ubassets" },
     ],
   },
 ];

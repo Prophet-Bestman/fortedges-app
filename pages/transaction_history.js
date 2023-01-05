@@ -22,7 +22,7 @@ import {
 import { useGetAllMyTransactions } from "api/transactions";
 import { useGetCustomPlans } from "api/plans";
 import { MdOutlineArrowBackIos, MdArrowForwardIos } from "react-icons/md";
-import { landingUrl } from "api/baseUrls";
+import { process.env.NEXT_PUBLIC_LANDING_URL } from "api/process.env.NEXT_PUBLIC_BASE_URLs";
 
 const TransactionHisory = () => {
   const { dispatch: setActiveNav } = useContext(NavContext);
@@ -171,7 +171,7 @@ const TransactionHisory = () => {
         </Flex>
 
         {/* Link */}
-        <a target="_blank" href={landingUrl + "/support"} rel="noreferrer">
+        <a target="_blank" href={process.env.NEXT_PUBLIC_LANDING_URL + "/support"} rel="noreferrer">
           <Text
             fontSize={["14px", , "16px"]}
             color="app.primary"

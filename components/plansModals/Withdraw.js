@@ -33,7 +33,7 @@ import { PlanContext } from "providers/PlanProvider";
 import { useWithdraw } from "api/transactions";
 import ErrorModal from "components/ErrorModal";
 import { formatDistance } from "date-fns";
-import { landingUrl } from "api/baseUrls";
+import { process.env.NEXT_PUBLIC_LANDING_URL } from "api/process.env.NEXT_PUBLIC_BASE_URLs";
 
 const optionsArr = Object.entries(options);
 
@@ -168,7 +168,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
               </Circle>
               {30 - days} {"day(s) left to Withdraw funds."}{" "}
               <a
-                href={landingUrl + "/support"}
+                href={process.env.NEXT_PUBLIC_LANDING_URL + "/support"}
                 rel="noreferrer"
                 target="_blank"
               >

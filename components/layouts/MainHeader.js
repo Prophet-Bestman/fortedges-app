@@ -24,7 +24,7 @@ import { useGetNotifications } from "api/notifications";
 import { AuthContext, userActions } from "providers/AuthProvider";
 import PlanProvider from "providers/PlanProvider";
 import UserSelectPlan from "components/overview/UserSelectPlan";
-import { landingUrl } from "api/baseUrls";
+import { process.env.NEXT_PUBLIC_LANDING_URL } from "api/process.env.NEXT_PUBLIC_BASE_URLs";
 
 const MainHeader = () => {
   const [notificationCount, setNotificationCount] = useState(0);
@@ -199,7 +199,7 @@ const MainHeader = () => {
                   <Text _hover={{ color: "app.primary" }} mb="16px">
                     <a
                       target="_blank"
-                      href={`${landingUrl}/support`}
+                      href={`${process.env.NEXT_PUBLIC_LANDING_URL}/support`}
                       rel="noreferrer"
                     >
                       Support

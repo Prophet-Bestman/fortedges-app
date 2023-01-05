@@ -1,10 +1,9 @@
 import axios from "axios";
-import { baseUrl } from "api/baseUrls";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import configOptions, { getUserID } from "./config";
 
 const request = axios.create({
-  baseURL: baseUrl + "/users",
+  baseUrl: process.env.NEXT_PUBLIC_BASE_URL + "/users",
 });
 
 const useGetUser = () => {

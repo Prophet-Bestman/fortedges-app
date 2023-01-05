@@ -21,7 +21,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSignUp } from "api/auth";
 import config from "utils/config";
-import { landingUrl } from "api/baseUrls";
+import { process.env.NEXT_PUBLIC_LANDING_URL } from "api/process.env.NEXT_PUBLIC_BASE_URLs";
 
 const SignupForm = () => {
   const [canSubmit, setCanSubmit] = useState(false);
@@ -232,7 +232,7 @@ const SignupForm = () => {
                 <a
                   target="_blank"
                   rel="noreferrer"
-                  href={landingUrl + "/terms"}
+                  href={process.env.NEXT_PUBLIC_LANDING_URL + "/terms"}
                 >
                   User Agreement
                 </a>{" "}
@@ -242,7 +242,7 @@ const SignupForm = () => {
                 <a
                   target="_blank"
                   rel="noreferrer"
-                  href={landingUrl + "/terms"}
+                  href={process.env.NEXT_PUBLIC_LANDING_URL + "/terms"}
                 >
                   Privacy Policy
                 </a>

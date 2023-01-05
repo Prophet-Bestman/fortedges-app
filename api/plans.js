@@ -1,10 +1,9 @@
 import axios from "axios";
-import { baseUrl } from "api/baseUrls";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import configOptions from "./config";
 
 const request = axios.create({
-  baseURL: baseUrl + "",
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL + "",
 });
 
 const useGetAllPlans = () => {
