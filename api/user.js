@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import configOptions, { getUserID } from "./config";
 
 const request = axios.create({
-  baseUrl: process.env.NEXT_PUBLIC_BASE_URL + "/users",
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL + "/users",
 });
 
 const useGetUser = () => {

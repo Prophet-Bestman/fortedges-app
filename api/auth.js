@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import configOptions from "./config";
 
 const request = axios.create({
-  baseUrl: process.env.NEXT_PUBLIC_BASE_URL + "",
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL + "",
 });
 
 const useSignUp = () => {

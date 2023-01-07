@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import configOptions from "./config";
 
 const request = axios.create({
-  baseUrl: process.env.NEXT_PUBLIC_BASE_URL + "/portfolio",
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL + "/portfolio",
 });
 
 export const useGetPortfolio = () => {
