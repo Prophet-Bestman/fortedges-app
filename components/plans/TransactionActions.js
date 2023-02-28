@@ -90,7 +90,7 @@ const TransactionActions = () => {
           </MenuButton>
           <MenuList>
             <MenuItem onClick={onEditOpen}>Edit Plan</MenuItem>
-            <MenuItem onClick={onDeleteOpen}>Delete Plan</MenuItem>
+            {/* <MenuItem onClick={onDeleteOpen}>Delete Plan</MenuItem> */}
           </MenuList>
         </Menu>
       </Flex>

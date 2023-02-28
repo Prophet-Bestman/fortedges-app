@@ -1,4 +1,4 @@
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Tag, Text } from "@chakra-ui/react";
 import { planProps } from "data";
 import { goalProps } from "data/explorePlans";
 import Link from "next/link";
@@ -43,8 +43,17 @@ const OverviewPlan = ({ plan }) => {
           case "Real Estate":
             setCurrentPlanProps(planProps.realEstate);
             break;
-          case "Premium Stock":
-            setCurrentPlanProps(planProps.premiumStock);
+          case "Cryptocurrency Premium":
+            setCurrentPlanProps(planProps.cryptoBasic);
+
+          case "Cryptocurrency Intermediate":
+            setCurrentPlanProps(planProps.cryptoBasic);
+
+          case "Cryptocurrency Basic":
+            setCurrentPlanProps(planProps.cryptoBasic);
+            break;
+
+          default:
             break;
         }
       }
@@ -58,11 +67,11 @@ const OverviewPlan = ({ plan }) => {
         cursor="pointer"
         bgRepeat="no-repeat"
         w="full"
-        maxW="166px"
+        maxW={["full", "327px"]}
         h="196px"
         p="16px"
-        display="flex"
-        justifyContent="center"
+        // display="flex"
+        // justifyContent="center"
         borderRadius="12px"
         // alignItems='center'
         position="relative"
@@ -78,26 +87,32 @@ const OverviewPlan = ({ plan }) => {
           w: "100%",
         }}
       >
-        <Box>
-          <Image
-            style={{
-              filter: "blur(4px)",
-            }}
-            src={currentPlanProps?.img}
-            w="101px"
-          />
-        </Box>
+        <Image mb="3" src={currentPlanProps?.img} w="90px" />
 
         <Box bottom="14px" position="absolute" color="white">
           <Text mb="4px" fontSize="13px">
             {name}
           </Text>
-          <Text mb="4px" fontSize="15px" fontWeight={600}>
-            {formatter.format(investment + profit)}
-          </Text>
-          <Text mb="4px" fontSize="13px">
+
+          <Flex gap="3" alignItems="center">
+            <Text mb="4px" fontSize="15px" fontWeight={600}>
+              {formatter.format(investment + profit)}
+            </Text>
+
+            <Tag
+              variant="subtle"
+              color="white"
+              rounded="full"
+              bg="#ffffff22"
+              size="sm"
+              px="3"
+            >
+              Profit
+            </Tag>
+          </Flex>
+          {/* <Text mb="4px" fontSize="13px">
             {parent_plan_name}
-          </Text>
+          </Text> */}
         </Box>
       </Box>
     </Link>

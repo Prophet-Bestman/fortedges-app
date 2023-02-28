@@ -4,8 +4,6 @@ import {
   CryptoIntermediatePlan,
   CryptoPremiumPlan,
   FixedIncomePlan,
-  // GoalsPlan,
-  // PremiumPlan,
   RealEstatePlan,
 } from "components/plansModals";
 import { goalModalProps, planProps } from "data";
@@ -74,7 +72,6 @@ const PlanResponsive = ({ plan }) => {
 
         case "Cryptocurrency Basic":
           setCurrentPlanProps(planProps.cryptoBasic);
-
           break;
 
         default:

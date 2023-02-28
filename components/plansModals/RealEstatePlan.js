@@ -22,13 +22,16 @@ import { formatter } from "utils";
 import SubmitPlan from "./SubmitPlan";
 import { planProps, portfolioCountries } from "data";
 import OurPortfolio from "./OurPortfolio";
+import { AuthContext } from "providers/AuthProvider";
 
-const RealEstatePlan = ({ isOpen, onClose, plan, userID }) => {
+const RealEstatePlan = ({ isOpen, onClose, plan, customPlan }) => {
   const { min, max, description, _id, name } = plan;
+  const { user } = useContext(AuthContext);
   const { dispatch: setOpen } = useContext(PlanFormContext);
   const { dispatch: setUserID } = useContext(PlanFormContext);
   const { dispatch: setParentID } = useContext(PlanFormContext);
   const { dispatch: setParentName } = useContext(PlanFormContext);
+  const { dispatch: setPlanId } = useContext(PlanFormContext);
 
   const {
     isOpen: isPortfolioOpen,
@@ -127,12 +130,18 @@ const RealEstatePlan = ({ isOpen, onClose, plan, userID }) => {
                 payload: name,
               });
               setParentID({ type: planFormActions.SET_ID, payload: _id });
-
               setOpen({ type: planFormActions.OPEN_FORM });
-              setUserID({ type: planFormActions.SET_USER_ID, payload: userID });
+              setUserID({
+                type: planFormActions.SET_USER_ID,
+                payload: user?._id,
+              });
+              setPlanId({
+                type: planFormActions.SET_PLAN_ID,
+                payload: customPlan._id,
+              });
             }}
           >
-            Get Started
+            {user?.has_plan ? "Upgrade" : "Get Started"}
           </Button>
         </ModalFooter>
       </ModalContent>

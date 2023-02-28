@@ -23,6 +23,7 @@ export const planProps = {
   fixedIncome: {
     img: "/img/icons/fixed-income-1.png",
     color: "app.green",
+    bg: "#7EDB954D",
     history: [
       { year: "2022", profit: "55.77%" },
       { year: "2021", profit: "53.12%" },
@@ -36,6 +37,7 @@ export const planProps = {
   realEstate: {
     img: "/img/icons/Real-estate-1.png",
     color: "app.blue",
+    bg: "#7EA9FA4D",
     history: [
       { year: "2022", profit: "26.02%" },
       { year: "2022", profit: "25.19%" },
@@ -50,6 +52,7 @@ export const planProps = {
   premiumStock: {
     img: "/img/emojis/star.png",
     color: "text.brown",
+    bg: "#FBE8D0",
     history: [
       { year: "2022", profit: "55.77%" },
       { year: "2021", profit: "53.12%" },
@@ -63,6 +66,7 @@ export const planProps = {
   cryptoPremium: {
     img: "/img/icons/bitcoin.png",
     color: "text.brown",
+    bg: "#FBE8D0",
     history: [
       { year: "2022", profit: "55.77%" },
       { year: "2021", profit: "53.12%" },
@@ -76,6 +80,7 @@ export const planProps = {
   cryptoIntermediate: {
     img: "/img/icons/bitcoin.png",
     color: "text.brown",
+    bg: "#FBE8D0",
     history: [
       { year: "2022", profit: "36.19%" },
       { year: "2021", profit: "36.12%%" },
@@ -89,6 +94,7 @@ export const planProps = {
   cryptoBasic: {
     img: "/img/icons/bitcoin.png",
     color: "text.brown",
+    bg: "#FBE8D0",
     history: [
       { year: "2022", profit: "18.80%" },
       { year: "2021", profit: "19.92%" },

@@ -21,12 +21,13 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useCreateCustomPlan } from "api/plans";
-import SuccessModal from "components/SuccessModal";
+import { useCreateCustomPlan, useEditCustomPlan } from "api/plans";
 import ErrorModal from "components/ErrorModal";
 import PlanCreated from "./PlanCreated";
+import { AuthContext } from "providers/AuthProvider";
 
 const SubmitPlan = ({ closeParent }) => {
+  const { user } = useContext(AuthContext);
   const { planFormState, dispatch: setOpen } = useContext(PlanFormContext);
   const [newPlan, setnewPlan] = useState({});
 
@@ -51,7 +52,7 @@ const SubmitPlan = ({ closeParent }) => {
   const isOpen = planFormState.isOpen;
   const id = planFormState.id;
   const parent_plan_name = planFormState.parent_plan_name;
-  const user_id = planFormState.user_id;
+  // const user_id = planFormState.user_id;
 
   const planSchema = yup.object({
     planName: yup.string().required().min(3),
@@ -78,19 +79,60 @@ const SubmitPlan = ({ closeParent }) => {
     data: createdPlan,
   } = useCreateCustomPlan();
 
-  const submitPlan = (data) => {
-    const plan = {
-      data: {
-        // user_id: user_id,
-        name: data.planName,
-        parent_plan_id: id,
-        description: "",
-        parent_plan_name: parent_plan_name,
-      },
-    };
+  const {
+    mutate: updatePlan,
+    isLoading: updating,
+    error: updateError,
+    data: updatedPlan,
+  } = useEditCustomPlan();
 
-    createPlan(plan);
+  const submitPlan = (data) => {
+    let payload;
+    if (user?.has_plan) {
+      payload = {
+        plan_id: planFormState?.plan_id,
+        data: {
+          name: data.planName,
+          parent_plan_id: id,
+          description: "",
+        },
+      };
+      updatePlan(payload);
+    } else {
+      payload = {
+        data: {
+          // user_id: user_id,
+          name: data.planName,
+          parent_plan_id: id,
+          description: "",
+          parent_plan_name: parent_plan_name,
+        },
+      };
+      createPlan(payload);
+    }
   };
+
+  useEffect(() => {
+    if (!!createdPlan) {
+      if (createdPlan?.status >= 200) {
+        onSuccessOpen();
+        setnewPlan(createdPlan);
+      } else {
+        onErrorOpen();
+      }
+    }
+  }, [createdPlan]);
+
+  useEffect(() => {
+    if (!!updatedPlan) {
+      if (updatedPlan?.status >= 200) {
+        onSuccessOpen();
+        setnewPlan(updatedPlan);
+      } else {
+        onErrorOpen();
+      }
+    }
+  }, [updatedPlan]);
 
   useEffect(() => {
     if (createdPlan !== undefined) {
@@ -104,10 +146,10 @@ const SubmitPlan = ({ closeParent }) => {
   }, [createdPlan]);
 
   useEffect(() => {
-    if (!!error) {
+    if (!!error || !!updateError) {
       onErrorOpen();
     }
-  }, [error]);
+  }, [error, updateError]);
 
   return (
     <Modal isOpen={isOpen} isCentered size="sm">
@@ -154,7 +196,7 @@ const SubmitPlan = ({ closeParent }) => {
                   Back
                 </Button>
                 <Button
-                  isLoading={isLoading}
+                  isLoading={isLoading || updating}
                   w="full"
                   ml={1}
                   size="md"
@@ -168,12 +210,16 @@ const SubmitPlan = ({ closeParent }) => {
         </ModalBody>
       </ModalContent>
 
-      {!!createdPlan && createdPlan?.data && (
+      {(createdPlan?.data || updatedPlan?.data) && (
         <PlanCreated
           isOpen={isSuccessOpen}
-          msg="Plan Creation Successful"
+          msg={
+            updatedPlan?.data
+              ? "Plan Upgrade Successful"
+              : "Plan Creation Successful"
+          }
           closeParent={onParentClose}
-          plan={createdPlan?.data}
+          plan={createdPlan?.data || updatedPlan?.data}
         />
       )}
 

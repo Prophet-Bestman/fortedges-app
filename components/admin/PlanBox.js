@@ -11,6 +11,34 @@ const PlanBox = ({ plan, onClick }) => {
   const { investment, name, parent_plan_name, profit, parent_goal_name } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState();
 
+  const {
+    isOpen: isCryptoPremiumOpen,
+    onClose: onCryptoPremiumClose,
+    onOpen: onCryptoPremiumOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isCryptoIntermediateOpen,
+    onClose: onCryptoIntermediateClose,
+    onOpen: onCryptoIntermediateOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isCryptoBasicOpen,
+    onClose: onCryptoBasicClose,
+    onOpen: onCryptoBasicOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isFixedIncomeOpen,
+    onClose: onFixedIncomeClose,
+    onOpen: onFixedIncomeOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isRealEstateOpen,
+    onClose: onRealEstateClose,
+    onOpen: onRealEstateOpen,
+  } = useDisclosure();
+
+  console.log(plan);
+
   useEffect(() => {
     if (plan !== undefined) {
       if (!!parent_goal_name) {
@@ -38,20 +66,53 @@ const PlanBox = ({ plan, onClick }) => {
             break;
         }
       } else {
-        switch (parent_plan_name) {
+        switch (plan.parent_plan_name) {
           case "Fixed Income":
             setCurrentPlanProps(planProps.fixedIncome);
+            setGoalProps(goalModalProps.fixedIncome);
             break;
           case "Real Estate":
             setCurrentPlanProps(planProps.realEstate);
             break;
-          case "Premium Stock":
-            setCurrentPlanProps(planProps.premiumStock);
+          case "Cryptocurrency Premium":
+            setCurrentPlanProps(planProps.cryptoBasic);
+
+          case "Cryptocurrency Intermediate":
+            setCurrentPlanProps(planProps.cryptoBasic);
+
+          case "Cryptocurrency Basic":
+            setCurrentPlanProps(planProps.cryptoBasic);
+            break;
+
+          default:
             break;
         }
       }
     }
   }, [plan]);
+
+  const handlePlan = () => {
+    switch (name) {
+      case "Cryptocurrency Premium":
+        onCryptoPremiumOpen();
+        break;
+      case "Cryptocurrency Intermediate":
+        onCryptoIntermediateOpen();
+        break;
+      case "Cryptocurrency Basic":
+        onCryptoBasicOpen();
+        break;
+      case "Fixed Income":
+        onFixedIncomeOpen();
+        break;
+      case "Real Estate":
+        onRealEstateOpen();
+        break;
+
+      default:
+        break;
+    }
+  };
 
   const amount = formatter.format(investment + profit);
   return (
@@ -72,9 +133,9 @@ const PlanBox = ({ plan, onClick }) => {
     >
       <Flex alignItems="center" h="100%">
         <Image
-          style={{
-            filter: "blur(4px)",
-          }}
+          // style={{
+          //   filter: "blur(4px)",
+          // }}
           src={currentPlanProps?.img}
           objectPosition="center"
           w="full"

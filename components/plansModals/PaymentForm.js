@@ -45,14 +45,25 @@ const PaymentForm = ({
   const [requestError, setRequestError] = useState("");
 
   useEffect(() => {
-    if (plan.parent_plan_name === "Premium Stock") {
-      setMinAmount(100000);
-    }
-    if (plan.parent_plan_name === "Real Estate") {
-      setMinAmount(50000);
-    }
-    if (plan.parent_plan_name === "Fixed Income") {
-      setMinAmount(2000);
+    switch (plan?.parent_plan_name) {
+      case "Cryptocurrency Premium":
+        setMinAmount(100000);
+        break;
+      case "Cryptocurrency Intermediate":
+        setMinAmount(25000);
+        break;
+      case "Cryptocurrency Basic":
+        setMinAmount(5000);
+        break;
+      case "Fixed Income":
+        setMinAmount(2000);
+        break;
+      case "Real Estate":
+        setMinAmount(20000);
+        break;
+
+      default:
+        break;
     }
   }, [plan]);
 

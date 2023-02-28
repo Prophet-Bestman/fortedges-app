@@ -115,7 +115,7 @@ const UserPlan = ({ plan }) => {
 
 export default UserPlan;
 
-const PlanBalance = ({ isOpen, onClose, plan }) => {
+const PlanBalance = ({ isOpen, onClose, plan, customPlan }) => {
   const { investment, profit, gain } = plan;
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xs" isCentered>

@@ -237,20 +237,22 @@ const MainHeader = () => {
           onClick={onOpen}
         >
           <AiOutlineMenu color="black" size="24px" />
-          <MainMobileNav
-            isOpen={isOpen}
-            onClose={onClose}
-            onFundOpen={onFundOpen}
-          />
+          <PlanProvider>
+            <MainMobileNav
+              isOpen={isOpen}
+              onClose={onClose}
+              onFundOpen={onFundOpen}
+            />
+          </PlanProvider>
         </Box>
       </Box>
       {navState.pageTitle !== "Overview" && (
         <MobilePageTitle>{pageTitle}</MobilePageTitle>
       )}
 
-      <PlanProvider>
+      {/* <PlanProvider>
         <UserSelectPlan isOpen={isFundOpen} onClose={onFundClose} />
-      </PlanProvider>
+      </PlanProvider> */}
     </Box>
   );
 };

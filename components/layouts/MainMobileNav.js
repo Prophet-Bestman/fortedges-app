@@ -8,27 +8,52 @@ import {
   ModalContent,
   ModalOverlay,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { useGetCustomPlans } from "api/plans";
+import { FundPlan } from "components/plansModals";
 
 import Link from "next/link";
 import { AuthContext, userActions } from "providers/AuthProvider";
 import { NavContext } from "providers/NavProvider";
+import { planActions, PlanContext } from "providers/PlanProvider";
 
 import React, { useContext, useEffect } from "react";
 import { mobileNavs } from "utils";
 
-const MainMobileNav = ({ isOpen, onClose, onFundOpen }) => {
+const MainMobileNav = ({ isOpen, onClose }) => {
   const { navState } = useContext(NavContext);
   const active = navState.name;
   const { dispatch: logout } = useContext(AuthContext);
+  const { dispatch: setPlan } = useContext(PlanContext);
+
+  const { data: plansData, isLoading } = useGetCustomPlans();
+
+  useEffect(() => {
+    if (plansData !== undefined) {
+      if (Object.keys(plansData)?.length > 0) {
+        setPlan({
+          type: planActions.SET_PLAN,
+          payload: plansData?.custom_plans[0],
+        });
+      }
+    }
+  }, [plansData]);
 
   useEffect(() => {
     onClose();
   }, [active]);
 
+  const {
+    isOpen: isFundOpen,
+    onClose: onFundClose,
+    onOpen: onFundOpen,
+  } = useDisclosure();
+
   const handleOpenFundModal = (nav) => {
-    if (nav?.name === "Fund A Plan") {
-      onClose();
+    if (nav?.name === "Add Money") {
+      console.log(nav);
+      // onClose();
       onFundOpen();
     }
   };
@@ -60,23 +85,27 @@ const MainMobileNav = ({ isOpen, onClose, onFundOpen }) => {
             >
               {mobileNavs.map((nav, i) => (
                 <Link href={nav.link} key={i}>
-                  <Text
-                    onClick={() => handleOpenFundModal(nav)}
-                    display="flex"
-                    alignItems="center"
-                    my="16px"
-                    gap="8px"
-                    color={active === nav.name ? "app.primary" : "text.dark"}
-                    cursor="pointer"
-                    _hover={{
-                      color: "app.primary",
-                    }}
-                  >
-                    <Circle size="32px" bg="#1D24410D">
-                      <Image w="20px" src={nav.icon} alt="" />
-                    </Circle>{" "}
-                    {nav.name}
-                  </Text>
+                  {nav?.name === "Add Money" && isLoading ? (
+                    <></>
+                  ) : (
+                    <Text
+                      onClick={() => handleOpenFundModal(nav)}
+                      display="flex"
+                      alignItems="center"
+                      my="16px"
+                      gap="8px"
+                      color={active === nav.name ? "app.primary" : "text.dark"}
+                      cursor="pointer"
+                      _hover={{
+                        color: "app.primary",
+                      }}
+                    >
+                      <Circle size="32px" bg="#1D24410D">
+                        <Image w="20px" src={nav.icon} alt="" />
+                      </Circle>{" "}
+                      {nav.name}
+                    </Text>
+                  )}
                 </Link>
               ))}
             </Box>
@@ -106,6 +135,8 @@ const MainMobileNav = ({ isOpen, onClose, onFundOpen }) => {
             </Box>
           </ModalBody>
         </ModalContent>
+
+        <FundPlan isOpen={isFundOpen} onClose={onFundClose} />
       </Modal>
     </div>
   );

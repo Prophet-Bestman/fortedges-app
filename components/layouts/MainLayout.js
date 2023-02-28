@@ -4,6 +4,7 @@ import MainHeader from "./MainHeader";
 import MainNav from "./MainNav";
 import { AuthContext } from "providers/AuthProvider";
 import { useRouter } from "next/router";
+import PlanProvider from "providers/PlanProvider";
 
 const MainLayout = ({ children }) => {
   const { user } = useContext(AuthContext);
@@ -26,7 +27,9 @@ const MainLayout = ({ children }) => {
           position="relative"
         >
           <Box top="0" position="sticky" w="full">
-            <MainNav />
+            <PlanProvider>
+              <MainNav />
+            </PlanProvider>
           </Box>
         </GridItem>
         <GridItem position="relative" bg="" colSpan={9}>

@@ -6,8 +6,10 @@ import {
   News,
   OverviewHeader,
   OverviewMarketTrends,
+  UpgradePlan,
   YourPlans,
 } from "components/overview";
+import PlanProvider from "providers/PlanProvider";
 
 export default function Home() {
   const { dispatch: setActiveNav } = useContext(NavContext);
@@ -25,8 +27,11 @@ export default function Home() {
       </Head>
 
       <Box minH="100vh" bg="">
-        <OverviewHeader />
+        <PlanProvider>
+          <OverviewHeader />
+        </PlanProvider>
         <YourPlans title={"Your Plans"} />
+        <UpgradePlan />
         <News />
 
         <OverviewMarketTrends />

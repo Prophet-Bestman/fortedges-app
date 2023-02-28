@@ -6,7 +6,6 @@ import PlanComponents from "components/plans/PlanComponents";
 
 function PlanDetails() {
   const { dispatch: setActiveNav } = useContext(NavContext);
-  const [planID, setPlanID] = React.useState("");
 
   useEffect(() => {
     setActiveNav({
@@ -18,15 +17,9 @@ function PlanDetails() {
   const router = useRouter();
   const query = router.query;
 
-  useEffect(() => {
-    if (!!query) {
-      setPlanID(query.plan);
-    }
-  }, [query]);
-
   return (
     <PlanProvider>
-      <PlanComponents planID={planID} />
+      <PlanComponents planID={query.plan} />
     </PlanProvider>
   );
 }

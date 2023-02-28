@@ -42,8 +42,17 @@ const PlanDetailsBanner = () => {
           case "Real Estate":
             setCurrentPlanProps(planProps.realEstate);
             break;
-          case "Premium Stock":
-            setCurrentPlanProps(planProps.premiumStock);
+          case "Cryptocurrency Premium":
+            setCurrentPlanProps(planProps.cryptoBasic);
+
+          case "Cryptocurrency Intermediate":
+            setCurrentPlanProps(planProps.cryptoBasic);
+
+          case "Cryptocurrency Basic":
+            setCurrentPlanProps(planProps.cryptoBasic);
+            break;
+
+          default:
             break;
         }
       }
