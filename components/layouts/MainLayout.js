@@ -1,11 +1,17 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import MainHeader from "./MainHeader";
 import MainNav from "./MainNav";
-import { useGetVerifiedUser } from "api/user";
+import { AuthContext } from "providers/AuthProvider";
+import { useRouter } from "next/router";
 
 const MainLayout = ({ children }) => {
-  const { data } = useGetVerifiedUser();
+  const { user } = useContext(AuthContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user?.has_plan) router?.push("/create_plan");
+  }, [user, router.asPath]);
 
   return (
     <Box>

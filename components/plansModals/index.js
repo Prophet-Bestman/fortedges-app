@@ -6,6 +6,10 @@ import SubmitGoal from "./SubmitGoal";
 import FundPlan from "./FundPlan";
 import WithdrawalSuccess from "./WithdrawalSuccess";
 import RequestSuccess from "./RequestSuccess";
+import CryptoPremiumPlan from "./CryptoPremium";
+import CryptoIntermediatePlan from "./CryptoIntermediate";
+import CryptoBasicPlan from "./CryptoBasic";
+import FixedIncomePlan from "./FixedIncomePlan";
 
 export {
   PremiumPlan,
@@ -16,4 +20,8 @@ export {
   FundPlan,
   WithdrawalSuccess,
   RequestSuccess,
+  CryptoPremiumPlan,
+  CryptoIntermediatePlan,
+  CryptoBasicPlan,
+  FixedIncomePlan,
 };

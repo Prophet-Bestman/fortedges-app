@@ -10,6 +10,7 @@ export const navActions = {
 export const navStates = {
   overview: { name: "Overview", pageTitle: "Overview" },
   myPlans: { name: "My Plans", pageTitle: "Plans" },
+  choosePlan: { name: "Choose a plan", pageTitle: "Choose a plan" },
   feeds: { name: "Feeds", pageTitle: "Feeds" },
   account: { name: "Account", pageTitle: "Account" },
   creatPlans: { name: "My Plans", pageTitle: "Create Plans" },

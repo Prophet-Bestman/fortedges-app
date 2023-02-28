@@ -24,8 +24,6 @@ const OverviewMarketTrends = () => {
     }
   }, [data]);
 
-  console.log(data);
-
   return (
     <Box px={["12px", , "24px"]}>
       <Text my="24px" fontSize="24px" fontWeight={600} mt="40px">

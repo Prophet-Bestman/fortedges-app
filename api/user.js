@@ -1,4 +1,6 @@
 import axios from "axios";
+import { AuthContext, userActions } from "providers/AuthProvider";
+import { useContext } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import configOptions, { getUserID } from "./config";
 
@@ -23,20 +25,32 @@ const useGetUser = () => {
   );
 };
 
-export const useGetVerifiedUser = () => {
+export const useGetLoggedInUser = () => {
   const headers = configOptions();
   const user_id = getUserID();
-  return useQuery(["user", user_id], () =>
-    request
-      .get(`/${user_id}`, {
-        headers: headers,
-      })
-      .then((res) => res)
-      .catch((err) => {
-        if (err.response.status === 403) {
-          localStorage.clear();
-        } else return err;
-      })
+  const { dispatch: appendProfile } = useContext(AuthContext);
+
+  return useQuery(
+    ["logged-in-user", user_id],
+    () =>
+      request
+        .get(`/${user_id}`, {
+          headers: headers,
+        })
+        .then((res) => res)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+    {
+      onSuccess: (data) => {
+        appendProfile({
+          type: userActions.APPEND_PROFILE,
+          payload: data?.data,
+        });
+      },
+    }
   );
 };
 
