@@ -59,15 +59,16 @@ export const mainNavs = [
     link: "#",
     icon: <RiRefund2Line size="18px" />,
   },
-  {
-    name: "Notifications",
-    link: "/notifications",
-    icon: <IoMdNotificationsOutline size="18px" />,
-  },
+
   {
     name: "Transaction History",
     link: "/transaction_history",
     icon: <GrHistory size="18px" />,
+  },
+  {
+    name: "Notifications",
+    link: "/notifications",
+    icon: <IoMdNotificationsOutline size="18px" />,
   },
 ];
 
@@ -75,15 +76,16 @@ export const mobileNavs = [
   { name: "Overview", link: "/", icon: "/img/nav/dashboard.svg" },
   // { name: "My Plans", link: "/myplans", icon: "/img/nav/trend.svg" },
   { name: "Add Money", link: "#", icon: "/img/nav/fund.svg" },
-  {
-    name: "Notifications",
-    link: "/notifications",
-    icon: "/img/nav/notification.svg",
-  },
+
   {
     name: "Transaction History",
     link: "/transaction_history",
     icon: "/img/nav/history.svg",
+  },
+  {
+    name: "Notifications",
+    link: "/notifications",
+    icon: "/img/nav/notification.svg",
   },
 ];
 

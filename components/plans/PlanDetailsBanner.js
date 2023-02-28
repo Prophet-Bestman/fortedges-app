@@ -2,6 +2,7 @@ import { Box, Image, Text } from "@chakra-ui/react";
 import { goalProps, planProps } from "data/explorePlans";
 import { PlanContext } from "providers/PlanProvider";
 import React, { useContext, useEffect, useState } from "react";
+import { BiArrowBack } from "react-icons/bi";
 
 const PlanDetailsBanner = () => {
   const { plan } = useContext(PlanContext);
@@ -61,15 +62,16 @@ const PlanDetailsBanner = () => {
 
   return (
     <Box
-      h="120px"
+      h="90px"
       bg={currentPlanProps.color}
       bgGradient="linear-gradient(178.73deg, rgba(196, 196, 196, 0) 1.08%, rgba(196, 196, 196, 0) 1.09%, rgba(0, 0, 0, 0.4) 98.92%)"
       position="relative"
     >
       <Image
+        pos="absolute"
+        right="8"
         h="full"
-        ml="140px"
-        filter={"blur(3px)"}
+        filter={"blur(0.4px)"}
         src={currentPlanProps.img}
         alt=""
       />
@@ -80,10 +82,13 @@ const PlanDetailsBanner = () => {
         w="full"
         h="full"
         display="flex"
-        justifyContent={"center"}
+        // justifyContent={"center"}
         alignItems="center"
+        px="3"
+        gap="6"
       >
-        <Box color="white" textAlign="center">
+        <BiArrowBack color="white" fontSize="24px" />
+        <Box color="white">
           {!!plan && (
             <Text fontSize="20px" fontWeight={500}>
               {plan.name}
