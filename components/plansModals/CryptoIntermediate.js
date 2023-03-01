@@ -27,7 +27,7 @@ import { AuthContext } from "providers/AuthProvider";
 const CryptoIntermediatePlan = ({ isOpen, onClose, plan, customPlan }) => {
   const { min, max, description, _id, name } = plan;
   const { user } = useContext(AuthContext);
-  const { dispatch: setOpen } = useContext(PlanFormContext);
+  const { dispatch: setOpen, planFormState } = useContext(PlanFormContext);
   const { dispatch: setUserID } = useContext(PlanFormContext);
   const { dispatch: setParentID } = useContext(PlanFormContext);
   const { dispatch: setParentName } = useContext(PlanFormContext);
@@ -141,7 +141,7 @@ const CryptoIntermediatePlan = ({ isOpen, onClose, plan, customPlan }) => {
           </Button>
         </ModalFooter>
       </ModalContent>
-      <SubmitPlan closeParent={closeParent} />
+      {planFormState?.isOpen && <SubmitPlan closeParent={closeParent} />}
       <OurPortfolio isOpen={isPortfolioOpen} onClose={onPortfolioClose} />
     </Modal>
   );

@@ -60,6 +60,7 @@ const PlanComponents = ({ planID }) => {
       <Grid
         mt={["20", , , "130px"]}
         templateColumns={["repeat(1, 1fr)", , , "repeat(12, 1fr)"]}
+        px={[0, 0, "42px", "48px", ,]}
       >
         <GridItem
           colSpan={7}
@@ -71,7 +72,7 @@ const PlanComponents = ({ planID }) => {
           {!!plan && <PlanBalance />}
         </GridItem>
         <GridItem pl={[, , , "18px"]} colSpan={5}>
-          <Padding>{!!plan && <TransactionCol />}</Padding>
+          {!!plan && <TransactionCol />}
         </GridItem>
       </Grid>
       <Padding>

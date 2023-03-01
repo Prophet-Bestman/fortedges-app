@@ -25,7 +25,7 @@ import OurPortfolio from "./OurPortfolio";
 
 const PremiumPlan = ({ isOpen, onClose, plan, userID }) => {
   const { min, max, description, _id, name } = plan;
-  const { dispatch: setOpen } = useContext(PlanFormContext);
+  const { dispatch: setOpen, planFormState } = useContext(PlanFormContext);
   const { dispatch: setUserID } = useContext(PlanFormContext);
   const { dispatch: setParentID } = useContext(PlanFormContext);
   const { dispatch: setParentName } = useContext(PlanFormContext);
@@ -128,7 +128,7 @@ const PremiumPlan = ({ isOpen, onClose, plan, userID }) => {
           </Button>
         </ModalFooter>
       </ModalContent>
-      <SubmitPlan closeParent={closeParent} />
+      {planFormState?.isOpen && <SubmitPlan closeParent={closeParent} />}
       <OurPortfolio isOpen={isPortfolioOpen} onClose={onPortfolioClose} />
     </Modal>
   );

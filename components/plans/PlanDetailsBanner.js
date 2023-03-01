@@ -91,7 +91,8 @@ const PlanDetailsBanner = () => {
         <Box color="white">
           {!!plan && (
             <Text fontSize="20px" fontWeight={500}>
-              {plan.name}
+              {/* {plan.parent_plan_name} */}
+              My Plan
             </Text>
           )}
           {!!plan && <Text fontSize="14px">{plan.parent_plan_name}</Text>}

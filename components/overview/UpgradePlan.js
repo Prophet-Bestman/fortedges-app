@@ -17,10 +17,10 @@ const UpgradePlan = () => {
       const currentPlanIdx = plansResp.findIndex(
         (plan) =>
           plan?.name?.toLowerCase() ===
-          customPlansResp?.custom_plans[0]?.name?.toLowerCase()
+          customPlansResp?.custom_plans[0]?.parent_plan_name?.toLowerCase()
       );
       const higherPlans = plansResp?.slice(currentPlanIdx + 1);
-      setHigherPlans(plansResp);
+      setHigherPlans(higherPlans);
     }
   }, [plansResp, customPlansResp]);
 

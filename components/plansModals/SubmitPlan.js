@@ -86,13 +86,13 @@ const SubmitPlan = ({ closeParent }) => {
     data: updatedPlan,
   } = useEditCustomPlan();
 
-  const submitPlan = (data) => {
+  const submitPlan = () => {
     let payload;
     if (user?.has_plan) {
       payload = {
         plan_id: planFormState?.plan_id,
         data: {
-          name: data.planName,
+          // name: data.planName,
           parent_plan_id: id,
           description: "",
         },
@@ -102,7 +102,7 @@ const SubmitPlan = ({ closeParent }) => {
       payload = {
         data: {
           // user_id: user_id,
-          name: data.planName,
+          // name: data.planName,
           parent_plan_id: id,
           description: "",
           parent_plan_name: parent_plan_name,
@@ -111,6 +111,13 @@ const SubmitPlan = ({ closeParent }) => {
       createPlan(payload);
     }
   };
+
+  // AUTO SUBMIT PLAN ON COMPONENT MOUNT
+  useEffect(() => {
+    if (!!parent_plan_name && !!id) {
+      submitPlan();
+    }
+  }, [id, parent_plan_name]);
 
   useEffect(() => {
     if (!!createdPlan) {
@@ -156,7 +163,7 @@ const SubmitPlan = ({ closeParent }) => {
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
       <ModalContent py="16px">
         <ModalHeader display="flex" justifyContent="space-between">
-          <Text>Name Your Plan</Text>
+          {/* <Text>Name Your Plan</Text> */}
           <Circle
             onClick={() => setOpen({ type: planFormActions.CLOSE_FORM })}
             cursor="pointer"
@@ -165,18 +172,28 @@ const SubmitPlan = ({ closeParent }) => {
             _hover={{
               bg: "#e1e1e3",
             }}
+            ml="auto"
           >
             <AiOutlineClose fontSize="14px" />
           </Circle>
         </ModalHeader>
 
-        <ModalBody>
-          <Text fontSize={"13px"} color="text.grey">
-            Question 1 of 1
+        <ModalBody py="6">
+          <Text fontSize={"18px"} fontWeight="600" mb="3">
+            Submiting Plan
           </Text>
-          <Progress colorScheme="purple" value={100} size="xs" rounded="full" />
+          <Progress
+            isIndeterminate
+            colorScheme="purple"
+            value={isLoading ? 100 : 0}
+            size="xs"
+            rounded="full"
+          />
+          {/* <Text fontSize={"13px"} color="text.grey">
+            Question 1 of 1
+          </Text> */}
 
-          <Box mt="32px">
+          {/* <Box mt="32px">
             <form onSubmit={handleSubmit(submitPlan)}>
               <FormLabel fontWeight={600}>Give your plan a name</FormLabel>
               <Input
@@ -206,7 +223,7 @@ const SubmitPlan = ({ closeParent }) => {
                 </Button>
               </Flex>
             </form>
-          </Box>
+          </Box> */}
         </ModalBody>
       </ModalContent>
 

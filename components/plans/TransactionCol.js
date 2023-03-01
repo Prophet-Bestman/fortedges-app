@@ -6,7 +6,7 @@ import TransactionHistory from "./TransactionHistory";
 
 const TransactionCol = () => {
   return (
-    <Box>
+    <Box px={["24px", "42px", "0", ,]}>
       <TransactionActions />
       <Box display={[, , , "none"]}>
         <TransactionHistory />
