@@ -52,7 +52,6 @@ const MainMobileNav = ({ isOpen, onClose }) => {
 
   const handleOpenFundModal = (nav) => {
     if (nav?.name === "Add Money") {
-      console.log(nav);
       // onClose();
       onFundOpen();
     }

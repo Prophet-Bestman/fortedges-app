@@ -37,8 +37,6 @@ const PlanBox = ({ plan, onClick }) => {
     onOpen: onRealEstateOpen,
   } = useDisclosure();
 
-  console.log(plan);
-
   useEffect(() => {
     if (plan !== undefined) {
       if (!!parent_goal_name) {

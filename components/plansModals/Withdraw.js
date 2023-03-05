@@ -54,8 +54,10 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
     if (!!plan?.createdAt) {
       today = new Date(Date.now());
       created_at = new Date(plan.createdAt);
-      const days = formatDistance(today, created_at);
-      setDays(days.split(" ")[0]);
+      const diff = Math.floor(today.getTime() - created_at.getTime());
+      const day = 1000 * 60 * 60 * 24;
+      const days = Math.floor(diff / day);
+      setDays(days);
     }
   }, [plan]);
 
@@ -143,7 +145,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
         </Flex>
 
         <ModalBody px="0">
-          {days < 30 && (
+          {days < 60 && (
             <Text
               fontSize="13px"
               py="12px"
@@ -165,7 +167,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
               >
                 i
               </Circle>
-              {30 - days} {"day(s) left to Withdraw funds."}{" "}
+              {60 - days} {"day(s) left to Withdraw funds."}{" "}
               <a
                 href={process.env.NEXT_PUBLIC_LANDING_URL + "/support"}
                 rel="noreferrer"

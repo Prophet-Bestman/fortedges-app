@@ -1,13 +1,16 @@
 import { Box, Image, Text } from "@chakra-ui/react";
 import { goalProps, planProps } from "data/explorePlans";
+import { useRouter } from "next/router";
 import { PlanContext } from "providers/PlanProvider";
 import React, { useContext, useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 
 const PlanDetailsBanner = () => {
   const { plan } = useContext(PlanContext);
-  const { investment, name, profit, parent_plan_name, parent_goal_name } = plan;
+  const { parent_plan_name, parent_goal_name } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState({});
+
+  const router = useRouter();
 
   useEffect(() => {
     if (plan !== undefined) {
@@ -87,7 +90,11 @@ const PlanDetailsBanner = () => {
         px="3"
         gap="6"
       >
-        <BiArrowBack color="white" fontSize="24px" />
+        <BiArrowBack
+          onClick={() => router.back()}
+          color="white"
+          fontSize="24px"
+        />
         <Box color="white">
           {!!plan && (
             <Text fontSize="20px" fontWeight={500}>

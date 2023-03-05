@@ -44,8 +44,6 @@ const RealEstatePlan = ({ isOpen, onClose, plan, customPlan }) => {
     onClose();
   };
 
-  console.log(customPlan);
-
   return (
     <Modal isOpen={isOpen} size="full">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />

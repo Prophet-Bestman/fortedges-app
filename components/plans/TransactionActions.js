@@ -121,24 +121,30 @@ const TransactionActions = () => {
         </Button>
       </Flex>
       <FundPlan isOpen={isFundOpen} onClose={onFundClose} />
-      <Withdraw
-        isOpen={isWithdrawOpen}
-        onClose={onWithdrawClose}
-        option={option}
-        setOption={setOption}
-      />
+      {isWithdrawOpen && (
+        <Withdraw
+          isOpen={isWithdrawOpen}
+          onClose={onWithdrawClose}
+          option={option}
+          setOption={setOption}
+        />
+      )}
 
-      <EditPlan
-        isOpen={isEditOpen}
-        onClose={onEditClose}
-        openSuccess={onSuccessOpen}
-      />
+      {isEditOpen && (
+        <EditPlan
+          isOpen={isEditOpen}
+          onClose={onEditClose}
+          openSuccess={onSuccessOpen}
+        />
+      )}
 
-      <SuccessModal
-        isOpen={isSuccessOpen}
-        msg="Successfully Updated Plan"
-        closeParent={onSuccessClose}
-      />
+      {isSuccessOpen && (
+        <SuccessModal
+          isOpen={isSuccessOpen}
+          msg="Successfully Updated Plan"
+          closeParent={onSuccessClose}
+        />
+      )}
       <DeletePlan onClose={onDeleteClose} isOpen={isDeleteOpen} />
     </Box>
   );

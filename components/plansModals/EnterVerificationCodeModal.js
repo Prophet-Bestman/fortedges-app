@@ -88,7 +88,7 @@ const EnterVerificationCodeModal = ({ isOpen, onClose, payload }) => {
 
   return (
     <>
-      <Modal isOpen={isOpen}>
+      <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent pos="absolute" bottom={0} py="30px" mb="0">
           <ModalBody>

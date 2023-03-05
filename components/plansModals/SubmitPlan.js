@@ -102,7 +102,7 @@ const SubmitPlan = ({ closeParent }) => {
       payload = {
         data: {
           // user_id: user_id,
-          // name: data.planName,
+          name: "",
           parent_plan_id: id,
           description: "",
           parent_plan_name: parent_plan_name,
