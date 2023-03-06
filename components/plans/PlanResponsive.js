@@ -136,7 +136,7 @@ const PlanResponsive = ({ plan }) => {
         <Text fontSize="15px" fontWeight="600" mb="4px">
           {name}
         </Text>
-        <Text fontSize={"13px"}>{plan.interest * 365}% ROI</Text>
+        <Text fontSize={"13px"}>{Math.round(plan.interest * 365)}% ROI</Text>
         <Text fontSize={"13px"}>
           Range: ${plan?.min?.toLocaleString()} -{" "}
           {typeof plan?.max === "number" && "$"}
