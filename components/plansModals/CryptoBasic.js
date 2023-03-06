@@ -74,7 +74,11 @@ const CryptoBasicPlan = ({ isOpen, onClose, plan, customPlan }) => {
             fontSize="14px"
             mb="16px"
           >
-            {description}
+            {/* {description} */}
+            {`Our premium plan is perfect for you if you’ve got a high capital and
+            would like to own a slice of mining and increadible returns.
+            We’ve delivered historical returns of 52% per annum to our Long term
+            investors. Returns are updated every weekday.`}
           </Text>
 
           <Flex justify="center" fontSize="14px">

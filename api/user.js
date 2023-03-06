@@ -45,6 +45,7 @@ export const useGetLoggedInUser = () => {
         }),
     {
       onSuccess: (data) => {
+        console.log("Fetched User", data);
         appendProfile({
           type: userActions.APPEND_PROFILE,
           payload: data?.data,

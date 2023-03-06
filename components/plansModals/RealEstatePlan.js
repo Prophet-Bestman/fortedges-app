@@ -75,7 +75,10 @@ const RealEstatePlan = ({ isOpen, onClose, plan, customPlan }) => {
             fontSize="14px"
             mb="16px"
           >
-            {description}
+            {/* {description} */}
+            {`Best for those who want a balance of good returns with medium level
+            capital. This plan invests in rented buildings and properties around
+            the world and return is 20 - 22.5% per annum`}
           </Text>
 
           <Flex justify="center" fontSize="14px">
@@ -88,7 +91,7 @@ const RealEstatePlan = ({ isOpen, onClose, plan, customPlan }) => {
             </Text>
           </Flex>
 
-          <HistoricalPerformance />
+          <HistoricalPerformance history={planProps.realEstate.history} />
           <Box mt={"48px"}>
             <Text
               display="flex"

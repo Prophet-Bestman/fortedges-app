@@ -74,7 +74,8 @@ const FixedIncomePlan = ({ isOpen, onClose, plan, customPlan }) => {
             fontSize="14px"
             mb="16px"
           >
-            {description}
+            {/* {description} */}
+            {`For people with relatively low investment capital who want to protect and preserve thier money in secure, appreciating currencies `}
           </Text>
 
           <Flex justify="center" fontSize="14px">

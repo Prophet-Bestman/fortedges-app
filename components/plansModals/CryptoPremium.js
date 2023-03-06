@@ -74,7 +74,9 @@ const CryptoPremiumPlan = ({ isOpen, onClose, plan, customPlan }) => {
             fontSize="14px"
             mb="16px"
           >
-            {description}
+            {/* {description} */}
+
+            {`Our Crypto basic plan is perfect for you if you’ve got a good capital and would like to own a slice of mining and incredible returns of cryptocurrenncyWe’ve delivered historical returns of 18% per month to our Long term investors.Returns are updated every weekday.`}
           </Text>
 
           <Flex justify="center" fontSize="14px">
