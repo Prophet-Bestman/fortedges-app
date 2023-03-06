@@ -12,19 +12,23 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React from "react";
+import { AuthContext } from "providers/AuthProvider";
+import React, { useContext, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsArrowRight } from "react-icons/bs";
 
 const PlanCreated = ({ isOpen, msg, closeParent, plan }) => {
   const router = useRouter();
+  const { user } = useContext(AuthContext);
 
-  if (isOpen) {
-    setTimeout(() => {
-      router.push(`/myplans/${plan?._id}`);
-      closeParent();
-    }, 1500);
-  }
+  useEffect(() => {
+    if (isOpen && user?.has_plan) {
+      setTimeout(() => {
+        router.push(`/myplans/${plan?._id}`);
+        closeParent();
+      }, 1500);
+    }
+  }, [user, isOpen]);
 
   return (
     <Modal isOpen={isOpen} size="sm" isCentered>

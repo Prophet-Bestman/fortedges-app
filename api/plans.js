@@ -96,9 +96,9 @@ const useCreateCustomPlan = () => {
         }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("custom-plans");
-        queryClient.invalidateQueries("admin-user");
         queryClient.invalidateQueries("logged-in-user");
+        queryClient.invalidateQueries("admin-user");
+        queryClient.invalidateQueries("custom-plans");
         queryClient.invalidateQueries("admin-custom-plans");
       },
     }

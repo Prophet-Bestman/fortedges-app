@@ -123,7 +123,7 @@ const SubmitPlan = ({ closeParent }) => {
     if (!!createdPlan) {
       if (createdPlan?.status >= 200) {
         onSuccessOpen();
-        setnewPlan(createdPlan);
+        // setnewPlan(createdPlan);
       } else {
         onErrorOpen();
       }
@@ -141,16 +141,16 @@ const SubmitPlan = ({ closeParent }) => {
     }
   }, [updatedPlan]);
 
-  useEffect(() => {
-    if (createdPlan !== undefined) {
-      if (createdPlan.status === 201) {
-        onSuccessOpen();
-        setnewPlan(createdPlan);
-      } else {
-        onErrorOpen();
-      }
-    }
-  }, [createdPlan]);
+  // useEffect(() => {
+  //   if (createdPlan !== undefined) {
+  //     if (createdPlan.status === 201) {
+  //       onSuccessOpen();
+  //       setnewPlan(createdPlan);
+  //     } else {
+  //       onErrorOpen();
+  //     }
+  //   }
+  // }, [createdPlan]);
 
   useEffect(() => {
     if (!!error || !!updateError) {
