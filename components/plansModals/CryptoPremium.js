@@ -82,8 +82,8 @@ const CryptoPremiumPlan = ({ isOpen, onClose, plan, customPlan }) => {
               Range:
             </Text>
             <Text mb="40px" color="text.grey">
-              ${min} - {typeof max === "number" && "$"}
-              {max}
+              ${min?.toLocaleString()} - {typeof max === "number" && "$"}
+              {max?.toLocaleString()}
             </Text>
           </Flex>
 

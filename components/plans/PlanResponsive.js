@@ -81,12 +81,6 @@ const PlanResponsive = ({ plan }) => {
   }, [plan]);
 
   const handlePlan = () => {
-    // if (name === "Premium Stock") {
-    //   onPremiumOpen();
-    // } else if (name === "Real Estate") {
-    //   onRealEstateOpen();
-    // } else onGoalOpen();
-
     switch (name) {
       case "Cryptocurrency Premium":
         onCryptoPremiumOpen();
@@ -142,10 +136,11 @@ const PlanResponsive = ({ plan }) => {
         <Text fontSize="15px" fontWeight="600" mb="4px">
           {name}
         </Text>
-        <Text fontSize={"13px"}>{plan.interest}% ROI</Text>
+        <Text fontSize={"13px"}>{plan.interest * 365}% ROI</Text>
         <Text fontSize={"13px"}>
-          Range: ${plan?.min} - {typeof plan?.max === "number" && "$"}
-          {plan?.max}
+          Range: ${plan?.min?.toLocaleString()} -{" "}
+          {typeof plan?.max === "number" && "$"}
+          {plan?.max.toLocaleString()}
         </Text>
       </Box>
 
