@@ -11,33 +11,16 @@ const request = axios.create({
 const useGetUser = () => {
   const headers = configOptions();
   const user_id = getUserID();
-  return useQuery(["user", user_id], () =>
-    request
-      .get(`/${user_id}`, {
-        headers: headers,
-      })
-      .then((res) => res.data)
-      .catch((err) => {
-        if (err.response.status === 403) {
-          localStorage.clear();
-        } else return err;
-      })
-  );
-};
-
-export const useGetLoggedInUser = () => {
-  const headers = configOptions();
-  const user_id = getUserID();
   const { dispatch: appendProfile } = useContext(AuthContext);
 
   return useQuery(
-    ["logged-in-user", user_id],
+    ["user", user_id],
     () =>
       request
         .get(`/${user_id}`, {
           headers: headers,
         })
-        .then((res) => res)
+        .then((res) => res.data)
         .catch((err) => {
           if (err.response.status === 403) {
             localStorage.clear();
@@ -99,6 +82,7 @@ const useUpdateUser = () => {
         .catch((err) => err.response.status),
     {
       onSuccess: () => {
+        queryClient.invalidateQueries("user");
         queryClient.invalidateQueries("user");
       },
     }

@@ -19,7 +19,7 @@ export default function CreatePlan() {
   }, []);
 
   useEffect(() => {
-    if (user?.has_plan) {
+    if (!!user && user?.has_plan) {
       router.back();
     }
   }, [user]);

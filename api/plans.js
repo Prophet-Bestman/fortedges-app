@@ -96,7 +96,7 @@ const useCreateCustomPlan = () => {
         }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("logged-in-user");
+        queryClient.invalidateQueries("user");
         queryClient.invalidateQueries("admin-user");
         queryClient.invalidateQueries("custom-plans");
         queryClient.invalidateQueries("admin-custom-plans");
@@ -135,7 +135,7 @@ const useDeletPlan = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("custom-plans");
-        queryClient.invalidateQueries("logged-in-user");
+        queryClient.invalidateQueries("user");
         queryClient.invalidateQueries("admin-user");
         queryClient.invalidateQueries("admin-custom-plans");
       },

@@ -1,18 +1,18 @@
 import {
   Box,
-  Flex,
-  Grid,
-  GridItem,
-  Image,
+  // Flex,
+  // Grid,
+  // GridItem,
+  // Image,
   Text,
-  Button,
+  // Button,
   Progress,
 } from "@chakra-ui/react";
 import { Padding } from "components/layouts";
 import React, { useEffect, useState, useContext } from "react";
 import OverviewPlan from "./OverviewPlan";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import { Pagination } from "swiper";
 import { IoMdTime } from "react-icons/io";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import "swiper/css";

@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import { AuthContext } from "providers/AuthProvider";
 import React, { useContext, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsArrowRight } from "react-icons/bs";
+// import { BsArrowRight } from "react-icons/bs";
 
 const PlanCreated = ({ isOpen, msg, closeParent, plan }) => {
   const router = useRouter();
@@ -23,10 +23,8 @@ const PlanCreated = ({ isOpen, msg, closeParent, plan }) => {
 
   useEffect(() => {
     if (isOpen && user?.has_plan) {
-      setTimeout(() => {
-        router.push(`/myplans/${plan?._id}`);
-        closeParent();
-      }, 1500);
+      router.push(`/myplans/${plan?._id}`);
+      closeParent();
     }
   }, [user, isOpen]);
 
