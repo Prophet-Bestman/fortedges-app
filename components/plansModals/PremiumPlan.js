@@ -31,6 +31,7 @@ const PremiumPlan = ({ isOpen, onClose, plan, userID }) => {
   const { dispatch: setParentName } = useContext(PlanFormContext);
   const { dispatch: setPlanId } = useContext(PlanFormContext);
 
+  const user = planFormState?.plan_user;
   const {
     isOpen: isPortfolioOpen,
     onClose: onPortfolioClose,

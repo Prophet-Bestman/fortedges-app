@@ -16,23 +16,22 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import HistoricalPerformance from "./HistoricalPerformance";
-import { planProps, portfolioBrands } from "data";
+import { planProps } from "data";
 import Link from "next/link";
 import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 import SubmitPlan from "./SubmitPlan";
 import { saveParentPlanId } from "api/config";
 import OurPortfolio from "./OurPortfolio";
-import { AuthContext } from "providers/AuthProvider";
 
 const CryptoPremiumPlan = ({ isOpen, onClose, plan, customPlan }) => {
-  const { min, max, description, _id, name } = plan;
-  const { user } = useContext(AuthContext);
+  const { min, max, _id, name } = plan;
   const { dispatch: setOpen, planFormState } = useContext(PlanFormContext);
   const { dispatch: setUserID } = useContext(PlanFormContext);
   const { dispatch: setParentID } = useContext(PlanFormContext);
   const { dispatch: setParentName } = useContext(PlanFormContext);
   const { dispatch: setPlanId } = useContext(PlanFormContext);
 
+  const user = planFormState?.plan_user;
   const {
     isOpen: isPortfolioOpen,
     onClose: onPortfolioClose,
@@ -131,10 +130,11 @@ const CryptoPremiumPlan = ({ isOpen, onClose, plan, customPlan }) => {
                 type: planFormActions.SET_USER_ID,
                 payload: user?._id,
               });
-              setPlanId({
-                type: planFormActions.SET_PLAN_ID,
-                payload: customPlan._id,
-              });
+              !!customPlan &&
+                setPlanId({
+                  type: planFormActions.SET_PLAN_ID,
+                  payload: customPlan?._id,
+                });
             }}
           >
             {user?.has_plan ? "Upgrade" : "Get Started"}

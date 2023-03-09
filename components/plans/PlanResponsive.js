@@ -10,7 +10,7 @@ import { goalModalProps, planProps } from "data";
 import { AuthContext } from "providers/AuthProvider";
 import React, { useState, useEffect, useContext } from "react";
 
-const PlanResponsive = ({ plan }) => {
+const PlanResponsive = ({ plan, isAdmin }) => {
   const { name } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState();
   const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
@@ -136,7 +136,7 @@ const PlanResponsive = ({ plan }) => {
         <Text fontSize="15px" fontWeight="600" mb="4px">
           {name}
         </Text>
-        <Text fontSize={"13px"}>{Math.round(plan.interest * 365)}% ROI</Text>
+        <Text fontSize={"13px"}>{Math.round(plan.interest * 30)}% ROI</Text>
         <Text fontSize={"13px"}>
           Range: ${plan?.min?.toLocaleString()} -{" "}
           {typeof plan?.max === "number" && "$"}

@@ -7,6 +7,7 @@ const initialState = {
   parent_plan_name: "",
   user_id: "",
   plan_id: "",
+  plan_user: null,
 };
 
 export const planFormActions = {
@@ -16,6 +17,7 @@ export const planFormActions = {
   SET_PARENT_NAME: "SET_PARENT_NAME",
   SET_PLAN_ID: "SET_PLAN_ID",
   SET_USER_ID: "SET_USER_ID",
+  SET_PLAN_USER: "SET_PLAN_USER",
 };
 
 const reducer = (planFormState, action) => {
@@ -32,6 +34,11 @@ const reducer = (planFormState, action) => {
       return (planFormState = {
         ...planFormState,
         user_id: action.payload,
+      });
+    case planFormActions.SET_PLAN_USER:
+      return (planFormState = {
+        ...planFormState,
+        plan_user: action.payload,
       });
     case planFormActions.SET_PARENT_NAME:
       return (planFormState = {

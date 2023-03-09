@@ -5,31 +5,26 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  Button,
   Circle,
   Text,
   Progress,
-  Box,
-  FormLabel,
-  Input,
-  Flex,
   useDisclosure,
 } from "@chakra-ui/react";
 import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 import { AiOutlineClose } from "react-icons/ai";
-import { IoIosArrowBack } from "react-icons/io";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useCreateCustomPlan, useEditCustomPlan } from "api/plans";
 import ErrorModal from "components/ErrorModal";
 import PlanCreated from "./PlanCreated";
 import { AuthContext } from "providers/AuthProvider";
 
 const SubmitPlan = ({ closeParent }) => {
-  const { user } = useContext(AuthContext);
+  const { user: loggedInUser } = useContext(AuthContext);
   const { planFormState, dispatch: setOpen } = useContext(PlanFormContext);
-  const [newPlan, setnewPlan] = useState({});
+
+  const isOpen = planFormState.isOpen;
+  const id = planFormState.id;
+  const parent_plan_name = planFormState.parent_plan_name;
+  const user = planFormState?.plan_user;
 
   const {
     isOpen: isSuccessOpen,
@@ -49,28 +44,7 @@ const SubmitPlan = ({ closeParent }) => {
     closeParent();
   };
 
-  const isOpen = planFormState.isOpen;
-  const id = planFormState.id;
-  const parent_plan_name = planFormState.parent_plan_name;
   // const user_id = planFormState.user_id;
-
-  const planSchema = yup.object({
-    planName: yup.string().required().min(3),
-  });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({
-    resolver: yupResolver(planSchema),
-  });
-
-  const onClose = () => {
-    reset();
-    setOpen({ type: planFormActions.CLOSE_FORM });
-  };
 
   const {
     mutate: createPlan,
@@ -86,13 +60,14 @@ const SubmitPlan = ({ closeParent }) => {
     data: updatedPlan,
   } = useEditCustomPlan();
 
+  // console.log(user);
+
   const submitPlan = () => {
     let payload;
     if (user?.has_plan) {
       payload = {
         plan_id: planFormState?.plan_id,
         data: {
-          // name: data.planName,
           parent_plan_id: id,
           description: "",
         },
@@ -106,8 +81,11 @@ const SubmitPlan = ({ closeParent }) => {
           parent_plan_id: id,
           description: "",
           parent_plan_name: parent_plan_name,
+          ...(user?._id !== loggedInUser?._id && { user_id: user?._id }),
         },
       };
+
+      // console.log(payload);
       createPlan(payload);
     }
   };
@@ -123,7 +101,6 @@ const SubmitPlan = ({ closeParent }) => {
     if (!!createdPlan) {
       if (createdPlan?.status >= 200) {
         onSuccessOpen();
-        // setnewPlan(createdPlan);
       } else {
         onErrorOpen();
       }
@@ -134,7 +111,6 @@ const SubmitPlan = ({ closeParent }) => {
     if (!!updatedPlan) {
       if (updatedPlan?.status >= 200) {
         onSuccessOpen();
-        setnewPlan(updatedPlan);
       } else {
         onErrorOpen();
       }
@@ -185,7 +161,7 @@ const SubmitPlan = ({ closeParent }) => {
           <Progress
             isIndeterminate
             colorScheme="purple"
-            value={isLoading ? 100 : 0}
+            value={isLoading || updating ? 100 : 0}
             size="xs"
             rounded="full"
           />

@@ -110,7 +110,7 @@ const UpgradePlanCard = ({ plan, customPlan }) => {
       </Circle>
       <Box ml="18px" mr="auto">
         <Text fontSize="14px">
-          Earn up to {Math.round(plan?.interest * 365)}% ROI
+          Earn up to {Math.round(plan?.interest * 30)}% ROI
         </Text>
         <Text mb="4px" color="text.black">
           Upgrade to {plan?.name}

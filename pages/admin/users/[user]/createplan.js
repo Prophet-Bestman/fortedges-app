@@ -1,4 +1,4 @@
-import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Progress, Text, useDisclosure } from "@chakra-ui/react";
 import { goalModalProps, goals } from "data";
 import React, { useState, useEffect, useContext } from "react";
 import { Pagination } from "swiper";
@@ -11,13 +11,20 @@ import { useGetAllPlans } from "api/plans";
 import { config } from "utils";
 import { Padding } from "components/layouts";
 import { useRouter } from "next/router";
+import { useAdminGetUser } from "api/user";
+import { PlanFormContext } from "providers/PlanFormProvider";
 
 const CreatePlan = () => {
   const [explorePlans, setExplorePlans] = useState([]);
   const [fetchErr, setFetchErr] = useState("");
   const [userID, setUserID] = useState("");
+  const {
+    planFormState: { plan_user },
+  } = useContext(PlanFormContext);
 
-  const { data: plansData, error } = useGetAllPlans();
+  // console.log(data);
+
+  const { data: plansData, error, isLoading } = useGetAllPlans();
   useEffect(() => {
     setExplorePlans([]);
     if (plansData !== undefined) {
@@ -37,6 +44,8 @@ const CreatePlan = () => {
   const router = useRouter();
   const query = router.query;
 
+  const { refetch } = useAdminGetUser(userID);
+
   useEffect(() => {
     setUserID("");
   }, []);
@@ -44,11 +53,12 @@ const CreatePlan = () => {
   useEffect(() => {
     if (!!query) {
       setUserID(query.user);
+      refetch();
     }
   }, [query]);
   return (
     <Padding>
-      <Box py="164px">
+      <Box>
         <Box
           py="16px"
           borderBottomWidth="1px"
@@ -64,140 +74,50 @@ const CreatePlan = () => {
           </Text>
         </Box>
 
-        {explorePlans.length > 0 && (
-          <Box>
-            <Swiper
-              slidesPerView={2}
-              spaceBetween={10}
-              pagination={{
-                clickable: true,
-              }}
-              breakpoints={{
-                767: {
-                  slidesPerView: 3,
-                  spaceBetween: 30,
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 30,
-                },
-              }}
-              modules={[Pagination]}
-              className="mySwiper"
-              style={{
-                paddingBottom: "50px",
-                width: "full",
-              }}
-            >
-              {explorePlans?.length > 0 &&
-                explorePlans.map((plan) => (
-                  <SwiperSlide
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {}}
-                    key={plan._id}
-                  >
-                    <PlanResponsive plan={plan} userID={userID} />
-                  </SwiperSlide>
-                ))}
-            </Swiper>
-          </Box>
-        )}
-        <Box>
-          <Flex
-            justifyContent="space-between"
-            alignItems="center"
-            py="16px"
-            borderBottomWidth="1px"
-            borderBottomColor="#E7E8ED"
-            mt="36px"
-            mb="40px"
-          >
+        {isLoading ? (
+          <Progress isIndeterminate colorScheme={"gray"} />
+        ) : (
+          explorePlans.length > 0 && (
             <Box>
-              <Text
-                mb="9px"
-                fontSize="20px"
-                color="text.black"
-                fontWeight="600"
+              <Swiper
+                slidesPerView={2}
+                spaceBetween={10}
+                pagination={{
+                  clickable: true,
+                }}
+                breakpoints={{
+                  767: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                  },
+                }}
+                modules={[Pagination]}
+                className="mySwiper"
+                style={{
+                  paddingBottom: "50px",
+                  width: "full",
+                }}
               >
-                Goals
-              </Text>
-              <Text fontSize="14px" color="text.grey">
-                Tap on any type of the plans to create a new plan.
-              </Text>
+                {explorePlans?.length > 0 &&
+                  explorePlans.map((plan) => (
+                    <SwiperSlide
+                      style={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {}}
+                      key={plan._id}
+                    >
+                      <PlanResponsive plan={plan} userID={userID} />
+                    </SwiperSlide>
+                  ))}
+              </Swiper>
             </Box>
-
-            <Box
-              textAlign="center"
-              display={["flex", , "none"]}
-              color="text.black"
-              alignItems="center"
-              gap="8px"
-            >
-              <Text cursor="pointer">
-                <Link href="/myplans/create">See All</Link>
-              </Text>
-              <MdArrowForwardIos fontSize="12px" />
-            </Box>
-          </Flex>
-
-          {/* ================================== */}
-          {/* ================================== */}
-          {/* LARGE SCREENS VIEW */}
-          <Flex
-            display={["none", , "flex"]}
-            flexWrap="wrap"
-            gap="10px"
-            justify="center"
-          >
-            {goals.map((goal) => (
-              <Goal userID={userID} key={goal.action} goal={goal} />
-            ))}
-          </Flex>
-
-          {/* ================================== */}
-          {/* ================================== */}
-          {/* ============== MOBILE VIEW =========== */}
-          <Box display={["block", , "none"]}>
-            <Swiper
-              slidesPerView={2}
-              spaceBetween={10}
-              pagination={{
-                clickable: true,
-              }}
-              breakpoints={{
-                767: {
-                  slidesPerView: 3,
-                  spaceBetween: 30,
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 30,
-                },
-              }}
-              modules={[Pagination]}
-              className="mySwiper"
-              style={{
-                paddingBottom: "50px",
-                width: "full",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              {goals.map((goal) => (
-                <SwiperSlide
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  key={goal.name}
-                >
-                  <Goal userID={userID} key={goal.action} goal={goal} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </Box>
-        </Box>
+          )
+        )}
       </Box>
     </Padding>
   );

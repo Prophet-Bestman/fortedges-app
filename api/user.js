@@ -1,5 +1,6 @@
 import axios from "axios";
 import { AuthContext, userActions } from "providers/AuthProvider";
+import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 import { useContext } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import configOptions, { getUserID } from "./config";
@@ -40,17 +41,30 @@ const useGetUser = () => {
 
 const useAdminGetUser = (user_id) => {
   const headers = configOptions();
-  return useQuery(["admin-user", user_id], () =>
-    request
-      .get(`/${user_id}`, {
-        headers: headers,
-      })
-      .then((res) => res.data)
-      .catch((err) => {
-        if (err.response.status === 403) {
-          localStorage.clear();
-        } else return err;
-      })
+  const { dispatch: setPlanUser } = useContext(PlanFormContext);
+
+  return useQuery(
+    ["admin-user", user_id],
+    () =>
+      request
+        .get(`/${user_id}`, {
+          headers: headers,
+        })
+        .then((res) => res.data)
+        .catch((err) => {
+          if (err.response.status === 403) {
+            localStorage.clear();
+          } else return err;
+        }),
+    {
+      onSuccess: (data) => {
+        console.log("Fetched User", data);
+        setPlanUser({
+          type: planFormActions.SET_PLAN_USER,
+          payload: data,
+        });
+      },
+    }
   );
 };
 

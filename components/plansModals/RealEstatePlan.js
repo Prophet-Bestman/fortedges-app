@@ -16,23 +16,20 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import HistoricalPerformance from "./HistoricalPerformance";
-import Link from "next/link";
 import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
-import { formatter } from "utils";
 import SubmitPlan from "./SubmitPlan";
 import { planProps, portfolioCountries } from "data";
 import OurPortfolio from "./OurPortfolio";
-import { AuthContext } from "providers/AuthProvider";
 
 const RealEstatePlan = ({ isOpen, onClose, plan, customPlan }) => {
-  const { min, max, description, _id, name } = plan;
-  const { user } = useContext(AuthContext);
+  const { min, max, _id, name } = plan;
   const { dispatch: setOpen, planFormState } = useContext(PlanFormContext);
   const { dispatch: setUserID } = useContext(PlanFormContext);
   const { dispatch: setParentID } = useContext(PlanFormContext);
   const { dispatch: setParentName } = useContext(PlanFormContext);
   const { dispatch: setPlanId } = useContext(PlanFormContext);
 
+  const user = planFormState?.plan_user;
   const {
     isOpen: isPortfolioOpen,
     onClose: onPortfolioClose,

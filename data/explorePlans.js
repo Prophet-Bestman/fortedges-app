@@ -40,7 +40,7 @@ export const planProps = {
     bg: "#7EA9FA4D",
     history: [
       { year: "2022", profit: "26.02%" },
-      { year: "2022", profit: "25.19%" },
+      // { year: "2022", profit: "25.19%" },
       { year: "2021", profit: "25.10%%" },
       { year: "2020", profit: "25.03%" },
       { year: "2019", profit: "25.11%" },
