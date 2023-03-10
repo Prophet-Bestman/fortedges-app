@@ -1,17 +1,25 @@
-import { Box, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Circle,
+  Flex,
+  Progress,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import { BiCopy } from "react-icons/bi";
-import { AiFillCheckCircle } from "react-icons/ai";
-import { EditBTC, EditETH } from "components/admin/EditBTC";
+import { AiFillCheckCircle, AiOutlinePlus } from "react-icons/ai";
 import { navActions, NavContext, navStates } from "providers/NavProvider";
 import { useGetMops } from "api/mop";
+import { CreateMOP } from "components/admin/CreateMop";
+import { EditMOP } from "components/admin/EditMop";
 
 const Mop = () => {
   const { dispatch: setActiveNav } = useContext(NavContext);
   const [copied, setCopied] = React.useState("");
   const [mops, setMops] = useState([]);
-  const [btcDetails, setBtcDetails] = useState({});
-  const [ethDetials, setEthDetails] = useState({});
+  const [selectedMOP, setSelectedMOP] = useState(null);
 
   useEffect(() => {
     setActiveNav({
@@ -21,15 +29,14 @@ const Mop = () => {
   }, []);
 
   const {
-    isOpen: isBTCOpen,
-    onOpen: onBTCOpen,
-    onClose: onBTCClose,
+    isOpen: isCreateOpen,
+    onOpen: onCreateOpen,
+    onClose: onCreateClose,
   } = useDisclosure();
-
   const {
-    isOpen: isETHOpen,
-    onOpen: onETHOpen,
-    onClose: onETHClose,
+    isOpen: isEditOpen,
+    onOpen: onEditOpen,
+    onClose: onEditClose,
   } = useDisclosure();
 
   const handleCopy = (mop) => {
@@ -40,61 +47,83 @@ const Mop = () => {
     }, 2000);
   };
 
+  const handleEdit = (mop) => {
+    setSelectedMOP(mop);
+    onEditOpen();
+  };
+
   // ============ GET MOPS LOGIC ==============
 
-  const { data: mopsData } = useGetMops();
+  const { data: mopsData, isLoading } = useGetMops();
 
   useEffect(() => {
     if (mopsData !== undefined && mopsData?.length > 0) setMops(mopsData);
   }, [mopsData]);
 
-  useEffect(() => {
-    if (mops !== undefined && mops?.length > 0) {
-      const btcDetails = mops.filter((mop) => mop.type === "btc");
-      setBtcDetails(btcDetails[0]);
-      const ethDetails = mops.filter((mop) => mop.type === "eth");
-      setEthDetails(ethDetails[0]);
-    }
-  }, [mops]);
-
   return (
     <Box px={"24px"} py="40px" color="text.black">
-      <Text fontSize={"34px"} fontWeight="600">
+      <Text fontSize={"34px"} fontWeight="600" mb="12">
         M.O.P
       </Text>
 
-      <Box bg="white" w={["320px", , "370px"]} p="24px" mb="40px">
-        <Flex justify="space-between" w="full" pb="24px">
-          <Text>BTC Address</Text>
-          <Button
-            onClick={onBTCOpen}
-            w="auto"
-            variant="link"
-            color="app.primary"
-          >
-            Edit
-          </Button>
-        </Flex>
+      <Circle
+        justifyContent="center"
+        alignItems="center"
+        size="28px"
+        bg="app.primary"
+        color="white"
+        cursor={"pointer"}
+      >
+        <AiOutlinePlus size="20px" onClick={onCreateOpen} />
+      </Circle>
 
-        {btcDetails?.address !== undefined && (
-          <Flex justify="space-between" alignItems="center" gap="12px">
-            <Text fontWeight="600" overflow="hidden" isTruncated>
-              {btcDetails?.address || ""}
-            </Text>
+      {isLoading ? (
+        <Progress isIndeterminate colorScheme="gray" my="12" />
+      ) : (
+        mops?.map((mop, i) => {
+          return (
+            <Box
+              key={i}
+              my="12"
+              bg="white"
+              w={["320px", , "370px"]}
+              p="24px"
+              mb="40px"
+            >
+              <Flex justify="space-between" w="full" pb="24px">
+                <Text textTransform="uppercase">{mop?.type} Address</Text>
+                <Button
+                  onClick={() => handleEdit(mop)}
+                  w="auto"
+                  variant="link"
+                  color="app.primary"
+                >
+                  Edit
+                </Button>
+              </Flex>
 
-            {copied === btcDetails?.type ? (
-              <AiFillCheckCircle size="24px" />
-            ) : (
-              <BiCopy
-                size="20px"
-                onClick={() => handleCopy(btcDetails)}
-                cursor="pointer"
-              />
-            )}
-          </Flex>
-        )}
-      </Box>
-      <Box bg="white" w={["320px", , "370px"]} p="24px">
+              {mop?.address !== undefined && (
+                <Flex justify="space-between" alignItems="center" gap="12px">
+                  <Text fontWeight="600" overflow="hidden" isTruncated>
+                    {mop?.address || ""}
+                  </Text>
+
+                  {copied === mop?.type ? (
+                    <AiFillCheckCircle size="24px" />
+                  ) : (
+                    <BiCopy
+                      size="20px"
+                      onClick={() => handleCopy(btcDetails)}
+                      cursor="pointer"
+                    />
+                  )}
+                </Flex>
+              )}
+            </Box>
+          );
+        })
+      )}
+      {/* <Box bg="white" w={["320px", , "370px"]} p="24px">
         <Flex justify="space-between" w="full" pb="24px">
           <Text>ETH Address</Text>
           <Button
@@ -124,9 +153,15 @@ const Mop = () => {
             )}
           </Flex>
         )}
-      </Box>
-      <EditBTC isOpen={isBTCOpen} onClose={onBTCClose} mop={btcDetails} />
-      <EditETH isOpen={isETHOpen} onClose={onETHClose} mop={ethDetials} />
+      </Box> */}
+      {/* <EditBTC isOpen={isBTCOpen} onClose={onBTCClose} mop={btcDetails} />
+      <EditETH isOpen={isETHOpen} onClose={onETHClose} mop={ethDetials} /> */}
+      {isCreateOpen && (
+        <CreateMOP isOpen={isCreateOpen} onClose={onCreateClose} />
+      )}
+      {isEditOpen && !!selectedMOP && (
+        <EditMOP isOpen={isEditOpen} onClose={onEditClose} mop={selectedMOP} />
+      )}
     </Box>
   );
 };

@@ -29,7 +29,6 @@ const useGetUser = () => {
         }),
     {
       onSuccess: (data) => {
-        console.log("Fetched User", data);
         appendProfile({
           type: userActions.APPEND_PROFILE,
           payload: data?.data,
@@ -58,7 +57,6 @@ const useAdminGetUser = (user_id) => {
         }),
     {
       onSuccess: (data) => {
-        console.log("Fetched User", data);
         setPlanUser({
           type: planFormActions.SET_PLAN_USER,
           payload: data,

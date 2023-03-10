@@ -74,7 +74,7 @@ const PlanDetailsBanner = () => {
         pos="absolute"
         right="8"
         h="full"
-        filter={"blur(0.4px)"}
+        // filter={"blur(1px)"}
         src={currentPlanProps.img}
         alt=""
       />

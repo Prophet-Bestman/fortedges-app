@@ -1,12 +1,8 @@
-import { Box, Flex, Progress, Text, useDisclosure } from "@chakra-ui/react";
-import { goalModalProps, goals } from "data";
+import { Box, Progress, Text } from "@chakra-ui/react";
 import React, { useState, useEffect, useContext } from "react";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Goal } from "components/plans";
 import { PlanResponsive } from "components/plans";
-import { MdArrowForwardIos } from "react-icons/md";
-import Link from "next/link";
 import { useGetAllPlans } from "api/plans";
 import { config } from "utils";
 import { Padding } from "components/layouts";
@@ -21,8 +17,6 @@ const CreatePlan = () => {
   const {
     planFormState: { plan_user },
   } = useContext(PlanFormContext);
-
-  // console.log(data);
 
   const { data: plansData, error, isLoading } = useGetAllPlans();
   useEffect(() => {

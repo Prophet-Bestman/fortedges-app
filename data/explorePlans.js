@@ -21,7 +21,7 @@ const explorePlans = [
 
 export const planProps = {
   fixedIncome: {
-    img: "/img/icons/fixed-income-1.png",
+    img: "/img/icons/fixed-income-1.svg",
     color: "app.green",
     bg: "#7EDB954D",
     history: [
@@ -35,7 +35,7 @@ export const planProps = {
     ],
   },
   realEstate: {
-    img: "/img/icons/Real-estate-1.png",
+    img: "/img/icons/Real-estate-1.svg",
     color: "app.blue",
     bg: "#7EA9FA4D",
     history: [
@@ -64,7 +64,7 @@ export const planProps = {
     ],
   },
   cryptoPremium: {
-    img: "/img/icons/bitcoin.png",
+    img: "/img/icons/bitcoin.svg",
     color: "text.brown",
     bg: "#FBE8D0",
     history: [
@@ -78,7 +78,7 @@ export const planProps = {
     ],
   },
   cryptoIntermediate: {
-    img: "/img/icons/bitcoin.png",
+    img: "/img/icons/bitcoin.svg",
     color: "text.brown",
     bg: "#FBE8D0",
     history: [
@@ -92,7 +92,7 @@ export const planProps = {
     ],
   },
   cryptoBasic: {
-    img: "/img/icons/bitcoin.png",
+    img: "/img/icons/bitcoin.svg",
     color: "text.brown",
     bg: "#FBE8D0",
     history: [

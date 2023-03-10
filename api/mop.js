@@ -62,7 +62,7 @@ const useCreateMop = () => {
   return useMutation(
     (values) =>
       request
-        .post(`/`, values.data, {
+        .post(`/`, values, {
           headers: headers,
         })
         .then((res) => res)

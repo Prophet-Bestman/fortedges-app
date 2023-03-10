@@ -60,8 +60,6 @@ const SubmitPlan = ({ closeParent }) => {
     data: updatedPlan,
   } = useEditCustomPlan();
 
-  // console.log(user);
-
   const submitPlan = () => {
     let payload;
     if (user?.has_plan) {
@@ -84,8 +82,6 @@ const SubmitPlan = ({ closeParent }) => {
           ...(user?._id !== loggedInUser?._id && { user_id: user?._id }),
         },
       };
-
-      // console.log(payload);
       createPlan(payload);
     }
   };
