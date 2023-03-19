@@ -14,6 +14,7 @@ import {
   ModalBody,
   ModalContent,
   ModalOverlay,
+  Progress,
   Stack,
   Text,
   useDisclosure,
@@ -32,7 +33,7 @@ import EnterVerificationCodeModal from "./EnterVerificationCodeModal";
 import { PlanContext } from "providers/PlanProvider";
 import { useWithdraw } from "api/transactions";
 import ErrorModal from "components/ErrorModal";
-import { formatDistance } from "date-fns";
+import { useGetMops } from "api/mop";
 
 const optionsArr = Object.entries(options);
 
@@ -41,6 +42,8 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
   const { plan } = useContext(PlanContext);
   const [withdrawData, setWithdrawData] = useState({});
   const [withdrawForm, setWithdrawForm] = useState({});
+
+  const { data: mopsResp, isLoading: loadingMops } = useGetMops();
 
   const withdrawSchema = yup.object().shape({
     amount: yup.number().required(),
@@ -99,7 +102,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
       data: {
         amount: data.amount,
         address: data.walletAddress,
-        mode_of_payment: option.name,
+        mode_of_payment: option.type,
         plan_id: plan._id,
       },
     };
@@ -201,7 +204,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
                   type="number"
                   h="48px"
                   placeholder="10,000"
-                  isDisabled={days < 30}
+                  isDisabled={days < 60}
                   mb="32px"
                   // defaultValue={formState.amount}
                   variant={errors.amount ? "error" : "outline"}
@@ -214,49 +217,54 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
               <Text fontSize={"12px"} color="text.grey">
                 Mode of payment
               </Text>
-              <Menu w="full">
-                <MenuButton
-                  variant="outline"
-                  isDisabled={days < 30}
-                  w="full"
-                  borderColor="#0000001A"
-                  borderWidth="1px"
-                  rounded="md"
-                  as={Button}
-                  rightIcon={<MdKeyboardArrowDown />}
-                >
-                  <Flex alignItems="center" gap="8px">
-                    <Image src={option.icon} />
-                    <Text textTransform="uppercase">{option.name}</Text>
-                  </Flex>
-                </MenuButton>
-                <MenuList w="full">
-                  {optionsArr.map((option) => (
-                    <MenuItem
-                      my="8px"
-                      py="12px"
-                      w="full"
-                      key={option[1].name}
-                      onClick={() => setOption(option[1])}
-                    >
-                      <Flex
-                        justifyContent="space-between"
-                        alignItems="center"
-                        w="270px"
-                      >
-                        <Flex alignItems="center" gap="8px">
-                          <Image src={option[1].icon} />
-                          <Text textTransform="uppercase">
-                            {option[1].name}
-                          </Text>
-                        </Flex>
+              {loadingMops ? (
+                <Progress isIndeterminate colorScheme="gray" size="sm" />
+              ) : (
+                <Menu w="full">
+                  <MenuButton
+                    variant="outline"
+                    isDisabled={days < 60}
+                    w="full"
+                    borderColor="#0000001A"
+                    borderWidth="1px"
+                    rounded="md"
+                    as={Button}
+                    rightIcon={<MdKeyboardArrowDown />}
+                  >
+                    <Flex alignItems="center" gap="8px">
+                      <Image src={option.icon} />
+                      <Text textTransform="uppercase">{option.type}</Text>
+                    </Flex>
+                  </MenuButton>
+                  <MenuList w="full">
+                    {!!mopsResp?.length > 0 &&
+                      mopsResp?.map((option) => (
+                        <MenuItem
+                          my="8px"
+                          py="12px"
+                          w="full"
+                          key={option?._id}
+                          onClick={() => setOption(option)}
+                        >
+                          <Flex
+                            justifyContent="space-between"
+                            alignItems="center"
+                            w="270px"
+                          >
+                            <Flex alignItems="center" gap="8px">
+                              <Image src={option?.icon} />
+                              <Text textTransform="uppercase">
+                                {option?.type}
+                              </Text>
+                            </Flex>
 
-                        <Text>{option[1].time}</Text>
-                      </Flex>
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </Menu>
+                            {/* <Text>{option[1].time}</Text> */}
+                          </Flex>
+                        </MenuItem>
+                      ))}
+                  </MenuList>
+                </Menu>
+              )}
             </Stack>
             <Stack>
               <Text fontSize={"12px"} color="text.grey">
@@ -269,7 +277,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
                   type="text"
                   h="48px"
                   placeholder=""
-                  isDisabled={days < 30}
+                  isDisabled={days < 60}
                   mb="32px"
                   // defaultValue={formState.amount}
                   variant={errors.walletAddress ? "error" : "outline"}
@@ -279,7 +287,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
             </Stack>
 
             <Button
-              isDisabled={days < 30}
+              isDisabled={days < 60}
               w="full"
               type="submit"
               isLoading={isLoading}

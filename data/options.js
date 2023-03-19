@@ -15,7 +15,7 @@ const options = {
   //   icon: "/img/tron.svg",
   // },
   bank: {
-    name: "Bank Deposit",
+    type: "Bank Deposit",
     time: "",
     disable: true,
     icon: "/img/bank.svg",

@@ -135,7 +135,7 @@ const MainMobileNav = ({ isOpen, onClose }) => {
           </ModalBody>
         </ModalContent>
 
-        <FundPlan isOpen={isFundOpen} onClose={onFundClose} />
+        {isFundOpen && <FundPlan isOpen={isFundOpen} onClose={onFundClose} />}
       </Modal>
     </div>
   );

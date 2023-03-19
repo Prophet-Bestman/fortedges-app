@@ -202,7 +202,7 @@ const OverviewHeader = () => {
           Add Money
         </Button>
       )}
-      <FundPlan isOpen={isOpen} onClose={onClose} />
+      {isOpen && <FundPlan isOpen={isOpen} onClose={onClose} />}
     </Box>
   );
 };

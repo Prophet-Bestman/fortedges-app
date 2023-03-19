@@ -88,7 +88,7 @@ const UserSelectPlan = ({ isOpen, onClose }) => {
           </Flex>
         </ModalBody>
       </ModalContent>
-      <FundPlan isOpen={isFundOpen} onClose={onFundClose} />
+      {isFundOpen && <FundPlan isOpen={isFundOpen} onClose={onFundClose} />}
     </Modal>
   );
 };

@@ -13,6 +13,7 @@ import {
   MenuList,
   ModalBody,
   ModalContent,
+  Progress,
   Stack,
   Text,
   Tooltip,
@@ -30,8 +31,16 @@ import { options } from "data";
 import { PlanContext } from "providers/PlanProvider";
 import { useBankRequest, useDeposit } from "api/transactions";
 import { formatter } from "utils";
+import { useGetMops } from "api/mop";
 
-const optionsArr = Object.entries(options);
+// const optionsArr = Object.entries(options);
+
+const bankOption = {
+  type: "Bank Deposit",
+  time: "",
+  disable: true,
+  icon: "/img/bank.svg",
+};
 const PaymentForm = ({
   onClose,
   setStep,
@@ -43,6 +52,8 @@ const PaymentForm = ({
   const { plan } = useContext(PlanContext);
   const [minAmount, setMinAmount] = useState(0);
   const [requestError, setRequestError] = useState("");
+
+  const { data: mopsResp, isLoading: loadingMops } = useGetMops();
 
   useEffect(() => {
     switch (plan?.parent_plan_name) {
@@ -147,15 +158,16 @@ const PaymentForm = ({
   } = useDeposit();
 
   const submit = (data) => {
-    data = { ...data, option: option.name };
+    if (option?.type !== "Bank Deposit") {
+      data = { ...data, option: option?.type };
+      const payload = {
+        amount: data.amount,
+        plan_id: plan._id,
+        mode_of_payment: option?.type?.toLowerCase(),
+      };
 
-    const payload = {
-      amount: data.amount,
-      plan_id: plan._id,
-      mode_of_payment: option.name.toLowerCase(),
-    };
-
-    createDeposit(payload);
+      createDeposit(payload);
+    }
   };
 
   useEffect(() => {
@@ -248,29 +260,58 @@ const PaymentForm = ({
             <Text fontSize={"12px"} color="text.grey">
               Mode of payment
             </Text>
-            <Menu w="full">
-              <MenuButton
-                variant="outline"
-                w="full"
-                borderColor="#0000001A"
-                borderWidth="1px"
-                rounded="md"
-                as={Button}
-                rightIcon={<MdKeyboardArrowDown />}
-              >
-                <Flex alignItems="center" gap="8px">
-                  <Image src={option.icon} />
-                  <Text textTransform="uppercase">{option.name}</Text>
-                </Flex>
-              </MenuButton>
-              <MenuList w="full">
-                {optionsArr.map((option) => (
+            {loadingMops ? (
+              <Progress isIndeterminate colorScheme="gray" size="sm" />
+            ) : (
+              <Menu w="full">
+                <MenuButton
+                  variant="outline"
+                  w="full"
+                  borderColor="#0000001A"
+                  borderWidth="1px"
+                  rounded="md"
+                  as={Button}
+                  rightIcon={<MdKeyboardArrowDown />}
+                >
+                  <Flex alignItems="center" gap="8px">
+                    {/* <Image src={option?.icon} /> */}
+                    <Text textTransform="uppercase">
+                      {option.type || "Select a mode of payment"}
+                    </Text>
+                  </Flex>
+                </MenuButton>
+                <MenuList w="full">
+                  {!!mopsResp?.length > 0 &&
+                    mopsResp.map((option) => (
+                      <MenuItem
+                        my="8px"
+                        py="12px"
+                        w="full"
+                        key={option?._id}
+                        onClick={() => setOption(option)}
+                      >
+                        <Flex
+                          justifyContent="space-between"
+                          alignItems="center"
+                          w="270px"
+                        >
+                          <Flex alignItems="center" gap="8px">
+                            <Image src={option?.icon} />
+                            <Text textTransform="uppercase">
+                              {option?.type}
+                            </Text>
+                          </Flex>
+
+                          {/* <Text>{option[1].time}</Text> */}
+                        </Flex>
+                      </MenuItem>
+                    ))}
+
                   <MenuItem
                     my="8px"
                     py="12px"
                     w="full"
-                    key={option[1].name}
-                    onClick={() => setOption(option[1])}
+                    onClick={() => setOption(bankOption)}
                   >
                     <Flex
                       justifyContent="space-between"
@@ -278,20 +319,22 @@ const PaymentForm = ({
                       w="270px"
                     >
                       <Flex alignItems="center" gap="8px">
-                        <Image src={option[1].icon} />
-                        <Text textTransform="uppercase">{option[1].name}</Text>
+                        <Image src={bankOption?.icon} />
+                        <Text textTransform="uppercase">
+                          {bankOption?.type}
+                        </Text>
                       </Flex>
 
-                      <Text>{option[1].time}</Text>
+                      {/* <Text>{option[1].time}</Text> */}
                     </Flex>
                   </MenuItem>
-                ))}
-              </MenuList>
-            </Menu>
+                </MenuList>
+              </Menu>
+            )}
           </Stack>
 
           <Box>
-            {option.name === "Bank Deposit" ? (
+            {option?.type === "Bank Deposit" ? (
               <Box>
                 <Text fontSize="14px" color="text.grey">
                   Currently, only P2P bank deposits are available in your
@@ -308,7 +351,12 @@ const PaymentForm = ({
                 </Button>
               </Box>
             ) : (
-              <Button w="full" type="submit" isLoading={isLoading}>
+              <Button
+                w="full"
+                type="submit"
+                disabled={option?.type === "Bank Deposit"}
+                isLoading={isLoading}
+              >
                 Continue
               </Button>
             )}

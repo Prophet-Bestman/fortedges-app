@@ -120,7 +120,7 @@ const TransactionActions = () => {
           Withdraw
         </Button>
       </Flex>
-      <FundPlan isOpen={isFundOpen} onClose={onFundClose} />
+      {isFundOpen && <FundPlan isOpen={isFundOpen} onClose={onFundClose} />}
       {isWithdrawOpen && (
         <Withdraw
           isOpen={isWithdrawOpen}
