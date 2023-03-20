@@ -37,13 +37,11 @@ import { useGetMops } from "api/mop";
 
 const optionsArr = Object.entries(options);
 
-const Withdraw = ({ onClose, isOpen, option, setOption }) => {
+const Withdraw = ({ onClose, isOpen, option, setOption, options }) => {
   const [days, setDays] = React.useState(0);
   const { plan } = useContext(PlanContext);
   const [withdrawData, setWithdrawData] = useState({});
   const [withdrawForm, setWithdrawForm] = useState({});
-
-  const { data: mopsResp, isLoading: loadingMops } = useGetMops();
 
   const withdrawSchema = yup.object().shape({
     amount: yup.number().required(),
@@ -217,54 +215,51 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
               <Text fontSize={"12px"} color="text.grey">
                 Mode of payment
               </Text>
-              {loadingMops ? (
-                <Progress isIndeterminate colorScheme="gray" size="sm" />
-              ) : (
-                <Menu w="full">
-                  <MenuButton
-                    variant="outline"
-                    isDisabled={days < 60}
-                    w="full"
-                    borderColor="#0000001A"
-                    borderWidth="1px"
-                    rounded="md"
-                    as={Button}
-                    rightIcon={<MdKeyboardArrowDown />}
-                  >
-                    <Flex alignItems="center" gap="8px">
-                      <Image src={option.icon} />
-                      <Text textTransform="uppercase">{option.type}</Text>
-                    </Flex>
-                  </MenuButton>
-                  <MenuList w="full">
-                    {!!mopsResp?.length > 0 &&
-                      mopsResp?.map((option) => (
-                        <MenuItem
-                          my="8px"
-                          py="12px"
-                          w="full"
-                          key={option?._id}
-                          onClick={() => setOption(option)}
-                        >
-                          <Flex
-                            justifyContent="space-between"
-                            alignItems="center"
-                            w="270px"
-                          >
-                            <Flex alignItems="center" gap="8px">
-                              <Image src={option?.icon} />
-                              <Text textTransform="uppercase">
-                                {option?.type}
-                              </Text>
-                            </Flex>
 
-                            {/* <Text>{option[1].time}</Text> */}
+              <Menu w="full">
+                <MenuButton
+                  variant="outline"
+                  isDisabled={days < 60}
+                  w="full"
+                  borderColor="#0000001A"
+                  borderWidth="1px"
+                  rounded="md"
+                  as={Button}
+                  rightIcon={<MdKeyboardArrowDown />}
+                >
+                  <Flex alignItems="center" gap="8px">
+                    <Image src={option.icon} />
+                    <Text textTransform="uppercase">{option.type}</Text>
+                  </Flex>
+                </MenuButton>
+                <MenuList w="full">
+                  {!!options?.length > 0 &&
+                    options?.map((option) => (
+                      <MenuItem
+                        my="8px"
+                        py="12px"
+                        w="full"
+                        key={option?._id}
+                        onClick={() => setOption(option)}
+                      >
+                        <Flex
+                          justifyContent="space-between"
+                          alignItems="center"
+                          w="270px"
+                        >
+                          <Flex alignItems="center" gap="8px">
+                            <Image src={option?.icon} />
+                            <Text textTransform="uppercase">
+                              {option?.type}
+                            </Text>
                           </Flex>
-                        </MenuItem>
-                      ))}
-                  </MenuList>
-                </Menu>
-              )}
+
+                          {/* <Text>{option[1].time}</Text> */}
+                        </Flex>
+                      </MenuItem>
+                    ))}
+                </MenuList>
+              </Menu>
             </Stack>
             <Stack>
               <Text fontSize={"12px"} color="text.grey">

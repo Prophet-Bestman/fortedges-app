@@ -24,6 +24,7 @@ import UserSelectPlan from "./UserSelectPlan";
 import PlanProvider, { planActions, PlanContext } from "providers/PlanProvider";
 import { FundPlan } from "components/plansModals";
 import { useGetCustomPlans } from "api/plans";
+import { useGetMops } from "api/mop";
 
 const OverviewHeader = () => {
   const [user, setUser] = useState({});
@@ -35,6 +36,7 @@ const OverviewHeader = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const { data: plansData, isLoading } = useGetCustomPlans();
+  const { data: mopsResp, isLoading: loadingMops } = useGetMops();
 
   useEffect(() => {
     if (plansData !== undefined) {
@@ -185,7 +187,7 @@ const OverviewHeader = () => {
         </Swiper>
       </Box>
 
-      {isLoading ? (
+      {isLoading || loadingMops ? (
         <Progress isIndeterminate colorScheme="gray" size="xs" />
       ) : (
         <Button
@@ -202,7 +204,9 @@ const OverviewHeader = () => {
           Add Money
         </Button>
       )}
-      {isOpen && <FundPlan isOpen={isOpen} onClose={onClose} />}
+      {isOpen && (
+        <FundPlan isOpen={isOpen} onClose={onClose} options={mopsResp} />
+      )}
     </Box>
   );
 };

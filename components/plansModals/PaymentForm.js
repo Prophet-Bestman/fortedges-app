@@ -48,12 +48,11 @@ const PaymentForm = ({
   option,
   setOption,
   setData,
+  options,
 }) => {
   const { plan } = useContext(PlanContext);
   const [minAmount, setMinAmount] = useState(0);
   const [requestError, setRequestError] = useState("");
-
-  const { data: mopsResp, isLoading: loadingMops } = useGetMops();
 
   useEffect(() => {
     switch (plan?.parent_plan_name) {
@@ -260,77 +259,70 @@ const PaymentForm = ({
             <Text fontSize={"12px"} color="text.grey">
               Mode of payment
             </Text>
-            {loadingMops ? (
-              <Progress isIndeterminate colorScheme="gray" size="sm" />
-            ) : (
-              <Menu w="full">
-                <MenuButton
-                  variant="outline"
-                  w="full"
-                  borderColor="#0000001A"
-                  borderWidth="1px"
-                  rounded="md"
-                  as={Button}
-                  rightIcon={<MdKeyboardArrowDown />}
-                >
-                  <Flex alignItems="center" gap="8px">
-                    {/* <Image src={option?.icon} /> */}
-                    <Text textTransform="uppercase">
-                      {option.type || "Select a mode of payment"}
-                    </Text>
-                  </Flex>
-                </MenuButton>
-                <MenuList w="full">
-                  {!!mopsResp?.length > 0 &&
-                    mopsResp.map((option) => (
-                      <MenuItem
-                        my="8px"
-                        py="12px"
-                        w="full"
-                        key={option?._id}
-                        onClick={() => setOption(option)}
-                      >
-                        <Flex
-                          justifyContent="space-between"
-                          alignItems="center"
-                          w="270px"
-                        >
-                          <Flex alignItems="center" gap="8px">
-                            <Image src={option?.icon} />
-                            <Text textTransform="uppercase">
-                              {option?.type}
-                            </Text>
-                          </Flex>
 
-                          {/* <Text>{option[1].time}</Text> */}
-                        </Flex>
-                      </MenuItem>
-                    ))}
-
-                  <MenuItem
-                    my="8px"
-                    py="12px"
-                    w="full"
-                    onClick={() => setOption(bankOption)}
-                  >
-                    <Flex
-                      justifyContent="space-between"
-                      alignItems="center"
-                      w="270px"
+            <Menu w="full">
+              <MenuButton
+                variant="outline"
+                w="full"
+                borderColor="#0000001A"
+                borderWidth="1px"
+                rounded="md"
+                as={Button}
+                rightIcon={<MdKeyboardArrowDown />}
+              >
+                <Flex alignItems="center" gap="8px">
+                  {/* <Image src={option?.icon} /> */}
+                  <Text textTransform="uppercase">
+                    {option?.type || "Select a mode of payment"}
+                  </Text>
+                </Flex>
+              </MenuButton>
+              <MenuList w="full">
+                {!!options?.length > 0 &&
+                  options.map((option) => (
+                    <MenuItem
+                      my="8px"
+                      py="12px"
+                      w="full"
+                      key={option?._id}
+                      onClick={() => setOption(option)}
                     >
-                      <Flex alignItems="center" gap="8px">
-                        <Image src={bankOption?.icon} />
-                        <Text textTransform="uppercase">
-                          {bankOption?.type}
-                        </Text>
-                      </Flex>
+                      <Flex
+                        justifyContent="space-between"
+                        alignItems="center"
+                        w="270px"
+                      >
+                        <Flex alignItems="center" gap="8px">
+                          <Image src={option?.icon} />
+                          <Text textTransform="uppercase">{option?.type}</Text>
+                        </Flex>
 
-                      {/* <Text>{option[1].time}</Text> */}
+                        {/* <Text>{option[1].time}</Text> */}
+                      </Flex>
+                    </MenuItem>
+                  ))}
+
+                <MenuItem
+                  my="8px"
+                  py="12px"
+                  w="full"
+                  onClick={() => setOption(bankOption)}
+                >
+                  <Flex
+                    justifyContent="space-between"
+                    alignItems="center"
+                    w="270px"
+                  >
+                    <Flex alignItems="center" gap="8px">
+                      <Image src={bankOption?.icon} />
+                      <Text textTransform="uppercase">{bankOption?.type}</Text>
                     </Flex>
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            )}
+
+                    {/* <Text>{option[1].time}</Text> */}
+                  </Flex>
+                </MenuItem>
+              </MenuList>
+            </Menu>
           </Stack>
 
           <Box>

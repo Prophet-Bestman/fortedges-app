@@ -7,6 +7,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Progress,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -17,10 +18,12 @@ import { useGetCustomPlans } from "api/plans";
 import { planActions, PlanContext } from "providers/PlanProvider";
 import { FundPlan } from "components/plansModals";
 import Link from "next/link";
+import { useGetMops } from "api/mop";
 
 const UserSelectPlan = ({ isOpen, onClose }) => {
   const { dispatch: setPlan } = useContext(PlanContext);
   const [userPlans, setUserPlans] = useState([]);
+  const { data: mopsResp, isLoading: loadingMops } = useGetMops();
 
   const {
     isOpen: isFundOpen,
@@ -64,7 +67,9 @@ const UserSelectPlan = ({ isOpen, onClose }) => {
             flexDir="column"
             h="full"
           >
-            {userPlans?.length > 0 ? (
+            {loadingMops ? (
+              <Progress isIndeterminate size="sm" colorScheme="gray" />
+            ) : userPlans?.length > 0 ? (
               userPlans?.map((plan) => (
                 <PlanBox
                   onClick={() => handleFundPlan(plan)}
@@ -88,7 +93,13 @@ const UserSelectPlan = ({ isOpen, onClose }) => {
           </Flex>
         </ModalBody>
       </ModalContent>
-      {isFundOpen && <FundPlan isOpen={isFundOpen} onClose={onFundClose} />}
+      {isFundOpen && (
+        <FundPlan
+          isOpen={isFundOpen}
+          onClose={onFundClose}
+          options={mopsResp}
+        />
+      )}
     </Modal>
   );
 };

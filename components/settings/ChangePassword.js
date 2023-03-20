@@ -205,7 +205,8 @@ const ChangePassword = ({ isOpen, onClose, closeParent }) => {
               <Text fontSize="14px" textAlign="center">
                 Enter the 2-step verification code we sent to your email
                 <br />
-                If you do not get it in 10 mins check your spam
+                {`If you haven’t recieved our email in 15 minutes. Please check your
+            spam folder.`}
               </Text>
               <Flex
                 alignItems={"center"}

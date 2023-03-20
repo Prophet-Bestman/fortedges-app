@@ -10,6 +10,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useGetMops } from "api/mop";
 import { useGetCustomPlans } from "api/plans";
 import { FundPlan } from "components/plansModals";
 
@@ -28,6 +29,7 @@ const MainMobileNav = ({ isOpen, onClose }) => {
   const { dispatch: setPlan } = useContext(PlanContext);
 
   const { data: plansData, isLoading } = useGetCustomPlans();
+  const { data: mopsResp, isLoading: loadingMops } = useGetMops();
 
   useEffect(() => {
     if (plansData !== undefined) {
@@ -84,7 +86,7 @@ const MainMobileNav = ({ isOpen, onClose }) => {
             >
               {mobileNavs.map((nav, i) => (
                 <Link href={nav.link} key={i}>
-                  {nav?.name === "Add Money" && isLoading ? (
+                  {nav?.name === "Add Money" && (isLoading || loadingMops) ? (
                     <></>
                   ) : (
                     <Text
@@ -135,7 +137,13 @@ const MainMobileNav = ({ isOpen, onClose }) => {
           </ModalBody>
         </ModalContent>
 
-        {isFundOpen && <FundPlan isOpen={isFundOpen} onClose={onFundClose} />}
+        {isFundOpen && (
+          <FundPlan
+            isOpen={isFundOpen}
+            onClose={onFundClose}
+            options={mopsResp}
+          />
+        )}
       </Modal>
     </div>
   );

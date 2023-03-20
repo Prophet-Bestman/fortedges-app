@@ -54,7 +54,7 @@ const SecurityTab = () => {
             </Text>
             <Text display={["none", , "block"]} fontSize="14px">
               {
-                " Remember not to store your password in your email or cloud and don't share it with anyone"
+                "Remember not to store your password in your email or cloud and don't share it with anyone"
               }
             </Text>
             <Text fontSize="12px" display={["block", , "none"]}>

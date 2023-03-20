@@ -5,7 +5,7 @@ import React from "react";
 import PaymentForm from "./PaymentForm";
 import ProofOfPayment from "./ProofOfPayment";
 
-const FundPlan = ({ onClose, isOpen }) => {
+const FundPlan = ({ onClose, isOpen, options }) => {
   const [step, setStep] = React.useState(1);
   const [data, setData] = React.useState({});
   const [option, setOption] = React.useState(options.btc);
@@ -27,6 +27,7 @@ const FundPlan = ({ onClose, isOpen }) => {
       {step === 1 && (
         <PaymentForm
           option={option}
+          options={options}
           setOption={setOption}
           setStep={setStep}
           onClose={onClose}

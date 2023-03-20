@@ -1,4 +1,5 @@
 import { Box, Circle, Text, useDisclosure } from "@chakra-ui/react";
+import { useGetMops } from "api/mop";
 import { useGetCustomPlans } from "api/plans";
 import { FundPlan } from "components/plansModals";
 import Link from "next/link";
@@ -13,6 +14,7 @@ const MainNav = () => {
 
   const { dispatch: setPlan } = useContext(PlanContext);
   const { data: plansData, isLoading } = useGetCustomPlans();
+  const { data: mopsResp, isLoading: loadingMops } = useGetMops();
 
   useEffect(() => {
     if (plansData !== undefined) {
@@ -44,7 +46,7 @@ const MainNav = () => {
         <Box ml="24px" w="full">
           {mainNavs.map((nav, i) => (
             <Link key={i} href={nav.link}>
-              {nav?.name === "Add Money" && isLoading ? (
+              {nav?.name === "Add Money" && (isLoading || loadingMops) ? (
                 <></>
               ) : (
                 <Text
@@ -74,7 +76,9 @@ const MainNav = () => {
         </Box>
       </Box>
 
-      {isOpen && <FundPlan isOpen={isOpen} onClose={onClose} />}
+      {isOpen && (
+        <FundPlan isOpen={isOpen} onClose={onClose} options={mopsResp} />
+      )}
     </Box>
   );
 };
