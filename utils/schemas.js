@@ -97,3 +97,8 @@ export const editUserSchema = yup.object().shape({
   nationality: yup.string(),
   dob: yup.string(),
 });
+
+export const createMOPSchema = yup.object().shape({
+  type: yup.string().required(),
+  address: yup.string().required(),
+});

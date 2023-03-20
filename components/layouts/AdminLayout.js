@@ -1,11 +1,9 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
-import { useGetVerifiedUser } from "api/user";
 import React from "react";
 import AdminNav from "./AdminNav";
 import AdminTopBar from "./AdminTopBar";
 
 const AdminLayout = ({ children }) => {
-  const { data } = useGetVerifiedUser();
   return (
     <Box>
       <Grid

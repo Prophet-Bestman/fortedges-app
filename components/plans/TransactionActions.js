@@ -7,6 +7,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Progress,
   useDisclosure,
 } from "@chakra-ui/react";
 import { FundPlan } from "components/plansModals";
@@ -19,9 +20,12 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import EditPlan from "./EditPlan";
 import { SuccessModal } from "components";
 import DeletePlan from "./DeletePlan";
+import { useGetMops } from "api/mop";
 
 const TransactionActions = () => {
   const [option, setOption] = React.useState(options.btc);
+  const { data: mopsResp, isLoading: loadingMops } = useGetMops();
+
   const {
     isOpen: isFundOpen,
     onOpen: onFundOpen,
@@ -60,27 +64,31 @@ const TransactionActions = () => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Box>
-          <Button
-            w="140px"
-            h="48px"
-            leftIcon={<AiOutlinePlus fontSize="20px" />}
-            mr="8px"
-            mb="8px"
-            onClick={onFundOpen}
-          >
-            Fund Plan
-          </Button>
-          <Button
-            variant="secondary"
-            w="140px"
-            h="48px"
-            leftIcon={<AiOutlineMinus fontSize="20px" />}
-            onClick={onWithdrawOpen}
-          >
-            Withdraw
-          </Button>
-        </Box>
+        {loadingMops ? (
+          <Progress isIndeterminate colorScheme="gray" size="sm" />
+        ) : (
+          <Box>
+            <Button
+              w="140px"
+              h="48px"
+              leftIcon={<AiOutlinePlus fontSize="20px" />}
+              mr="8px"
+              mb="8px"
+              onClick={onFundOpen}
+            >
+              Fund Plan
+            </Button>
+            <Button
+              variant="secondary"
+              w="140px"
+              h="48px"
+              leftIcon={<AiOutlineMinus fontSize="20px" />}
+              onClick={onWithdrawOpen}
+            >
+              Withdraw
+            </Button>
+          </Box>
+        )}
 
         <Menu>
           <MenuButton>
@@ -90,7 +98,7 @@ const TransactionActions = () => {
           </MenuButton>
           <MenuList>
             <MenuItem onClick={onEditOpen}>Edit Plan</MenuItem>
-            <MenuItem onClick={onDeleteOpen}>Delete Plan</MenuItem>
+            {/* <MenuItem onClick={onDeleteOpen}>Delete Plan</MenuItem> */}
           </MenuList>
         </Menu>
       </Flex>
@@ -120,25 +128,38 @@ const TransactionActions = () => {
           Withdraw
         </Button>
       </Flex>
-      <FundPlan isOpen={isFundOpen} onClose={onFundClose} />
-      <Withdraw
-        isOpen={isWithdrawOpen}
-        onClose={onWithdrawClose}
-        option={option}
-        setOption={setOption}
-      />
+      {isFundOpen && (
+        <FundPlan
+          isOpen={isFundOpen}
+          onClose={onFundClose}
+          options={mopsResp}
+        />
+      )}
+      {isWithdrawOpen && (
+        <Withdraw
+          isOpen={isWithdrawOpen}
+          onClose={onWithdrawClose}
+          option={option}
+          options={mopsResp}
+          setOption={setOption}
+        />
+      )}
 
-      <EditPlan
-        isOpen={isEditOpen}
-        onClose={onEditClose}
-        openSuccess={onSuccessOpen}
-      />
+      {isEditOpen && (
+        <EditPlan
+          isOpen={isEditOpen}
+          onClose={onEditClose}
+          openSuccess={onSuccessOpen}
+        />
+      )}
 
-      <SuccessModal
-        isOpen={isSuccessOpen}
-        msg="Successfully Updated Plan"
-        closeParent={onSuccessClose}
-      />
+      {isSuccessOpen && (
+        <SuccessModal
+          isOpen={isSuccessOpen}
+          msg="Successfully Updated Plan"
+          closeParent={onSuccessClose}
+        />
+      )}
       <DeletePlan onClose={onDeleteClose} isOpen={isDeleteOpen} />
     </Box>
   );

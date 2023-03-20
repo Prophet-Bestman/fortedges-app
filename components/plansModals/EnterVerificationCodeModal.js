@@ -88,13 +88,18 @@ const EnterVerificationCodeModal = ({ isOpen, onClose, payload }) => {
 
   return (
     <>
-      <Modal isOpen={isOpen}>
+      <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent pos="absolute" bottom={0} py="30px" mb="0">
           <ModalBody>
             <Box>
               <Text fontSize="14px" textAlign="center">
                 Enter the 2-step verification code we sent to your email
+                <br />
+                <strong>
+                  {`If you haven’t recieved our email in 15 minutes. Please check your
+            spam folder.`}
+                </strong>
               </Text>
               <form onSubmit={(e) => handleSubmit(e)}>
                 <Flex

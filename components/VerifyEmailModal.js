@@ -77,7 +77,12 @@ const ConfirmModal = ({ isOpen, onClose }) => {
             mb="24px"
           >
             A verification link will be sent to your registered email. Click the
-            link to verify your email
+            link to verify your email.
+            <br />
+            <strong>
+              {`If you haven’t recieved our email in 15 minutes. Please check your
+            spam folder.`}
+            </strong>
           </Text>
         </ModalBody>
 

@@ -1,6 +1,13 @@
-import { Box, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Progress,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   AiOutlineEyeInvisible,
   AiOutlinePlus,
@@ -14,15 +21,37 @@ import "swiper/css/pagination";
 import { useGetUser } from "api/user";
 import { config } from "utils";
 import UserSelectPlan from "./UserSelectPlan";
-import PlanProvider from "providers/PlanProvider";
+import PlanProvider, { planActions, PlanContext } from "providers/PlanProvider";
+import { FundPlan } from "components/plansModals";
+import { useGetCustomPlans } from "api/plans";
+import { useGetMops } from "api/mop";
 
 const OverviewHeader = () => {
   const [user, setUser] = useState({});
   const [show, setShow] = useState(true);
+  const { dispatch: setPlan } = useContext(PlanContext);
 
   const { data: userData, error } = useGetUser();
 
   const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const { data: plansData, isLoading } = useGetCustomPlans();
+  const { data: mopsResp, isLoading: loadingMops } = useGetMops();
+
+  useEffect(() => {
+    if (plansData !== undefined) {
+      if (Object.keys(plansData)?.length > 0) {
+        setPlan({
+          type: planActions.SET_PLAN,
+          payload: plansData?.custom_plans[0],
+        });
+      }
+    }
+  }, [plansData]);
+
+  const handleFundPlan = () => {
+    onOpen();
+  };
 
   useEffect(() => {
     let user;
@@ -96,16 +125,20 @@ const OverviewHeader = () => {
           </Link>
         </Flex>
 
-        <Button
-          variant="secondary"
-          bg="white"
-          borderColor="gray.200"
-          borderWidth="1px"
-          leftIcon={<AiOutlinePlus />}
-          onClick={onOpen}
-        >
-          Add Money
-        </Button>
+        {isLoading ? (
+          <Progress size="xs" isIndeterminate colorScheme="gray" />
+        ) : (
+          <Button
+            variant="secondary"
+            bg="white"
+            borderColor="gray.200"
+            borderWidth="1px"
+            leftIcon={<AiOutlinePlus />}
+            onClick={handleFundPlan}
+          >
+            Add Money
+          </Button>
+        )}
       </Flex>
 
       <Box maxW={["90vw", , , "75vw"]}>
@@ -154,23 +187,26 @@ const OverviewHeader = () => {
         </Swiper>
       </Box>
 
-      <Button
-        variant="secondary"
-        w="full"
-        color="app.primary"
-        display={["block", , "none"]}
-        bg="white"
-        borderColor="gray.200"
-        borderWidth="1px"
-        leftIcon={<AiOutlinePlus />}
-        onClick={onOpen}
-      >
-        Add Money
-      </Button>
-
-      <PlanProvider>
-        <UserSelectPlan isOpen={isOpen} onClose={onClose} />
-      </PlanProvider>
+      {isLoading || loadingMops ? (
+        <Progress isIndeterminate colorScheme="gray" size="xs" />
+      ) : (
+        <Button
+          variant="secondary"
+          w="full"
+          color="app.primary"
+          display={["block", , "none"]}
+          bg="white"
+          borderColor="gray.200"
+          borderWidth="1px"
+          leftIcon={<AiOutlinePlus />}
+          onClick={handleFundPlan}
+        >
+          Add Money
+        </Button>
+      )}
+      {isOpen && (
+        <FundPlan isOpen={isOpen} onClose={onClose} options={mopsResp} />
+      )}
     </Box>
   );
 };

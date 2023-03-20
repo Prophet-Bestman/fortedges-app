@@ -5,30 +5,26 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  Button,
   Circle,
   Text,
   Progress,
-  Box,
-  FormLabel,
-  Input,
-  Flex,
   useDisclosure,
 } from "@chakra-ui/react";
 import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 import { AiOutlineClose } from "react-icons/ai";
-import { IoIosArrowBack } from "react-icons/io";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useCreateCustomPlan } from "api/plans";
-import SuccessModal from "components/SuccessModal";
+import { useCreateCustomPlan, useEditCustomPlan } from "api/plans";
 import ErrorModal from "components/ErrorModal";
 import PlanCreated from "./PlanCreated";
+import { AuthContext } from "providers/AuthProvider";
 
 const SubmitPlan = ({ closeParent }) => {
+  const { user: loggedInUser } = useContext(AuthContext);
   const { planFormState, dispatch: setOpen } = useContext(PlanFormContext);
-  const [newPlan, setnewPlan] = useState({});
+
+  const isOpen = planFormState.isOpen;
+  const id = planFormState.id;
+  const parent_plan_name = planFormState.parent_plan_name;
+  const user = planFormState?.plan_user;
 
   const {
     isOpen: isSuccessOpen,
@@ -48,28 +44,7 @@ const SubmitPlan = ({ closeParent }) => {
     closeParent();
   };
 
-  const isOpen = planFormState.isOpen;
-  const id = planFormState.id;
-  const parent_plan_name = planFormState.parent_plan_name;
-  const user_id = planFormState.user_id;
-
-  const planSchema = yup.object({
-    planName: yup.string().required().min(3),
-  });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({
-    resolver: yupResolver(planSchema),
-  });
-
-  const onClose = () => {
-    reset();
-    setOpen({ type: planFormActions.CLOSE_FORM });
-  };
+  // const user_id = planFormState.user_id;
 
   const {
     mutate: createPlan,
@@ -78,25 +53,50 @@ const SubmitPlan = ({ closeParent }) => {
     data: createdPlan,
   } = useCreateCustomPlan();
 
-  const submitPlan = (data) => {
-    const plan = {
-      data: {
-        user_id: user_id,
-        name: data.planName,
-        parent_plan_id: id,
-        description: "",
-        parent_plan_name: parent_plan_name,
-      },
-    };
+  const {
+    mutate: updatePlan,
+    isLoading: updating,
+    error: updateError,
+    data: updatedPlan,
+  } = useEditCustomPlan();
 
-    createPlan(plan);
+  const submitPlan = () => {
+    let payload;
+    if (user?.has_plan) {
+      payload = {
+        plan_id: planFormState?.plan_id,
+        data: {
+          parent_plan_id: id,
+          description: "",
+        },
+      };
+      updatePlan(payload);
+    } else {
+      payload = {
+        data: {
+          // user_id: user_id,
+          name: "",
+          parent_plan_id: id,
+          description: "",
+          parent_plan_name: parent_plan_name,
+          ...(user?._id !== loggedInUser?._id && { user_id: user?._id }),
+        },
+      };
+      createPlan(payload);
+    }
   };
 
+  // AUTO SUBMIT PLAN ON COMPONENT MOUNT
   useEffect(() => {
-    if (createdPlan !== undefined) {
-      if (createdPlan.status === 201) {
+    if (!!parent_plan_name && !!id) {
+      submitPlan();
+    }
+  }, [id, parent_plan_name]);
+
+  useEffect(() => {
+    if (!!createdPlan) {
+      if (createdPlan?.status >= 200) {
         onSuccessOpen();
-        setnewPlan(createdPlan);
       } else {
         onErrorOpen();
       }
@@ -104,17 +104,38 @@ const SubmitPlan = ({ closeParent }) => {
   }, [createdPlan]);
 
   useEffect(() => {
-    if (!!error) {
+    if (!!updatedPlan) {
+      if (updatedPlan?.status >= 200) {
+        onSuccessOpen();
+      } else {
+        onErrorOpen();
+      }
+    }
+  }, [updatedPlan]);
+
+  // useEffect(() => {
+  //   if (createdPlan !== undefined) {
+  //     if (createdPlan.status === 201) {
+  //       onSuccessOpen();
+  //       setnewPlan(createdPlan);
+  //     } else {
+  //       onErrorOpen();
+  //     }
+  //   }
+  // }, [createdPlan]);
+
+  useEffect(() => {
+    if (!!error || !!updateError) {
       onErrorOpen();
     }
-  }, [error]);
+  }, [error, updateError]);
 
   return (
     <Modal isOpen={isOpen} isCentered size="sm">
       <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
       <ModalContent py="16px">
         <ModalHeader display="flex" justifyContent="space-between">
-          <Text>Name Your Plan</Text>
+          {/* <Text>Name Your Plan</Text> */}
           <Circle
             onClick={() => setOpen({ type: planFormActions.CLOSE_FORM })}
             cursor="pointer"
@@ -123,18 +144,28 @@ const SubmitPlan = ({ closeParent }) => {
             _hover={{
               bg: "#e1e1e3",
             }}
+            ml="auto"
           >
             <AiOutlineClose fontSize="14px" />
           </Circle>
         </ModalHeader>
 
-        <ModalBody>
-          <Text fontSize={"13px"} color="text.grey">
-            Question 1 of 1
+        <ModalBody py="6">
+          <Text fontSize={"18px"} fontWeight="600" mb="3">
+            Submiting Plan
           </Text>
-          <Progress colorScheme="purple" value={100} size="xs" rounded="full" />
+          <Progress
+            isIndeterminate
+            colorScheme="purple"
+            value={isLoading || updating ? 100 : 0}
+            size="xs"
+            rounded="full"
+          />
+          {/* <Text fontSize={"13px"} color="text.grey">
+            Question 1 of 1
+          </Text> */}
 
-          <Box mt="32px">
+          {/* <Box mt="32px">
             <form onSubmit={handleSubmit(submitPlan)}>
               <FormLabel fontWeight={600}>Give your plan a name</FormLabel>
               <Input
@@ -154,7 +185,7 @@ const SubmitPlan = ({ closeParent }) => {
                   Back
                 </Button>
                 <Button
-                  isLoading={isLoading}
+                  isLoading={isLoading || updating}
                   w="full"
                   ml={1}
                   size="md"
@@ -164,16 +195,20 @@ const SubmitPlan = ({ closeParent }) => {
                 </Button>
               </Flex>
             </form>
-          </Box>
+          </Box> */}
         </ModalBody>
       </ModalContent>
 
-      {!!createdPlan && createdPlan?.data && (
+      {(createdPlan?.data || updatedPlan?.data) && (
         <PlanCreated
           isOpen={isSuccessOpen}
-          msg="Plan Creation Successful"
+          msg={
+            updatedPlan?.data
+              ? "Plan Upgrade Successful"
+              : "Plan Creation Successful"
+          }
           closeParent={onParentClose}
-          plan={createdPlan?.data}
+          plan={createdPlan?.data || updatedPlan?.data}
         />
       )}
 

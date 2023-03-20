@@ -1,12 +1,16 @@
 import { Box, Image, Text } from "@chakra-ui/react";
 import { goalProps, planProps } from "data/explorePlans";
+import { useRouter } from "next/router";
 import { PlanContext } from "providers/PlanProvider";
 import React, { useContext, useEffect, useState } from "react";
+import { BiArrowBack } from "react-icons/bi";
 
 const PlanDetailsBanner = () => {
   const { plan } = useContext(PlanContext);
-  const { investment, name, profit, parent_plan_name, parent_goal_name } = plan;
+  const { parent_plan_name, parent_goal_name } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState({});
+
+  const router = useRouter();
 
   useEffect(() => {
     if (plan !== undefined) {
@@ -42,8 +46,17 @@ const PlanDetailsBanner = () => {
           case "Real Estate":
             setCurrentPlanProps(planProps.realEstate);
             break;
-          case "Premium Stock":
-            setCurrentPlanProps(planProps.premiumStock);
+          case "Cryptocurrency Premium":
+            setCurrentPlanProps(planProps.cryptoBasic);
+
+          case "Cryptocurrency Intermediate":
+            setCurrentPlanProps(planProps.cryptoBasic);
+
+          case "Cryptocurrency Basic":
+            setCurrentPlanProps(planProps.cryptoBasic);
+            break;
+
+          default:
             break;
         }
       }
@@ -52,15 +65,16 @@ const PlanDetailsBanner = () => {
 
   return (
     <Box
-      h="120px"
+      h="90px"
       bg={currentPlanProps.color}
       bgGradient="linear-gradient(178.73deg, rgba(196, 196, 196, 0) 1.08%, rgba(196, 196, 196, 0) 1.09%, rgba(0, 0, 0, 0.4) 98.92%)"
       position="relative"
     >
       <Image
+        pos="absolute"
+        right="8"
         h="full"
-        ml="140px"
-        filter={"blur(3px)"}
+        // filter={"blur(1px)"}
         src={currentPlanProps.img}
         alt=""
       />
@@ -71,13 +85,21 @@ const PlanDetailsBanner = () => {
         w="full"
         h="full"
         display="flex"
-        justifyContent={"center"}
+        // justifyContent={"center"}
         alignItems="center"
+        px="3"
+        gap="6"
       >
-        <Box color="white" textAlign="center">
+        <BiArrowBack
+          onClick={() => router.back()}
+          color="white"
+          fontSize="24px"
+        />
+        <Box color="white">
           {!!plan && (
             <Text fontSize="20px" fontWeight={500}>
-              {plan.name}
+              {/* {plan.parent_plan_name} */}
+              My Plan
             </Text>
           )}
           {!!plan && <Text fontSize="14px">{plan.parent_plan_name}</Text>}

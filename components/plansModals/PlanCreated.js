@@ -12,19 +12,32 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React from "react";
+import { AuthContext } from "providers/AuthProvider";
+import { PlanFormContext } from "providers/PlanFormProvider";
+import React, { useContext, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsArrowRight } from "react-icons/bs";
+// import { BsArrowRight } from "react-icons/bs";
 
 const PlanCreated = ({ isOpen, msg, closeParent, plan }) => {
   const router = useRouter();
+  const { user } = useContext(AuthContext);
+  const {
+    planFormState: { plan_user },
+  } = useContext(PlanFormContext);
 
-  if (isOpen) {
-    setTimeout(() => {
-      router.push(`/myplans/${plan?._id}`);
-      closeParent();
-    }, 1500);
-  }
+  useEffect(() => {
+    if (user?._id === plan_user?._id) {
+      if (isOpen && user?.has_plan) {
+        router.push(`/myplans/${plan?._id}`);
+        closeParent();
+      }
+    } else {
+      if (isOpen && plan_user?.has_plan) {
+        router.push(`/admin/users/${plan_user?._id}`);
+        closeParent();
+      }
+    }
+  }, [user, isOpen, plan_user]);
 
   return (
     <Modal isOpen={isOpen} size="sm" isCentered>

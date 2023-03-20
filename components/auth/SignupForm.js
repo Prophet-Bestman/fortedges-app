@@ -60,8 +60,6 @@ const SignupForm = () => {
   // ======= SIGN UP LOGIC ==========
   const { mutate: signUp, isLoading, data: signUpData, error } = useSignUp();
 
-  console.log(process.env.NEXT_PUBLIC_BASE_URL);
-
   const onSubmit = (data) => {
     data = {
       firstname: data.firstName,

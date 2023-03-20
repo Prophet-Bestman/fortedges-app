@@ -12,23 +12,24 @@ import {
   Image,
   Box,
   useDisclosure,
+  Circle,
 } from "@chakra-ui/react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import HistoricalPerformance from "./HistoricalPerformance";
-import Link from "next/link";
 import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
-import { formatter } from "utils";
 import SubmitPlan from "./SubmitPlan";
-import { portfolioCountries } from "data";
+import { planProps, portfolioCountries } from "data";
 import OurPortfolio from "./OurPortfolio";
 
-const RealEstatePlan = ({ isOpen, onClose, plan, userID }) => {
-  const { min, max, description, _id, name } = plan;
-  const { dispatch: setOpen } = useContext(PlanFormContext);
+const RealEstatePlan = ({ isOpen, onClose, plan, customPlan }) => {
+  const { min, max, _id, name } = plan;
+  const { dispatch: setOpen, planFormState } = useContext(PlanFormContext);
   const { dispatch: setUserID } = useContext(PlanFormContext);
   const { dispatch: setParentID } = useContext(PlanFormContext);
   const { dispatch: setParentName } = useContext(PlanFormContext);
+  const { dispatch: setPlanId } = useContext(PlanFormContext);
 
+  const user = planFormState?.plan_user;
   const {
     isOpen: isPortfolioOpen,
     onClose: onPortfolioClose,
@@ -58,7 +59,9 @@ const RealEstatePlan = ({ isOpen, onClose, plan, userID }) => {
         {/* <ModalCloseButton /> */}
         <ModalBody>
           <Flex justify="center">
-            <Image src="/img/realEstate.png" />
+            <Circle bg={planProps?.realEstate.color} size="96px">
+              <Image src={planProps?.realEstate.img} w="10" />
+            </Circle>
           </Flex>
 
           <Text
@@ -69,21 +72,23 @@ const RealEstatePlan = ({ isOpen, onClose, plan, userID }) => {
             fontSize="14px"
             mb="16px"
           >
-            {description}
+            {/* {description} */}
+            {`Best for those who want a balance of good returns with medium level
+            capital. This plan invests in rented buildings and properties around
+            the world and return is 20 - 22.5% per annum`}
           </Text>
 
           <Flex justify="center" fontSize="14px">
-            <Text mb="40px" color="text.grey">
-              Min Investment -{" "}
+            <Text fontWeight={600} mb="40px" color="text.black" mr="2">
+              Range:
             </Text>
-            <Text>
-              {" "}
-              {formatter.format(min)}
-              {/* - {formatter.format(max)} */}
+            <Text mb="40px" color="text.grey">
+              ${min?.toLocaleString()} - {typeof max === "number" && "$"}
+              {max?.toLocaleString()}
             </Text>
           </Flex>
 
-          <HistoricalPerformance />
+          <HistoricalPerformance history={planProps.realEstate.history} />
           <Box mt={"48px"}>
             <Text
               display="flex"
@@ -125,16 +130,23 @@ const RealEstatePlan = ({ isOpen, onClose, plan, userID }) => {
                 payload: name,
               });
               setParentID({ type: planFormActions.SET_ID, payload: _id });
-
               setOpen({ type: planFormActions.OPEN_FORM });
-              setUserID({ type: planFormActions.SET_USER_ID, payload: userID });
+              setUserID({
+                type: planFormActions.SET_USER_ID,
+                payload: user?._id,
+              });
+              !!customPlan &&
+                setPlanId({
+                  type: planFormActions.SET_PLAN_ID,
+                  payload: customPlan?._id,
+                });
             }}
           >
-            Get Started
+            {user?.has_plan ? "Upgrade" : "Get Started"}
           </Button>
         </ModalFooter>
       </ModalContent>
-      <SubmitPlan closeParent={onClose} />
+      {planFormState?.isOpen && <SubmitPlan closeParent={onClose} />}
       <OurPortfolio isOpen={isPortfolioOpen} onClose={onPortfolioClose} />
     </Modal>
   );

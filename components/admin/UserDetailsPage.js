@@ -16,16 +16,28 @@ import {
 } from "components/admin";
 
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ActionSuccessful from "./ActionSuccessful";
 import ConfirmDeleteUser from "./ConfirmDeleteUser";
 import { MdArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
+import { useAdminGetUser } from "api/user";
+import { PlanFormContext } from "providers/PlanFormProvider";
 
 const UserDetailsPage = ({ userID }) => {
   const [action, setAction] = React.useState("");
   const [pages, setPages] = useState(1);
   const [page, setPage] = useState(1);
   const [transactions, setTransactions] = useState();
+  const [user, setUser] = useState(null);
+
+  // ======== User details logic ======
+  const { data: userData } = useAdminGetUser(userID);
+
+  useEffect(() => {
+    if (!!userData && Object.keys(userData).length > 0) {
+      setUser(userData);
+    }
+  }, [userData]);
 
   const {
     isOpen: isSelectOpen,
@@ -76,8 +88,8 @@ const UserDetailsPage = ({ userID }) => {
 
   return (
     <Box px="24px">
-      <UserDetails userID={userID} />
-      <UserPlans userID={userID} />
+      <UserDetails user={user} userID={userID} />
+      <UserPlans user={user} userID={userID} />
       <Grid
         templateColumns={[
           "repeat(1, 1fr)",
@@ -145,15 +157,17 @@ const UserDetailsPage = ({ userID }) => {
           </Button>
         </GridItem>
 
-        <GridItem colSpan={1}>
-          <Link href={`/admin/users/${userID}/createplan`}>
-            <Button size="sm" variant="outline" w="full">
-              Create new plan
-            </Button>
-          </Link>
-        </GridItem>
+        {!user?.has_plan && (
+          <GridItem colSpan={1}>
+            <Link href={`/admin/users/${userID}/createplan`}>
+              <Button size="sm" variant="outline" w="full">
+                Create new plan
+              </Button>
+            </Link>
+          </GridItem>
+        )}
 
-        <GridItem colSpan={1}>
+        {/* <GridItem colSpan={1}>
           <Button
             onClick={() => openSelectModal("DELETE_PLAN")}
             size="sm"
@@ -162,7 +176,7 @@ const UserDetailsPage = ({ userID }) => {
           >
             Delete Plan
           </Button>
-        </GridItem>
+        </GridItem> */}
         <GridItem colSpan={1}>
           <Button
             size="sm"

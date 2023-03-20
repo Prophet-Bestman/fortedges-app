@@ -28,22 +28,10 @@ const PlanBalance = () => {
 
   return (
     <Box my="24px">
-      <Text
-        fontSize={"12px"}
-        color="text.grey"
-        py="6px"
-        textAlign="center"
-        bg="#F2F3F5"
-        rounded="full"
-      >
-        Return are updated every weekday
-      </Text>
-
       <Flex
         justify={["center", , "space-between"]}
         alignItems={["center", , "center"]}
         flexDir={["column", , "row"]}
-        my="40px"
       >
         <Box my="12px">
           <Text
@@ -83,15 +71,31 @@ const PlanBalance = () => {
             Profits
           </Text>
           <Flex gap="8px" alignItems="center">
-            <Text color="text.green" fontSize={"14px"}>
+            <Text color="text.light_green" fontSize={"14px"}>
               +{formatter.format(plan.profit)}
             </Text>
-            <Circle bg="text.green" size="5px"></Circle>
-            <Text color="text.green" fontSize={"14px"}>
+            <Circle bg="text.light_green" size="5px"></Circle>
+            <Text color="text.light_green" fontSize={"14px"}>
               +{percentageProfit.toFixed(3)}%
             </Text>
           </Flex>
         </Box>
+      </Flex>
+
+      <Flex justify="center">
+        <Text
+          fontSize={"12px"}
+          color="text.grey"
+          py="6px"
+          px="4"
+          textAlign="center"
+          bg="#F2F3F5"
+          rounded="full"
+          my="4"
+          w="fit-content"
+        >
+          Return are updated every weekday
+        </Text>
       </Flex>
     </Box>
   );

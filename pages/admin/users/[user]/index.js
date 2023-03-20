@@ -34,12 +34,3 @@ const User = () => {
 export default User;
 
 User.isAdmin = true;
-
-// export async function getServerSideProps(context) {
-//   const id = context.params.user;
-//   return {
-//     props: {
-//       userID: id,
-//     },
-//   };
-// }

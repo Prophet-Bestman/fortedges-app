@@ -150,6 +150,11 @@ const ChangeEmail = ({ isOpen, onClose, openConfirmEmailChange }) => {
             <Box>
               <Text fontSize="14px" textAlign="center">
                 Enter the 2-step verification code we sent to your email
+                <br />
+                <strong>
+                  {`If you haven’t recieved our email in 15 minutes. Please check your
+            spam folder.`}
+                </strong>
               </Text>
               <Flex
                 alignItems={"center"}

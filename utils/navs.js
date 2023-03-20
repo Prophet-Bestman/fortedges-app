@@ -53,37 +53,39 @@ export const authNavs = [
 
 export const mainNavs = [
   { name: "Overview", link: "/", icon: <AiOutlineDashboard size="18px" /> },
-  { name: "My Plans", link: "/myplans", icon: <BiTrendingUp size="18px" /> },
+  // { name: "My Plans", link: "/myplans", icon: <BiTrendingUp size="18px" /> },
   {
-    name: "Fund A Plan",
+    name: "Add Money",
     link: "#",
     icon: <RiRefund2Line size="18px" />,
+  },
+
+  {
+    name: "Transaction History",
+    link: "/transaction_history",
+    icon: <GrHistory size="18px" />,
   },
   {
     name: "Notifications",
     link: "/notifications",
     icon: <IoMdNotificationsOutline size="18px" />,
   },
-  {
-    name: "Transaction History",
-    link: "/transaction_history",
-    icon: <GrHistory size="18px" />,
-  },
 ];
 
 export const mobileNavs = [
   { name: "Overview", link: "/", icon: "/img/nav/dashboard.svg" },
-  { name: "My Plans", link: "/myplans", icon: "/img/nav/trend.svg" },
-  { name: "Fund A Plan", link: "/myplans", icon: "/img/nav/fund.svg" },
-  {
-    name: "Notifications",
-    link: "/notifications",
-    icon: "/img/nav/notification.svg",
-  },
+  // { name: "My Plans", link: "/myplans", icon: "/img/nav/trend.svg" },
+  { name: "Add Money", link: "#", icon: "/img/nav/fund.svg" },
+
   {
     name: "Transaction History",
     link: "/transaction_history",
     icon: "/img/nav/history.svg",
+  },
+  {
+    name: "Notifications",
+    link: "/notifications",
+    icon: "/img/nav/notification.svg",
   },
 ];
 

@@ -14,6 +14,7 @@ import {
   ModalBody,
   ModalContent,
   ModalOverlay,
+  Progress,
   Stack,
   Text,
   useDisclosure,
@@ -32,11 +33,11 @@ import EnterVerificationCodeModal from "./EnterVerificationCodeModal";
 import { PlanContext } from "providers/PlanProvider";
 import { useWithdraw } from "api/transactions";
 import ErrorModal from "components/ErrorModal";
-import { formatDistance } from "date-fns";
+import { useGetMops } from "api/mop";
 
 const optionsArr = Object.entries(options);
 
-const Withdraw = ({ onClose, isOpen, option, setOption }) => {
+const Withdraw = ({ onClose, isOpen, option, setOption, options }) => {
   const [days, setDays] = React.useState(0);
   const { plan } = useContext(PlanContext);
   const [withdrawData, setWithdrawData] = useState({});
@@ -54,8 +55,10 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
     if (!!plan?.createdAt) {
       today = new Date(Date.now());
       created_at = new Date(plan.createdAt);
-      const days = formatDistance(today, created_at);
-      setDays(days.split(" ")[0]);
+      const diff = Math.floor(today.getTime() - created_at.getTime());
+      const day = 1000 * 60 * 60 * 24;
+      const days = Math.floor(diff / day);
+      setDays(days);
     }
   }, [plan]);
 
@@ -97,7 +100,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
       data: {
         amount: data.amount,
         address: data.walletAddress,
-        mode_of_payment: option.name,
+        mode_of_payment: option.type,
         plan_id: plan._id,
       },
     };
@@ -143,7 +146,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
         </Flex>
 
         <ModalBody px="0">
-          {days < 30 && (
+          {days < 60 && (
             <Text
               fontSize="13px"
               py="12px"
@@ -165,7 +168,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
               >
                 i
               </Circle>
-              {30 - days} {"day(s) left to Withdraw funds."}{" "}
+              {60 - days} {"day(s) left to Withdraw funds."}{" "}
               <a
                 href={process.env.NEXT_PUBLIC_LANDING_URL + "/support"}
                 rel="noreferrer"
@@ -199,7 +202,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
                   type="number"
                   h="48px"
                   placeholder="10,000"
-                  isDisabled={days < 30}
+                  isDisabled={days < 60}
                   mb="32px"
                   // defaultValue={formState.amount}
                   variant={errors.amount ? "error" : "outline"}
@@ -212,10 +215,11 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
               <Text fontSize={"12px"} color="text.grey">
                 Mode of payment
               </Text>
+
               <Menu w="full">
                 <MenuButton
                   variant="outline"
-                  isDisabled={days < 30}
+                  isDisabled={days < 60}
                   w="full"
                   borderColor="#0000001A"
                   borderWidth="1px"
@@ -225,34 +229,35 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
                 >
                   <Flex alignItems="center" gap="8px">
                     <Image src={option.icon} />
-                    <Text textTransform="uppercase">{option.name}</Text>
+                    <Text textTransform="uppercase">{option.type}</Text>
                   </Flex>
                 </MenuButton>
                 <MenuList w="full">
-                  {optionsArr.map((option) => (
-                    <MenuItem
-                      my="8px"
-                      py="12px"
-                      w="full"
-                      key={option[1].name}
-                      onClick={() => setOption(option[1])}
-                    >
-                      <Flex
-                        justifyContent="space-between"
-                        alignItems="center"
-                        w="270px"
+                  {!!options?.length > 0 &&
+                    options?.map((option) => (
+                      <MenuItem
+                        my="8px"
+                        py="12px"
+                        w="full"
+                        key={option?._id}
+                        onClick={() => setOption(option)}
                       >
-                        <Flex alignItems="center" gap="8px">
-                          <Image src={option[1].icon} />
-                          <Text textTransform="uppercase">
-                            {option[1].name}
-                          </Text>
-                        </Flex>
+                        <Flex
+                          justifyContent="space-between"
+                          alignItems="center"
+                          w="270px"
+                        >
+                          <Flex alignItems="center" gap="8px">
+                            <Image src={option?.icon} />
+                            <Text textTransform="uppercase">
+                              {option?.type}
+                            </Text>
+                          </Flex>
 
-                        <Text>{option[1].time}</Text>
-                      </Flex>
-                    </MenuItem>
-                  ))}
+                          {/* <Text>{option[1].time}</Text> */}
+                        </Flex>
+                      </MenuItem>
+                    ))}
                 </MenuList>
               </Menu>
             </Stack>
@@ -267,7 +272,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
                   type="text"
                   h="48px"
                   placeholder=""
-                  isDisabled={days < 30}
+                  isDisabled={days < 60}
                   mb="32px"
                   // defaultValue={formState.amount}
                   variant={errors.walletAddress ? "error" : "outline"}
@@ -277,7 +282,7 @@ const Withdraw = ({ onClose, isOpen, option, setOption }) => {
             </Stack>
 
             <Button
-              isDisabled={days < 30}
+              isDisabled={days < 60}
               w="full"
               type="submit"
               isLoading={isLoading}

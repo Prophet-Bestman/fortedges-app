@@ -1,27 +1,52 @@
-import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Progress, Text } from "@chakra-ui/react";
 import { Padding } from "components/layouts";
-import { OverviewPlans } from "data";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
-import Link from "next/link";
 import UserPlan from "./UserPlan";
-import { useAdminGetCustomPlans } from "api/plans";
+import { useAdminGetCustomPlans, useGetAllPlans } from "api/plans";
+import UpgradePlanCard from "components/overview/UpgradePlanCard";
+import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 
-const UserPlans = ({ userID }) => {
+const UserPlans = ({ userID, user }) => {
   const [userPlans, setUserPlans] = useState([]);
-
-  const { data: plansData } = useAdminGetCustomPlans(userID);
+  const [higherPlans, setHigherPlans] = useState([]);
+  const { dispatch: setPlanUser } = useContext(PlanFormContext);
 
   useEffect(() => {
-    if (plansData !== undefined) {
-      if (Object.keys(plansData).length > 0) {
-        setUserPlans(plansData.custom_plans);
+    if (!!user) {
+      setPlanUser({ type: planFormActions.SET_PLAN_USER, payload: user });
+    }
+  }, [user]);
+
+  const { data: customPlansResp, isLoading: loadingCustom } =
+    useAdminGetCustomPlans(userID);
+  const { data: plansResp, isLoading } = useGetAllPlans();
+
+  useEffect(() => {
+    if (customPlansResp !== undefined) {
+      if (Object.keys(customPlansResp).length > 0) {
+        setUserPlans(customPlansResp.custom_plans);
       }
     }
-  }, [plansData]);
+  }, [customPlansResp]);
+
+  //  const { data: customPlansResp, isLoading: loadingCustom } =
+  //    useGetCustomPlans();
+
+  useEffect(() => {
+    if (plansResp?.length > 0 && customPlansResp?.custom_plans?.length > 0) {
+      const currentPlanIdx = plansResp.findIndex(
+        (plan) =>
+          plan?.name?.toLowerCase() ===
+          customPlansResp?.custom_plans[0]?.parent_plan_name?.toLowerCase()
+      );
+      const higherPlans = plansResp?.slice(currentPlanIdx + 1);
+      setHigherPlans(higherPlans);
+    }
+  }, [plansResp, customPlansResp]);
 
   return (
     <Box>
@@ -58,17 +83,63 @@ const UserPlans = ({ userID }) => {
                   width: "full",
                 }}
               >
-                {!!userPlans &&
+                {isLoading ? (
+                  <Progress isIndeterminate colorScheme="gray" />
+                ) : (
+                  !!userPlans &&
                   userPlans?.length > 0 &&
                   userPlans?.map((plan, i) => (
                     <SwiperSlide key={i}>
                       <UserPlan plan={plan} />
                     </SwiperSlide>
-                  ))}
+                  ))
+                )}
               </Swiper>
             </Box>
           </GridItem>
         </Grid>
+
+        {userPlans?.length > 0 && (
+          <Box my="64px">
+            {higherPlans?.length > 0 && (
+              <Box>
+                <Text
+                  borderBottomWidth="1px"
+                  borderBottomColor="#E7E8ED"
+                  fontSize="16px"
+                  pb="4"
+                >
+                  You can earn more
+                </Text>
+
+                <Grid
+                  templateColumns={[
+                    "repeat(1, 1fr)",
+                    ,
+                    "repeat(3, 1fr)",
+                    "repeat(2, 1fr)",
+                    "repeat(3, 1fr)",
+                  ]}
+                  my="4"
+                  gap="4"
+                >
+                  {isLoading || loadingCustom ? (
+                    <Progress size="sm" isIndeterminate colorScheme="gray" />
+                  ) : (
+                    higherPlans?.length > 0 &&
+                    higherPlans?.map((plan) => (
+                      <UpgradePlanCard
+                        key={plan?.id}
+                        plan={plan}
+                        customPlan={customPlansResp?.custom_plans[0]}
+                      />
+                    ))
+                  )}
+                </Grid>
+              </Box>
+            )}
+          </Box>
+        )}
       </Padding>
     </Box>
   );

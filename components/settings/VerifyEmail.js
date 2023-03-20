@@ -22,6 +22,11 @@ const VerifyEmail = ({ isOpen, onClose, email }) => {
             <Text textAlign="center" mt="32px">
               We sent a verification email to <strong>{email}</strong> Click the
               link inside to get started!
+              <br />
+              <strong>
+                {`If you haven’t recieved our email in 15 minutes. Please check your
+            spam folder.`}
+              </strong>
             </Text>
             <Text
               textAlign="center"

@@ -2,9 +2,9 @@ import { Box, Grid, Text } from "@chakra-ui/react";
 import { historicalPerformance } from "data";
 import React from "react";
 
-const HistoricalPerformance = () => {
+const HistoricalPerformance = ({ history }) => {
   return (
-    <Box>
+    <Box overflowX="hidden">
       <Text textAlign={"center"} fontSize="13px">
         Historical Performance
       </Text>
@@ -12,7 +12,8 @@ const HistoricalPerformance = () => {
       <Grid
         my="16px"
         maxH="160px"
-        overflowY="scroll"
+        overflowX="scroll"
+        // w="200%"
         templateColumns="repeat(2, 1fr)"
         gap={4}
         sx={{
@@ -33,17 +34,20 @@ const HistoricalPerformance = () => {
           scrollbarColor: "#7950DA",
           scrollbarBorderRadius: "25px",
         }}
+        overflow="auto"
       >
-        {historicalPerformance.map((record) => (
-          <Box p="12px" bg="#F2F3F5" key={record.year}>
-            <Text fontSize="13px" color={"text.grey"} mb="8px">
-              {record.year}
-            </Text>
-            <Text fontWeight={600} color="text.green">
-              {record.profit}
-            </Text>
-          </Box>
-        ))}
+        {(history?.length > 0 ? history : historicalPerformance).map(
+          (record) => (
+            <Box p="12px" bg="#F2F3F5" key={record.year}>
+              <Text fontSize="13px" color={"text.grey"} mb="8px">
+                {record.year}
+              </Text>
+              <Text fontWeight={600} color="text.light_green">
+                {record.profit}
+              </Text>
+            </Box>
+          )
+        )}
       </Grid>
     </Box>
   );

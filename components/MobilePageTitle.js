@@ -13,8 +13,11 @@ const MobilePageTitle = ({ children }) => {
         mt="32px"
         // mb="24px"
         alignItems="center"
+        pos="relative"
       >
-        <AiOutlineArrowLeft onClick={() => router.back()} fontSize="20px" />
+        <Box pos="absolute" left={4}>
+          <AiOutlineArrowLeft onClick={() => router.back()} fontSize="20px" />
+        </Box>
         <Text
           mx="auto"
           fontSize="24px"

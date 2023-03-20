@@ -25,19 +25,9 @@ const calculateAge = (dob) => {
   return age;
 };
 
-const UserDetails = ({ userID }) => {
+const UserDetails = ({ user, userID }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [user, setUser] = useState({});
   const [verificationDetails, setVerificationDetails] = useState({});
-
-  // ======== User details logic ======
-  const { data: userData } = useAdminGetUser(userID);
-
-  useEffect(() => {
-    if (!!userData && Object.keys(userData).length > 0) {
-      setUser(userData);
-    }
-  }, [userData]);
 
   // ========= User's Verifications Logic ==========
   const { data: verificationData } = useAdminGetUserVerifications(userID);

@@ -1,17 +1,18 @@
 import {
   Box,
-  Flex,
-  Grid,
-  GridItem,
-  Image,
+  // Flex,
+  // Grid,
+  // GridItem,
+  // Image,
   Text,
-  Button,
+  // Button,
+  Progress,
 } from "@chakra-ui/react";
 import { Padding } from "components/layouts";
 import React, { useEffect, useState, useContext } from "react";
 import OverviewPlan from "./OverviewPlan";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import { Pagination } from "swiper";
 import { IoMdTime } from "react-icons/io";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import "swiper/css";
@@ -20,11 +21,11 @@ import Link from "next/link";
 import { useGetCustomPlans } from "api/plans";
 import { AuthContext } from "providers/AuthProvider";
 
-const YourPlans = ({ title }) => {
+const YourPlans = () => {
   const [plans, setPlans] = useState([]);
   const { user } = useContext(AuthContext);
 
-  const { data: plansData } = useGetCustomPlans();
+  const { data: plansData, isLoading } = useGetCustomPlans();
 
   useEffect(() => {
     if (plansData != undefined) setPlans(plansData.custom_plans);
@@ -33,8 +34,88 @@ const YourPlans = ({ title }) => {
   return (
     <Box my="64px">
       <Padding>
-        <Grid
-          templateColumns={["repeat(1, 1fr)", , , "repeat(3, 1fr)"]}
+        <Box>
+          <Text fontSize={["16px", "18px", "20px", "24px"]} mb="24px">
+            {/* {title} */}
+            My plan
+          </Text>
+          {plans?.length > 0 &&
+            plans
+              .slice(0, 4)
+              .map((plan) => <OverviewPlan key={plan?.id} plan={plan} />)}
+        </Box>
+        <Box px="14px" maxW={["full", , "327px"]} my="10">
+          {isLoading ? (
+            <Progress size="sm" isIndeterminate colorScheme="gray" />
+          ) : (
+            (!user?.is_verified || !plans?.length > 0) && (
+              <>
+                <Text
+                  fontSize={["16px", "18px", "20px", "24px"]}
+                  pb="24px"
+                  borderBottomColor="#E2E0E0"
+                  borderBottomWidth="1px"
+                >
+                  Setup Guide
+                </Text>
+                <Box>
+                  {!user?.is_verified && (
+                    <Link href="/settings ">
+                      <Box
+                        color="text.grey"
+                        bg="gray.50"
+                        display="flex"
+                        p="8px"
+                        mt="8px"
+                        cursor="pointer"
+                        _hover={{ bg: "gray.100" }}
+                        alignItems="center"
+                      >
+                        <IoMdTime fontSize="32px" />
+                        <Box ml="18px" mr="auto">
+                          <Text mb="4px" color="text.black">
+                            Verify your ID
+                          </Text>
+                          <Text fontSize="14px">
+                            We need to know who you are.
+                          </Text>
+                        </Box>
+                        <MdOutlineKeyboardArrowRight fontSize="24px" />
+                      </Box>
+                    </Link>
+                  )}
+                  {!plans?.length > 0 && (
+                    <Link href="/myplans/create">
+                      <Box
+                        color="text.grey"
+                        display="flex"
+                        p="8px"
+                        mt="8px"
+                        cursor="pointer"
+                        _hover={{ bg: "gray.50" }}
+                        alignItems="center"
+                      >
+                        <IoMdTime fontSize="32px" />
+                        <Box ml="18px" mr="auto">
+                          <Text mb="4px" color="text.black">
+                            Create Investment Plan
+                          </Text>
+                          <Text fontSize="14px">
+                            Let your money work for you.
+                          </Text>
+                        </Box>
+                        <MdOutlineKeyboardArrowRight fontSize="24px" />
+                      </Box>
+                    </Link>
+                  )}
+                </Box>
+              </>
+            )
+          )}
+        </Box>
+
+        {/* <Grid
+          // templateColumns={["repeat(1, 1fr)", , , "repeat(3, 1fr)"]}
           gap="14px"
         >
           <GridItem
@@ -42,7 +123,7 @@ const YourPlans = ({ title }) => {
             w="full"
           >
             <Text fontSize={["16px", "18px", "20px", "24px"]} mb="24px">
-              {/* {title} */}
+              My plan
             </Text>
             <Box>
               {plans?.length > 0 && (
@@ -163,7 +244,7 @@ const YourPlans = ({ title }) => {
               </>
             )}
           </GridItem>
-        </Grid>
+        </Grid> */}
       </Padding>
     </Box>
   );

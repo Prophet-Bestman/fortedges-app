@@ -24,7 +24,7 @@ const TransactionHistory = () => {
 
   return (
     <Box mt="32px" borderBottomWidth="1px" borderColor="#F1F2F4" pb="24px">
-      <Box
+      {/* <Box
         display={["block", , "none"]}
         py="12px"
         borderColor={"#F1F2F4"}
@@ -52,7 +52,7 @@ const TransactionHistory = () => {
             <MdKeyboardArrowRight />
           </Text>
         </Flex>
-      </Box>
+      </Box> */}
       <Flex color="text.black" justifyContent={"space-between"} mb="32px">
         <Text fontSize="18px">Recent Transactions</Text>
         <Link href="/transaction_history">
