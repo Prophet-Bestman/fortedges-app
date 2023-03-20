@@ -136,8 +136,10 @@ const VerifyAdminLogin = ({ isOpen, onClose, payload }) => {
               <Text fontSize="14px" textAlign="center">
                 Enter the 2-step verification code we sent to your email
                 <br />
-                {`If you haven’t recieved our email in 15 minutes. Please check your
+                <strong>
+                  {`If you haven’t recieved our email in 15 minutes. Please check your
             spam folder.`}
+                </strong>
               </Text>
               <form onSubmit={(e) => handleSubmit(e)}>
                 <Flex

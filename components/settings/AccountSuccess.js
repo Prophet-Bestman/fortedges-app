@@ -38,8 +38,10 @@ const AccountSuccess = ({ isOpen, onClose }) => {
           <Text color="text.grey" my="24px" textAlign="center">
             Your account statement has been sent to your email.
             <br />
-            {`If you haven’t recieved our email in 15 minutes. Please check your
+            <strong>
+              {`If you haven’t recieved our email in 15 minutes. Please check your
             spam folder.`}
+            </strong>
           </Text>
 
           <Button
