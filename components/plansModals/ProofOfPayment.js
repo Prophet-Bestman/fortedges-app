@@ -137,7 +137,7 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
             Pay to the {option?.type} wallet Address
           </Text>
           <Text fontWeight={600} fontSize="20px" mt="8px">
-            ${(data.amount / cryptoPrice).toFixed(4)} {option?.type}{" "}
+            {(data.amount / cryptoPrice).toFixed(4)} {option?.type}{" "}
             <small>{formatter.format(data.amount)}</small>
           </Text>
         </Flex>
