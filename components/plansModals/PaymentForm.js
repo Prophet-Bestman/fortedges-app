@@ -274,7 +274,9 @@ const PaymentForm = ({
                 <Flex alignItems="center" gap="8px">
                   {/* <Image src={option?.icon} /> */}
                   <Text textTransform="uppercase">
-                    {option?.type || "Select a mode of payment"}
+                    {(option?.type && option?.type?.toLowerCase() == "usdt"
+                      ? "USDT ERC20"
+                      : option?.type) || "Select a mode of payment"}
                   </Text>
                 </Flex>
               </MenuButton>
@@ -295,7 +297,11 @@ const PaymentForm = ({
                       >
                         <Flex alignItems="center" gap="8px">
                           <Image src={option?.icon} />
-                          <Text textTransform="uppercase">{option?.type}</Text>
+                          <Text textTransform="">
+                            {option?.type?.toLowerCase() === "usdt"
+                              ? "USDT ERC20"
+                              : option?.type}
+                          </Text>
                         </Flex>
 
                         {/* <Text>{option[1].time}</Text> */}
