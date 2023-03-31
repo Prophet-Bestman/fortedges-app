@@ -64,9 +64,9 @@ export const planProps = {
     ],
   },
   cryptoPremium: {
-    img: "/img/icons/bitcoin.svg",
-    color: "text.brown",
-    bg: "#FBE8D0",
+    img: "/img/icons/crypto-premium.svg",
+    color: "#0E7C7BDD",
+    bg: "#0E7C7B4D",
     history: [
       { year: "2022", profit: "55.77%" },
       { year: "2021", profit: "53.12%" },
@@ -78,9 +78,9 @@ export const planProps = {
     ],
   },
   cryptoIntermediate: {
-    img: "/img/icons/bitcoin.svg",
-    color: "text.brown",
-    bg: "#FBE8D0",
+    img: "/img/icons/crypto-intermediate.svg",
+    color: "#7950DADD",
+    bg: "#7950DA80",
     history: [
       { year: "2022", profit: "33.19%" },
       { year: "2021", profit: "34.12%%" },
