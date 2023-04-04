@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Grid,
-  GridItem,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Input, Text } from "@chakra-ui/react";
 import React from "react";
 import AuthCard from "./AuthCard";
 
@@ -32,7 +22,6 @@ const ForgotPasswordForm = () => {
 
   const onSubmit = (data) => {
     router.push(`/auth/verify/?email=${data.email}`);
-    log(data);
   };
 
   return (

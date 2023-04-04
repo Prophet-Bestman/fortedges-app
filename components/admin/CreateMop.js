@@ -38,12 +38,7 @@ export const CreateMOP = ({ isOpen, onClose }) => {
     });
   };
 
-  const {
-    data: mopCreateResp,
-    mutate: createMOP,
-    isLoading,
-    error,
-  } = useCreateMop();
+  const { data: mopCreateResp, mutate: createMOP, isLoading } = useCreateMop();
 
   const submitMOP = (data) => {
     createMOP(data);
