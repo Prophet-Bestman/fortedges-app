@@ -334,7 +334,7 @@ const ProfileTab = () => {
 
               <ControlledInput
                 h={["48px", , "56px"]}
-                placeholder="United States of America"
+                placeholder="Select a country"
                 // defaultValue={user?.address?.country}
                 name="country"
                 control={control2}
