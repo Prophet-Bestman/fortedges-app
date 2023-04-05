@@ -31,8 +31,6 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
   const filePickerRef = useRef(null);
   const [POPResponse, setPOPResponse] = useState({});
 
-  console.log(option);
-
   const { data: cryptoData } = useGetCryptoCurrencies();
 
   useEffect(() => {
@@ -45,8 +43,6 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
       );
     }
   }, [cryptoData]);
-
-  console.log(cryptoData);
 
   const {
     isOpen: isReqOpen,
