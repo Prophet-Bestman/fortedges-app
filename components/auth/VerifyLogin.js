@@ -76,7 +76,8 @@ const VerifyLogin = ({ isOpen, onClose, payload }) => {
       successToast();
       const redirect = getRedirect();
       clearRedirect();
-      !!redirect ? router.push(redirect) : router.push("/");
+      // !!redirect ? router.push(redirect) : router.push("/");
+      router.push("/");
     }
   }, [data]);
 
