@@ -2,30 +2,26 @@ import {
   Avatar,
   Box,
   Button,
-  Circle,
   Flex,
   FormLabel,
   Grid,
   GridItem,
   Input,
-  Select,
-  SelectField,
   Stack,
   Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useGetUser, useUpdateUser } from "api/user";
+import { useUpdateUser } from "api/user";
 import React, { useState, useEffect, useCallback, useContext } from "react";
 import { personalInfoSchema, profileSchema } from "utils/schemas";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validatePersonalInfo, validateProfile } from "utils/validation";
 import { MdOutlineErrorOutline } from "react-icons/md";
-import { getUserFromLocalStorage } from "api/config";
 import UploadProfilePhoto from "./UploadProfilePhoto";
 import ControlledInput from "components/ControlledInput";
-import { Country, State, City } from "country-state-city";
+import { Country } from "country-state-city";
 import { AuthContext } from "providers/AuthProvider";
 
 const ProfileTab = () => {
@@ -46,8 +42,6 @@ const ProfileTab = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
-    control,
   } = useForm({
     resolver: yupResolver(profileSchema),
     defaultValues: {
