@@ -166,7 +166,6 @@ const PaymentForm = ({
       };
 
       createDeposit(payload);
-      // console.log(data);
     }
   };
 
