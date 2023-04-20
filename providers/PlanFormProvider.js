@@ -18,6 +18,8 @@ export const planFormActions = {
   SET_PLAN_ID: "SET_PLAN_ID",
   SET_USER_ID: "SET_USER_ID",
   SET_PLAN_USER: "SET_PLAN_USER",
+  RESET_PLAN: "RESET_PLAN",
+  CONFIGURE_FORM: "CONFIGURE_FORM",
 };
 
 const reducer = (planFormState, action) => {
@@ -27,7 +29,7 @@ const reducer = (planFormState, action) => {
     case planFormActions.CLOSE_FORM:
       return (planFormState = { ...planFormState, isOpen: false });
     case planFormActions.SET_ID:
-      return (planFormState = { ...planFormState, id: action.payload });
+      return (planFormState.SET_ID = { ...planFormState, id: action.payload });
     case planFormActions.SET_PLAN_ID:
       return (planFormState = { ...planFormState, plan_id: action.payload });
     case planFormActions.SET_USER_ID:
@@ -45,6 +47,11 @@ const reducer = (planFormState, action) => {
         ...planFormState,
         parent_plan_name: action.payload,
       });
+    case planFormActions.RESET_PLAN:
+      return (planFormState = initialState);
+
+    case planFormActions.CONFIGURE_FORM:
+      return (planFormState = action.payload);
 
     default:
       break;

@@ -59,7 +59,7 @@ const DeletePlan = ({ isOpen, onClose }) => {
       if (deleteResp?.status === 204) {
         onClose();
         successToast();
-        router.push("/myplans");
+        router.push("/");
       } else {
         setDeleteError("Error Occurred while trying to update plan");
       }
