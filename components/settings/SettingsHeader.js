@@ -50,7 +50,7 @@ const SettingsHeader = () => {
       >
         ID Verification
       </Tab>
-      <Tab
+      {/* <Tab
         _selected={{
           outline: "none",
           borderBottomWidth: "2px",
@@ -64,7 +64,7 @@ const SettingsHeader = () => {
         }}
       >
         Account statements
-      </Tab>
+      </Tab> */}
     </TabList>
   );
 };
