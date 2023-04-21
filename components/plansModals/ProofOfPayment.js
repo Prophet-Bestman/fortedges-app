@@ -253,9 +253,11 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
           </Text>
 
           <Box mt="24px">
-            <Button variant="secondary" size="sm">
-              Need Help?
-            </Button>
+            <a href="https://wa.link/lk2ms6">
+              <Button variant="secondary" size="sm">
+                Need Help?
+              </Button>
+            </a>
 
             <Button
               onClick={handleSendPOP}
