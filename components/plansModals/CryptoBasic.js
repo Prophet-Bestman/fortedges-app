@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -22,16 +22,33 @@ import { planFormActions, PlanFormContext } from "providers/PlanFormProvider";
 import SubmitPlan from "./SubmitPlan";
 import { saveParentPlanId } from "api/config";
 import OurPortfolio from "./OurPortfolio";
+import { AuthContext } from "providers/AuthProvider";
 
 const CryptoBasicPlan = ({ isOpen, onClose, plan, customPlan }) => {
   const { min, max, _id, name } = plan;
   const { dispatch: setOpen, planFormState } = useContext(PlanFormContext);
-  const { dispatch: setUserID } = useContext(PlanFormContext);
-  const { dispatch: setParentID } = useContext(PlanFormContext);
-  const { dispatch: setParentName } = useContext(PlanFormContext);
-  const { dispatch: setPlanId } = useContext(PlanFormContext);
+  const { dispatch: resetPlan } = useContext(PlanFormContext);
+  const { dispatch: configureForm } = useContext(PlanFormContext);
+  const { user } = useContext(AuthContext);
 
-  const user = planFormState?.plan_user;
+  useEffect(() => {
+    if (!!customPlan) {
+      configureForm({
+        type: planFormActions.CONFIGURE_FORM,
+        payload: {
+          isOpen: false,
+          id: _id,
+          parent_plan_name: name,
+          plan_user: null,
+          ...(!!customPlan && {
+            user_id: customPlan.owner,
+            plan_id: customPlan?._id,
+          }),
+        },
+      });
+    }
+  }, [customPlan]);
+
   const {
     isOpen: isPortfolioOpen,
     onClose: onPortfolioClose,
@@ -39,6 +56,7 @@ const CryptoBasicPlan = ({ isOpen, onClose, plan, customPlan }) => {
   } = useDisclosure();
 
   const closeParent = () => {
+    resetPlan({ type: planFormActions.RESET_PLAN });
     onClose();
   };
 
@@ -121,22 +139,7 @@ const CryptoBasicPlan = ({ isOpen, onClose, plan, customPlan }) => {
             variant="yellow"
             w="full"
             onClick={() => {
-              setParentName({
-                type: planFormActions.SET_PARENT_NAME,
-                payload: name,
-              });
-              setParentID({ type: planFormActions.SET_ID, payload: _id });
-              saveParentPlanId(_id);
               setOpen({ type: planFormActions.OPEN_FORM });
-              setUserID({
-                type: planFormActions.SET_USER_ID,
-                payload: user?._id,
-              });
-              !!customPlan &&
-                setPlanId({
-                  type: planFormActions.SET_PLAN_ID,
-                  payload: customPlan?._id,
-                });
             }}
           >
             {user?.has_plan ? "Upgrade" : "Get Started"}

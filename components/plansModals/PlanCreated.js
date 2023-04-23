@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { AuthContext } from "providers/AuthProvider";
-import { PlanFormContext } from "providers/PlanFormProvider";
+import { PlanFormContext, planFormActions } from "providers/PlanFormProvider";
 import React, { useContext, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 // import { BsArrowRight } from "react-icons/bs";
@@ -23,17 +23,20 @@ const PlanCreated = ({ isOpen, msg, closeParent, plan }) => {
   const { user } = useContext(AuthContext);
   const {
     planFormState: { plan_user },
+    dispatch: resetPlan,
   } = useContext(PlanFormContext);
 
   useEffect(() => {
     if (user?._id === plan_user?._id) {
       if (isOpen && user?.has_plan) {
         router.push(`/myplans/${plan?._id}`);
+        resetPlan({ type: planFormActions.RESET_PLAN });
         closeParent();
       }
     } else {
       if (isOpen && plan_user?.has_plan) {
         router.push(`/admin/users/${plan_user?._id}`);
+        resetPlan({ type: planFormActions.RESET_PLAN });
         closeParent();
       }
     }

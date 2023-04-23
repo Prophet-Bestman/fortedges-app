@@ -24,7 +24,7 @@ const SubmitPlan = ({ closeParent }) => {
   const isOpen = planFormState.isOpen;
   const id = planFormState.id;
   const parent_plan_name = planFormState.parent_plan_name;
-  const user = planFormState?.plan_user;
+  // const user = planFormState?.plan_user;
 
   const {
     isOpen: isSuccessOpen,
@@ -44,7 +44,7 @@ const SubmitPlan = ({ closeParent }) => {
     closeParent();
   };
 
-  // const user_id = planFormState.user_id;
+  const user_id = planFormState.user_id;
 
   const {
     mutate: createPlan,
@@ -62,24 +62,24 @@ const SubmitPlan = ({ closeParent }) => {
 
   const submitPlan = () => {
     let payload;
-    if (user?.has_plan) {
+    if (loggedInUser?.has_plan) {
       payload = {
         plan_id: planFormState?.plan_id,
         data: {
           parent_plan_id: id,
           description: "",
+          ...(user_id !== loggedInUser?._id && { user_id: user_id }),
         },
       };
       updatePlan(payload);
     } else {
       payload = {
         data: {
-          // user_id: user_id,
           name: "",
           parent_plan_id: id,
           description: "",
           parent_plan_name: parent_plan_name,
-          ...(user?._id !== loggedInUser?._id && { user_id: user?._id }),
+          ...(user_id !== loggedInUser?._id && { user_id: user_id }),
         },
       };
       createPlan(payload);

@@ -31,8 +31,6 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
   const filePickerRef = useRef(null);
   const [POPResponse, setPOPResponse] = useState({});
 
-  console.log(option);
-
   const { data: cryptoData } = useGetCryptoCurrencies();
 
   useEffect(() => {
@@ -45,8 +43,6 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
       );
     }
   }, [cryptoData]);
-
-  console.log(cryptoData);
 
   const {
     isOpen: isReqOpen,
@@ -253,31 +249,33 @@ const ProofOfPayment = ({ onClose, option, data, setStep, openError }) => {
           </Box>
 
           <Text fontSize={"14px"} color="app.primary" fontWeight={600}>
-            NOTE: Screenshot size must be less than 1.5 MB
+            NOTE: Screenshot size must be less than 5 MB
           </Text>
 
           <Box mt="24px">
-            <Button variant="secondary" size="sm">
-              Need Help?
-            </Button>
+            <a href="https://wa.link/lk2ms6">
+              <Button variant="secondary" size="sm">
+                Need Help?
+              </Button>
+            </a>
 
             <Button
               onClick={handleSendPOP}
-              isDisabled={!selectedFile || POPImg?.size > 1705000}
+              isDisabled={!selectedFile || POPImg?.size > 6050000}
               w="full"
               my="16px"
               isLoading={isLoading}
             >
               Continue
             </Button>
-            {POPImg?.size > 1705000 && (
+            {POPImg?.size > 6050000 && (
               <Text
                 color="red"
                 fontSize="13px"
                 fontWeight={600}
                 textAlign="center"
               >
-                Uploaded Image must be less than 1.5 MB
+                Uploaded Image must be less than 5 MB
               </Text>
             )}
           </Box>

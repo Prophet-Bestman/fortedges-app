@@ -74,9 +74,10 @@ const VerifyLogin = ({ isOpen, onClose, payload }) => {
       localStorage.setItem(wallet, walletData);
       localStorage.setItem(userID, data?.data?.user._id);
       successToast();
-      const redirect = getRedirect();
+      // const redirect = getRedirect();
       clearRedirect();
-      !!redirect ? router.push(redirect) : router.push("/");
+      // !!redirect ? router.push(redirect) : router.push("/");
+      router.push("/");
     }
   }, [data]);
 
