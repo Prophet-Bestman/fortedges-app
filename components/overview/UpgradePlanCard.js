@@ -50,10 +50,12 @@ const UpgradePlanCard = ({ plan, customPlan }) => {
           setCurrentPlanProps(planProps.realEstate);
           break;
         case "Cryptocurrency Premium":
-          setCurrentPlanProps(planProps.cryptoBasic);
+          setCurrentPlanProps(planProps.cryptoPremium);
+          break;
 
         case "Cryptocurrency Intermediate":
-          setCurrentPlanProps(planProps.cryptoBasic);
+          setCurrentPlanProps(planProps.cryptoIntermediate);
+          break;
 
         case "Cryptocurrency Basic":
           setCurrentPlanProps(planProps.cryptoBasic);
