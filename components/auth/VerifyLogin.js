@@ -19,7 +19,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { config } from "utils";
 
 const VerifyLogin = ({ isOpen, onClose, payload }) => {
-  const { dispatch, getRedirect, clearRedirect } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
   const [code, setCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -74,10 +74,6 @@ const VerifyLogin = ({ isOpen, onClose, payload }) => {
       localStorage.setItem(wallet, walletData);
       localStorage.setItem(userID, data?.data?.user._id);
       successToast();
-      // const redirect = getRedirect();
-      clearRedirect();
-      // !!redirect ? router.push(redirect) : router.push("/");
-      router.push("/");
     }
   }, [data]);
 

@@ -19,7 +19,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { config } from "utils";
 
 const VerifyAdminLogin = ({ isOpen, onClose, payload }) => {
-  const { dispatch, getRedirect, clearRedirect } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
   const [code, setCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -95,10 +95,7 @@ const VerifyAdminLogin = ({ isOpen, onClose, payload }) => {
           localStorage.setItem(wallet, walletData);
           localStorage.setItem(userID, loginData?.data.user._id);
           successToast();
-
-          const redirect = getRedirect();
-          clearRedirect();
-          !!redirect ? router.push(redirect) : router.push("/admin");
+          router.push("/admin");
         }
       }
     }

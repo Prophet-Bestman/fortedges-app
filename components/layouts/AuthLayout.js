@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, toast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { AuthContext } from "providers/AuthProvider";
 import React, { useContext, useEffect } from "react";
@@ -9,7 +9,9 @@ const AuthLayout = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!!user && Object.keys(user).length > 0) router.back();
+    if (!!user && Object.keys(user).length > 0) {
+      router.push("/");
+    }
   }, [user]);
   return (
     <Box bg="app.primary" pos="relative">
