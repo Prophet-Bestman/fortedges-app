@@ -13,17 +13,17 @@ export const userActions = {
 
 const initialUserState = {};
 
-function setRedirect(redirect) {
-  window.sessionStorage.setItem(config.key.redirect, redirect);
-}
+// function setRedirect(redirect) {
+//   window.sessionStorage.setItem(config.key.redirect, redirect);
+// }
 
-function getRedirect() {
-  return window.sessionStorage.getItem(config.key.redirect);
-}
+// function getRedirect() {
+//   return window.sessionStorage.getItem(config.key.redirect);
+// }
 
-function clearRedirect() {
-  return window.sessionStorage.removeItem(config.key.redirect);
-}
+// function clearRedirect() {
+//   return window.sessionStorage.removeItem(config.key.redirect);
+// }
 
 const reducer = (user, action) => {
   switch (action.type) {
@@ -76,9 +76,9 @@ const AuthProvider = ({ children }) => {
     loading,
     setLoading,
     dispatch,
-    setRedirect,
-    getRedirect,
-    clearRedirect,
+    // setRedirect,
+    // getRedirect,
+    // clearRedirect,
   };
 
   return (

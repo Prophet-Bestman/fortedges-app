@@ -93,8 +93,8 @@ export const planProps = {
   },
   cryptoBasic: {
     img: "/img/icons/bitcoin.svg",
-    color: "text.brown",
-    bg: "#FBE8D0",
+    color: "#F0B2634D",
+    bg: "#FCF2E4",
     history: [
       { year: "2022", profit: "18.80%" },
       { year: "2021", profit: "19.92%" },

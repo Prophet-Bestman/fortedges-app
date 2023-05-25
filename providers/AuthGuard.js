@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from "react";
 import { AuthContext } from "providers/AuthProvider";
 
 const AuthGuard = ({ children }) => {
-  const { user, loading, setRedirect } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const router = useRouter();
 
   useEffect(() => {
@@ -18,13 +18,12 @@ const AuthGuard = ({ children }) => {
             redirect = redirect.replace("[plan]", router?.query?.plan);
           }
         }
-        setRedirect(redirect);
 
         // redirect
         router.push("/auth/signin");
       }
     }
-  }, [loading, router, user, setRedirect]);
+  }, [loading, router, user]);
 
   /* show loading indicator while the auth provider is still loading */
   if (loading) {
