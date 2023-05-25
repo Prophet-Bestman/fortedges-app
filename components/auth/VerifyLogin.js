@@ -74,7 +74,6 @@ const VerifyLogin = ({ isOpen, onClose, payload }) => {
       localStorage.setItem(wallet, walletData);
       localStorage.setItem(userID, data?.data?.user._id);
       successToast();
-      router.push("/");
     }
   }, [data]);
 
