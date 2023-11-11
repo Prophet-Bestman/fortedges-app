@@ -24,15 +24,21 @@ import { saveParentPlanId } from "api/config";
 import OurPortfolio from "./OurPortfolio";
 import { AuthContext } from "providers/AuthProvider";
 
-const CryptoBasicPlan = ({ isOpen, onClose, plan, customPlan }) => {
+const CryptoBasicPlan = ({ isOpen, onClose, plan }) => {
   const { min, max, _id, name } = plan;
   const { dispatch: setOpen, planFormState } = useContext(PlanFormContext);
   const { dispatch: resetPlan } = useContext(PlanFormContext);
   const { dispatch: configureForm } = useContext(PlanFormContext);
   const { user } = useContext(AuthContext);
 
+  const {
+    isOpen: isPortfolioOpen,
+    onClose: onPortfolioClose,
+    onOpen: onPortfolioOpen,
+  } = useDisclosure();
+
   useEffect(() => {
-    if (!!customPlan) {
+    if (!!plan && isOpen) {
       configureForm({
         type: planFormActions.CONFIGURE_FORM,
         payload: {
@@ -40,20 +46,14 @@ const CryptoBasicPlan = ({ isOpen, onClose, plan, customPlan }) => {
           id: _id,
           parent_plan_name: name,
           plan_user: null,
-          ...(!!customPlan && {
-            user_id: customPlan.owner,
-            plan_id: customPlan?._id,
+          ...(!!plan && {
+            user_id: plan.owner,
+            plan_id: plan?._id,
           }),
         },
       });
     }
-  }, [customPlan]);
-
-  const {
-    isOpen: isPortfolioOpen,
-    onClose: onPortfolioClose,
-    onOpen: onPortfolioOpen,
-  } = useDisclosure();
+  }, [plan, isOpen]);
 
   const closeParent = () => {
     resetPlan({ type: planFormActions.RESET_PLAN });

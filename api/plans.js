@@ -88,8 +88,12 @@ const useCreateCustomPlan = () => {
             headers: headers,
           }
         )
-        .then((res) => res)
+        .then((res) => {
+          console.log(res)
+          return res;
+        })
         .catch((err) => {
+          console.log(err);
           if (err.response.status === 403) {
             localStorage.clear();
           } else return err;

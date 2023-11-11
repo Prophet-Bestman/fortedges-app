@@ -13,6 +13,7 @@ import React, { useState, useEffect, useContext } from "react";
 const PlanResponsive = ({ plan, isAdmin }) => {
   const { name } = plan;
   const [currentPlanProps, setCurrentPlanProps] = useState();
+  const [activePlan, setActivePlan] = useState(plan);
   const [goalProps, setGoalProps] = useState(goalModalProps.fixedIncome);
   const { user } = useContext(AuthContext);
 
@@ -56,10 +57,12 @@ const PlanResponsive = ({ plan, isAdmin }) => {
 
   useEffect(() => {
     if (plan !== undefined) {
+      
       switch (name) {
         case "Fixed Income":
           setCurrentPlanProps(planProps.fixedIncome);
           setGoalProps(goalModalProps.fixedIncome);
+          setActivePlan(plan);
           break;
         case "Real Estate":
           setCurrentPlanProps(planProps.realEstate);
@@ -87,18 +90,23 @@ const PlanResponsive = ({ plan, isAdmin }) => {
     switch (name) {
       case "Cryptocurrency Premium":
         onCryptoPremiumOpen();
+        setActivePlan(plan)
         break;
       case "Cryptocurrency Intermediate":
         onCryptoIntermediateOpen();
+        setActivePlan(plan)
         break;
       case "Cryptocurrency Basic":
         onCryptoBasicOpen();
+        setActivePlan(plan)
         break;
       case "Fixed Income":
         onFixedIncomeOpen();
+        setActivePlan(plan)
         break;
       case "Real Estate":
         onRealEstateOpen();
+        setActivePlan(plan)
         break;
 
       default:
@@ -150,31 +158,31 @@ const PlanResponsive = ({ plan, isAdmin }) => {
       <CryptoPremiumPlan
         isOpen={isCryptoPremiumOpen}
         onClose={onCryptoPremiumClose}
-        plan={plan}
+        plan={activePlan}
         userID={user?._id}
       />
       <CryptoIntermediatePlan
         isOpen={isCryptoIntermediateOpen}
         onClose={onCryptoIntermediateClose}
-        plan={plan}
+        plan={activePlan}
         userID={user?._id}
       />
       <CryptoBasicPlan
         isOpen={isCryptoBasicOpen}
         onClose={onCryptoBasicClose}
-        plan={plan}
+        plan={activePlan}
         userID={user?._id}
       />
       <RealEstatePlan
         isOpen={isRealEstateOpen}
         onClose={onRealEstateClose}
-        plan={plan}
+        plan={activePlan}
         userID={user?._id}
       />
       <FixedIncomePlan
         isOpen={isFixedIncomeOpen}
         onClose={onFixedIncomeClose}
-        plan={plan}
+        plan={activePlan}
         userID={user?._id}
       />
       {/* <PremiumPlan
