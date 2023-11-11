@@ -24,6 +24,7 @@ const SubmitPlan = ({ closeParent }) => {
   const isOpen = planFormState.isOpen;
   const id = planFormState.id;
   const parent_plan_name = planFormState.parent_plan_name;
+  console.log(planFormState);
   // const user = planFormState?.plan_user;
 
   const {

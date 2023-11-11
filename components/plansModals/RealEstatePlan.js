@@ -22,7 +22,7 @@ import { planProps, portfolioCountries } from "data";
 import OurPortfolio from "./OurPortfolio";
 import { AuthContext } from "providers/AuthProvider";
 
-const RealEstatePlan = ({ isOpen, onClose, plan, customPlan }) => {
+const RealEstatePlan = ({ isOpen, onClose, plan }) => {
   const { min, max, _id, name } = plan;
   const { dispatch: setOpen, planFormState } = useContext(PlanFormContext);
   const { dispatch: resetPlan } = useContext(PlanFormContext);
@@ -35,14 +35,8 @@ const RealEstatePlan = ({ isOpen, onClose, plan, customPlan }) => {
     onOpen: onPortfolioOpen,
   } = useDisclosure();
 
-  const closeParent = () => {
-    // onPortfolioClose();
-    resetPlan({ type: planFormActions.RESET_PLAN });
-    onClose();
-  };
-
   useEffect(() => {
-    if (!!customPlan) {
+    if (!!plan && !!isOpen) {
       configureForm({
         type: planFormActions.CONFIGURE_FORM,
         payload: {
@@ -50,14 +44,19 @@ const RealEstatePlan = ({ isOpen, onClose, plan, customPlan }) => {
           id: _id,
           parent_plan_name: name,
           plan_user: null,
-          ...(!!customPlan && {
-            user_id: customPlan.owner,
-            plan_id: customPlan?._id,
+          ...(!!plan && {
+            user_id: plan.owner,
+            plan_id: plan?._id,
           }),
         },
       });
     }
-  }, [customPlan]);
+  }, [plan, isOpen]);
+
+  const closeParent = () => {
+    resetPlan({ type: planFormActions.RESET_PLAN });
+    onClose();
+  };
 
   return (
     <Modal isOpen={isOpen} size="full">
